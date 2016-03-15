@@ -1,2 +1,3 @@
-# tabulae
-A build system or Latin morphological parser
+# tabulae #
+
+A build system for Latin morphological parsers.
