@@ -3,7 +3,7 @@
 A build system for Latin morphological parsers.
 
 
-## Needs
+## Organization
 
 
 -   `datasets`: suites of inflectional endings and lexical stems
@@ -17,9 +17,11 @@ Currently using `sbt.version=0.13.16` and `scalaVersion := "2.10.6"` in project 
 Get on line and look this up.
 
 
-## Kudos
+## Acknowledgments
 
-Mad props to `parsley`
+This project is especially indebted to Harry Schmidt's [parsley](https://github.com/goldibex/parsley-core).
+
+
 
 
 ## Sequence
