@@ -1,6 +1,7 @@
 import sbt._
 import java.io.PrintWriter
 import scala.io.Source
+import Path.rebase
 
 /**
 */
@@ -9,16 +10,17 @@ object SymbolsComposer {
 
   def apply(repo: File, corpus: String) : Unit = {
     composeMainFile(repo / s"parsers/${corpus}")
-    //copySecondaryFiles(repo, corpus)
-    //rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
+    copySecondaryFiles(repo, corpus)
+    rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
   }
 
-/*
+
   def rewritePhonologyFile(f: File, workDir: File): Unit = {
     val lines = Source.fromFile(f).getLines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     new PrintWriter(f) { write(rewritten); close }
   }
+
 
 
   def copySecondaryFiles(repo: File, corpus: String) : Unit = {
@@ -32,7 +34,6 @@ object SymbolsComposer {
        IO.copyFile(m._1, m._2)
      }
   }
-*/
 
   def composeMainFile(projectDir: File): Unit = {
     val fst = StringBuilder.newBuilder

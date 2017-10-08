@@ -16,10 +16,9 @@ lazy val root = (project in file(".")).
       ),
 
       fst := buildFst.evaluated,
-      corpusTemplate := corpusTemplateImpl.evaluated //,
+      corpusTemplate := corpusTemplateImpl.evaluated,
       //utils := utilsImpl.evaluated,
-      //cleanAll := cleanAllImpl.value,
-
+      cleanAll := cleanAllImpl.value   //,
       //kdebug := currentTest.value
     )
 
@@ -61,7 +60,6 @@ lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 //}
 
 // Delete all compiled parsers
-/*
 lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
   val parserDir = baseDirectory.value / "parsers"
   val filesVector = parserDir.listFiles.toVector
@@ -74,7 +72,7 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
     }
   }
 }
-*/
+
 
 // Generate data directory hierarchy for a new named corpus.
 // Writes output to `datasets/CORPUS`.
@@ -207,7 +205,9 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   RulesInstaller(baseDirectory.value, corpus)
 
   // Compose makefiles and higher-order FST for build system
-  //BuildComposer(baseDirectory.value, corpus, "/usr/local/bin/fst-compiler")
+
+
+  BuildComposer(baseDirectory.value, corpus, conf.fstcompile)
 
 
 /*

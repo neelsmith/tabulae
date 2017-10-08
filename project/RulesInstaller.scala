@@ -6,7 +6,7 @@ object RulesInstaller {
 
   /** Format compilable FST rules for a named corpus.
   *
-  * @param repo Base directory of the Kanónes repository.
+  * @param repo Base directory of the Tabulae repository.
   * @param corpus Name of corpus
   */
   def apply(repo: File, corpus: String): Unit = {
