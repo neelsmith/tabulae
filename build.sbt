@@ -15,8 +15,8 @@ lazy val root = (project in file(".")).
         "edu.holycross.shot.cite" %% "xcite" % "2.7.1"
       ),
 
-      //fst := buildFst.evaluated,
-      corpusTemplate := corpusTemplateImpl.evaluated,
+      fst := buildFst.evaluated,
+      corpusTemplate := corpusTemplateImpl.evaluated //,
       //utils := utilsImpl.evaluated,
       //cleanAll := cleanAllImpl.value,
 
@@ -150,27 +150,28 @@ lazy val utilsImpl = Def.inputTaskDyn {
     }
   }
 }
-
+*/
 
 // Dynamically creates task to build parser by
 // successively invoking tasks that take parameters.
 lazy val buildFst = Def.inputTaskDyn {
+  val bdFile= baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
 
   args.size match {
     case 1 => {
-      val src = baseDirectory.value / s"datasets/${args.head}"
+      val src = bdFile / s"datasets/${args.head}"
       if (! src.exists()) {
         error("Source dataset " + src + " does not exist.\n")
       } else {
         println("\nCompile corpus " + args.head + " with default configuration from config.properties\n")
-        fstCompile(args.head, baseDirectory.value / "config.properties")
+        fstCompile(args.head, bdFile / "config.properties")
       }
 
     }
     case 2 => {
-      val src = baseDirectory.value / s"datasets/${args.head}"
-      val confFile = baseDirectory.value / args(1)
+      val src = bdFile / s"datasets/${args.head}"
+      val confFile = bdFile / args(1)
       if (! src.exists()) {
         error("Source dataset " + src + " does not exist.\n")
       } else if (! confFile.exists()) {
@@ -186,7 +187,7 @@ lazy val buildFst = Def.inputTaskDyn {
     }
   }
 }
-*/
+
 def usage: Def.Initialize[Task[Unit]] = Def.task {
   println("\n\tUsage: fst CORPUS [CONFIGFILE] \n")
 }
@@ -195,7 +196,7 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
   println(s"\n\tError: {$msg}\n")
 }
 
-/*
+
 // Compile FST parser
 def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] = Def.task {
   val buildDirectory = baseDirectory.value / s"parsers/${corpus}"
@@ -206,8 +207,10 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   RulesInstaller(baseDirectory.value, corpus)
 
   // Compose makefiles and higher-order FST for build system
-  BuildComposer(baseDirectory.value, corpus, "/usr/local/bin/fst-compiler")
+  //BuildComposer(baseDirectory.value, corpus, "/usr/local/bin/fst-compiler")
 
+
+/*
   // Build it!
   val inflMakefile = buildDirectory / "inflection/makefile"
   val makeInfl = s"${conf.make} -f ${inflMakefile}"
@@ -215,5 +218,5 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   val makefile = buildDirectory / "makefile"
   val doit = s"${conf.make} -f ${makefile}"
   doit !
+  */
 }
-*/
