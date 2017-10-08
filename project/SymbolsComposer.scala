@@ -43,7 +43,6 @@ object SymbolsComposer {
     fst.append("#include \"" + projectDir.toString + "/symbols/morphsymbols.fst\"\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/stemtypes.fst\"\n\n")
 
-
     fst.append("% 2. ASCII representation of polytonic Greek\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/phonology.fst\"\n\n")
 

@@ -20,9 +20,9 @@ object BuildComposer {
     IO.copyFile(repo / s"datasets/${corpus}/orthography/alphabet.fst",
       repo / s"parsers/${corpus}/symbols/alphabet.fst")
     InflectionComposer(projectDir)
-    //AcceptorComposer(repo, corpus)
-    //ParserComposer(projectDir)
-    //MakefileComposer(projectDir, fstcompiler)
+    AcceptorComposer(repo, corpus)
+    ParserComposer(projectDir)
+    MakefileComposer(projectDir, fstcompiler)
 
     //GeneratorComposer(repo, corpus)
   }
