@@ -8,13 +8,12 @@ object DataInstaller {
 
   def apply(repo: File, corpus: String): Unit = {
     println(s"Convert morphological lexicon tables in ${repo} to FST")
-    /*
+
     val projectDir = DataInstaller.madeDir(repo / s"parsers/${corpus}")
     val lexDir = DataInstaller.madeDir(projectDir / "lexica")
-    NounDataInstaller(repo, corpus)
-    IndeclDataInstaller(repo, corpus)
-    VerbDataInstaller(repo, corpus)
-    */
+    //NounDataInstaller(repo, corpus)
+    //IndeclDataInstaller(repo, corpus)
+    //VerbDataInstaller(repo, corpus)
   }
 
 
@@ -27,20 +26,4 @@ object DataInstaller {
       dir
     }
   }
-
-  /** Rewrite characters in s that are not part of FST's
-  * alphabet to corresponding FST representation.
-  *
-  * @param s String to rewrite.
-  */
-  def toFstAlphabet( s: String) = {
-    s.
-     replaceAll("_", "<lo>").
-     replaceAll("\\^", "<sh>").
-     replaceAll("\\(", "<ro>").
-     replaceAll("\\)", "<sm>").
-     replaceAll("=", "\\\\=").
-     replaceAll("\\|", "<isub>")
-   }
-
 }
