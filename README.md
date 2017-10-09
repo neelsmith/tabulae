@@ -11,7 +11,7 @@ A system for building Latin morphological parsers.
 
 - A POSIX-like environment with `sh`, `echo` and `make`
 - [Scala](https://www.scala-lang.org/) and [sbt](https://github.com/sbt/sbt)
-- [Stuttgart FST toolbox](http://www.cis.uni-muenchen.de/~schmid/tools/SFST/).
+- [Stuttgart FST toolbox](http://www.cis.uni-muenchen.de/~schmid/tools/SFST/)
 
 ## Organization of files
 
@@ -33,10 +33,10 @@ The`tabulae` build system compiles parsers into named subdirectories of the `par
 
 The `project` directory defines classes for building a build system.  These classes are directly used by the build tasks of `build.sbt`.  The high-level `sbt` task `buildFst` composes files, assembles predfined and automaticallycomposed files in a source tree, and uses the SFST compiler to compile a binary parser.  The `buildFst` task invokes
 
--    the `fstCompile` build task.  It in turn uses tasks defined in these classes of the `project` directory:
-    -    the `RulesInstaller` class, which uses
+-   the `fstCompile` build task.  It in turn uses tasks defined in these classes of the `project` directory:
+    1.  the `RulesInstaller` class, which uses
         -   `NounRulesInstaller` class
-    -    the `DataInstaller` class, which uses
+    2.   the `DataInstaller` class, which uses
         -   `NounDataInstaller` class
 
 
