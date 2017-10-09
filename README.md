@@ -46,4 +46,4 @@ Generic parsing logic in SFST syntax is in the `fst` library.  These files are a
 
 ## Acknowledgments
 
-This project is especially indebted to Harry Schmidt's [parsley](https://github.com/goldibex/parsley-core).
+This project is especially indebted to Harry Schmidt's [parsley](https://github.com/goldibex/parsley-core), and to the openly licensed data sets of the [Perseus project](http://www.perseus.tufts.edu).
