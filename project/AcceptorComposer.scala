@@ -40,7 +40,7 @@ object AcceptorComposer {
     fst.append("%%%\n%%% Adjust stem  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
     fst.append("$stems_acceptors$ = \"<" +  projectDir.toString +     "/acceptors/verbstems.a>\"\n")
 
-    fst.append("%%%\n%%% Adjust augment  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\nALPHABET = [#editorial# #urntag# #urnchar# <verb> #morphtag# #stemtype#  #separator# #letter# #diacritic#  #breathing# \\. #stemchars# ]\n\n")
+    fst.append("%%%\n%%% Adjust augment  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\nALPHABET = [#editorial# #urntag# #urnchar# <verb> #morphtag# #stemtype#  #separator# #letter# #diacritic#  \\. #stemchars# ]\n\n")
     fst.append("#augmenttense# = <aor><impft><plupft>\n")
 
     fst.append("#=ltr# = #consonant#\n\n")
@@ -92,7 +92,7 @@ object AcceptorComposer {
     fst.append(indeclAcceptor + "\n")
 
     fst.append(irregNounAcceptor + "\n")
-    fst.append("$verb_pipeline$ = \"<" + projectDir.toString + "/verb.a>\"\n")
+    //fst.append("$verb_pipeline$ = \"<" + projectDir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor + "\n")
 
@@ -165,7 +165,7 @@ $stem_acceptors$ || $aug$ || $squashverburn$
   val nounAcceptor = """
 % Noun acceptor:
 $=nounclass$ = [#nounclass#]
-$squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$  [#persistacc#]  $separator$+ $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+$squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$   $separator$+ $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
 
   /** String defining final acceptor transducer for irregular nouns.  */
@@ -188,12 +188,13 @@ $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>
   */
   val topLevelAcceptor = """
 % Union of all URN squashers:
-$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
+%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
+$acceptor$ = $squashnounurn$
 
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.
 #analysissymbol# = #editorial# #urntag# <noun><verb><indecl><ptcpl><infin><vadj><adj><adv> #morphtag# #stemtype#  #separator#
-#surfacesymbol# = #letter# #diacritic#  #breathing#
+#surfacesymbol# = #letter# #diacritic#
 ALPHABET = [#surfacesymbol#] [#analysissymbol#]:<>
 $stripsym$ = .+
 

@@ -6,3 +6,42 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Noun stem types
 #noun1# = <a_ae>
+#noun2# = <us_i>
+#noun3# = <e_is>
+
+
+#nounclass# = #noun1# #noun2# #noun3#
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adjective stem types
+#adj1and2# = <0_a_um><er_era_erum>
+
+#adjectiveclass# = #adj1and2#
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Adverb stem types
+#indecladv# = <indeclpos><indeclcomp><indeclsup>
+
+#adverbclass# = #indecladv#
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Verb stem types
+#regular# = <regular>
+
+#verbclass#  = #regular#
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Indeclinable type
+#indeclclass# = <conjunct><exclam><prepos>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Irregular type
+#irregclass# = <irregadj><irregnoun><irregadv><irregcverb><irreginfin><irregptcpl><irregvadj>
+
+% Union of all stemtypes
+#stemtype# = #nounclass# #adjectiveclass# #adverbclass# #verbclass# #indeclclass# #irregclass#

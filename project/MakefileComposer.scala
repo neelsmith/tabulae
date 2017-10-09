@@ -46,7 +46,7 @@ object MakefileComposer {
 
   def composeMainMake(projectDir: File, fstcompiler: String): Unit = {
     val makeFileText = StringBuilder.newBuilder
-    makeFileText.append(s"${projectDir.toString}/greek.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
+    makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
 
     val dotAs = dotAsForFst(projectDir / "acceptors").mkString(" ")
     makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
