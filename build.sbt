@@ -18,7 +18,7 @@ lazy val root = (project in file(".")).
 
       fst := buildFst.evaluated,
       corpusTemplate := corpusTemplateImpl.evaluated,
-      //utils := utilsImpl.evaluated,
+      utils := utilsImpl.evaluated,
       cleanAll := cleanAllImpl.value   //,
       //kdebug := currentTest.value
     )
@@ -136,7 +136,7 @@ def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
 }
 
 
-/*
+
 lazy val utilsImpl = Def.inputTaskDyn {
   val args = spaceDelimited("corpus>").parsed
   if (args.size != 1) {
@@ -148,7 +148,7 @@ lazy val utilsImpl = Def.inputTaskDyn {
     }
   }
 }
-*/
+
 
 // Dynamically creates task to build parser by
 // successively invoking tasks that take parameters.

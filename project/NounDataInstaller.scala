@@ -53,7 +53,7 @@ object NounDataInstaller {
 
       //fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<verb><${princPart}>")
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexEntity}</u>${stem}<noun><${declClass}><${gender}>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexEntity}</u>${stem}<noun><${gender}><${declClass}>")
       fstBuilder.toString
 
       //<u>vienna\.n3\_1</u><u>lexent\.n3</u>t<noun><fem><h_hs><inflacc>
