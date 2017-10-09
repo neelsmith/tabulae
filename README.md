@@ -1,9 +1,17 @@
-# tabulae #
+# `tabulae` #
 
 A system for building Latin morphological parsers.
 
-`tabulae` makes it possible to build corpus-specific Latin morphological parsers from tabular data for inflectional rules and for vocabulary ("stems").
+`tabulae` makes it possible to build corpus-specific Latin morphological parsers from tabular data for inflectional rules and for vocabulary ("stems").  It's a Latin sibling of `[kanones](https://github.com/neelsmith/kanones)`:  like `kanones`, its aim is to build corpus-specific morphological analyzers, identifying citable lexical items and citable inflectional rules for each analysis.
 
+
+
+## Prerequisites
+
+
+- A POSIX-like environment with `sh`, `echo` and `make`
+- [Scala](https://www.scala-lang.org/) and [sbt](https://github.com/sbt/sbt)
+- [Stuttgart FST toolbox](http://www.cis.uni-muenchen.de/~schmid/tools/SFST/).
 
 ## Organization of files
 
