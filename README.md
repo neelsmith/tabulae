@@ -10,11 +10,7 @@ A build system for Latin morphological parsers.
 -   `project` classes:  Configuraiton file;  others...?
 
 
-## Upgrade
 
-Currently using `sbt.version=0.13.16` and `scalaVersion := "2.10.6"` in project folder settings, b/c apparentl system exec syntax changed with sbt 1.0?
-
-Get on line and look this up.
 
 
 ## Acknowledgments
