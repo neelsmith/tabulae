@@ -36,7 +36,7 @@ The `project` directory defines classes for building a build system.  These clas
 -   the `fstCompile` build task.  It in turn uses tasks defined in these classes of the `project` directory:
     1.  the `RulesInstaller` class, which uses
         -   `NounRulesInstaller` class
-    2.   the `DataInstaller` class, which uses
+    2.  the `DataInstaller` class, which uses
         -   `NounDataInstaller` class
 
 
