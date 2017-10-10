@@ -1,7 +1,7 @@
 import sbt._
 import java.io.PrintWriter
 
-/** Write top-level transducer, latin.fst.
+/** Write the top-level transducer, latin.fst.
 */
 object ParserComposer {
 

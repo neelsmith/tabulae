@@ -2,7 +2,7 @@ import sbt._
 import java.io.PrintWriter
 
 
-/** Write makefiles to compile FST.
+/** Write makefiles to compile all FST source to binary transducers.
 */
 object MakefileComposer {
 

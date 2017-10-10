@@ -205,11 +205,7 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   RulesInstaller(baseDirectory.value, corpus)
 
   // Compose makefiles and higher-order FST for build system
-
-
   BuildComposer(baseDirectory.value, corpus, conf.fstcompile)
-
-
 
   // Build it!
   val inflMakefile = buildDirectory / "inflection/makefile"

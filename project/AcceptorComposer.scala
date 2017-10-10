@@ -4,11 +4,11 @@ import scala.io.Source
 
 import Path.rebase
 
-/** Factory object for composing and writing to file the top-level
-* acceptor transducer, acceptor.fst in the root of the project FST build.
+/** Factory object for composing and writing to a file the top-level
+* acceptor transducer, acceptor.fst, in the root of the project FST build.
 *
 * The acceptor transducer is the final stage in the morphological pipeline.
-* See documentation for details.
+* See documentation on the tabulae github repository for details.
 */
 object AcceptorComposer {
 
