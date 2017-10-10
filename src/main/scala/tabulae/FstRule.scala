@@ -69,12 +69,32 @@ object NounRule {
 }
 
 
+
+
+/** Rule entry for a verb form.
+*
+* @param ruleId Abbreviated URN string for rule.
+* @param person String value for person.
+* @param grammaticalNumber String value for number.
+* @param tense String value for tense.
+* @param mood String value for mood.
+* @param voice String value for voice.
+* @param inflClass String value for conjugation class.
+* @param ending String value for ending to apply to stem.
+*/
 case class VerbRule(ruleId: String, person: String,
 grammaticalNumber:String, tense: String, mood: String,voice: String, inflClass: String, ending: String ) extends FstRule
 
+
+/** Factory to create full [[NounRule]] object from FST.
+*
+*/
 object VerbRule {
+
   /** Create full [[VerbRule]] object from verb-specific FST.
   *
+  * @param declClass String value for conjugation class.
+  * @param nounData Verb-specific FST to parse.
   */
   def apply(inflClass: String, verbData: String): VerbRule = {
     val dataRE  = "([^<]+)<([^>]+)><([^>]+)><([^>]+)><([^>]+)><([^>]+)><u>(.+)<\\/u>".r
@@ -84,6 +104,9 @@ object VerbRule {
 }
 
 
+/** Factory object for creating [[FstRule]] objects
+* from the "rule" half of a FST reply.
+*/
 object FstRule {
 
   /** Create an [[FstRule]] object from the FST

@@ -1,9 +1,11 @@
 package edu.holycross.shot.tabulae
 
 
-
+/** A valid grammatical form identification.*/
 sealed trait Form
 
+/** Factory object to create full [[Form]] from a string of FST.
+*/
 object Form {
 
   /** From a raw FST string, identify a morphological form.
