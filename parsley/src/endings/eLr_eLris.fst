@@ -1,0 +1,12 @@
+(e\_r[<masc><fem>][<nom><voc>]<sg>|\
+e\_r<neut>[<nom><voc><acc>]<sg>|\
+e\_ris<gen><sg>|\
+e\_ri\_<dat><sg>|\
+e\_rem[<masc><fem>]<acc><sg>|\
+e\_re<abl><sg>|\
+e\_re\_s[<masc><fem>][<nom><voc>]<pl>|\
+e\_ra<neut>[<nom><voc><acc>]<pl>|\
+e\_rum<gen><pl>|\
+e\_ribus<dat><pl>|\
+e\_re\_s[<masc><fem>]<acc><pl>|\
+e\_ribus<abl><pl>)

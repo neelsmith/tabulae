@@ -1,0 +1,13 @@
+(x<nom><sg>|\
+gis<gen><sg>|\
+gi\_<dat><sg>|\
+gem[<masc><fem>]<acc><sg>|\
+ga[<masc><fem>]<acc><sg>|\
+ge<abl><sg>|\
+ge\_s[<masc><fem>][<nom><voc>]<pl>|\
+ga<neut>[<nom><voc><acc>]<pl>|\
+gum<gen><pl>|\
+gibus<dat><pl>|\
+ge\_s[<masc><fem>]<acc><pl>|\
+gas[<masc><fem>]<acc><pl>|\
+gibus<abl><pl>)

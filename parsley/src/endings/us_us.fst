@@ -1,0 +1,14 @@
+(us[<masc><fem>]<nom><sg>|\
+u<neut><nom><sg>|\
+u\_s<gen><sg>|\
+ui\_<dat><sg>|\
+um[<masc><fem>]<acc><sg>|\
+u\_<abl><sg>|\
+u\_s[<masc><fem>]<nom><pl>|\
+ua<neut>[<nom><voc><acc>]<pl>|\
+uum<gen><pl>|\
+ubus<dat><pl>|\
+ibus<dat><pl>|\
+u\_s[<masc><fem>]<acc><pl>|\
+ubus<abl><pl>|\
+ibus<abl><pl>)

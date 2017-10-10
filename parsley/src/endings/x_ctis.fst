@@ -1,0 +1,13 @@
+(x[<masc><fem>][<nom><voc>]<sg>|\
+c<neut>[<nom><voc><acc>]<sg>|\
+ctis<gen><sg>|\
+cti\_<dat><sg>|\
+ctem[<masc><fem>]<acc><sg>|\
+cte[<masc><fem><neut>]<abl><sg>|\
+cte\_s[<masc><fem>][<nom><voc>]<pl>|\
+ctia<neut>[<nom><voc><acc>]<pl>|\
+ctium<gen><pl>|\
+ctibus<dat><pl>|\
+cti\_s[<masc><fem>]<acc><pl>|\
+cte\_s[<masc><fem>]<acc><pl>|\
+ctibus<abl><pl>)

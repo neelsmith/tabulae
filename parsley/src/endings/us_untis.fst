@@ -1,0 +1,12 @@
+(uLs[<masc><fem>]<nom><sg>|\
+untis<gen><sg>|\
+unti\_<dat><sg>|\
+unta<acc><sg>|\
+untem[<masc><fem>]<acc><sg>|\
+unte<abl><sg>|\
+unte\_s[<masc><fem>][<nom><voc>]<pl>|\
+unta<neut>[<nom><voc><acc>]<pl>|\
+untum<gen><pl>|\
+untibus<dat><pl>|\
+unte\_s[<masc><fem>]<acc><pl>|\
+untibus<abl><pl>)

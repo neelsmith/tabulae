@@ -1,0 +1,11 @@
+(o<nom><sg>|\
+onis<gen><sg>|\
+oni\_<dat><sg>|\
+onem[<masc><fem>]<acc><sg>|\
+one<abl><sg>|\
+one\_s[<masc><fem>][<nom><voc>]<pl>|\
+ona<neut>[<nom><voc><acc>]<pl>|\
+onum<gen><pl>|\
+onibus<dat><pl>|\
+one\_s[<masc><fem>]<acc><pl>|\
+onibus<abl><pl>)

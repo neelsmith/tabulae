@@ -1,0 +1,12 @@
+(ior[<masc><fem>][<nom><voc>]<comp><sg>|\
+ius<neut>[<nom><voc><acc>]<comp><sg>|\
+ioris[<masc><fem><neut>]<gen><comp><sg>|\
+iori\_[<masc><fem><neut>]<dat><comp><sg>|\
+iorem[<masc><fem>]<acc><comp><sg>|\
+iore[<masc><fem><neut>]<abl><comp><sg>|\
+iore\_s[<masc><fem>][<nom><voc>]<comp><pl>|\
+iora<neut>[<nom><voc><acc>]<comp><pl>|\
+iorum[<masc><fem><neut>]<gen><comp><pl>|\
+ioribus[<masc><fem><neut>]<dat><comp><pl>|\
+iore\_s[<masc><fem>]<acc><comp><pl>|\
+ioribus[<masc><fem><neut>]<abl><comp><pl>)

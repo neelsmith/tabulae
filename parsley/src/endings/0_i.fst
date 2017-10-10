@@ -1,0 +1,17 @@
+([<nom><voc>]<sg>|\
+om<neut>[<nom><voc><acc>]<sg><early>|\
+um<neut>[<nom><voc><acc>]<sg>|\
+i\_<gen><sg>|\
+o\_<dat><sg>|\
+e\_<adverbial>|\
+om[<masc><fem>]<acc><sg><early>|\
+um[<masc><fem>]<acc><sg>|\
+e<voc><sg>|\
+o\_<abl><sg>|\
+i\_[<masc><fem>][<nom><voc>]<pl>|\
+a<neut>[<nom><voc><acc>]<pl>|\
+u\_m<gen><pl><poetic>|\
+o\_rum<gen><pl>|\
+i\_s<dat><pl>|\
+o\_s[<masc><fem>]<acc><pl>|\
+i\_s<abl><pl>)

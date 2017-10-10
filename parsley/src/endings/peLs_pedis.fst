@@ -1,0 +1,10 @@
+(pe\_s[<masc><fem>]<nom><sg>|\
+edis[<masc><fem>]<gen><sg>|\
+edi\_[<masc><fem>]<dat><sg>|\
+edem[<masc><fem>]<acc><sg>|\
+ede[<masc><fem>]<abl><sg>|\
+ede\_s[<masc><fem>][<nom><voc>]<pl>|\
+edum[<masc><fem>]<gen><pl>|\
+edibus[<masc><fem>]<dat><pl>|\
+ede\_s[<masc><fem>]<acc><pl>|\
+edibus[<masc><fem>]<abl><pl>)

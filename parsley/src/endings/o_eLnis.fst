@@ -1,0 +1,11 @@
+(o\_<nom><sg>|\
+e\_nis<gen><sg>|\
+e\_ni\_<dat><sg>|\
+e\_nem[<masc><fem>]<acc><sg>|\
+e\_ne<abl><sg>|\
+e\_ne\_s[<masc><fem>][<nom><voc>]<pl>|\
+e\_na<neut>[<nom><voc><acc>]<pl>|\
+e\_num<gen><pl>|\
+e\_nibus<dat><pl>|\
+e\_ne\_s[<masc><fem>]<acc><pl>|\
+e\_nibus<abl><pl>)

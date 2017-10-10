@@ -1,0 +1,12 @@
+(o\_s[<masc><fem>]<nom><sg>|\
+o\_is[<masc><fem>]<gen><sg>|\
+o\_is[<masc><fem>]<gen><sg>|\
+o\_i\_[<masc><fem>]<dat><sg>|\
+o\_a[<masc><fem>]<acc><sg>|\
+o\_e[<masc><fem>]<abl><sg>|\
+o\_e\_s[<masc><fem>]<nom><pl>|\
+o\_um[<masc><fem>]<gen><pl>|\
+o\_um[<masc><fem>]<gen><pl>|\
+o\_ibus[<masc><fem>]<dat><pl>|\
+o\_as[<masc><fem>]<acc><pl>|\
+o\_ibus[<masc><fem>]<abl><pl>)

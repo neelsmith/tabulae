@@ -1,0 +1,14 @@
+(o\_n[<masc><fem>]<nom><sg>|\
+on<neut>[<nom><voc><acc>]<sg>|\
+o\_nis<gen><sg>|\
+o\_ni\_<dat><sg>|\
+o\_nem[<masc><fem>]<acc><sg>|\
+ona[<masc><fem>]<acc><sg>|\
+o\_ne<abl><sg>|\
+o\_ne\_s[<masc><fem>][<nom><voc>]<pl>|\
+o\_na<neut>[<nom><voc><acc>]<pl>|\
+o\_num<gen><pl>|\
+o\_nibus<dat><pl>|\
+o\_ne\_s[<masc><fem>]<acc><pl>|\
+onas[<masc><fem>]<acc><pl>|\
+o\_nibus<abl><pl>)

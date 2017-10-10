@@ -1,0 +1,13 @@
+(x<nom><sg>|\
+cis<gen><sg>|\
+ci\_<dat><sg>|\
+cem[<masc><fem>]<acc><sg>|\
+ca[<masc><fem>]<acc><sg>|\
+ce<abl><sg>|\
+ce\_s[<masc><fem>][<nom><voc>]<pl>|\
+ca<neut>[<nom><voc><acc>]<pl>|\
+cum<gen><pl>|\
+cibus<dat><pl>|\
+ce\_s[<masc><fem>]<acc><pl>|\
+cas[<masc><fem>]<acc><pl>|\
+cibus<abl><pl>)

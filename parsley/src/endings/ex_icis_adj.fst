@@ -1,0 +1,12 @@
+(ex[<masc><fem><neut>]<nom><sg>|\
+icis[<masc><fem><neut>]<gen><sg>|\
+ici\_[<masc><fem><neut>]<dat><sg>|\
+icem[<masc><fem>]<acc><sg>|\
+ice\_s[<masc><fem>][<nom><voc>]<pl>|\
+icia<neut>[<nom><voc><acc>]<pl>|\
+icium[<masc><fem><neut>]<gen><pl>|\
+icibus[<masc><fem><neut>]<dat><pl>|\
+ici\_s[<masc><fem>]<acc><pl>|\
+ice\_s[<masc><fem>]<acc><pl>|\
+icibus[<masc><fem><neut>]<abl><pl>|\
+ice[<masc><fem><neut>]<sg>)

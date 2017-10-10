@@ -1,0 +1,12 @@
+(or[<masc><fem>]<nom><comp><sg>|\
+us<neut>[<nom><acc>]<comp><sg>|\
+oris<gen><comp><sg>|\
+ori\_<dat><comp><sg>|\
+orem[<masc><fem>]<acc><comp><sg>|\
+ore<abl><comp><sg>|\
+ore\_s[<masc><fem>][<nom><voc>]<comp><pl>|\
+ora<neut>[<nom><voc><acc>]<comp><pl>|\
+orum<gen><comp><pl>|\
+oribus<dat><comp><pl>|\
+ore\_s[<masc><fem>]<acc><comp><pl>|\
+oribus<abl><comp><pl>)

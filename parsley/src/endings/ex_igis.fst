@@ -1,0 +1,11 @@
+(ex<nom><sg>|\
+igis<gen><sg>|\
+igi\_<dat><sg>|\
+igem[<masc><fem>]<acc><sg>|\
+ige<abl><sg>|\
+ige\_s[<masc><fem>][<nom><voc>]<pl>|\
+iga<neut>[<nom><voc><acc>]<pl>|\
+igum<gen><pl>|\
+igibus<dat><pl>|\
+ige\_s[<masc><fem>]<acc><pl>|\
+igibus<abl><pl>)

@@ -1,0 +1,13 @@
+(on[<masc><fem><neut>][<nom><voc>]<sg>|\
+ontis<gen><sg>|\
+onti\_<dat><sg>|\
+onta[<masc><fem>]<acc><sg>|\
+ontem[<masc><fem>]<acc><sg>|\
+onte<abl><sg>|\
+onte\_s[<masc><fem>][<nom><voc>]<pl>|\
+onta<neut>[<nom><voc><acc>]<pl>|\
+ontum<gen><pl>|\
+ontibus<dat><pl>|\
+onte\_s[<masc><fem>]<acc><pl>|\
+ontas[<masc><fem>]<acc><pl>|\
+ontibus<abl><pl>)

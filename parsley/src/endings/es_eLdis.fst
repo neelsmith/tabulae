@@ -1,0 +1,11 @@
+(es[<masc><fem>]<nom><sg>|\
+e\_dis<gen><sg>|\
+e\_di\_<dat><sg>|\
+e\_dem[<masc><fem>]<acc><sg>|\
+e\_de<abl><sg>|\
+e\_de\_s[<masc><fem>][<nom><voc>]<pl>|\
+e\_da<neut>[<nom><voc><acc>]<pl>|\
+e\_dum<gen><pl>|\
+e\_dibus<dat><pl>|\
+e\_de\_s[<masc><fem>]<acc><pl>|\
+e\_dibus<abl><pl>)

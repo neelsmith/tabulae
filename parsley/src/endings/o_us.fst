@@ -1,0 +1,9 @@
+(o\_[<masc><fem>]<nom><sg>|\
+u\_s<gen><sg>|\
+o\_is<gen><sg>|\
+o\_i\_<dat><sg>|\
+o\_<dat><sg>|\
+o\_<acc><sg>|\
+o\_em[<masc><fem>]<acc><sg>|\
+o\_<abl><sg>|\
+o\_e<abl><sg>)

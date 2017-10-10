@@ -1,0 +1,11 @@
+(eps<nom><sg>|\
+ipis<gen><sg>|\
+ipi\_<dat><sg>|\
+ipem[<masc><fem>]<acc><sg>|\
+ipe<abl><sg>|\
+ipe\_s[<masc><fem>][<nom><voc>]<pl>|\
+ipa<neut>[<nom><voc><acc>]<pl>|\
+ipum<gen><pl>|\
+ipibus<dat><pl>|\
+ipe\_s[<masc><fem>]<acc><pl>|\
+ipibus<abl><pl>)

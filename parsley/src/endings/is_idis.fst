@@ -1,0 +1,12 @@
+(is<nom><sg>|\
+idis<gen><sg>|\
+idi\_<dat><sg>|\
+ida<acc><sg>|\
+idem[<masc><fem>]<acc><sg>|\
+ide<abl><sg>|\
+ide\_s[<masc><fem>][<nom><voc>]<pl>|\
+ida<neut>[<nom><voc><acc>]<pl>|\
+idum<gen><pl>|\
+idibus<dat><pl>|\
+ide\_s[<masc><fem>]<acc><pl>|\
+idibus<abl><pl>)

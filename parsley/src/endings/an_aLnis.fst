@@ -1,0 +1,12 @@
+(an[<masc><fem>][<nom><voc>]<sg>|\
+a\_nis<gen><sg>|\
+a\_ni\_<dat><sg>|\
+a\_nem[<masc><fem>]<acc><sg>|\
+a\_ne<abl><sg>|\
+a\_ne\_s[<masc><fem>][<nom><voc>]<pl>|\
+a\_na<neut>[<nom><voc><acc>]<pl>|\
+a\_num<gen><pl>|\
+a\_nibus<dat><pl>|\
+a\_nas[<masc><fem>]<acc><pl>|\
+a\_ne\_s[<masc><fem>]<acc><pl>|\
+a\_nibus<abl><pl>)

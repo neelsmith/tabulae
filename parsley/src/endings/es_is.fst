@@ -1,0 +1,10 @@
+(e\_s<nom><sg>|\
+is[<masc><fem>]<gen><sg>|\
+i\_[<masc><fem>]<dat><sg>|\
+em[<masc><fem>]<acc><sg>|\
+e[<masc><fem>]<abl><sg>|\
+e\_s[<masc><fem>][<nom><voc>]<pl>|\
+um[<masc><fem>]<gen><pl>|\
+ibus[<masc><fem>]<dat><pl>|\
+e\_s[<masc><fem>]<acc><pl>|\
+ibus[<masc><fem>]<abl><pl>)

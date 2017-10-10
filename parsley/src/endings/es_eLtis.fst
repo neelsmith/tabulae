@@ -1,0 +1,12 @@
+(es[<masc><fem>][<nom><voc>]<sg>|\
+e\_tis<gen><sg>|\
+e\_ti\_<dat><sg>|\
+e\_tem[<masc><fem>]<acc><sg>|\
+e\_ta[<masc><fem>]<acc><sg>|\
+e\_te<abl><sg>|\
+e\_te\_s[<masc><fem>][<nom><voc>]<pl>|\
+e\_ta<neut>[<nom><voc><acc>]<pl>|\
+e\_tum<gen><pl>|\
+e\_tibus<dat><pl>|\
+e\_te\_s[<masc><fem>]<acc><pl>|\
+e\_tibus<abl><pl>)
