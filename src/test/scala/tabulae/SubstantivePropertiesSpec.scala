@@ -6,7 +6,7 @@ import org.scalatest.FlatSpec
 class SustantivePropertiesSpec extends FlatSpec {
 
 
-  "The  GrammaticalCase trait" should "include all Greek cases" in pending  /*{
+  "The  GrammaticalCase trait" should "include all Latin cases" in {
 
     val nominativeExample : GrammaticalCase = Nominative
     val isNominative = nominativeExample match {
@@ -14,13 +14,14 @@ class SustantivePropertiesSpec extends FlatSpec {
       case Genitive => false
       case Dative => false
       case Accusative => false
+      case Ablative => false
       case Vocative => false
     }
     assert(isNominative)
   }
 
 
-  "The Gender trait" should "include all Greek genders" in {
+  "The Gender trait" should "include all Latin genders" in {
     val neuterExample: Gender = Neuter
     val isNeuter = neuterExample match {
       case Masculine => false
@@ -31,23 +32,22 @@ class SustantivePropertiesSpec extends FlatSpec {
   }
 
 
-  "The GrammaticalNumber trait" should "include all Greek numbers" in {
-    val dualExample: GrammaticalNumber = Dual
-    val isDual = dualExample match {
+  "The GrammaticalNumber trait" should "include all Latin numbers" in {
+    val pluralExample: GrammaticalNumber = Plural
+    val isPlural = pluralExample match {
       case Singular => false
-      case Plural => false
-      case Dual => true
+      case Plural => true
     }
-    assert(isDual)
+    assert(isPlural)
   }
 
-    "The Degree trait" should "include all degrees of Greek adjectives " in {
-      val superlativeExample: Degree = Superlative
-      val isSuperlative = superlativeExample match {
-        case Positive => false
-        case Comparative => false
-        case Superlative => true
-      }
-      assert(isSuperlative)
-    }*/
+  "The Degree trait" should "include all degrees of Latin adjectives " in {
+    val superlativeExample: Degree = Superlative
+    val isSuperlative = superlativeExample match {
+      case Positive => false
+      case Comparative => false
+      case Superlative => true
+    }
+    assert(isSuperlative)
+  }
 }

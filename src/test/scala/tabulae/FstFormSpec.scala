@@ -4,11 +4,11 @@ package edu.holycross.shot.tabulae
 import org.scalatest.FlatSpec
 
 class FstFormSpec extends FlatSpec {
-  val res1 = "<u>dev1.n1</u><u>lexent.n1</u>femin<noun><fem><a_ae>::<a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
 
-    "The Form object" should "construct Forms from FST input" in {
 
-    val f = Form(res1)
+  "The Form object" should "construct parsed grammatical form from FST string input" in {
+    val fst = "<u>dev1.n1</u><u>lexent.n1</u>femin<noun><fem><a_ae>::<a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
+    val f = Form(fst)
     f match {
       case nf: NounForm => {
         assert (nf.gender == Feminine)
@@ -17,7 +17,6 @@ class FstFormSpec extends FlatSpec {
       }
       case _ => fail("Should have created a noun form")
     }
-
   }
 
 }

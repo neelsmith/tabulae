@@ -5,15 +5,20 @@ import org.scalatest.FlatSpec
 
 class PackageObjectSpec extends FlatSpec {
 
-  val fst = "ni<lo>kh h<ro> e<sm>n th<isub> a<sm>po<#>dosei"
-  val ascii = "ni_kh h( e)n th| a)po-dosei"
+  val longFst = "agricola<lo>"
+  val longAscii = "agricola_"
 
-  "The kanones package object" should "convert FST symbols to ASCII" in pending /* {
-      assert(fstToAscii(fst) == ascii)
+  val shortFst = "ponti<sh>fex"
+  val shortAscii = "ponti^fex"
+
+  "The kanones package object" should "convert FST symbols to ASCII" in {
+    assert(fstToAscii(longFst) == longAscii)
+    assert(fstToAscii(shortFst) == shortAscii)
   }
 
   it should "convert ASCII to FST symbols" in {
-    assert (asciiToFst(ascii) == fst)
+    assert (asciiToFst(longAscii) == longFst)
+    assert (asciiToFst(shortAscii) == shortFst)
   }
-*/
+
 }
