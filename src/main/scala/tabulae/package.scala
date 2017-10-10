@@ -1,6 +1,10 @@
 
 package edu.holycross.shot
 
+/**  Classes for working with Latin morphological concepts,
+*  and for parsing string output of tabulae's FST parsing into
+*  objects.
+*/
 package object tabulae {
 
   /** Convert ASCII string to FST symbols.
