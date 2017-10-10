@@ -81,6 +81,9 @@ package object tabulae {
     "exclamation" -> Exclamation
   )
 
+
+
+  /** Map string used in fst data to [[IndeclinablePoS]]. */
   val indeclinablePoSForFst: Map[String, IndeclinablePoS] = Map(
     "conjunct" -> Conjunction,
     "preposition" -> Preposition,

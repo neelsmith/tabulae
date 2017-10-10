@@ -2,6 +2,7 @@ package edu.holycross.shot.tabulae
 
 
 
+/** A valid analytical pattern for a morphological analysis.*/
 sealed trait AnalysisType
 
 /** Noun analysis type.*/

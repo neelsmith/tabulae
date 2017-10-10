@@ -33,8 +33,21 @@ object Form {
   }
 }
 
+
+/** Conjugated verb form, identified by person, number, tense, mood and voice.
+*
+* @param person Property for person.
+* @param grammaticalNumber Property for number.
+* @param tense Property for tense.
+* @param mood Property for mood.
+* @param voice Property for voice.
+*/
 case class VerbForm(person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends Form {}
 
+
+
+/** Factory object to build a [[VerbForm]] from string vaues.
+*/
 object VerbForm {
   /** Create a [[VerbForm]] from five FST symbols.
   */
@@ -43,9 +56,7 @@ object VerbForm {
   }
 }
 
-
-
-/** Indeclinable forms are identified only by their part of speech.
+/** Indeclinable form, identified only by their part of speech.
 *
 * @param pos Part of speech.
 */
@@ -57,10 +68,20 @@ object IndeclinableForm {
   }
 }
 
-
+/** Noun form, identified by gender, case and number.
+*
+* @param gender Property for number.
+* @param grammaticalCase Property for case.
+* @param grammaticalNumber Property for number.
+*/
 case class NounForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends Form {}
 
+
+
+/** Factory object to build a [[NounForm]] from string vaues.
+*/
 object NounForm {
+
   /** Create a [[NounForm]] from three FST symbols.
   */
   def apply(g: String, c: String, n: String): NounForm = {
@@ -69,4 +90,10 @@ object NounForm {
 }
 
 
+/** Adjective form, identified by gender, case, number and degree.
+*
+* @param gender Property for number.
+* @param grammaticalCase Property for case.
+* @param grammaticalNumber Property for number.
+*/
 case class AdjectiveForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, degree: Degree) extends Form {}

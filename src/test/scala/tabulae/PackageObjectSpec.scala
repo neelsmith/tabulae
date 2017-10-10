@@ -11,7 +11,7 @@ class PackageObjectSpec extends FlatSpec {
   val shortFst = "ponti<sh>fex"
   val shortAscii = "ponti^fex"
 
-  "The kanones package object" should "convert FST symbols to ASCII" in {
+  "The tabulae package object" should "convert FST symbols to ASCII" in {
     assert(fstToAscii(longFst) == longAscii)
     assert(fstToAscii(shortFst) == shortAscii)
   }
