@@ -4,6 +4,8 @@ import scala.io.Source
 
 import Path.rebase
 
+
+
 /** Factory object for composing and writing to a file the top-level
 * acceptor transducer, acceptor.fst, in the root of the project FST build.
 *
@@ -25,59 +27,57 @@ object AcceptorComposer {
     copySecondaryAcceptors(repo, corpus)
     rewriteSecondaryAcceptors(projectDir)
 
-    //composeVerbStems(projectDir)
-    //composeVerbAcceptor(projectDir)
+    composeVerbStems(projectDir)
+    composeVerbAcceptor(projectDir)
   }
+
+
   /** Write verb.fst, the top-level transducer for verbs in the
-  * the FST chain.
+  * the FST chain.  Squashed URN representations are generated for
+  * underlying patterns like:
+  * <u>1.1</u><u>2.2</u>am<verb><are_vb>::<are_vb><verb>i<1st><sg><pft><indic><act><u>3.3</u>
   *
   * @param projectDir The directory for the corpus-specific
   * parser where acceptor.fst should be written.
-  *//*
+  */
   def composeVerbAcceptor(projectDir: File): Unit = {
     val fst = StringBuilder.newBuilder
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n")
     fst.append("%%%\n%%% Adjust stem  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
     fst.append("$stems_acceptors$ = \"<" +  projectDir.toString +     "/acceptors/verbstems.a>\"\n")
 
-    fst.append("%%%\n%%% Adjust augment  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\nALPHABET = [#editorial# #urntag# #urnchar# <verb> #morphtag# #stemtype#  #separator# #letter# #diacritic#  \\. #stemchars# ]\n\n")
-    fst.append("#augmenttense# = <aor><impft><plupft>\n")
-
-    fst.append("#=ltr# = #consonant#\n\n")
-
-    fst.append("\n$aug$ =  { [#=ltr#]}:{[#epsilon#]<sm>[#=ltr#]} ^-> (<#>__ [#stemchars#]+<verb>[#verbclass#]\\:\\:[#verbclass#]<verb>[#stemchars#]+[#person#][#number#][#augmenttense#]<indic>[#voice#]<u>[#urnchar#]+[#period#][#urnchar#]+</u>)\n")
-
 
     fst.append("%%%\n%%% The URN squasher for verbs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
     fst.append("$=verbclass$ = [#verbclass#]\n")
     fst.append("$squashverburn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$\\:\\:$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>\n\n")
 
-    fst.append("$stems_acceptors$ || $aug$ || $squashverburn$\n")
+    fst.append("$stems_acceptors$ ||  $squashverburn$\n")
 
 
     //fst.append(mainVerbAcceptor)
     val acceptorFile = projectDir / "verb.fst"
     new PrintWriter(acceptorFile) { write(fst.toString); close }
   }
-*/
+
   /** Write verb_stems.fst, the union of all acceptors
   * in acceptors/verb, for a corpus-specific parser.
   *
   * @param projectDir  The directory for the corpus-specific
   * parser where verb_stems.fst should be written.
-  */ /*
+  */
   def composeVerbStems(projectDir: File): Unit = {
 
     val src = projectDir / "acceptors/verb"
     val fileOpt = (src) ** "*fst"
     val fileList = fileOpt.get
+
     val fileNames = for (f <- fileList) yield {
       "\"<" + f.getAbsolutePath().replaceFirst(".fst$", ".a") + ">\""
     }
     val heading = "% verbstems.fst\n% A transducer to generate principal part stems for inflected forms of verbs.\n\n"
     val acceptorFile = projectDir / "acceptors/verbstems.fst"
     new PrintWriter(acceptorFile) { write(heading + fileNames.mkString(" || ")); close }
-  } */
+  }
 
   /** Write acceptor.fst, the final transducer in the
   * the FST chain.
@@ -92,7 +92,7 @@ object AcceptorComposer {
     fst.append(indeclAcceptor + "\n")
 
     fst.append(irregNounAcceptor + "\n")
-    //fst.append("$verb_pipeline$ = \"<" + projectDir.toString + "/verb.a>\"\n")
+    fst.append("$verb_pipeline$ = \"<" + projectDir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor + "\n")
 
@@ -189,7 +189,7 @@ $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>
   val topLevelAcceptor = """
 % Union of all URN squashers:
 %%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
-$acceptor$ = $squashnounurn$
+$acceptor$ = $verb_pipeline$ |  $squashnounurn$
 
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.

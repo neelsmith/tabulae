@@ -14,13 +14,13 @@ object DataInstaller {
     val lexDir = DataInstaller.madeDir(projectDir / "lexica")
 
 
-      val corpDir = DataInstaller.madeDir(parsers / corpus)
-      val inflDir = DataInstaller.madeDir(corpDir / "inflection")
+    val corpDir = DataInstaller.madeDir(parsers / corpus)
+    val inflDir = DataInstaller.madeDir(corpDir / "inflection")
 
 
     NounDataInstaller(repo, corpus)
     //IndeclDataInstaller(repo, corpus)
-    //VerbDataInstaller(repo, corpus)
+    VerbDataInstaller(repo, corpus)
   }
 
 

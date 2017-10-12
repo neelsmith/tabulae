@@ -7,7 +7,6 @@ object DataTemplate {
     copyMarkdown(srcDir, targetDir)
     copyCex(srcDir,targetDir)
     copyFst(srcDir,targetDir)
-
   }
 
 

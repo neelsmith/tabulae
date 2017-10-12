@@ -19,8 +19,8 @@ lazy val root = (project in file(".")).
       fst := buildFst.evaluated,
       corpusTemplate := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value   //,
-      //kdebug := currentTest.value
+      cleanAll := cleanAllImpl.value //,
+      //mdebug := currentTest.value
     )
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
@@ -29,15 +29,21 @@ lazy val cleanAll = taskKey[Unit]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
 
+/*
+lazy val mdebug = taskKey[Unit]("Run temporary build tests")
+def currentTest: Def.Initialize[Task[Unit]] = Def.task {
+  val src =  new File("parsers/dev1/acceptors/verb"
+  val fileOpt = (src) ** "*fst"
+}
+*/
+  /*
 
-//lazy val kdebug = taskKey[Unit]("Run temporary build tests")
-/*def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   val corpus = "vienna_lit"
   val configFile = file("config.properties")
-*/
 
 
-  /*
+
+
   val buildDirectory = baseDirectory.value / s"parsers/${corpus}"
   val conf = Configuration(configFile)
 

@@ -29,7 +29,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Verb stem types
-#regular# = <regular>
+#regular# = <are_vb>
 
 #verbclass#  = #regular#
 
