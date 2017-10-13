@@ -26,7 +26,7 @@ object Configuration {
       val parts = l.split("=")
       parts(0).trim -> parts(1).trim
     }).toMap
-    Configuration(mapped("FSTCOMPILER"),mapped("FSTINFL"),mapped("MAKE"))
+    Configuration(mapped("FSTCOMPILER"),mapped("FSTINFL"),mapped("MAKE"),mapped("datadir"))
   }
 
 }

@@ -6,8 +6,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Noun stem types
 #noun1# = <a_ae>
-#noun2# = <us_i>
-#noun3# = <e_is>
+#noun2# = <us_i><ius_i>
+#noun3# = <e_is><x_gis><tas_tatis>
 
 
 #nounclass# = #noun1# #noun2# #noun3#

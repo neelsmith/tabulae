@@ -161,25 +161,29 @@ lazy val utilsImpl = Def.inputTaskDyn {
 lazy val buildFst = Def.inputTaskDyn {
   val bdFile= baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
-
+  //val src = if (args.head.head == '/') { file(args.head)} else { bdFile / s"datasets/${args.head}" }
+  //println(s"FROM ${args.head} will use ${src}")
   args.size match {
     case 1 => {
-      val src = bdFile / s"datasets/${args.head}"
-      if (! src.exists()) {
-        error("Source dataset " + src + " does not exist.\n")
+      val config =  bdFile / "config.properties"
+      if (! config.exists()) {
+        error("Configuration file " + config + " does not exist.\n")
+
       } else {
-        println("\nCompile corpus " + args.head + " with default configuration from config.properties\n")
-        fstCompile(args.head, bdFile / "config.properties")
+
+        val conf = Configuration(config)
+        //val src = if (args.head.head == '/') { file(args.head)} else { file(config.datadir) / args.head }
+        //println("\nCompile corpus " + args.head + " with default configuration from config.properties\n")
+        fstCompile(args.head,config)
       }
 
     }
     case 2 => {
-      val src = bdFile / s"datasets/${args.head}"
+      //val src = bdFile / s"datasets/${args.head}"
       val confFile = bdFile / args(1)
-      if (! src.exists()) {
-        error("Source dataset " + src + " does not exist.\n")
-      } else if (! confFile.exists()) {
+      if (! confFile.exists()) {
         error("Configuration file " + confFile + " does not exist.\n")
+
       } else {
         println("\nCompile corpus " + args.head ) + " using configuration file " + confFile
         fstCompile(args.head, confFile)
@@ -203,15 +207,23 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
 
 // Compile FST parser
 def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] = Def.task {
-  val buildDirectory = baseDirectory.value / s"parsers/${corpus}"
+  val bd = baseDirectory.value
+  val buildDirectory = bd / s"parsers/${corpus}"
   val conf = Configuration(configFile)
 
+  println("Conf is " + conf + " from config file " + configFile)
+
+  val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
+  println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
+
+
+
   // Install data and rules, converting tabular data to FST
-  DataInstaller(baseDirectory.value, corpus)
-  RulesInstaller(baseDirectory.value, corpus)
+  DataInstaller(dataDirectory, bd, corpus)
+  RulesInstaller(dataDirectory, bd, corpus)
 
   // Compose makefiles and higher-order FST for build system
-  BuildComposer(baseDirectory.value, corpus, conf.fstcompile)
+  BuildComposer(dataDirectory, bd, corpus, conf.fstcompile)
 
   // Build it!
   val inflMakefile = buildDirectory / "inflection/makefile"

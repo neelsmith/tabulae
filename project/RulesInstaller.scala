@@ -9,7 +9,7 @@ object RulesInstaller {
   * @param repo Base directory of the Tabulae repository.
   * @param corpus Name of corpus
   */
-  def apply(repo: File, corpus: String): Unit = {
+  def apply(sourceDir: File, repo: File, corpus: String): Unit = {
     println(s"\nConvert inflectional rules tables in ${repo} to FST")
 
     val parsers =  DataInstaller.madeDir(repo / "parsers")
@@ -18,7 +18,7 @@ object RulesInstaller {
 
 
     println("Install infl rules into " + inflDir)
-    val srcCorpus = repo / s"datasets/${corpus}"
+    val srcCorpus = sourceDir / corpus
 
 
     NounRulesInstaller( srcCorpus / "rules-tables/nouns", inflDir / "nouninfl.fst")
