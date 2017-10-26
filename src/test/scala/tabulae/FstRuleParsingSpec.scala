@@ -22,6 +22,21 @@ class FstRuleParsingSpec extends FlatSpec {
     }
   }
 
+  it should "recognize verb forms" in {
+    val ruleFst = "<are_vb><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
+    val rule = FstRule(ruleFst)
+    rule match {
+      case vr: VerbRule => {
+        assert(vr.ruleId == "lverbinfl.are_pftind1")
+        assert(vr.person == "1st")
+        assert(vr.grammaticalNumber == "sg")
+
+
+      }
+      case _ => fail("Should have formed a VerbRule")
+    }
+  }
+
 
 
 }
