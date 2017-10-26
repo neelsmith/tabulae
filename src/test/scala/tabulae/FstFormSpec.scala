@@ -19,4 +19,21 @@ class FstFormSpec extends FlatSpec {
     }
   }
 
+  it should "contstruct parsed verb form from FST string input" in {
+    val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><are_vb>"
+    val ruleFst = "<are_vb><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
+    val fst = stemFst + "::" + ruleFst
+    val f = Form(fst)
+    f match {
+      case vf: VerbForm => {
+        assert (vf.person == First)
+        assert (vf.grammaticalNumber == Singular)
+        assert (vf.tense == Perfect)
+        assert (vf.mood == Indicative)
+        assert (vf.voice == Active)
+      }
+      case _ => fail("Should have created a verb form")
+    }
+  }
+
 }
