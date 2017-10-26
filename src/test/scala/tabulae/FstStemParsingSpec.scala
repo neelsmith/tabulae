@@ -36,7 +36,19 @@ class FstStemParsingSpec extends FlatSpec {
     }
   }
 
-  it should "parse indeclinable stems" in pending
+  it should "parse indeclinable stems" in {
+      val stemFst = "<u>pliny.indecl1</u><u>lexent.tbd</u>cum<indecl><conjunct>"
+      val stemObj = FstStem(stemFst)
+      stemObj match {
+        case indeclObj: IndeclStem => {
+          assert(indeclObj.stemId == "pliny.indecl1")
+          assert(indeclObj.lexentId == "lexent.tbd")
+          assert(indeclObj.pos == "conjunct")
+          assert(indeclObj.stem == "cum")
+        }
+        case _ => fail("Should have created IndeclStem")
+      }
+  }
   it should "parse adjective stems" in pending
   it should "parse participial stems" in pending
   it should "parse infinitive stems" in pending

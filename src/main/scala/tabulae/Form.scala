@@ -44,8 +44,6 @@ object Form {
 */
 case class VerbForm(person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends Form {}
 
-
-
 /** Factory object to build a [[VerbForm]] from string vaues.
 */
 object VerbForm {
@@ -76,12 +74,9 @@ object IndeclinableForm {
 */
 case class NounForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends Form {}
 
-
-
 /** Factory object to build a [[NounForm]] from string vaues.
 */
 object NounForm {
-
   /** Create a [[NounForm]] from three FST symbols.
   */
   def apply(g: String, c: String, n: String): NounForm = {

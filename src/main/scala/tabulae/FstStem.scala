@@ -33,6 +33,32 @@ object VerbStem {
 }
 
 
+/** Lexicon entry for an indeclinable form.
+*
+* @param stemId Abbreviated URN string for stem.
+* @param lexId Abbreviated URN string for lexical entity.
+* @param stem Stem string, in FST symbol alphabet.
+* @param pos String value for part of speech.
+*/
+case class IndeclStem(stemId: String, lexentId: String, stem: String, pos: String ) extends FstStem
+
+object IndeclStem {
+
+  /** Create full [[NounStem]] object from noun-specific FST.
+  *
+  * @param stemId Abbreviated URN for stem.
+  * @param lexId Abbreviated URN for lexical entity.
+  * @param remainder Noun-specific FST to parse.
+  */
+  def apply(stemId: String, lexId: String, remainder: String): IndeclStem = {
+    val parts = remainder.split("<indecl>")
+    IndeclStem(stemId, lexId, parts(0),parts(1).replaceFirst("<","").replaceFirst(">",""))
+  }
+}
+
+
+
+
 /** Lexicon entry for a noun.
 *
 * @param stemId Abbreviated URN string for stem.
@@ -42,7 +68,6 @@ object VerbStem {
 * @param gender String value for gender.
 */
 case class NounStem(stemId: String, lexentId: String, stem: String, gender: String, inflClass: String ) extends FstStem
-
 
 /** Factory object to build [[NounStem]] from a noun-specific
 * string with undifferentiated analytical parts.
@@ -69,11 +94,10 @@ object NounStem {
 */
 object FstStem {
 
-
   /** FST symbols identifying inflectional type ("part of speech").
   */
   val typeTags: Vector[String] =  Vector(
-    "<noun>", "<verb>"
+    "<noun>", "<verb>","<indecl>"
   )
 
   /** Create an [[FstStem]] object from the FST representation of a stem.
@@ -96,6 +120,10 @@ object FstStem {
       case Verb => {
         val parts = remainder.split("<verb>")
         VerbStem(stemId, lexEntity, remainder)
+      }
+      case Indeclinable => {
+        val parts = remainder.split("<indecl>")
+        IndeclStem(stemId, lexEntity, remainder)
       }
       case _ => throw new Exception("Type not yet implemented: " + stemClass)
     }
@@ -120,6 +148,7 @@ object FstStem {
     pair._1 match {
       case "<noun>" => Noun
       case "<verb>" => Verb
+      case "<indecl>" => Indeclinable
     }
   }
 }

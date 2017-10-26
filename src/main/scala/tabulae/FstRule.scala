@@ -7,7 +7,6 @@ package edu.holycross.shot.tabulae
 */
 trait FstRule
 
-
 /** Rule entry for an indeclinable form.
 *
 * @param ruleId Abbreviated URN string for rule.
@@ -29,7 +28,7 @@ object IndeclRule {
   def fromStrings(pos: String, urn: String): IndeclRule = {
     val dataRE  = "<u>(.+)<\\/u>".r
     val dataRE(ruleId) = urn
-    IndeclRule( ruleId,pos)
+    IndeclRule(ruleId,pos)
   }
 }
 
@@ -54,8 +53,6 @@ grammaticalNumber:String, declClass: String, ending: String ) extends FstRule
 *
 */
 object NounRule {
-
-
   /** Create full [[NounRule]] object from noun-specific FST.
   *
   * @param declClass String value for declension class.
@@ -85,7 +82,6 @@ object NounRule {
 case class VerbRule(ruleId: String, person: String,
 grammaticalNumber:String, tense: String, mood: String,voice: String, inflClass: String, ending: String ) extends FstRule
 
-
 /** Factory to create full [[NounRule]] object from FST.
 *
 */
@@ -108,7 +104,6 @@ object VerbRule {
 * from the "rule" half of a FST reply.
 */
 object FstRule {
-
   /** Create an [[FstRule]] object from the FST
   * representation of a rule.
   *
