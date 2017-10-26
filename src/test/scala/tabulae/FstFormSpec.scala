@@ -36,4 +36,10 @@ class FstFormSpec extends FlatSpec {
     }
   }
 
+
+  it should "contstruct a parsed indeclinable form from FST string input" in pending
+  it should "contstruct a parsed adjectival form from FST string input" in pending
+  it should "contstruct a parsed participal form from FST string input" in pending
+  it should "contstruct a parsed infinitive form from FST string input" in pending
+  it should "contstruct a parsed adverbial form from FST string input" in pending
 }

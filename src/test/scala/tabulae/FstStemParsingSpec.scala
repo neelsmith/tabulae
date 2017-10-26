@@ -36,5 +36,10 @@ class FstStemParsingSpec extends FlatSpec {
     }
   }
 
+  it should "parse indeclinable stems" in pending
+  it should "parse adjective stems" in pending
+  it should "parse participial stems" in pending
+  it should "parse infinitive stems" in pending
+  it should "parse adverbial stems" in pending
 
 }

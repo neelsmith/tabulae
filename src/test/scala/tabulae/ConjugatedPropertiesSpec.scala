@@ -5,7 +5,6 @@ import org.scalatest.FlatSpec
 
 class ConjugatedPropertiesSpec extends FlatSpec {
 
-
   "The  Person trait" should "include all Latin persons" in {
 
     val firstPersonExample : Person = First

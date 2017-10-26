@@ -40,5 +40,10 @@ class FstRuleParsingSpec extends FlatSpec {
   }
 
 
+  it should "recognize indeclinable forms" in pending
+  it should "recognize adjective forms" in pending
+  it should "recognize participial forms" in pending
+  it should "recognize infinitive forms" in pending
+  it should "recognize adverbial forms" in pending
 
 }
