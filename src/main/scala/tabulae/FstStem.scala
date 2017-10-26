@@ -9,6 +9,30 @@ package edu.holycross.shot.tabulae
 */
 trait FstStem
 
+
+/** Lexicon entry for a verb.
+*
+* @param stemId Abbreviated URN string for stem.
+* @param lexId Abbreviated URN string for lexical entity.
+* @param stem Stem string, in FST symbol alphabet.
+* @param inflClass String value for inflectional class.
+*/
+case class VerbStem(stemId: String, lexentId: String, stem: String, inflClass: String) extends FstStem
+object VerbStem {
+
+  /** Create full [[VerbStem]] object from verb-specific FST.
+  *
+  * @param stemId Abbreviated URN for stem.
+  * @param lexId Abbreviated URN for lexical entity.
+  * @param remainder Verb-specific FST to parse.
+  */
+  def apply(stemId: String, lexId: String, remainder: String): VerbStem = {
+    val parts = remainder.split("<verb>")
+    VerbStem(stemId, lexId, parts(0), parts(1).replaceFirst("<","").replaceFirst(">",""))
+  }
+}
+
+
 /** Lexicon entry for a noun.
 *
 * @param stemId Abbreviated URN string for stem.
@@ -63,10 +87,15 @@ object FstStem {
 
     println(s"GOT from idsRE: ${stemId}, ${lexEntity}, ${remainder}")
     val stemClass =  stemType(remainder)
+    println("So stem class is " + stemClass)
     stemClass match {
       case Noun => {
         val parts = remainder.split("<noun>")
         NounStem(stemId, lexEntity, remainder)
+      }
+      case Verb => {
+        val parts = remainder.split("<verb>")
+        VerbStem(stemId, lexEntity, remainder)
       }
       case _ => throw new Exception("Type not yet implemented: " + stemClass)
     }

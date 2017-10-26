@@ -30,7 +30,9 @@ class FstRuleParsingSpec extends FlatSpec {
         assert(vr.ruleId == "lverbinfl.are_pftind1")
         assert(vr.person == "1st")
         assert(vr.grammaticalNumber == "sg")
-
+        assert(vr.tense == "pft")
+        assert(vr.mood == "indic")
+        assert(vr.voice == "act")
 
       }
       case _ => fail("Should have formed a VerbRule")

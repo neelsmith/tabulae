@@ -22,4 +22,19 @@ class FstStemParsingSpec extends FlatSpec {
     }
   }
 
+  it should "parse verb stems"in {
+    val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><are_vb>"
+    val stemObj = FstStem(stemFst)
+    stemObj match {
+      case verbObj: VerbStem => {
+        assert(verbObj.stemId == "dev1.v1")
+        assert(verbObj.lexentId == "lexent.v1")
+        assert(verbObj.inflClass == "are_vb")
+        assert(verbObj.stem == "<#>am")
+      }
+      case _ => fail("Should have created VerbStem")
+    }
+  }
+
+
 }
