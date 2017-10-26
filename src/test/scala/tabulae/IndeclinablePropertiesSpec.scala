@@ -16,12 +16,4 @@ class IndeclinablePropertiesSpec extends FlatSpec {
     assert(isConjunction)
   }
 
-/*
-
-case object Conjunction extends IndeclinablePoS
-
-case object Preposition extends IndeclinablePoS
-
-case object Exclamation extends IndeclinablePoS
-*/
 }
