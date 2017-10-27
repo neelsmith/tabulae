@@ -136,6 +136,7 @@ object FstStem {
   * @param stemFst The "stem" half of an FST reply.
   */
   def stemType(stemFst: String) : AnalysisType = {
+    println("STEM TYPE FOR " + stemFst)
     val typeMatches = typeTags.map( t => {
       val parts = stemFst.split(t).toVector
       parts.size == 2
@@ -143,7 +144,7 @@ object FstStem {
 
     val pairs = typeTags.zip(typeMatches).filter(_._2)
 
-    require(pairs.size == 1, "Matched multiple types : " + pairs)
+    require(pairs.size == 1, "Did not match a unique type : " + pairs)
     val pair = pairs(0)
     pair._1 match {
       case "<noun>" => Noun

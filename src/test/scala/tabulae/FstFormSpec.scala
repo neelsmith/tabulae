@@ -19,7 +19,7 @@ class FstFormSpec extends FlatSpec {
     }
   }
 
-  it should "contstruct parsed verb form from FST string input" in {
+  it should "construct parsed verb form from FST string input" in {
     val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><are_vb>"
     val ruleFst = "<are_vb><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val fst = stemFst + "::" + ruleFst
@@ -37,9 +37,22 @@ class FstFormSpec extends FlatSpec {
   }
 
 
-  it should "contstruct a parsed indeclinable form from FST string input" in pending
-  it should "contstruct a parsed adjectival form from FST string input" in pending
-  it should "contstruct a parsed participal form from FST string input" in pending
-  it should "contstruct a parsed infinitive form from FST string input" in pending
-  it should "contstruct a parsed adverbial form from FST string input" in pending
+  it should "construct a parsed indeclinable form from FST string input" in  {
+    val ruleFst = "<conjunct><indecl><u>lindeclinfl.1</u>"
+    val stemFst = "<u>pliny.indecl1</u><u>lexent.tbd</u>cum<indecl><conjunct>"
+
+    val fst = stemFst + "::" +  ruleFst
+    val f = Form(fst)
+    f match {
+      case indeclForm: IndeclinableForm => {
+        assert(indeclForm.pos == Conjunction)
+      }
+      case _ => fail("Should have created an indeclinable form")
+    }
+  }
+
+  it should "contsruct a parsed adjectival form from FST string input" in pending
+  it should "contsruct a parsed participal form from FST string input" in pending
+  it should "contsruct a parsed infinitive form from FST string input" in pending
+  it should "contsruct a parsed adverbial form from FST string input" in pending
 }

@@ -17,7 +17,7 @@ object DataInstaller {
 
 
     NounDataInstaller(dataSource, repo, corpus)
-    //IndeclDataInstaller(repo, corpus)
+    IndeclDataInstaller(dataSource,repo, corpus)
     VerbDataInstaller(dataSource, repo, corpus)
   }
 

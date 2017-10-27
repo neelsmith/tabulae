@@ -178,7 +178,7 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 val indeclAcceptor = """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indeclclass#]
-$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
 
 
@@ -189,7 +189,8 @@ $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>
   val topLevelAcceptor = """
 % Union of all URN squashers:
 %%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
-$acceptor$ = $verb_pipeline$ |  $squashnounurn$
+
+$acceptor$ = $verb_pipeline$ |  $squashnounurn$ | $squashindeclurn$
 
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.
