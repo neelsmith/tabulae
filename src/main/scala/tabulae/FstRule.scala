@@ -34,6 +34,38 @@ object IndeclRule {
 
 
 
+/** Rule entry for an adjective form.
+*
+* @param ruleId Abbreviated URN string for rule.
+* @param gender String value for gender.
+* @param grammaticalCase String value for case.
+* @param grammaticalNumber String value for number.
+* @param degree String value for degree.
+* @param declClass String value for declension class.
+* @param ending String value for ending to apply to stem.
+*/
+case class AdjectiveRule(ruleId: String,gender: String, grammaticalCase: String,
+grammaticalNumber:String, degree: String, declClass: String, ending: String ) extends FstRule
+
+/** Factory to create full [[AdjectiveRule]] object from FST.
+*
+*/
+object AdjectiveRule {
+  /** Create full [[AdjectiveRule]] object from adjective-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param nounData Noun-specific FST to parse.
+  */
+  def apply(declClass: String, adjData: String): AdjectiveRule = {
+    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    val dataRE(ending, gender, grammCase, grammNumber, degree, ruleId) = adjData
+    AdjectiveRule(ruleId, gender, grammCase, grammNumber,degree, declClass, ending)
+  }
+}
+
+
+
+
 /** Rule entry for a noun form.
 *
 * @param ruleId Abbreviated URN string for rule.
@@ -45,9 +77,6 @@ object IndeclRule {
 */
 case class NounRule(ruleId: String,gender: String, grammaticalCase: String,
 grammaticalNumber:String, declClass: String, ending: String ) extends FstRule
-
-
-
 
 /** Factory to create full [[NounRule]] object from FST.
 *
