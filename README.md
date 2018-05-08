@@ -6,7 +6,7 @@ A system for building Latin morphological parsers.
 
 ## Information
 
-See the [project web site](https://neelsmith.github.io/tabulae).
+See the project web site: <https://neelsmith.github.io/tabulae>.
 
 ## Acknowledgments
 
