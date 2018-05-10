@@ -19,13 +19,18 @@ title: Tabulae
 - [Scala](https://www.scala-lang.org/) and [sbt](https://github.com/sbt/sbt)
 - [Stuttgart FST toolbox](http://www.cis.uni-muenchen.de/~schmid/tools/SFST/)
 
+
+## Overview
+
+The build file for this repository includes tasks for compiling a FST parser using rules and vocabulary read from a specified set of tabular files.
+
 ## Installing and using `tabulae`
 
--   [Installation and configuration](../configuration)
--   Managing [your data sets](../datasets)
--   [Building and using a the FST parser](../parsing)
--   [Using code libraries to work with parsed output](../code-library)
+-   [Installation and configuration](configuration)
+-   Managing [your data sets](datasets)
+-   [Building and using a the FST parser](parsing)
+-   [Using code libraries to work with parsed output](code-library)
 
 ## Under the hood
 
-More information about [how `tabulae` works](../how-works)
+More information about [how `tabulae` works](how-works)
