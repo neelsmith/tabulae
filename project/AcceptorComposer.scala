@@ -181,6 +181,12 @@ $=indeclclass$ = [#indeclclass#]
 $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
 
+/** String defining final adjective acceptor transducer.  */
+val adjAcceptor = """
+% adjective acceptor:
+$=adjectiveclass$ = [#adjectiveclass#]
+$squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj> $=adjectiveclass$   $separator$+ $=adjectiveclass$  <adj> [#stemchars#]* $=gender$ $case$ $number$ $degree$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
 
   /** String defining union of acceptors for each distinct
   * analytical pattern, followed by a transducer removing
@@ -190,7 +196,7 @@ $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>
 % Union of all URN squashers:
 %%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
 
-$acceptor$ = $verb_pipeline$ |  $squashnounurn$ | $squashindeclurn$
+$acceptor$ = $verb_pipeline$ |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
 
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.

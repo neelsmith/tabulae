@@ -6,14 +6,14 @@ lazy val root = (project in file(".")).
       name := "tabulae",
       organization := "edu.holycross.shot",
       version := "0.0.1",
-      scalaVersion := "2.12.3",
+      scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
 
-        "edu.holycross.shot.cite" %% "xcite" % "2.7.1"
+        "edu.holycross.shot.cite" %% "xcite" % "3.3.0"
       ),
 
       tutTargetDirectory := file("docs"),
@@ -161,28 +161,29 @@ lazy val utilsImpl = Def.inputTaskDyn {
 
 // Dynamically creates task to build parser by
 // successively invoking tasks that take parameters.
+//
+// Can be invoked interactively either with
+//   fst CORPUS
+// or
+//   fst CORPUS CONFIG_FILE
+//
+// CONFIG_FILE must be relative to project's base directory.
+//
 lazy val buildFst = Def.inputTaskDyn {
   val bdFile= baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
-  //val src = if (args.head.head == '/') { file(args.head)} else { bdFile / s"datasets/${args.head}" }
-  //println(s"FROM ${args.head} will use ${src}")
   args.size match {
     case 1 => {
       val config =  bdFile / "config.properties"
       if (! config.exists()) {
         error("Configuration file " + config + " does not exist.\n")
-
       } else {
-
         val conf = Configuration(config)
-        //val src = if (args.head.head == '/') { file(args.head)} else { file(config.datadir) / args.head }
-        //println("\nCompile corpus " + args.head + " with default configuration from config.properties\n")
         fstCompile(args.head,config)
       }
-
     }
+
     case 2 => {
-      //val src = bdFile / s"datasets/${args.head}"
       val confFile = bdFile / args(1)
       if (! confFile.exists()) {
         error("Configuration file " + confFile + " does not exist.\n")
@@ -192,6 +193,7 @@ lazy val buildFst = Def.inputTaskDyn {
         fstCompile(args.head, confFile)
       }
     }
+
     case _ => {
       println("Wrong number of parameters.")
       usage

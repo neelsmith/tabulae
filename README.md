@@ -8,6 +8,11 @@ A system for building Latin morphological parsers.
 
 See the project web site: <https://neelsmith.github.io/tabulae>.
 
+
+## Status
+
+The current version (0.0.1)
+
 ## Acknowledgments
 
 This project is especially indebted to Harry Schmidt's [parsley](https://github.com/goldibex/parsley-core), and to the openly licensed data sets of the [Perseus project](http://www.perseus.tufts.edu).

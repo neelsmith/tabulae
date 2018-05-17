@@ -30,8 +30,13 @@ The accompanying Scala code library, `edu.holycross.shot.tabulae`, can read the 
 
 -   [Installation and configuration](configuration)
 -   Managing [your data sets](datasets)
--   [Building and using a the FST parser](parsing)
+-   [Building and using a FST parser](parsing)
 -   [Using code libraries to work with parsed output](code-library)
+
+## Current status
+
+-   [status](status)
+
 
 ## Under the hood
 
