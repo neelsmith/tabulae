@@ -38,6 +38,23 @@ lazy val mdebug = taskKey[Unit]("Run temporary build tests")
 def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
   val buildDirectory = bd / s"parsers/${corpus}"
+
+
+  val configFile = file("configs/horace.properties")
+  val conf = Configuration(configFile)
+
+  println("Conf is " + conf + " from config file " + configFile)
+
+  val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
+  println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
+
+  val corp = "h5"
+  // Compose makefiles and higher-order FST for build system
+  BuildComposer(dataDirectory, bd, corp, conf.fstcompile)
+
+  /*
+  val bd = baseDirectory.value
+  val buildDirectory = bd / s"parsers/${corpus}"
   println(buildDirectory)
 
   val  configFile = "configs/horace.properties"
@@ -49,12 +66,10 @@ def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   } else {
     bd / "datasets"
   }
-
-
   val corps = "h4"
-  // src, repo, corps
+  println(s"Install data witb src, repo, corpus \t${srcDir}\n \t${baseDirectory.value}\n\t${corps}\n")
   DataInstaller(srcDir, baseDirectory.value, corps)
-
+  */
 }
 
 
@@ -78,6 +93,7 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
 lazy val corpusTemplateImpl = Def.inputTaskDyn {
   val bdFile = baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
+  println(s"TEMPLATE FROM ${args} of size ${args.size}")
   args.size match {
     case 1 => {
       val destDir = baseDirectory.value / s"datasets/${args.head}"
@@ -91,15 +107,18 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
 
     case 2 => {
       def conf = Configuration(file(args(1)))
+      println("CONFIG FROM " + conf)
       val destDir = if (conf.datadir.head == '/') {
         val configuredBase = new File(conf.datadir)
-        configuredBase / args(0)
+
+        val configuredDest = configuredBase / args(0)
+        println("configurd destdir "+ configuredDest)
+        configuredDest
       } else {
         bdFile / "datasets"
       }
 
       Def.task {
-        def conf = Configuration(file("config.properties"))
         UtilsInstaller(baseDirectory.value, args.head,conf)
       }
     }
@@ -223,5 +242,150 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   val makefile = buildDirectory / "makefile"
   val doit = s"${conf.make} -f ${makefile}"
   doit !
-
 }
+
+// Debugging tasks
+
+def testCorpusTemplate(corpusName: String, conf: Configuration) : Boolean = {
+  false
+}
+
+def testFstBuild(corpusName: String, conf: Configuration) : Boolean = {
+  false
+}
+
+def plural[T] (lst : List[T]) : String = {
+  if (lst.size > 1) { "s"} else {""}
+}
+
+def runBuildTests (corpusName: String, conf: Configuration): Unit  = {
+  val testList = List(
+    ("Test making Corpus template", testCorpusTemplate(_, _), "pending" ),
+
+    ("Test compiling FST", testFstBuild(_, _), "pending" )
+  )
+  println("\nExecuting tests of build system with settings:\n\tcorpus: " + corpusName + "\n\tdata source: " + conf.datadir + "\n")
+
+  val results = for (t <- testList.filter(_._3 != "pending")) yield {
+    print(t._1 + "...")
+    val reslt = t._2(corpusName, conf)
+    if (reslt) { println ("success.") } else { println("failed.\n")}
+    reslt
+  }
+
+
+  val distinctResults = results.distinct
+  if (distinctResults.size == 1 && distinctResults(0)){
+    println("All tests.succeeded.")
+  } else {
+    println("There were failures.")
+  }
+  println(s"${results.filter(_ == true).size} passed out of ${results.size} test${plural(results)} executed.")
+  val pending = testList.filter(_._3 == "pending")
+  if (pending.nonEmpty) {
+    println(s"${pending.size} test${plural(pending)} pending.")
+  }
+}
+
+lazy val allBuildTests = inputKey[Unit]("Test using output of args")
+allBuildTests in Test := {
+  val args: Seq[String] = spaceDelimited("<arg>").parsed
+
+  args.size match {
+
+    case 1 => {
+      try {
+        val conf = Configuration(file("conf.properties"))
+        val f = file(conf.datadir)
+
+        if (f.exists) {
+          runBuildTests(args(0), conf)
+        } else {
+          println("Failed.")
+          println(s"No configuration file ${conf.datadir} exists.")
+        }
+
+      } catch {
+        case t: Throwable => {
+          println("Failed.")
+          println(t)
+        }
+      }
+    }
+
+    case 2 => {
+      try {
+        val conf = Configuration(file(args(1)))
+        val f = file(conf.datadir)
+
+        if (f.exists) {
+          runBuildTests(args(0), conf)
+
+        } else {
+          println("Failed.")
+          println(s"No configuration file ${conf.datadir} exists.")
+        }
+
+      } catch {
+        case t: Throwable => {
+          println("Failed.")
+          println(t)
+        }
+      }
+    }
+
+    case _ =>  {
+      println(s"Wrong number args (${args.size}): ${args}")
+      println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
+    }
+  }
+  /*
+  args foreach println
+
+  val binaryResults = List(
+    (Test / quotedOut).value
+  )
+  (binaryResults.distinct.size == 1 && binaryResults(0) == true)
+  */
+}
+
+
+//lazy val testBuildTasks = taskKey[Boolean]
+/*
+  args.size match {
+    case 1 => {
+      val destDir = baseDirectory.value / s"datasets/${args.head}"
+      println ("DestDir:  " + destDir)
+     Def.task {
+        val srcDir = baseDirectory.value / "datatemplate"
+        println("\nCreate directory tree for new corpus " + args.head + " in " + destDir + "\n")
+        DataTemplate(srcDir, destDir)
+        println("\n\nDone.  Template is in " + destDir)
+      }
+    }
+
+    case 2 => {
+      def conf = Configuration(file(args(1)))
+      println(s"CONFIG FROM ${args(1)} yields " + conf)
+
+      val destDir = if (conf.datadir.head == '/') {
+        val configuredBase = new File(conf.datadir)
+
+        val configuredDest = configuredBase / args(0)
+        println("configurd destdir "+ configuredDest)
+        configuredDest
+      } else {
+        bdFile / "datasets"
+      }
+      println("So dest dir is " + destDir)
+
+      Def.task {
+        UtilsInstaller(baseDirectory.value, args.head,conf)
+      }
+
+    }
+
+    case _ => {
+      println("\nWrong number of parameters.")
+      templateUsage
+    }*/
