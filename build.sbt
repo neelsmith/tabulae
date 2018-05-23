@@ -246,11 +246,11 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
 
 // Debugging tasks
 
-def testCorpusTemplate(corpusName: String, conf: Configuration) : Boolean = {
+def testCorpusTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
 
-def testFstBuild(corpusName: String, conf: Configuration) : Boolean = {
+def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
 
@@ -258,17 +258,17 @@ def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
 
-def runBuildTests (corpusName: String, conf: Configuration): Unit  = {
+def runBuildTests (corpusName: String, conf: Configuration, baseDir: File): Unit  = {
   val testList = List(
-    ("Test making Corpus template", testCorpusTemplate(_, _), "pending" ),
+    ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ),
 
-    ("Test compiling FST", testFstBuild(_, _), "pending" )
+    ("Test compiling FST", testFstBuild(_, _, _), "pending" )
   )
-  println("\nExecuting tests of build system with settings:\n\tcorpus: " + corpusName + "\n\tdata source: " + conf.datadir + "\n")
+  println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir)
 
   val results = for (t <- testList.filter(_._3 != "pending")) yield {
     print(t._1 + "...")
-    val reslt = t._2(corpusName, conf)
+    val reslt = t._2(corpusName, conf, baseDir)
     if (reslt) { println ("success.") } else { println("failed.\n")}
     reslt
   }
@@ -299,7 +299,7 @@ allBuildTests in Test := {
         val f = file(conf.datadir)
 
         if (f.exists) {
-          runBuildTests(args(0), conf)
+          runBuildTests(args(0), conf, baseDirectory.value)
         } else {
           println("Failed.")
           println(s"No configuration file ${conf.datadir} exists.")
@@ -319,7 +319,7 @@ allBuildTests in Test := {
         val f = file(conf.datadir)
 
         if (f.exists) {
-          runBuildTests(args(0), conf)
+          runBuildTests(args(0), conf, baseDirectory.value)
 
         } else {
           println("Failed.")
