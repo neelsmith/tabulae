@@ -12,8 +12,7 @@ object MakefileComposer {
   * @param fstcompiler Full path to FST compiler.
   */
   def apply(projectDir: File, fstcompiler: String) : Unit = {
-    val inflDir = projectDir / "inflection"
-
+    //val inflDir = projectDir / "inflection"
 
     composeInflectionMake(projectDir, fstcompiler)
     //composeVerbStemMake(projectDir, fstcompiler)
@@ -53,7 +52,6 @@ object MakefileComposer {
 
     makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
     makeFileText.append(verbStemMake(projectDir, fstcompiler))
-
 
 
 /*
@@ -114,7 +112,8 @@ object MakefileComposer {
       val inflDir = projectDir / "inflection"
       val inflFst = (inflDir) ** "*fst"
       val inflFstFiles = inflFst.get
-      val dotAs = inflFstFiles.map(_.toString().replaceFirst(".fst$", ".a"))
+
+      val dotAs = inflFstFiles.filter(_.asFile.length > 0).map(_.toString().replaceFirst(".fst$", ".a"))
 
       makeFileText.append(dotAs.mkString(" ") + "\n")
       makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")

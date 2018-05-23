@@ -32,42 +32,6 @@ lazy val cleanAll = taskKey[Unit]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
 
-/*
-lazy val mdebug = taskKey[Unit]("Run temporary build tests")
-def currentTest: Def.Initialize[Task[Unit]] = Def.task {
-  val src =  new File("parsers/dev1/acceptors/verb"
-  val fileOpt = (src) ** "*fst"
-}
-*/
-  /*
-
-  val corpus = "vienna_lit"
-  val configFile = file("config.properties")
-
-
-
-
-  val buildDirectory = baseDirectory.value / s"parsers/${corpus}"
-  val conf = Configuration(configFile)
-
-  // Install data and rules, converting tabular data to FST
-*/
-
-   ///DataInstaller(baseDirectory.value, corpus)
-/*   RulesInstaller(baseDirectory.value, corpus)
-
-
-
-   // Compose makefiles and higher-order FST for build system
-   BuildComposer(baseDirectory.value, corpus, "/usr/local/bin/fst-compiler")
-
-   // Build it!
-   val inflMakefile = buildDirectory / "inflection/makefile"
-   val makeInfl = s"${conf.make} -f ${inflMakefile}"
-   makeInfl !
-
-}   */
-
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
   val parserDir = baseDirectory.value / "parsers"
@@ -105,7 +69,7 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
 
     case 2 => {
       def conf = Configuration(file(args(1)))
-      val destDir = new File( s"${conf.datadir}/${args(1)}")
+      val destDir = if (conf.datadir.head == '/') { file(conf.datadir)} else { bdFile / "datasets" }
       if(args(0) == "-r") {
         if (destDir.exists()) {
           IO.delete(destDir)

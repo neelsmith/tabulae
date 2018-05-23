@@ -32,7 +32,11 @@ object IndeclRulesInstaller {
 
     val rules = indeclFiles.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
     val fst = indeclRulesToFst(rules.toVector)
-    "$indeclinfl$ = " + fst + "\n\n$indeclinfl$\n"
+    if (fst.nonEmpty) {
+      "$indeclinfl$ = " + fst + "\n\n$indeclinfl$\n"
+    } else {
+      ""
+    }
   }
 
   /** Compose FST for a single delimited-text line of a lexical

@@ -31,7 +31,11 @@ object VerbRulesInstaller {
 
     val rules = fileList.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
     val fst = verbRulesToFst(rules.toVector)
-    "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
+    if (fst.nonEmpty) {
+      "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
+    } else {
+      ""
+    }
   }
 
   /** Compose FST for a single delimited-text line of a lexical

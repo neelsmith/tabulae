@@ -32,7 +32,11 @@ object NounRulesInstaller {
 
     val rules = nounsFiles.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
     val fst = nounRulesToFst(rules.toVector)
-    "$nouninfl$ = " + fst + "\n\n$nouninfl$\n"
+    if (fst.nonEmpty) {
+      "$nouninfl$ = " + fst + "\n\n$nouninfl$\n"
+    } else {
+      ""
+    }
   }
 
   /** Compose FST for a single delimited-text line of a lexical

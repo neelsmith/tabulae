@@ -17,9 +17,6 @@ object BuildComposer {
     val corpusDir = "parsers/" + corpus
     val projectDir = repo / corpusDir
     SymbolsComposer(repo, corpus)
-    val alphabet = dataSource / s"${corpus}/orthography/alphabet.fst"
-    println("COPY ALPHABET from " + alphabet)
-    IO.copyFile(alphabet,  repo / s"parsers/${corpus}/symbols/alphabet.fst")
     InflectionComposer(projectDir)
     AcceptorComposer(repo, corpus)
     ParserComposer(projectDir)

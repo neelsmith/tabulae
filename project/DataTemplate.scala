@@ -16,7 +16,7 @@ object DataTemplate {
 
      val mappings: Seq[(File,File)] = fstFiles pair rebase(srcDir, targetDir)
 
-     println("\ncopying data files...")
+     println("\ncopying FST files...")
      for (m <- mappings) {
        println("  ..copy " + m._1 + " -> " + m._2)
        IO.copyFile(m._1, m._2)
@@ -29,7 +29,7 @@ object DataTemplate {
 
      val mappings: Seq[(File,File)] = cexFiles pair rebase(srcDir, targetDir)
 
-     println("\ncopying data files...")
+     println("\ncopying CEX files...")
      for (m <- mappings) {
        println("  ..copy " + m._1 + " -> " + m._2)
        IO.copyFile(m._1, m._2)
@@ -42,7 +42,7 @@ object DataTemplate {
 
      val mappings: Seq[(File,File)] = readmeFiles pair rebase(srcDir, targetDir)
 
-     println("\ncopying data files...")
+     println("\ncopying markdown files...")
      for (m <- mappings) {
        println("  ..copy " + m._1 + " -> " + m._2)
        IO.copyFile(m._1, m._2)
