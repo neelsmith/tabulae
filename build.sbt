@@ -104,7 +104,9 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
       }
     }
     case 2 => {
-      val destDir = baseDirectory.value / s"datasets/${args(1)}"
+      // NO
+      def conf = Configuration(file(args(1)))
+      val destDir = baseDirectory.value / s"${conf.datadir}/${args(1)}"
       if(args(0) == "-r") {
         if (destDir.exists()) {
           IO.delete(destDir)
