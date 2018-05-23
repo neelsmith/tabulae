@@ -5,7 +5,11 @@ import java.io.PrintWriter
 
 object DataInstaller {
 
-
+/*
+Users/nsmith/Desktop/horace
+ 	/data/repos/latin/tabulae
+	h4
+*/
   def apply(dataSource: File, repo: File, corpus: String): Unit = {
     println(s"Convert morphological lexicon tables in ${dataSource} to FST")
 
@@ -16,9 +20,9 @@ object DataInstaller {
     val inflDir = DataInstaller.madeDir(corpDir / "inflection")
 
 
-    NounDataInstaller(dataSource, repo, corpus)
+    //NounDataInstaller(dataSource, repo, corpus)
     IndeclDataInstaller(dataSource,repo, corpus)
-    VerbDataInstaller(dataSource, repo, corpus)
+    //VerbDataInstaller(dataSource, repo, corpus)
   }
 
 

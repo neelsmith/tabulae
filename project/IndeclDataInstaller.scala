@@ -8,16 +8,22 @@ object IndeclDataInstaller {
   /** Creates FST file for each CEX file of
   * noun stems.
   *
-  * @param srcDir Project directory.
+  * @param dataSource Root directory of morphological data set.
+  * @param repo Root directory  of tabulae repository.
+  * @param corpus Name of corpus
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
     val lexDirectory = DataInstaller.madeDir(repo / s"parsers/${corpus}/lexica")
-    val indeclDir = file( s"${dataSource}/${corpus}/stems-tables/indeclinables")
-    val indeclOpt = (indeclDir) ** "*cex"
+
+    val indeclSourceDir = file( s"${dataSource}/${corpus}/stems-tables/indeclinables")
+    println("Collect source data from " + indeclSourceDir)
+    val indeclOpt = (indeclSourceDir) ** "*cex"
     val indeclFiles = indeclOpt.get
 
+    println("DATA:  Indecl Files: " + indeclFiles)
     for (f <- indeclFiles) {
       val lexName = "lex-indeclinables-"+ f.getName().replaceFirst(".cex$", ".fst")
+      println("DATA INSTALL: INDECL FILE " + lexName)
       val fstFile = lexDirectory /  lexName
 
       // omit empty lines and header

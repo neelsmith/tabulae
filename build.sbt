@@ -2,6 +2,18 @@ import complete.DefaultParsers._
 import scala.sys.process._
 import java.io.File
 
+
+def testList = List(
+  ("Test finding build directory", testBuildDirectory(_,_,_), ""),
+  ("Test making Corpus template", testCorpusTemplate(_, _, _), "" ),
+
+  ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
+  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
+)
+
+
+
+
 lazy val root = (project in file(".")).
     settings(
       name := "tabulae",
@@ -38,7 +50,6 @@ lazy val mdebug = taskKey[Unit]("Run temporary build tests")
 def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
   val buildDirectory = bd / s"parsers/${corpus}"
-
 
   val configFile = file("configs/horace.properties")
   val conf = Configuration(configFile)
@@ -244,27 +255,50 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   doit !
 }
 
+
+// Utility tasks
+
+def buildDirectory(repoRoot: File , corpus: String) = {
+  repoRoot / s"parsers/${corpus}"
+}
+
+
 // Debugging tasks
 
-def testCorpusTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
-  false
+
+def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
+  val expected = repoRoot / s"parsers/${corpus}"
+  (buildDirectory(repoRoot, corpus) == expected)
+}
+
+def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
+  val buildDirectory = baseDir / s"parsers/${corpus}"
+
+  val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { baseDir / "datasets" }
+  println("Data directory  " +  dataDirectory + buildDirectory )
+
+  BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
+  val expectedAlphabet = baseDir / "parsers/x/symbols/alphabet.fst"
+  println("Expected " + expectedAlphabet)
+  val haveAlphabet= expectedAlphabet.exists
+  println("FOund alpha?  " + haveAlphabet)
+  haveAlphabet
 }
 
 def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
 
+def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
 def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
 
 def runBuildTests (corpusName: String, conf: Configuration, baseDir: File): Unit  = {
-  val testList = List(
-    ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ),
 
-    ("Test compiling FST", testFstBuild(_, _, _), "pending" )
-  )
-  println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir)
+  println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
 
   val results = for (t <- testList.filter(_._3 != "pending")) yield {
     print(t._1 + "...")
@@ -276,9 +310,9 @@ def runBuildTests (corpusName: String, conf: Configuration, baseDir: File): Unit
 
   val distinctResults = results.distinct
   if (distinctResults.size == 1 && distinctResults(0)){
-    println("All tests.succeeded.")
+    println("\nAll tests.succeeded.")
   } else {
-    println("There were failures.")
+    println("\nThere were failures.")
   }
   println(s"${results.filter(_ == true).size} passed out of ${results.size} test${plural(results)} executed.")
   val pending = testList.filter(_._3 == "pending")

@@ -7,7 +7,9 @@ import Path.rebase
 */
 object SymbolsComposer {
 
-
+  // Works with a repository directory and a corpus name
+  // to compose files of FST symbols.
+  //
   def apply(repo: File, corpus: String) : Unit = {
     composeMainFile(repo / s"parsers/${corpus}")
     copySecondaryFiles(repo, corpus)
@@ -36,6 +38,7 @@ object SymbolsComposer {
   }
 
   def composeMainFile(projectDir: File): Unit = {
+    println("Composing main fileof some kind in " + projectDir)
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 
@@ -49,8 +52,13 @@ object SymbolsComposer {
     fst.append("% 3. Editorial symbols\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/markup.fst\"\n\n")
 
+    println("COmpose a symbols file in " + projectDir)
     val symbolsFile = projectDir / "symbols.fst"
+
+    if (! projectDir.exists) {projectDir.mkdir()} else {}
+    println("Time to write symboles files " + symbolsFile)
     new PrintWriter(symbolsFile) { write(fst.toString); close }
+
   }
 
 }

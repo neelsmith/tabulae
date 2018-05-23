@@ -13,22 +13,26 @@ object BuildComposer {
 
   def apply(dataSource: File, repo: File, corpus: String, fstcompiler: String) : Unit = {
     println("Composing a lot of build things.")
+    println(s"Param are: \ndata source: ${dataSource}\nrepo ${repo}\ncorpus")
 
     val corpusDir = "parsers/" + corpus
     val projectDir = repo / corpusDir
+
     SymbolsComposer(repo, corpus)
 
-    IO.copyFile(dataSource / s"${corpus}/orthography/alphabet.fst",
+
+    val symDir = repo / s"parsers/${corpus}/symbols/"
+    println("Install alphabet using " + dataSource + " and " + corpus + " into " + symDir)
+    if (! symDir.exists) { symDir.mkdir} else {}
+    IO.copyFile(dataSource / s"orthography/alphabet.fst",
     repo / s"parsers/${corpus}/symbols/alphabet.fst")
-    //  IO.copyFile(repo / s"datasets/${corpus}/orthography/alphabet.fst",
-
-
-
+    println("Installed " + (repo / s"parsers/${corpus}/symbols/alphabet.fst"))
+/*
     InflectionComposer(projectDir)
     AcceptorComposer(repo, corpus)
     ParserComposer(projectDir)
     MakefileComposer(projectDir, fstcompiler)
-
+*/
     //GeneratorComposer(repo, corpus)
   }
 

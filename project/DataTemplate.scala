@@ -4,9 +4,11 @@ import sbt._
 object DataTemplate {
 
   def apply(srcDir: File, targetDir: File): Unit = {
-    copyMarkdown(srcDir, targetDir)
-    copyCex(srcDir,targetDir)
-    copyFst(srcDir,targetDir)
+    if (! targetDir.exists){ targetDir.mkdir} else {}
+    println("Data template: now " + targetDir + " exists.")
+    //copyMarkdown(srcDir, targetDir)
+    //copyCex(srcDir,targetDir)
+    //copyFst(srcDir,targetDir)
   }
 
 

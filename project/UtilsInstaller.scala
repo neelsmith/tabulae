@@ -3,15 +3,15 @@ import scala.io.Source
 import java.io.PrintWriter
 
 import scala.sys.process._
-
 import Path.rebase
 
 
 object UtilsInstaller {
 
-
   def apply(repo: File, corpus: String, conf: Configuration): Unit = {
     println(s"Install utility transducers in ${repo} for ${corpus}")
+    println("BUT NOT JUST YET>...")
+    /*
     val projectDir = madeDir(repo / s"parsers/${corpus}")
 
     cpUtils(repo, corpus)
@@ -24,7 +24,7 @@ object UtilsInstaller {
 
     val mkfile = projectDir / "utils/makefile"
     s"${conf.make} -f ${mkfile }" !
-
+*/
   }
 
   def writeMakefile(dir: File): Unit = {
