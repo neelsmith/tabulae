@@ -20,14 +20,14 @@ lazy val root = (project in file(".")).
       tutSourceDirectory := file("src/main/tut"),
 
       fst := buildFst.evaluated,
-      corpusTemplate := corpusTemplateImpl.evaluated,
+      corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
       cleanAll := cleanAllImpl.value //,
       //mdebug := currentTest.value
     ).enablePlugins(TutPlugin)
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
-lazy val corpusTemplate = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
+lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Unit]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
@@ -88,55 +88,44 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
 lazy val corpusTemplateImpl = Def.inputTaskDyn {
   val bdFile = baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
-
+  println(s"${args.size} from ${args}")
   args.size match {
     case 1 => {
-
-      val srcDir = file(args.head)
-      val destDir = bdFile / s"datasets/${args.head}"
-
+      val destDir = baseDirectory.value / s"datasets/${args.head}"
       if (destDir.exists()) {
         error(s"file exists: ${destDir}")
-
       } else {
         Def.task {
-          val srcDir = bdFile / "datatemplate"
+          val srcDir = baseDirectory.value / "datatemplate"
           println("\nCreate directory tree for new corpus " + args.head + "\n")
           DataTemplate(srcDir, destDir)
           println("\n\nDone.  Template is in " + destDir)
         }
       }
     }
-
     case 2 => {
-
+      val destDir = baseDirectory.value / s"datasets/${args(1)}"
       if(args(0) == "-r") {
-        val destDir = bdFile / s"datasets/${args(1)}"
         if (destDir.exists()) {
           IO.delete(destDir)
           println("Deleted " + destDir)
-        } else {}
-        Def.task {
-          val srcDir = bdFile / "datatemplate"
-          println("\nCreate directory tree for new corpus " + args.head + "\n")
-          DataTemplate(srcDir, destDir)
-          println("\n\nDone.  Template is in " + destDir)
-        }
-
-      } else {
-        println("Syntax error.")
-        templateUsage
+        } else { }
+      }
+      Def.task {
+        val srcDir = baseDirectory.value / "datatemplate"
+        println("\nCreate directory tree for new corpus " + args.head + "\n")
+        DataTemplate(srcDir, destDir)
+        println("\n\nDone.  Template is in " + destDir)
       }
     }
-
 
     case _ => {
       println("\nWrong number of parameters.")
       templateUsage
     }
   }
-
 }
+
 
 
 def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
@@ -220,7 +209,6 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
 
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
   println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
-
 
 
   // Install data and rules, converting tabular data to FST
