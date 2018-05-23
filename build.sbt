@@ -88,7 +88,6 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
 lazy val corpusTemplateImpl = Def.inputTaskDyn {
   val bdFile = baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
-  println(s"${args.size} from ${args}")
   args.size match {
     case 1 => {
       val destDir = baseDirectory.value / s"datasets/${args.head}"
@@ -103,10 +102,10 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
         }
       }
     }
+
     case 2 => {
-      // NO
       def conf = Configuration(file(args(1)))
-      val destDir = baseDirectory.value / s"${conf.datadir}/${args(1)}"
+      val destDir = new File( s"${conf.datadir}/${args(1)}")
       if(args(0) == "-r") {
         if (destDir.exists()) {
           IO.delete(destDir)
@@ -115,7 +114,7 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
       }
       Def.task {
         val srcDir = baseDirectory.value / "datatemplate"
-        println("\nCreate directory tree for new corpus " + args.head + "\n")
+        println("\nCreate directory tree for new corpus " + args.head + " in " + destDir + "\n")
         DataTemplate(srcDir, destDir)
         println("\n\nDone.  Template is in " + destDir)
       }
@@ -136,7 +135,7 @@ def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
 }
 
 
-
+// MOD TO SUPPORT 2 ARGS
 lazy val utilsImpl = Def.inputTaskDyn {
   val args = spaceDelimited("corpus>").parsed
   if (args.size != 1) {
