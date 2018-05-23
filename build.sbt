@@ -23,14 +23,39 @@ lazy val root = (project in file(".")).
       fst := buildFst.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value //,
-      //mdebug := currentTest.value
+      cleanAll := cleanAllImpl.value,
+      mdebug := currentTest.value
     ).enablePlugins(TutPlugin)
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Unit]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
+
+
+lazy val mdebug = taskKey[Unit]("Run temporary build tests")
+
+def currentTest: Def.Initialize[Task[Unit]] = Def.task {
+  val bd = baseDirectory.value
+  val buildDirectory = bd / s"parsers/${corpus}"
+  println(buildDirectory)
+
+  val  configFile = "configs/horace.properties"
+  val conf = Configuration(file(configFile))
+  println("Conf is " + conf + " from config file " + configFile)
+
+  val srcDir = if (conf.datadir.head == '/') {
+    file(conf.datadir)
+  } else {
+    bd / "datasets"
+  }
+
+
+  val corps = "h4"
+  // src, repo, corps
+  DataInstaller(srcDir, baseDirectory.value, corps)
+
+}
 
 
 // Delete all compiled parsers
@@ -49,7 +74,7 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
 
 
 // Generate data directory hierarchy for a new named corpus.
-// Writes output to `datasets/CORPUS`.
+// Writes output to ... depends on params given.
 lazy val corpusTemplateImpl = Def.inputTaskDyn {
   val bdFile = baseDirectory.value
   val args = spaceDelimited("corpus>").parsed
@@ -72,13 +97,6 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
       } else {
         bdFile / "datasets"
       }
-
-      /*if(args(0) == "-r") {
-        if (destDir.exists()) {
-          IO.delete(destDir)
-          println("Deleted " + destDir)
-        } else { }
-      }*/
 
       Def.task {
         def conf = Configuration(file("config.properties"))
