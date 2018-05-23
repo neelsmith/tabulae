@@ -1,5 +1,6 @@
 import complete.DefaultParsers._
 import scala.sys.process._
+import java.io.File
 
 lazy val root = (project in file(".")).
     settings(
@@ -55,32 +56,33 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
   args.size match {
     case 1 => {
       val destDir = baseDirectory.value / s"datasets/${args.head}"
-      if (destDir.exists()) {
-        error(s"file exists: ${destDir}")
-      } else {
-        Def.task {
-          val srcDir = baseDirectory.value / "datatemplate"
-          println("\nCreate directory tree for new corpus " + args.head + "\n")
-          DataTemplate(srcDir, destDir)
-          println("\n\nDone.  Template is in " + destDir)
-        }
-      }
-    }
-
-    case 2 => {
-      def conf = Configuration(file(args(1)))
-      val destDir = if (conf.datadir.head == '/') { file(conf.datadir)} else { bdFile / "datasets" }
-      if(args(0) == "-r") {
-        if (destDir.exists()) {
-          IO.delete(destDir)
-          println("Deleted " + destDir)
-        } else { }
-      }
       Def.task {
         val srcDir = baseDirectory.value / "datatemplate"
         println("\nCreate directory tree for new corpus " + args.head + " in " + destDir + "\n")
         DataTemplate(srcDir, destDir)
         println("\n\nDone.  Template is in " + destDir)
+      }
+    }
+
+    case 2 => {
+      def conf = Configuration(file(args(1)))
+      val destDir = if (conf.datadir.head == '/') {
+        val configuredBase = new File(conf.datadir)
+        configuredBase / args(0)
+      } else {
+        bdFile / "datasets"
+      }
+
+      /*if(args(0) == "-r") {
+        if (destDir.exists()) {
+          IO.delete(destDir)
+          println("Deleted " + destDir)
+        } else { }
+      }*/
+
+      Def.task {
+        def conf = Configuration(file("config.properties"))
+        UtilsInstaller(baseDirectory.value, args.head,conf)
       }
     }
 
@@ -94,20 +96,32 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
 
 
 def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
-  println("\n\tUsage: corpus [-r] CORPUSNAME\n")
-  println("\t-r option = replace (delete) existing dataset\n")
+  println("\n\tUsage: corpu CORPUSNAME [CONFIGFILE]\n")
+  //println("\t-r option = replace (delete) existing dataset\n")
 }
 
 
-// MOD TO SUPPORT 2 ARGS
+
 lazy val utilsImpl = Def.inputTaskDyn {
+
   val args = spaceDelimited("corpus>").parsed
-  if (args.size != 1) {
-    error("No corpus named\n\tUsage: utils CORPUS")
-  } else {
-    Def.task {
+  val bdFile = baseDirectory.value
+
+  args.size match {
+    case 1 => {
       def conf = Configuration(file("config.properties"))
-      UtilsInstaller(baseDirectory.value, args.head,conf)
+      Def.task {
+        UtilsInstaller(bdFile, args.head, conf)
+      }
+    }
+
+    case 2 => {
+
+      def conf = Configuration(file(args(1)))
+      Def.task {
+        UtilsInstaller(bdFile, args.head, conf)
+      }
+
     }
   }
 }
