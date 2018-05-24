@@ -44,8 +44,8 @@ object IndeclDataInstaller {
 
     if (cols.size < 4) {
       //StemUrn#LexicalEntity#Stem#PoS
-      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
-      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse indeclinable data line:\n${line}")
+      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse indeclinable data line:\n${line}")
     } else {
       val fstBuilder = StringBuilder.newBuilder
       val stemUrn = cols(0).replaceAll("_","\\\\_").replaceAll("\\.","\\\\.")

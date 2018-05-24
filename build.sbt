@@ -1,7 +1,7 @@
 import complete.DefaultParsers._
 import scala.sys.process._
 import java.io.File
-
+import java.io.PrintWriter
 
 
 
@@ -28,18 +28,17 @@ lazy val root = (project in file(".")).
       fst := buildFst.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value,
-      mdebug := currentTest.value
+      cleanAll := cleanAllImpl.value//,
+      //mdebug := currentTest.value
     ).enablePlugins(TutPlugin)
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
-lazy val cleanAll = taskKey[Unit]("Delete all compiled parsers")
+lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
-
+/*
 lazy val mdebug = taskKey[Unit]("Run temporary build tests")
-
 def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
   val buildDirectory = bd / s"parsers/${corpus}"
@@ -75,21 +74,44 @@ def currentTest: Def.Initialize[Task[Unit]] = Def.task {
   DataInstaller(srcDir, baseDirectory.value, corps)
   */
 }
+*/
 
-
-// Delete all compiled parsers
-lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
-  val parserDir = baseDirectory.value / "parsers"
-  val filesVector = parserDir.listFiles.toVector
-  for (f <- filesVector) {
+/** Delete all subdirectories of a given directory.
+* Return names of deleted diretories.
+*
+* @param dir Directory to empty out.
+*/
+def deleteSubdirs(dir: File, verbose: Boolean = true): Vector[String] = {
+  val filesVector = dir.listFiles.toVector
+  val deleted = for (f <- filesVector) yield {
     if (f.exists && f.isDirectory) {
-      println("\tdeleting " + f)
+      if (verbose) { println("\tdeleting " + f) } else {}
       IO.delete(f)
+      f.toString
     } else {
-      // pass over f
+      ""
     }
   }
+  deleted.filter(_.nonEmpty)
 }
+
+/** Make sure directory exists.
+*
+* @param d Directory to check.
+*/
+def dir(d: File) : File = {
+  if (! d.isDirectory) {d.mkdir} else {}
+  require(d.isDirectory, s"File ${d} is not a directory")
+  if (! d.exists) {d.mkdir}
+  d
+}
+
+// Delete all compiled parsers
+lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
+  val parserDir = baseDirectory.value / "parsers"
+  deleteSubdirs(parserDir)
+}
+
 
 
 // Generate data directory hierarchy for a new named corpus.
@@ -262,9 +284,15 @@ def buildDirectory(repoRoot: File , corpus: String) = {
 def testList = List(
 
   ("Test finding build directory", testBuildDirectory(_,_,_), ""),
+  ("Test verifying directory", testDirCheck(_,_,_), ""),
+  ("Test cleaning build directory", testCleanAll(_,_,_), ""),
+
   ("Test Configuration", testConfiguration(_, _, _), "pending" ),
+  ("Test Corpus object", testCorpusObject(_, _, _), "" ),
+
 
   ("Test IndeclDataInstaller", testIndeclDataInstaller(_, _, _), "" ),
+  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "pending" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -277,7 +305,7 @@ def testList = List(
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
 
-  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "pending" ),
+
   ("Test NounRulesInstaller", testNounRulesInstaller(_, _, _), "pending" ),
   ("Test VerbRulesInstaller", testVerbRulesInstaller(_, _, _), "pending" ),
 
@@ -302,17 +330,77 @@ def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
   val expected = repoRoot / s"parsers/${corpus}"
   (buildDirectory(repoRoot, corpus) == expected)
 }
+
+
+def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
+  val corpusDir = dir(repoRoot / s"parsers/${corpus}")
+  (corpusDir.isDirectory && corpusDir.exists)
+  /*
+  println("Does it exist? " + corpusDir.exists)
+  val checkSub = corpusDir / "subdir"
+  val datax = checkSub / "dummy.txt"
+  new PrintWriter(checkSub){write("Empty test file"); close;}
+  val filesVector = corpusDir.listFiles.toVector
+  println(s"Files in ${corpusDir}:\n" + filesVector.mkString("\n"))
+  */
+  ///madeUpSubdir/twoLevelsDeep"
+  //val resultDir = dir(testDir)
+}
+
+def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
+
+  val workSpace = repoRoot / "parsers"
+  val verbose = false
+  val initialClean = deleteSubdirs(workSpace, verbose)
+  val examples = List("a","b","c")
+  for (ex <- examples) {
+    val corpus = workSpace / ex
+    corpus.mkdir
+  }
+  val expected = examples.size
+
+  (deleteSubdirs(workSpace, verbose).size == expected)
+}
+
+def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val src = file(conf.datadir)
+  val corpus =  Corpus(src, repoRoot, corpusName)
+  (corpus.dir.exists)
+}
+
 def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
   println("Test configuration object")
-
+  // Should throw Exception if any of these don't exist
+//fstcompile: String, fstinfl: String, make: String, datadir
   false
 }
-def testIndeclDataInstaller(corpus: String, conf: Configuration, repoRoot : File) = {
-  val dataSource = file(conf.datadir)
-  IndeclDataInstaller(dataSource, repoRoot, corpus)
-  false
+def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val dataSource = dir(file(conf.datadir))
+  val corpus = dir(dataSource / corpusName)
+  val stems = dir(corpus / "stems-tables")
+  val indeclSource = dir (stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = "FAKE DATA.\nBut the file should show up and be installed anyway."
+  new PrintWriter(testData){write(text); close;}
+  println("Wrote test data file " + testData)
+
+  val caughtBadLine = try {
+    val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
+  println(goodFst)
+
+  //println(s"Parsed 'Not a real line' as " + fst)
+  //StemUrn#LexicalEntity#Stem#PoS
+  //IndeclDataInstaller(dataSource, repoRoot, corpusName)
+  caughtBadLine
 }
 
+def testIndeclRulesInstaller(corpus: String, conf: Configuration, repoRoot : File) : Boolean =  false
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"
@@ -366,7 +454,7 @@ allBuildTests in Test := {
           val baseDir = baseDirectory.value
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            println(s"Before ${t._1}, delete all parsers")
+            //println(s"(Before ${t._1}, delete all parsers)")
             cleanAll.value
 
             print(t._1 + "...")
@@ -400,7 +488,7 @@ allBuildTests in Test := {
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            println(s"Before ${t._1}, delete all parsers")
+            //println(s"(Before ${t._1}, delete all parsers)")
             cleanAll.value
             print(t._1 + "...")
 
@@ -429,53 +517,4 @@ allBuildTests in Test := {
       println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
     }
   }
-  /*
-  args foreach println
-
-  val binaryResults = List(
-    (Test / quotedOut).value
-  )
-  (binaryResults.distinct.size == 1 && binaryResults(0) == true)
-  */
 }
-
-
-//lazy val testBuildTasks = taskKey[Boolean]
-/*
-  args.size match {
-    case 1 => {
-      val destDir = baseDirectory.value / s"datasets/${args.head}"
-      println ("DestDir:  " + destDir)
-     Def.task {
-        val srcDir = baseDirectory.value / "datatemplate"
-        println("\nCreate directory tree for new corpus " + args.head + " in " + destDir + "\n")
-        DataTemplate(srcDir, destDir)
-        println("\n\nDone.  Template is in " + destDir)
-      }
-    }
-
-    case 2 => {
-      def conf = Configuration(file(args(1)))
-      println(s"CONFIG FROM ${args(1)} yields " + conf)
-
-      val destDir = if (conf.datadir.head == '/') {
-        val configuredBase = new File(conf.datadir)
-
-        val configuredDest = configuredBase / args(0)
-        println("configurd destdir "+ configuredDest)
-        configuredDest
-      } else {
-        bdFile / "datasets"
-      }
-      println("So dest dir is " + destDir)
-
-      Def.task {
-        UtilsInstaller(baseDirectory.value, args.head,conf)
-      }
-
-    }
-
-    case _ => {
-      println("\nWrong number of parameters.")
-      templateUsage
-    }*/
