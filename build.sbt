@@ -293,21 +293,21 @@ def testList = List(
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
 
-  ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "pending" ),
+  ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "" ),
   ("Test writing noun acceptor string", testNounAcceptor(_, _, _), "pending" ),
   ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
 
-  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
 
-  ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
+  //("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
 
-  ("Test composing parser", testParserComposer(_, _, _), "pending" ),
-  ("Test composing makefile", testMakefileComposer(_, _, _), "pending" ),
+  //("Test composing parser", testParserComposer(_, _, _), "" ),
+  //("Test composing makefile", testMakefileComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -527,16 +527,28 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = file(s"parsers/${corpusName}")
+
   // 1. Should omit indeclinables if not data present.
   AcceptorComposer.composeMainAcceptor(projectDir)
+  val acceptor = projectDir / "acceptor.fst"
+  val lines = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
+  val expected = "$acceptor$ = $verb_pipeline$"
+  val emptyOk = lines(3).trim == expected.trim
 
-  val dataSource = file(conf.datadir)
-  val corpus = dataSource / corpusName
-  DataInstaller.dir(corpus)
-  val acceptor = DataInstaller.dir(corpus / "acceptor.fst")
+  // 2. Should include indeclinables if data are present.
+  val lexica = projectDir / "lexica"
+  DataInstaller.dir(lexica)
+  val indeclLexicon= lexica  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
 
+  AcceptorComposer.composeMainAcceptor(projectDir)
+  val lines2 = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
+  val expected2 = "$=indeclclass$ = [#indeclclass#]"
+  val dataOk = expected2.trim == lines2(2).trim
 
-  false
+  emptyOk && dataOk
 }
 def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {
   // Make directories;
@@ -557,14 +569,24 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
   new PrintWriter(testOut){write("@workdir@\n@workdir@\nUnmodified line\n"); close;}
   AcceptorComposer.rewriteFile(testOut, testOutDir)
   val lines = Source.fromFile(testOut).getLines.toVector.filter(_.nonEmpty)
-  println(lines.mkString("\n"))
 
   //clean up:
   testOut.delete
   lines(0) == testOutDir.toString + "/"
 }
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+
+  val projectDir = repoRoot / "parsers"
+  DataInstaller.dir(projectDir)
+  val corpus = projectDir / corpusName
+  DataInstaller.dir(corpus)
+  AcceptorComposer.composeVerbAcceptor(corpus)
+
+  val verbFile = corpus / "verb.fst"
+  val lines = Source.fromFile(verbFile).getLines.toVector.filter(_.nonEmpty)
+  val expected = "#include \""  + corpus + "/symbols.fst\""
+
+  lines(0).trim == expected.trim
 }
 def testWriteVerbStems(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
@@ -604,7 +626,27 @@ def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   false
 }
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+
+  // 1.  Should have minimal pipeline when no data installed
+  val minAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
+  val lines = minAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  println("Lines(2):\n" + lines(2))
+  val expected = "$acceptor$ = $verb_pipeline$"
+  val minimalOk = lines(2).trim == expected
+
+  // 2. Should prdocued same output for top of record when
+  // data  installed
+  val lexDir = DataInstaller.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
+  val lines2 = minAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expandedOk = lines2(2).trim == expected
+
+  minimalOk && expandedOk
 }
 def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
@@ -671,7 +713,7 @@ allBuildTests in Test := {
 
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
-            if (reslt) { println ("success.") } else { println("failed.\n")}
+            if (reslt) { println ("success.") } else { println("failed.")}
             reslt
           }
           reportResults(results)
@@ -705,7 +747,7 @@ allBuildTests in Test := {
             print(t._1 + "...")
 
             val reslt = t._2(corpusName, conf, baseDir)
-            if (reslt) { println ("success.") } else { println("failed.\n")}
+            if (reslt) { println ("success.") } else { println("failed.")}
             reslt
           }
           reportResults(results)

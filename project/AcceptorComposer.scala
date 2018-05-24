@@ -94,15 +94,12 @@ object AcceptorComposer {
 
     fst.append(indeclAcceptor(projectDir) + "\n")
 
-
     //fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
-
     val acceptorFile = projectDir / "acceptor.fst"
     new PrintWriter(acceptorFile) { write(fst.toString); close }
-    println("Wrote " + acceptorFile)
   }
 
 
@@ -116,7 +113,6 @@ object AcceptorComposer {
   def copySecondaryAcceptors(repo: File, corpus: String): Unit = {
     val src = repo / "fst/acceptors"
     val dest = DataInstaller.dir(repo / s"parsers/${corpus}/acceptors")
-    println("\tcopying secondary acceptors from " + src)
      val fst = (src) ** "*.fst"
      val fstFiles = fst.get
      val mappings: Seq[(File,File)] = fstFiles pair rebase(src, dest)
@@ -136,8 +132,6 @@ object AcceptorComposer {
   */
   def rewriteFile(f: File, workDir: File): Unit = {
     val lines = Source.fromFile(f).getLines.toVector
-    println("Rewriting " + f + " in "+ workDir)
-    println("lines = " + lines)
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     new PrintWriter(f) { write(rewritten); close }
   }
@@ -152,7 +146,6 @@ object AcceptorComposer {
     val dir = projectDir / "acceptors"
     val fst = (dir) ** "*.fst"
     val fstFiles = fst.get
-    println("\tfiltering acceptor files in " + dir)
     for (f <- fstFiles) {
       rewriteFile(f, projectDir)
     }
