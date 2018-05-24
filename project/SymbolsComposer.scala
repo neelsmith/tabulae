@@ -16,7 +16,8 @@ object SymbolsComposer {
     rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
   }
 
-
+  // This only works if you've already installed the source
+  // files.
   def rewritePhonologyFile(f: File, workDir: File): Unit = {
     val lines = Source.fromFile(f).getLines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")

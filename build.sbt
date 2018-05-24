@@ -287,6 +287,8 @@ def testList = List(
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
+  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
+
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -365,6 +367,24 @@ def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : 
   val symbols = Source.fromFile(expectedFile).getLines.toVector
   val expectedLine = "% symbols.fst"
   (expectedFile.exists && symbols(0) == expectedLine)
+}
+
+def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  val phono = projectDir / "symbols/phonology.fst"
+
+  // First install raw source.  Phonology file
+  // should have unexpanded macro:
+  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
+  val rawLines = Source.fromFile(phono).getLines.toVector
+  val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
+  (rawLines(7))
+  // Then rewrite phonology with expanded paths:
+  SymbolsComposer.rewritePhonologyFile(phono, projectDir)
+  val cookedLines = Source.fromFile(phono).getLines.toVector
+
+  val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
+  (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
 }
 
 def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
@@ -515,7 +535,7 @@ allBuildTests in Test := {
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
             //println(s"(Before ${t._1}, delete all parsers)")
-            deleteSubdirs(baseDir / "parsers")
+            deleteSubdirs(baseDir / "parsers", false)
 
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
@@ -549,7 +569,7 @@ allBuildTests in Test := {
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
             //println(s"(Before ${t._1}, delete all parsers)")
-            deleteSubdirs(baseDir / "parsers")
+            deleteSubdirs(baseDir / "parsers", false)
             print(t._1 + "...")
 
             val reslt = t._2(corpusName, conf, baseDir)
