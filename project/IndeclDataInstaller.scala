@@ -13,7 +13,7 @@ object IndeclDataInstaller {
   * @param corpus Name of corpus
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = DataInstaller.madeDir(repo / s"parsers/${corpus}/lexica")
+    val lexDirectory = DataInstaller.dir(repo / s"parsers/${corpus}/lexica")
 
     val indeclSourceDir = file( s"${dataSource}/${corpus}/stems-tables/indeclinables")
     println("Collect source data from " + indeclSourceDir)
@@ -25,7 +25,7 @@ object IndeclDataInstaller {
       val lexName = "lex-indeclinables-"+ f.getName().replaceFirst(".cex$", ".fst")
       println("DATA INSTALL: INDECL FILE " + lexName)
       val fstFile = lexDirectory /  lexName
-
+      println("Installing to " + fstFile)
       // omit empty lines and header
       val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
       val fstLines = IndeclDataInstaller.indeclLinesToFst(dataLines)

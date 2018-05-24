@@ -9,7 +9,7 @@ object VerbDataInstaller {
   /**
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = DataInstaller.madeDir(repo / s"parsers/${corpus}/lexica")
+    val lexDirectory = DataInstaller.dir(repo / s"parsers/${corpus}/lexica")
 
     val dir =  dataSource / s"${corpus}/stems-tables/verbs-simplex"
     val rulesOpt = (dir) ** "*cex"

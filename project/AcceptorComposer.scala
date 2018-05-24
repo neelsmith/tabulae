@@ -111,7 +111,7 @@ object AcceptorComposer {
   */
   def copySecondaryAcceptors(repo: File, corpus: String): Unit = {
     val src = repo / "fst/acceptors"
-    val dest = DataInstaller.madeDir(repo / s"parsers/${corpus}/acceptors")
+    val dest = DataInstaller.dir(repo / s"parsers/${corpus}/acceptors")
     println("\tcopying secondary acceptors from " + src)
      val fst = (src) ** "*.fst"
      val fstFiles = fst.get

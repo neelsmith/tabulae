@@ -95,16 +95,7 @@ def deleteSubdirs(dir: File, verbose: Boolean = true): Vector[String] = {
   deleted.filter(_.nonEmpty)
 }
 
-/** Make sure directory exists.
-*
-* @param d Directory to check.
-*/
-def dir(d: File) : File = {
-  if (! d.isDirectory) {d.mkdir} else {}
-  require(d.isDirectory, s"File ${d} is not a directory")
-  if (! d.exists) {d.mkdir}
-  d
-}
+
 
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
@@ -286,6 +277,8 @@ def testList = List(
   ("Test finding build directory", testBuildDirectory(_,_,_), ""),
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
+  ("Test generic data installer", testDataInstaller(_,_,_), ""),
+
 
   ("Test Configuration", testConfiguration(_, _, _), "pending" ),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
@@ -333,7 +326,7 @@ def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
 
 
 def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
-  val corpusDir = dir(repoRoot / s"parsers/${corpus}")
+  val corpusDir = DataInstaller.dir(repoRoot / s"parsers/${corpus}")
   (corpusDir.isDirectory && corpusDir.exists)
   /*
   println("Does it exist? " + corpusDir.exists)
@@ -374,16 +367,16 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 //fstcompile: String, fstinfl: String, make: String, datadir
   false
 }
-def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val dataSource = dir(file(conf.datadir))
-  val corpus = dir(dataSource / corpusName)
-  val stems = dir(corpus / "stems-tables")
-  val indeclSource = dir (stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = "FAKE DATA.\nBut the file should show up and be installed anyway."
-  new PrintWriter(testData){write(text); close;}
-  println("Wrote test data file " + testData)
 
+
+def testDataInstaller(corpus: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+
+
+def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
+
+  //  Test conversion of delimited text to FST
   val caughtBadLine = try {
     val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
     false
@@ -392,12 +385,25 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   }
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
   val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
-  println(goodFst)
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  val goodParse =  (goodFst ==  expected)
+
+  // Test file copying
+  val dataSource = DataInstaller.dir(file(conf.datadir))
+  val corpus = DataInstaller.dir(dataSource / corpusName)
+  val stems = DataInstaller.dir(corpus / "stems-tables")
+  val indeclSource = DataInstaller.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+  println("Wrote test data file " + testData)
+
+
 
   //println(s"Parsed 'Not a real line' as " + fst)
   //StemUrn#LexicalEntity#Stem#PoS
-  //IndeclDataInstaller(dataSource, repoRoot, corpusName)
-  caughtBadLine
+  IndeclDataInstaller(dataSource, repoRoot, corpusName)
+  (caughtBadLine && goodParse && false)
 }
 
 def testIndeclRulesInstaller(corpus: String, conf: Configuration, repoRoot : File) : Boolean =  false

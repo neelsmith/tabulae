@@ -12,9 +12,9 @@ object RulesInstaller {
   def apply(sourceDir: File, repo: File, corpus: String): Unit = {
     println(s"\nConvert inflectional rules tables in ${repo} to FST")
 
-    val parsers =  DataInstaller.madeDir(repo / "parsers")
-    val corpDir = DataInstaller.madeDir(parsers / corpus)
-    val inflDir = DataInstaller.madeDir(corpDir / "inflection")
+    val parsers =  DataInstaller.dir(repo / "parsers")
+    val corpDir = DataInstaller.dir(parsers / corpus)
+    val inflDir = DataInstaller.dir(corpDir / "inflection")
 
 
     println("Install infl rules into " + inflDir)
