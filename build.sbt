@@ -305,11 +305,10 @@ def testList = List(
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
-
-  ("Test composing parser", testParserComposer(_, _, _), "" ),
   ("Test composing makefile", testMakefileComposer(_, _, _), "" ),
+  ("Test composing parser", testParserComposer(_, _, _), "" ),
 
-  ("Test making Corpus template", testCorpusTemplate(_, _, _), "" ) /*,
+  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
 
 
@@ -665,7 +664,14 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
   minimalOk && expandedOk
 }
 def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  ParserComposer(projectDir)
+
+  val parserFst = projectDir / "latin.fst"
+  val lines = Source.fromFile(parserFst).getLines.toVector.filter(_.nonEmpty)
+
+  val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
+  lines(0).trim == expected
 }
 def testMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false

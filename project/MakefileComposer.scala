@@ -73,16 +73,13 @@ object MakefileComposer {
     makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
      //later:  ${projectDir.toString}/generator.a ")
 
-
-
     val makeFile = projectDir / "makefile"
     println("Writing MAIN make file " + makeFile)
     new PrintWriter(makeFile) { write(makeFileText.toString); close }
   }
 
 
-
-  /** Compose makefile for inflection subdirectory.
+  /** Compose makefile for verb subdirectory.
   */
   def verbStemMake(projectDir: File, fstcompiler: String) : String = {
     (s"\nWrite makefile for verb stem trandsducers in project ${projectDir}\n")
