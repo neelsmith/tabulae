@@ -24,7 +24,6 @@ object SymbolsComposer {
   }
 
 
-
   def copySecondaryFiles(repo: File, corpus: String) : Unit = {
     val src = repo / "fst/symbols"
     val dest = repo / s"parsers/${corpus}/symbols"
@@ -52,13 +51,12 @@ object SymbolsComposer {
     fst.append("% 3. Editorial symbols\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/markup.fst\"\n\n")
 
-    println("COmpose a symbols file in " + projectDir)
+    println("Compose a symbols file in " + projectDir)
     val symbolsFile = projectDir / "symbols.fst"
 
     if (! projectDir.exists) {projectDir.mkdir()} else {}
     println("Time to write symboles files " + symbolsFile)
     new PrintWriter(symbolsFile) { write(fst.toString); close }
-
   }
 
 }

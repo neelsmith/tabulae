@@ -263,7 +263,6 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
 
 
 // Utility tasks
-
 def buildDirectory(repoRoot: File , corpus: String) = {
   repoRoot / s"parsers/${corpus}"
 }
@@ -282,8 +281,12 @@ def testList = List(
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 
 
-  ("Test IndeclDataInstaller", testIndeclDataInstaller(_, _, _), "" ),
-  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "" ),
+  ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
+  ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
+
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
+
+  ("Test composing FST symbols", testSymbolsComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -301,7 +304,7 @@ def testList = List(
 
   ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
 
-  ("Test SymbolsComposer", testSymbolsComposer(_, _, _), "pending" ),
+
   ("Test InflectionComposer", testInflectionComposer(_, _, _), "pending" ),
   ("Test MakefileComposer", testMakefileComposer(_, _, _), "pending" ),
   ("Test ParserComposer", testParserComposer(_, _, _), "pending" ),
@@ -354,10 +357,21 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 }
 
 
+def testSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
 
+def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
+  val dataSrc = file(conf.datadir)
+  BuildComposer.installAlphabet(dataSrc, repoRoot, corpusName)
+  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols/alphabet.fst"
 
+  val alphabet = Source.fromFile(expectedFile).getLines.toVector.mkString("\n")
+  println(alphabet)
+  expectedFile.exists
+}
 
-def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
 
   //  Test conversion of delimited text to FST.
   // 1:  should object to bad data
@@ -373,7 +387,6 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   val goodParse =  (goodFst ==  expected)
 
-
   // 3: should create FST for all files in a directory
   val dataSource = DataInstaller.dir(file(conf.datadir))
   val corpus = DataInstaller.dir(dataSource / corpusName)
@@ -385,7 +398,6 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
 
   val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
   val readDirOk = fstFromDir == s"${expected}\n"
-
 
   // 4.  Test file copying in apply function
   // Write some test data in the source work space:

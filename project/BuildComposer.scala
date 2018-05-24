@@ -11,6 +11,14 @@ import java.io.PrintWriter
 */
 object BuildComposer {
 
+
+  def installAlphabet(dataSrc: File, repo: File, corpus: String): Unit = {
+    val symbolsDir = repo / s"parsers/${corpus}/symbols/"
+    if (! symbolsDir.exists) { symbolsDir.mkdir} else {}
+    IO.copyFile(dataSrc / "orthography/alphabet.fst",
+          repo / s"parsers/${corpus}/symbols/alphabet.fst")
+  }
+
   def apply(dataSource: File, repo: File, corpus: String, fstcompiler: String) : Unit = {
     println("Composing a lot of build things.")
     println(s"Params are: \ndata source: ${dataSource}\nrepo ${repo}\ncorpus")
@@ -19,12 +27,7 @@ object BuildComposer {
     val projectDir = repo / corpusDir
 
     SymbolsComposer(repo, corpus)
-
-    val symbolsDir = repo / s"parsers/${corpus}/symbols/"
-    if (! symbolsDir.exists) { symbolsDir.mkdir} else {}
-    IO.copyFile(dataSource / s"orthography/alphabet.fst",
-    repo / s"parsers/${corpus}/symbols/alphabet.fst")
-
+    installAlphabet(dataSource, repo, corpus)
     InflectionComposer(projectDir)
     /*
     AcceptorComposer(repo, corpus)
