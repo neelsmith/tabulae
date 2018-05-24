@@ -277,7 +277,7 @@ def testList = List(
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
 
-  ("Test Configuration", testConfiguration(_, _, _), "pending" ),
+  ("Test Configuration object", testConfiguration(_, _, _), "pending" ),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 
   ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
@@ -288,7 +288,6 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
-
 
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
@@ -302,36 +301,34 @@ def testList = List(
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
-
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
-  ("Test composing makefile", testMakefileComposer(_, _, _), "" ),
+
   ("Test composing parser", testParserComposer(_, _, _), "" ),
+  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
+  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
+  ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "pending" ),
 
-  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
+  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
 
-
+  /*
 
   ("Test NounDataInstaller", testNounDataInstaller(_, _, _), "pending" ),
-  ("Test VerbDataInstaller", testVerbDataInstaller(_, _, _), "pending" ),
-
-  ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
-
-
-
   ("Test NounRulesInstaller", testNounRulesInstaller(_, _, _), "pending" ),
+
+  ("Test VerbDataInstaller", testVerbDataInstaller(_, _, _), "pending" ),
   ("Test VerbRulesInstaller", testVerbRulesInstaller(_, _, _), "pending" ),
 
   ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
+  */
 
-
-  ("Test BuildComposer", testBuildComposer(_, _, _), "pending" ),
-
+  ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
   ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
   ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
-  */
 )
+
+
 def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
   val expected = repoRoot / s"parsers/${corpus}"
   (buildDirectory(repoRoot, corpus) == expected)
@@ -673,10 +670,15 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
   lines(0).trim == expected
 }
-def testMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
-
+def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"
 
@@ -699,6 +701,12 @@ def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Bool
 def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
+
+def testDataTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+
+
 def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
