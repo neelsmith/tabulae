@@ -289,7 +289,7 @@ def testList = List(
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
-  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
+
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
 
@@ -300,6 +300,7 @@ def testList = List(
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
 
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),

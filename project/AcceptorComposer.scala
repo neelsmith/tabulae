@@ -188,9 +188,7 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : File): String = {
-  val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
-  if (indeclSource.exists) {
-
+  if (includeIndecls(dir) ) {
    """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indeclclass#]
@@ -206,17 +204,37 @@ $=adjectiveclass$ = [#adjectiveclass#]
 $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj> $=adjectiveclass$   $separator$+ $=adjectiveclass$  <adj> [#stemchars#]* $=gender$ $case$ $number$ $degree$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
 }
+
+  /** True if data set includes data for indeclinables.
+  *
+  * @param dir Directory for corpus data set.
+  */
+  def includeIndecls(dir: File): Boolean = {
+    val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
+    indeclSource.exists
+  }
+
+  /** Compose FST for union of transducers squashing URNs.
+  *
+  * @param dir Directory for corpus data set.
+  */
+  def unionOfSquashers(dir: File) : String = {
+    val fst = StringBuilder.newBuilder
+    fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
+    if (includeIndecls(dir)) {
+      fst.append(" | $squashindeclurn$")
+    }
+    // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
+    fst.append("\n")
+    fst.toString
+  }
+
   /** String defining union of acceptors for each distinct
   * analytical pattern, followed by a transducer removing
   * all analysis-level symbols.*/
-
   def topLevelAcceptor(dir : File): String = {
-    """
-% Union of all URN squashers:
-%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
-
-$acceptor$ = $verb_pipeline$ |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
-
+    val constructed  = unionOfSquashers(dir)
+  val trail = """
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.
 #analysissymbol# = #editorial# #urntag# <noun><verb><indecl><ptcpl><infin><vadj><adj><adv> #morphtag# #stemtype#  #separator#
@@ -227,6 +245,7 @@ $stripsym$ = .+
 %% The canonical pipeline: (morph data) -> acceptor -> parser/stripper
 $acceptor$ || $stripsym$
 """
-}
+    constructed + trail
+  }
 
 }
