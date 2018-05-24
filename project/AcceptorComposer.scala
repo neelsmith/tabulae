@@ -4,8 +4,6 @@ import scala.io.Source
 
 import Path.rebase
 
-
-
 /** Factory object for composing and writing to a file the top-level
 * acceptor transducer, acceptor.fst, in the root of the project FST build.
 *
@@ -30,7 +28,6 @@ object AcceptorComposer {
     composeVerbStems(projectDir)
     composeVerbAcceptor(projectDir)
   }
-
 
   /** Write verb.fst, the top-level transducer for verbs in the
   * the FST chain.  Squashed URN representations are generated for
@@ -80,25 +77,30 @@ object AcceptorComposer {
   }
 
   /** Write acceptor.fst, the final transducer in the
-  * the FST chain.
+  * the FST chain.  Should only include acceptors for
+  * components that actually appear in the project's data.
   *
   * @param projectDir The directory for the corpus-specific
   * parser where acceptor.fst should be written.
   */
   def composeMainAcceptor(projectDir: File): Unit = {
+    val dir = DataInstaller.dir(projectDir)
     val fst = StringBuilder.newBuilder
-    fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
-    fst.append(nounAcceptor + "\n")
-    fst.append(indeclAcceptor + "\n")
+    // automatically included
+    fst.append("#include \"" + dir.toString + "/symbols.fst\"\n")
 
-    fst.append(irregNounAcceptor + "\n")
-    fst.append("$verb_pipeline$ = \"<" + projectDir.toString + "/verb.a>\"\n")
+    fst.append(nounAcceptor(projectDir) + "\n")
+    fst.append(indeclAcceptor(projectDir) + "\n")
 
-    fst.append("\n\n" + topLevelAcceptor + "\n")
+    fst.append(irregNounAcceptor(projectDir) + "\n")
+    fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
+
+    fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
 
     val acceptorFile = projectDir / "acceptor.fst"
     new PrintWriter(acceptorFile) { write(fst.toString); close }
+    println("Wrote " + acceptorFile)
   }
 
 
@@ -153,46 +155,56 @@ object AcceptorComposer {
   }
 
 
-  /** String defining final step of main verb acceptor.*/
-  val mainVerbAcceptor = """
+  /** String defining final step of main verb acceptor. */
+  def mainVerbAcceptor(dir : File): String = {
+    """
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 
 $stem_acceptors$ || $aug$ || $squashverburn$
-
 """
-  /** String defining final noun acceptor transducer.  */
-  val nounAcceptor = """
+
+}
+  /** String defining final noun acceptor transducer.*/
+  def nounAcceptor(dir : File): String = {
+    """
 % Noun acceptor:
 $=nounclass$ = [#nounclass#]
 $squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$   $separator$+ $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
+}
 
-  /** String defining final acceptor transducer for irregular nouns.  */
-  val irregNounAcceptor = """
+  /** String defining final acceptor transducer for irregular nouns.*/
+  def irregNounAcceptor(dir : File): String = {
+    """
 % Irregular noun acceptor
 $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+ $gender$ $case$ $number$ <irregnoun>  $separator$+ <irregnoun><noun><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
+}
 
-/** String defining final acceptor transducer for indeclinable forms.  */
-val indeclAcceptor = """
+/** String defining final acceptor transducer for indeclinable forms.*/
+def indeclAcceptor (dir : File): String = {
+   """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indeclclass#]
 $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
+}
 
 /** String defining final adjective acceptor transducer.  */
-val adjAcceptor = """
+def adjAcceptor(dir : File): String = {
+  """
 % adjective acceptor:
 $=adjectiveclass$ = [#adjectiveclass#]
 $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj> $=adjectiveclass$   $separator$+ $=adjectiveclass$  <adj> [#stemchars#]* $=gender$ $case$ $number$ $degree$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
-
+}
   /** String defining union of acceptors for each distinct
   * analytical pattern, followed by a transducer removing
-  * all analysis-level symbols.
-  */
-  val topLevelAcceptor = """
+  * all analysis-level symbols.*/
+
+  def topLevelAcceptor(dir : File): String = {
+    """
 % Union of all URN squashers:
 %%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$
 
@@ -208,7 +220,6 @@ $stripsym$ = .+
 %% The canonical pipeline: (morph data) -> acceptor -> parser/stripper
 $acceptor$ || $stripsym$
 """
-
-
+}
 
 }

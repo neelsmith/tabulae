@@ -280,7 +280,6 @@ def testList = List(
   ("Test Configuration", testConfiguration(_, _, _), "pending" ),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 
-
   ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
 
@@ -289,12 +288,24 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
-  ("Test composing acceptor", testAcceptorComposer(_, _, _), "pending" ),
+
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
+  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
+  ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "pending" ),
+  ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "pending" ),
+
+  ("Test writing noun acceptor string", testNounAcceptor(_, _, _), "pending" ),
+  ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
+  ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
+  ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
+  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+
+
+  ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
+
+
   ("Test composing parser", testParserComposer(_, _, _), "pending" ),
   ("Test composing makefile", testMakefileComposer(_, _, _), "pending" ),
-
-
-
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -312,12 +323,10 @@ def testList = List(
 
   ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
 
-
-  ("Test InflectionComposer", testInflectionComposer(_, _, _), "pending" ),
   ("Test MakefileComposer", testMakefileComposer(_, _, _), "pending" ),
   ("Test ParserComposer", testParserComposer(_, _, _), "pending" ),
 
-  ("Test AcceptorComposer", testAcceptorComposer(_, _, _), "pending" ),
+
   ("Test BuildComposer", testBuildComposer(_, _, _), "pending" ),
 
 
@@ -455,6 +464,7 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   (caughtBadLine && goodParse && outputGood && readDirOk)
 }
 
+
 def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // 1:  should object to bad data
@@ -508,12 +518,47 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   InflectionComposer(repoRoot / s"parsers/${corpusName}")
   val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
   val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
-  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/x/inflection/indeclinfl.a>\""
+  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
   testData.delete()
   (expectedFile.exists && lines(3) == expectedLine)
 }
 
-def testAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = file(s"parsers/${corpusName}")
+
+  AcceptorComposer.composeMainAcceptor(projectDir)
+  false
+}
+def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testWriteVerbStems(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testRewriteAcceptors(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+
+
+def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
 def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
