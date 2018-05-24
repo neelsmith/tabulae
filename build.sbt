@@ -5,8 +5,6 @@ import java.io.PrintWriter
 import scala.io.Source
 
 
-
-
 lazy val root = (project in file(".")).
     settings(
       name := "tabulae",
@@ -37,44 +35,6 @@ lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new na
 lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
-/*
-lazy val mdebug = taskKey[Unit]("Run temporary build tests")
-def currentTest: Def.Initialize[Task[Unit]] = Def.task {
-  val bd = baseDirectory.value
-  val buildDirectory = bd / s"parsers/${corpus}"
-
-  val configFile = file("configs/horace.properties")
-  val conf = Configuration(configFile)
-
-  println("Conf is " + conf + " from config file " + configFile)
-
-  val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
-  println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
-
-  val corp = "h5"
-  // Compose makefiles and higher-order FST for build system
-  BuildComposer(dataDirectory, bd, corp, conf.fstcompile)
-
-  /*
-  val bd = baseDirectory.value
-  val buildDirectory = bd / s"parsers/${corpus}"
-  println(buildDirectory)
-
-  val  configFile = "configs/horace.properties"
-  val conf = Configuration(file(configFile))
-  println("Conf is " + conf + " from config file " + configFile)
-
-  val srcDir = if (conf.datadir.head == '/') {
-    file(conf.datadir)
-  } else {
-    bd / "datasets"
-  }
-  val corps = "h4"
-  println(s"Install data witb src, repo, corpus \t${srcDir}\n \t${baseDirectory.value}\n\t${corps}\n")
-  DataInstaller(srcDir, baseDirectory.value, corps)
-  */
-}
-*/
 
 /** Delete all subdirectories of a given directory.
 * Return names of deleted diretories.
