@@ -3,13 +3,6 @@ import scala.sys.process._
 import java.io.File
 
 
-def testList = List(
-  ("Test finding build directory", testBuildDirectory(_,_,_), ""),
-  ("Test making Corpus template", testCorpusTemplate(_, _, _), "" ),
-
-  ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
-  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
-)
 
 
 
@@ -90,7 +83,7 @@ lazy val cleanAllImpl: Def.Initialize[Task[Unit]] = Def.task {
   val filesVector = parserDir.listFiles.toVector
   for (f <- filesVector) {
     if (f.exists && f.isDirectory) {
-      println("Deleting " + f)
+      println("\tdeleting " + f)
       IO.delete(f)
     } else {
       // pass over f
@@ -262,14 +255,64 @@ def buildDirectory(repoRoot: File , corpus: String) = {
   repoRoot / s"parsers/${corpus}"
 }
 
+////////////////////////////////////////////////////////////////
+//
+// Testing the build system
 
-// Debugging tasks
+def testList = List(
+
+  ("Test finding build directory", testBuildDirectory(_,_,_), ""),
+  ("Test Configuration", testConfiguration(_, _, _), "pending" ),
+
+  ("Test IndeclDataInstaller", testIndeclDataInstaller(_, _, _), "" ),
+
+  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
 
+
+  ("Test NounDataInstaller", testNounDataInstaller(_, _, _), "pending" ),
+  ("Test VerbDataInstaller", testVerbDataInstaller(_, _, _), "pending" ),
+
+  ("Test DataInstaller", testDataInstaller(_, _, _), "pending" ),
+  ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
+
+
+  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "pending" ),
+  ("Test NounRulesInstaller", testNounRulesInstaller(_, _, _), "pending" ),
+  ("Test VerbRulesInstaller", testVerbRulesInstaller(_, _, _), "pending" ),
+
+  ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
+
+  ("Test SymbolsComposer", testSymbolsComposer(_, _, _), "pending" ),
+  ("Test InflectionComposer", testInflectionComposer(_, _, _), "pending" ),
+  ("Test MakefileComposer", testMakefileComposer(_, _, _), "pending" ),
+  ("Test ParserComposer", testParserComposer(_, _, _), "pending" ),
+
+  ("Test AcceptorComposer", testAcceptorComposer(_, _, _), "pending" ),
+  ("Test BuildComposer", testBuildComposer(_, _, _), "pending" ),
+
+
+
+
+  ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
+  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
+  */
+)
 def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
   val expected = repoRoot / s"parsers/${corpus}"
   (buildDirectory(repoRoot, corpus) == expected)
 }
+def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
+  println("Test configuration object")
+
+  false
+}
+def testIndeclDataInstaller(corpus: String, conf: Configuration, repoRoot : File) = {
+  val dataSource = file(conf.datadir)
+  IndeclDataInstaller(dataSource, repoRoot, corpus)
+  false
+}
+
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"
@@ -279,10 +322,7 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
 
   BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
   val expectedAlphabet = baseDir / "parsers/x/symbols/alphabet.fst"
-  println("Expected " + expectedAlphabet)
-  val haveAlphabet= expectedAlphabet.exists
-  println("FOund alpha?  " + haveAlphabet)
-  haveAlphabet
+  expectedAlphabet.exists
 }
 
 def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
@@ -296,18 +336,7 @@ def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
 
-def runBuildTests (corpusName: String, conf: Configuration, baseDir: File): Unit  = {
-
-  println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
-
-  val results = for (t <- testList.filter(_._3 != "pending")) yield {
-    print(t._1 + "...")
-    val reslt = t._2(corpusName, conf, baseDir)
-    if (reslt) { println ("success.") } else { println("failed.\n")}
-    reslt
-  }
-
-
+def reportResults(results: List[Boolean]): Unit = {
   val distinctResults = results.distinct
   if (distinctResults.size == 1 && distinctResults(0)){
     println("\nAll tests.succeeded.")
@@ -326,14 +355,27 @@ allBuildTests in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
 
   args.size match {
-
+      //runBuildTests(args(0), conf, baseDirectory.value)
     case 1 => {
       try {
         val conf = Configuration(file("conf.properties"))
         val f = file(conf.datadir)
 
         if (f.exists) {
-          runBuildTests(args(0), conf, baseDirectory.value)
+          val corpusName = args(0)
+          val baseDir = baseDirectory.value
+          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
+          val results = for (t <- testList.filter(_._3 != "pending")) yield {
+            println(s"Before ${t._1}, delete all parsers")
+            cleanAll.value
+
+            print(t._1 + "...")
+            val reslt = t._2(corpusName, conf, baseDir)
+            if (reslt) { println ("success.") } else { println("failed.\n")}
+            reslt
+          }
+          reportResults(results)
+
         } else {
           println("Failed.")
           println(s"No configuration file ${conf.datadir} exists.")
@@ -353,7 +395,21 @@ allBuildTests in Test := {
         val f = file(conf.datadir)
 
         if (f.exists) {
-          runBuildTests(args(0), conf, baseDirectory.value)
+          val corpusName = args(0)
+          val baseDir = baseDirectory.value
+          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
+
+          val results = for (t <- testList.filter(_._3 != "pending")) yield {
+            println(s"Before ${t._1}, delete all parsers")
+            cleanAll.value
+            print(t._1 + "...")
+
+            val reslt = t._2(corpusName, conf, baseDir)
+            if (reslt) { println ("success.") } else { println("failed.\n")}
+            reslt
+          }
+          reportResults(results)
+
 
         } else {
           println("Failed.")

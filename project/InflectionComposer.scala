@@ -7,7 +7,6 @@ import java.io.PrintWriter
 */
 object InflectionComposer {
 
-
   val header = """
 %% inflection.fst
 % A transducer accepting all inflectional patterns.
@@ -25,7 +24,7 @@ $ending$ = """
   }
 
   def apply(projectDir: File) : Unit = {
-
+    println("INSTALL INFL FILES in " + projectDir)
     val fstText = StringBuilder.newBuilder
     fstText.append(header)
     fstText.append( inflectionFsts(projectDir / "inflection").mkString(" |\\\n"))

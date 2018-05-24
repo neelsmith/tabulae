@@ -38,7 +38,7 @@ object SymbolsComposer {
   }
 
   def composeMainFile(projectDir: File): Unit = {
-    println("Composing main fileof some kind in " + projectDir)
+    println("Composing main file of all symbols in " + projectDir)
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 
