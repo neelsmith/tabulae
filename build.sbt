@@ -303,7 +303,6 @@ def testList = List(
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
-
   ("Test composing parser", testParserComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
@@ -324,7 +323,7 @@ def testList = List(
 
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
-  ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
+  ("Test compiling and executing FST parser", testFstBuild(_, _, _), "pending" ),
   ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
 )
 
@@ -701,6 +700,8 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
   expectedAlphabet.exists && moretests
 }
 
+
+// test comopiling and executing a final parser
 def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
