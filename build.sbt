@@ -303,7 +303,7 @@ def testList = List(
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
 
-  //("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
+  ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
 
   //("Test composing parser", testParserComposer(_, _, _), "" ),
@@ -374,7 +374,6 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 //fstcompile: String, fstinfl: String, make: String, datadir
   false
 }
-
 
 def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
@@ -500,7 +499,6 @@ def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot :
   (caughtBadLine && goodParse && readDirOk)
 }
 
-
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   // must install rules before composint inflection.fst
   val dataSource = file(conf.datadir)
@@ -575,7 +573,6 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
   lines(0) == testOutDir.toString + "/"
 }
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-
   val projectDir = repoRoot / "parsers"
   DataInstaller.dir(projectDir)
   val corpus = projectDir / corpusName
@@ -589,7 +586,29 @@ def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   lines(0).trim == expected.trim
 }
 def testWriteVerbStems(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  DataInstaller.dir(projectDir)
+  val acceptorsDir  = projectDir / "acceptors"
+  val acceptorFile = acceptorsDir / "verbstems.fst"
+
+  // 1. Should be minimal if no data installed.
+  DataInstaller.dir(acceptorsDir)
+  AcceptorComposer.composeVerbStems(projectDir)
+  val linesEmpty = Source.fromFile(acceptorFile).getLines.toVector.filter(_.nonEmpty)
+  val firstChars = linesEmpty.map(_(0)).distinct
+  val emptyOk = firstChars.size == 1 && firstChars(0) == '%'
+  // tidy up
+  acceptorFile.delete
+
+  // 2. Should accommodate data if installed.
+  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
+  AcceptorComposer.composeVerbStems(projectDir)
+
+  val expectedStart = "\"<" + projectDir + "/acceptors/verb/"
+  val fullLines = Source.fromFile(acceptorFile).getLines.toVector
+  val expandedOk =  fullLines(3).startsWith(expectedStart)
+
+  emptyOk  && expandedOk
 }
 def testRewriteAcceptors(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
@@ -603,7 +622,8 @@ def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   false
 }
 def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  DataInstaller.dir(projectDir)
 
   // 1. Should  return empty string if no data:
   val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
@@ -631,7 +651,6 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
   // 1.  Should have minimal pipeline when no data installed
   val minAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
   val lines = minAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
-  println("Lines(2):\n" + lines(2))
   val expected = "$acceptor$ = $verb_pipeline$"
   val minimalOk = lines(2).trim == expected
 
