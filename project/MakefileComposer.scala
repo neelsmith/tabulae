@@ -110,6 +110,7 @@ object MakefileComposer {
 
 
       val inflDir = projectDir / "inflection"
+      DataInstaller.dir(inflDir)
       val inflFst = (inflDir) ** "*fst"
       val inflFstFiles = inflFst.get
 

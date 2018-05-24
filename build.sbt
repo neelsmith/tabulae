@@ -306,10 +306,10 @@ def testList = List(
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
 
-  //("Test composing parser", testParserComposer(_, _, _), "" ),
-  //("Test composing makefile", testMakefileComposer(_, _, _), "" ),
+  ("Test composing parser", testParserComposer(_, _, _), "" ),
+  ("Test composing makefile", testMakefileComposer(_, _, _), "" ),
 
-  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
+  ("Test making Corpus template", testCorpusTemplate(_, _, _), "" ) /*,
 
 
 
@@ -324,9 +324,6 @@ def testList = List(
   ("Test VerbRulesInstaller", testVerbRulesInstaller(_, _, _), "pending" ),
 
   ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
-
-  ("Test MakefileComposer", testMakefileComposer(_, _, _), "pending" ),
-  ("Test ParserComposer", testParserComposer(_, _, _), "pending" ),
 
 
   ("Test BuildComposer", testBuildComposer(_, _, _), "pending" ),
@@ -682,7 +679,11 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
 
   BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
   val expectedAlphabet = baseDir / "parsers/x/symbols/alphabet.fst"
-  expectedAlphabet.exists
+
+  val moretests = false
+
+
+  expectedAlphabet.exists && moretests
 }
 
 def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {

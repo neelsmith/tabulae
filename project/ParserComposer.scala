@@ -54,7 +54,6 @@ object ParserComposer {
   def lexiconFiles(dir: File): Vector[String] = {
     val filesOpt = (dir) ** "*.fst"
     val files = filesOpt.get
-    println("==>LEXICON FILEs from  " + dir + " == " + files)
     files.map(f => "\"" + f.toString() + "\"").toVector
   }
 
