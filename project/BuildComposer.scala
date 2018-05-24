@@ -29,11 +29,10 @@ object BuildComposer {
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
     InflectionComposer(projectDir)
-    /*
     AcceptorComposer(repo, corpus)
     ParserComposer(projectDir)
     MakefileComposer(projectDir, fstcompiler)
-*/
+
     //GeneratorComposer(repo, corpus)
   }
 

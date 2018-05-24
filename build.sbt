@@ -288,7 +288,7 @@ def testList = List(
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
-
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -481,6 +481,32 @@ def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot :
 
   (caughtBadLine && goodParse && readDirOk)
 }
+
+
+def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  // must install rules before composint inflection.fst
+  val dataSource = file(conf.datadir)
+  val corpus = DataInstaller.dir(dataSource / corpusName)
+  val rules = DataInstaller.dir(corpus / "rules-tables")
+  val indeclSource = DataInstaller.dir(rules / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val dataLine = "testdata.rule1#nunc"
+  val text = s"header line, omitted in parsing\n${dataLine}\n"
+  new PrintWriter(testData){write(text); close;}
+
+  RulesInstaller(dataSource, repoRoot, corpusName)
+  val installedSource =  (repoRoot / s"parsers/${corpusName}/inflection") ** "*.fst"
+  require(installedSource.get.size > 0, s"Testing inflection composer, but failed to install any FST source for parsers/${corpusName}")
+
+  // Now compose inflection.fst:
+  InflectionComposer(repoRoot / s"parsers/${corpusName}")
+  val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
+  val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
+  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/x/inflection/indeclinfl.a>\""
+  testData.delete()
+  (expectedFile.exists && lines(3) == expectedLine)
+}
+
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"

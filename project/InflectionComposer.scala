@@ -16,15 +16,11 @@ $ending$ = """
 
   def inflectionFsts(dir: File): Vector[String] = {
     val filesOpt = (dir) ** "*infl.fst"
-
-
     val files = filesOpt.get.filter(_.asFile.length > 0)
-    println("INFL FILES :  " + files)
     files.map(f => "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\"").toVector
   }
 
   def apply(projectDir: File) : Unit = {
-    println("INSTALL INFL FILES in " + projectDir)
     val fstText = StringBuilder.newBuilder
     fstText.append(header)
     fstText.append( inflectionFsts(projectDir / "inflection").mkString(" |\\\n"))

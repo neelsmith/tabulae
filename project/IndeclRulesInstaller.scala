@@ -15,7 +15,7 @@ object IndeclRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val indeclFst = fstForIndeclRules(srcDir)
-    println(s"Write ${indeclFst.size} chars of rules for indeclinables to " + targetFile)
+    //println(s"Write ${indeclFst.size} chars of rules for indeclinables to " + targetFile)
     new PrintWriter(targetFile) { write(indeclFst ); close }
   }
 

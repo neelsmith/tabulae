@@ -17,7 +17,7 @@ object SymbolsComposer {
   }
 
   // This only works if you've already installed the source
-  // files.
+  // files (eg, by invoking copySecondaryFiles)
   def rewritePhonologyFile(f: File, workDir: File): Unit = {
     val lines = Source.fromFile(f).getLines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")

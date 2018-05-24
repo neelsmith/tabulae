@@ -16,10 +16,8 @@ object RulesInstaller {
     val corpDir = DataInstaller.dir(parsers / corpus)
     val inflDir = DataInstaller.dir(corpDir / "inflection")
 
-
     println("Install infl rules into " + inflDir)
     val srcCorpus = sourceDir / corpus
-
 
     NounRulesInstaller( srcCorpus / "rules-tables/nouns", inflDir / "nouninfl.fst")
     IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
