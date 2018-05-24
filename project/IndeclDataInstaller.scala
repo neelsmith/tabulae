@@ -12,26 +12,37 @@ object IndeclDataInstaller {
   * @param repo Root directory  of tabulae repository.
   * @param corpus Name of corpus
   */
-  def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = DataInstaller.dir(repo / s"parsers/${corpus}/lexica")
+  def apply(dataSource: File, repo: File, corpusName: String) = {
+    val corpus = DataInstaller.dir(repo / s"parsers/${corpusName}")
+    val lexDirectory = DataInstaller.dir(corpus / "lexica")
 
-    val indeclSourceDir = file( s"${dataSource}/${corpus}/stems-tables/indeclinables")
-    println("Collect source data from " + indeclSourceDir)
-    val indeclOpt = (indeclSourceDir) ** "*cex"
+    val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
+    val fst = fstForIndeclData(indeclSourceDir)
+
+//val lexName = "lex-indeclinables-"+ f.getName().replaceFirst(".cex$", ".fst")
+//val fstFile = lexDirectory /  lexName
+
+    val fstFile = lexDirectory / "lexicon-indeclinables.fst"
+    new PrintWriter(fstFile) { write(fst); close }
+
+  }
+
+
+  /** Create a single FST string from all CEX
+  * files in a given directory.
+  *
+  * @param dir Directory with CEX data.
+  */
+  def fstForIndeclData(dir: File) : String = {
+    val indeclOpt = (dir) ** "*cex"
     val indeclFiles = indeclOpt.get
 
-    println("DATA:  Indecl Files: " + indeclFiles)
-    for (f <- indeclFiles) {
-      val lexName = "lex-indeclinables-"+ f.getName().replaceFirst(".cex$", ".fst")
-      println("DATA INSTALL: INDECL FILE " + lexName)
-      val fstFile = lexDirectory /  lexName
-      println("Installing to " + fstFile)
+    val fstLines = for (f <- indeclFiles) yield {
       // omit empty lines and header
       val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
-      val fstLines = IndeclDataInstaller.indeclLinesToFst(dataLines)
-
-      new PrintWriter(fstFile) { write(fstLines); close }
+      IndeclDataInstaller.indeclLinesToFst(dataLines)
     }
+    fstLines.mkString("\n")
   }
 
   /** Translates one line of CEX data documenting a noun stem
@@ -61,7 +72,7 @@ object IndeclDataInstaller {
     }
   }
 
-  /** Convert a Vector of noun stem data in CES form to
+  /** Convert a Vector of data for indeclinables in CEX form to
   * a single valid FST string.
   *
   * @param data Vector of strings in which each string

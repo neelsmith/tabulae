@@ -2,7 +2,7 @@ import complete.DefaultParsers._
 import scala.sys.process._
 import java.io.File
 import java.io.PrintWriter
-
+import scala.io.Source
 
 
 
@@ -277,15 +277,13 @@ def testList = List(
   ("Test finding build directory", testBuildDirectory(_,_,_), ""),
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
-  ("Test generic data installer", testDataInstaller(_,_,_), ""),
-
 
   ("Test Configuration", testConfiguration(_, _, _), "pending" ),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 
 
   ("Test IndeclDataInstaller", testIndeclDataInstaller(_, _, _), "" ),
-  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "pending" ),
+  ("Test IndeclRulesInstaller", testIndeclRulesInstaller(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -294,7 +292,6 @@ def testList = List(
   ("Test NounDataInstaller", testNounDataInstaller(_, _, _), "pending" ),
   ("Test VerbDataInstaller", testVerbDataInstaller(_, _, _), "pending" ),
 
-  ("Test DataInstaller", testDataInstaller(_, _, _), "pending" ),
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
 
@@ -313,8 +310,6 @@ def testList = List(
   ("Test BuildComposer", testBuildComposer(_, _, _), "pending" ),
 
 
-
-
   ("Test compiling FST", testFstBuild(_, _, _), "pending" ),
   ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
   */
@@ -328,16 +323,6 @@ def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
 def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
   val corpusDir = DataInstaller.dir(repoRoot / s"parsers/${corpus}")
   (corpusDir.isDirectory && corpusDir.exists)
-  /*
-  println("Does it exist? " + corpusDir.exists)
-  val checkSub = corpusDir / "subdir"
-  val datax = checkSub / "dummy.txt"
-  new PrintWriter(checkSub){write("Empty test file"); close;}
-  val filesVector = corpusDir.listFiles.toVector
-  println(s"Files in ${corpusDir}:\n" + filesVector.mkString("\n"))
-  */
-  ///madeUpSubdir/twoLevelsDeep"
-  //val resultDir = dir(testDir)
 }
 
 def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
@@ -369,26 +354,27 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 }
 
 
-def testDataInstaller(corpus: String, conf: Configuration, repoRoot : File) = {
-  false
-}
+
 
 
 def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
 
-  //  Test conversion of delimited text to FST
+  //  Test conversion of delimited text to FST.
+  // 1:  should object to bad data
   val caughtBadLine = try {
     val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
     false
   } catch {
     case t : Throwable => true
   }
+  // 2: should correctly convert good data.
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
   val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   val goodParse =  (goodFst ==  expected)
 
-  // Test file copying
+  // 3.  Test file copying in apply function
+  // Write some test data in the source work space:
   val dataSource = DataInstaller.dir(file(conf.datadir))
   val corpus = DataInstaller.dir(dataSource / corpusName)
   val stems = DataInstaller.dir(corpus / "stems-tables")
@@ -396,17 +382,21 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
-  println("Wrote test data file " + testData)
 
-
-
-  //println(s"Parsed 'Not a real line' as " + fst)
-  //StemUrn#LexicalEntity#Stem#PoS
   IndeclDataInstaller(dataSource, repoRoot, corpusName)
-  (caughtBadLine && goodParse && false)
+
+  // check the results:
+  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
+  val output  = Source.fromFile(resultFile).getLines.toVector
+  val outputGood = output(0) == expected
+
+  (caughtBadLine && goodParse && outputGood)
 }
 
-def testIndeclRulesInstaller(corpus: String, conf: Configuration, repoRoot : File) : Boolean =  false
+def testIndeclRulesInstaller(corpus: String, conf: Configuration, repoRoot : File) : Boolean =  {
+
+  false
+}
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"

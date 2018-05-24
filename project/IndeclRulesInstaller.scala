@@ -31,7 +31,7 @@ object IndeclRulesInstaller {
     println("\tbuilding inflection rules for indeclinables from " + srcDir)
 
     val rules = indeclFiles.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
-    println("GOT THESE RULES FOR INDECLS: " + rules)
+    //println("GOT THESE RULES FOR INDECLS: " + rules)
     val fst = indeclRulesToFst(rules.toVector)
 
     if (fst.nonEmpty) {
@@ -69,12 +69,6 @@ object IndeclRulesInstaller {
   * @param data Vector of rules strings.
   */
   def indeclRulesToFst(data: Vector[String]) : String = {
-
-
-    println("\n\n\n")
-    println("FST DATA: " + data)
-    println("\n\n\n")
-
     data.map(indeclRuleToFst(_)).mkString(" |\\\n")
   }
 
