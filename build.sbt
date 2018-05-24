@@ -289,6 +289,12 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+  ("Test composing acceptor", testAcceptorComposer(_, _, _), "pending" ),
+  ("Test composing parser", testParserComposer(_, _, _), "pending" ),
+  ("Test composing makefile", testMakefileComposer(_, _, _), "pending" ),
+
+
+
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -507,6 +513,15 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   (expectedFile.exists && lines(3) == expectedLine)
 }
 
+def testAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
+def testMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  false
+}
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"
