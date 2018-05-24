@@ -55,15 +55,11 @@ def deleteSubdirs(dir: File, verbose: Boolean = true): Vector[String] = {
   deleted.filter(_.nonEmpty)
 }
 
-
-
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
   val parserDir = baseDirectory.value / "parsers"
   deleteSubdirs(parserDir)
 }
-
-
 
 // Generate data directory hierarchy for a new named corpus.
 // Writes output to ... depends on params given.
@@ -107,14 +103,10 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
   }
 }
 
-
-
 def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
   println("\n\tUsage: corpu CORPUSNAME [CONFIGFILE]\n")
   //println("\t-r option = replace (delete) existing dataset\n")
 }
-
-
 
 lazy val utilsImpl = Def.inputTaskDyn {
 
@@ -139,7 +131,6 @@ lazy val utilsImpl = Def.inputTaskDyn {
     }
   }
 }
-
 
 // Dynamically creates task to build parser by
 // successively invoking tasks that take parameters.
@@ -191,7 +182,6 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
   println(s"\n\tError: {$msg}\n")
 }
 
-
 // Compile FST parser
 def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
@@ -221,7 +211,6 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   doit !
 }
 
-
 // Utility tasks
 def buildDirectory(repoRoot: File , corpus: String) = {
   repoRoot / s"parsers/${corpus}"
@@ -230,7 +219,7 @@ def buildDirectory(repoRoot: File , corpus: String) = {
 ////////////////////////////////////////////////////////////////
 //
 // Testing the build system
-
+//
 def testList = List(
 
   ("Test finding build directory", testBuildDirectory(_,_,_), ""),
@@ -710,7 +699,6 @@ allBuildTests in Test := {
           val baseDir = baseDirectory.value
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //println(s"(Before ${t._1}, delete all parsers)")
             deleteSubdirs(baseDir / "parsers", false)
 
             print(t._1 + "...")
@@ -744,7 +732,6 @@ allBuildTests in Test := {
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //println(s"(Before ${t._1}, delete all parsers)")
             deleteSubdirs(baseDir / "parsers", false)
             print(t._1 + "...")
 
