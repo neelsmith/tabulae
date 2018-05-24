@@ -293,10 +293,9 @@ def testList = List(
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "pending" ),
   ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "pending" ),
-
   ("Test writing noun acceptor string", testNounAcceptor(_, _, _), "pending" ),
   ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
-  ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
+  ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
 
@@ -553,7 +552,15 @@ def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   false
 }
 def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = file(s"parsers/${corpusName}")
+  //val indeclFile = projectDir /
+  // Should  return empty string if no data:
+  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
+  println(indeclFst)
+  val emptiedOk = indeclFst.isEmpty
+
+  emptiedOk
+
 }
 def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false

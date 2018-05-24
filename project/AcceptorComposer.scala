@@ -184,11 +184,15 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : File): String = {
+
+  //val indeclSource = dir / "inflection/inde") ** "*.fst"
+  val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
+  if (indeclSource.exists) {
    """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indeclclass#]
 $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
-"""
+""" } else { "" }
 }
 
 /** String defining final adjective acceptor transducer.  */
