@@ -89,11 +89,13 @@ object AcceptorComposer {
     // automatically included
     fst.append("#include \"" + dir.toString + "/symbols.fst\"\n")
 
-    fst.append(nounAcceptor(projectDir) + "\n")
+    //fst.append(nounAcceptor(projectDir) + "\n")
+    //fst.append(irregNounAcceptor(projectDir) + "\n")
+
     fst.append(indeclAcceptor(projectDir) + "\n")
 
-    fst.append(irregNounAcceptor(projectDir) + "\n")
-    fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
+
+    //fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -134,6 +136,8 @@ object AcceptorComposer {
   */
   def rewriteFile(f: File, workDir: File): Unit = {
     val lines = Source.fromFile(f).getLines.toVector
+    println("Rewriting " + f + " in "+ workDir)
+    println("lines = " + lines)
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     new PrintWriter(f) { write(rewritten); close }
   }
@@ -184,10 +188,9 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : File): String = {
-
-  //val indeclSource = dir / "inflection/inde") ** "*.fst"
   val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
   if (indeclSource.exists) {
+
    """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indeclclass#]

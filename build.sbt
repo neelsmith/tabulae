@@ -290,13 +290,15 @@ def testList = List(
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
-  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
-  ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "pending" ),
+  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
+  ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
+
   ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "pending" ),
   ("Test writing noun acceptor string", testNounAcceptor(_, _, _), "pending" ),
   ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
+
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
 
 
@@ -529,10 +531,26 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
   false
 }
 def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  // Make directories;
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  DataInstaller.dir(projectDir)
+  val acceptorDir = projectDir / "acceptors"
+  DataInstaller.dir(acceptorDir)
+
+  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
+  val fst = (acceptorDir) ** "*.fst"
+  fst.get.size > 0
 }
 def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+
+  val testOutDir = repoRoot / "parsers"
+  DataInstaller.dir(testOutDir)
+  val testOut = testOutDir / "testfile.fst"
+  new PrintWriter(testOut){write("@workdir@\n@workdir@\nUnmodified line\n"); close;}
+  AcceptorComposer.rewriteFile(testOut, testOutDir)
+  val lines = Source.fromFile(testOut).getLines.toVector.filter(_.nonEmpty)
+  println(lines.mkString("\n"))
+  lines(0) == testOutDir.toString + "/"
 }
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
@@ -552,15 +570,24 @@ def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   false
 }
 def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = file(s"parsers/${corpusName}")
-  //val indeclFile = projectDir /
-  // Should  return empty string if no data:
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = DataInstaller.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
   val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
-  println(indeclFst)
-  val emptiedOk = indeclFst.isEmpty
+  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "% Indeclinable form acceptor:"
 
-  emptiedOk
-
+  (emptiedOk && lines(0) == expected)
 }
 def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
@@ -600,14 +627,15 @@ def plural[T] (lst : List[T]) : String = {
 def reportResults(results: List[Boolean]): Unit = {
   val distinctResults = results.distinct
   if (distinctResults.size == 1 && distinctResults(0)){
-    println("\nAll tests.succeeded.")
+    println("\nAll tests succeeded.")
   } else {
     println("\nThere were failures.")
   }
   println(s"${results.filter(_ == true).size} passed out of ${results.size} test${plural(results)} executed.")
   val pending = testList.filter(_._3 == "pending")
   if (pending.nonEmpty) {
-    println(s"${pending.size} test${plural(pending)} pending.")
+    println(s"\n${pending.size} test${plural(pending)} pending:")
+    println(pending.map(_._1).mkString("\n"))
   }
 }
 

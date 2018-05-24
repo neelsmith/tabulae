@@ -19,9 +19,6 @@ object IndeclDataInstaller {
     val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
     val fst = fstForIndeclData(indeclSourceDir)
 
-//val lexName = "lex-indeclinables-"+ f.getName().replaceFirst(".cex$", ".fst")
-//val fstFile = lexDirectory /  lexName
-
     val fstFile = lexDirectory / "lexicon-indeclinables.fst"
     new PrintWriter(fstFile) { write(fst); close }
 
