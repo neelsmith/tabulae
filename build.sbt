@@ -458,7 +458,6 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   (caughtBadLine && goodParse && outputGood && readDirOk)
 }
 
-
 def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // 1:  should object to bad data
@@ -607,13 +606,14 @@ def testRewriteAcceptors(corpusName: String, conf: Configuration, repoRoot : Fil
   false
 }
 
-
 def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
   DataInstaller.dir(projectDir)
@@ -635,9 +635,11 @@ def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File)
 
   (emptiedOk && lines(0) == expected)
 }
+
 def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
 
@@ -660,6 +662,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
 
   minimalOk && expandedOk
 }
+
 def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
   ParserComposer(projectDir)
@@ -670,15 +673,19 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
   lines(0).trim == expected
 }
+
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
+
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
   val buildDirectory = baseDir / s"parsers/${corpus}"
 
