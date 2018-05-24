@@ -527,8 +527,15 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = file(s"parsers/${corpusName}")
-
+  // 1. Should omit indeclinables if not data present.
   AcceptorComposer.composeMainAcceptor(projectDir)
+
+  val dataSource = file(conf.datadir)
+  val corpus = dataSource / corpusName
+  DataInstaller.dir(corpus)
+  val acceptor = DataInstaller.dir(corpus / "acceptor.fst")
+
+
   false
 }
 def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {
@@ -551,6 +558,9 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
   AcceptorComposer.rewriteFile(testOut, testOutDir)
   val lines = Source.fromFile(testOut).getLines.toVector.filter(_.nonEmpty)
   println(lines.mkString("\n"))
+
+  //clean up:
+  testOut.delete
   lines(0) == testOutDir.toString + "/"
 }
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
