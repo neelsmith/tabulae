@@ -38,7 +38,6 @@ object SymbolsComposer {
   }
 
   def composeMainFile(projectDir: File): Unit = {
-    println("Composing main file of all symbols in " + projectDir)
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 
@@ -52,11 +51,8 @@ object SymbolsComposer {
     fst.append("% 3. Editorial symbols\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/markup.fst\"\n\n")
 
-    println("Compose a symbols file in " + projectDir)
     val symbolsFile = projectDir / "symbols.fst"
-
     if (! projectDir.exists) {projectDir.mkdir()} else {}
-    println("Time to write symbols files " + symbolsFile)
     new PrintWriter(symbolsFile) { write(fst.toString); close }
   }
 

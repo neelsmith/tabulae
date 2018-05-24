@@ -21,7 +21,6 @@ object BuildComposer {
 
   def apply(dataSource: File, repo: File, corpus: String, fstcompiler: String) : Unit = {
     println("Composing a lot of build things.")
-    println(s"Params are: \ndata source: ${dataSource}\nrepo ${repo}\ncorpus")
 
     val corpusDir = "parsers/" + corpus
     val projectDir = repo / corpusDir
@@ -30,8 +29,8 @@ object BuildComposer {
     installAlphabet(dataSource, repo, corpus)
     InflectionComposer(projectDir)
     AcceptorComposer(repo, corpus)
-    ParserComposer(projectDir)
-    MakefileComposer(projectDir, fstcompiler)
+    //ParserComposer(projectDir)
+    //MakefileComposer(projectDir, fstcompiler)
 
     //GeneratorComposer(repo, corpus)
   }

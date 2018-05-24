@@ -15,7 +15,6 @@ object IndeclRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val indeclFst = fstForIndeclRules(srcDir)
-    //println(s"Write ${indeclFst.size} chars of rules for indeclinables to " + targetFile)
     new PrintWriter(targetFile) { write(indeclFst ); close }
   }
 
@@ -28,12 +27,8 @@ object IndeclRulesInstaller {
   def fstForIndeclRules(srcDir: File) : String = {
     val indeclOpt = (srcDir) ** "*cex"
     val indeclFiles = indeclOpt.get
-    println("\tbuilding inflection rules for indeclinables from " + srcDir)
-
     val rules = indeclFiles.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
-    //println("GOT THESE RULES FOR INDECLS: " + rules)
     val fst = indeclRulesToFst(rules.toVector)
-
     if (fst.nonEmpty) {
       "$indeclinfl$ = " + fst + "\n\n$indeclinfl$\n"
     } else {
