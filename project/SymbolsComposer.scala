@@ -55,7 +55,7 @@ object SymbolsComposer {
     val symbolsFile = projectDir / "symbols.fst"
 
     if (! projectDir.exists) {projectDir.mkdir()} else {}
-    println("Time to write symboles files " + symbolsFile)
+    println("Time to write symbols files " + symbolsFile)
     new PrintWriter(symbolsFile) { write(fst.toString); close }
   }
 

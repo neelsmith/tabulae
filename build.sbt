@@ -285,7 +285,6 @@ def testList = List(
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
 
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
-
   ("Test composing FST symbols", testSymbolsComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
@@ -358,7 +357,13 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 
 
 def testSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  SymbolsComposer.composeMainFile(projectDir)
+
+  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
+  val symbols = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "% symbols.fst"
+  (expectedFile.exists && symbols(0) == expectedLine)
 }
 
 def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
@@ -366,9 +371,10 @@ def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File
   BuildComposer.installAlphabet(dataSrc, repoRoot, corpusName)
   val expectedFile = repoRoot / s"parsers/${corpusName}/symbols/alphabet.fst"
 
-  val alphabet = Source.fromFile(expectedFile).getLines.toVector.mkString("\n")
-  println(alphabet)
-  expectedFile.exists
+  val alphabet = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
+
+  (expectedFile.exists && alphabet(1) == expectedLine)
 }
 
 def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
