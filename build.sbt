@@ -373,8 +373,8 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   val goodParse =  (goodFst ==  expected)
 
-  // 3.  Test file copying in apply function
-  // Write some test data in the source work space:
+
+  // 3: should create FST for all files in a directory
   val dataSource = DataInstaller.dir(file(conf.datadir))
   val corpus = DataInstaller.dir(dataSource / corpusName)
   val stems = DataInstaller.dir(corpus / "stems-tables")
@@ -383,6 +383,12 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
 
+  val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
+  val readDirOk = fstFromDir == s"${expected}\n"
+
+
+  // 4.  Test file copying in apply function
+  // Write some test data in the source work space:
   IndeclDataInstaller(dataSource, repoRoot, corpusName)
 
   // check the results:
@@ -390,12 +396,43 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val output  = Source.fromFile(resultFile).getLines.toVector
   val outputGood = output(0) == expected
 
-  (caughtBadLine && goodParse && outputGood)
+  // clean up:
+  testData.delete()
+
+  (caughtBadLine && goodParse && outputGood && readDirOk)
 }
 
-def testIndeclRulesInstaller(corpus: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  //  Test conversion of delimited text to FST.
+  // 1:  should object to bad data
+  val caughtBadLine = try {
+    val fst = IndeclRulesInstaller.indeclRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+  // 2: should correctly convert good data.
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
+  val goodParse =  (goodFst ==  expected)
 
-  false
+  // 3: should create FST for all files in a directory
+  val dataSource = DataInstaller.dir(file(conf.datadir))
+  val corpus = DataInstaller.dir(dataSource / corpusName)
+  val rules = DataInstaller.dir(corpus / "rules-tables")
+  val indeclSource = DataInstaller.dir(rules / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
+  val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
+
+  // clean up:
+  testData.delete()
+
+  (caughtBadLine && goodParse && readDirOk)
 }
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {

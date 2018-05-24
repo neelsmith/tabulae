@@ -49,14 +49,12 @@ object IndeclRulesInstaller {
   def indeclRuleToFst(line: String) : String = {
     val cols = line.split("#")
     if (cols.size < 2) {
-      println("Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
-      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse rule:\n${line}")
+      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse rule:\n${line}")
     } else {
-
       val fst = StringBuilder.newBuilder
       val ruleUrn = cols(0).replaceAll("_","\\\\_").
         replaceAll("\\.","\\\\.")
-
       val pos = cols(1)
 
       fst.append(s"<${pos}><indecl><u>${ruleUrn}</u>").toString
