@@ -285,7 +285,8 @@ def testList = List(
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
 
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
-  ("Test composing FST symbols", testSymbolsComposer(_, _, _), "" ),
+  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
+  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) /*,
 
@@ -356,7 +357,7 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
 }
 
 
-def testSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
   SymbolsComposer.composeMainFile(projectDir)
 
@@ -364,6 +365,14 @@ def testSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File
   val symbols = Source.fromFile(expectedFile).getLines.toVector
   val expectedLine = "% symbols.fst"
   (expectedFile.exists && symbols(0) == expectedLine)
+}
+
+def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
+  val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
+  val actualFiles =  (projectDir / "symbols") ** "*.fst"
+  expectedNames == actualFiles.get.map(_.getName).toSet
 }
 
 def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
@@ -506,7 +515,7 @@ allBuildTests in Test := {
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
             //println(s"(Before ${t._1}, delete all parsers)")
-            cleanAll.value
+            deleteSubdirs(baseDir / "parsers")
 
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
@@ -540,7 +549,7 @@ allBuildTests in Test := {
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
             //println(s"(Before ${t._1}, delete all parsers)")
-            cleanAll.value
+            deleteSubdirs(baseDir / "parsers")
             print(t._1 + "...")
 
             val reslt = t._2(corpusName, conf, baseDir)
