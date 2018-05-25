@@ -15,7 +15,7 @@ object MakefileComposer {
     //val inflDir = projectDir / "inflection"
 
     composeInflectionMake(projectDir, fstcompiler)
-    //composeVerbStemMake(projectDir, fstcompiler)
+    composeVerbStemMake(projectDir, fstcompiler)
 
     composeMainMake(projectDir, fstcompiler)
   }
@@ -51,7 +51,7 @@ object MakefileComposer {
     makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
 
     makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
-    makeFileText.append(verbStemMake(projectDir, fstcompiler))
+    makeFileText.append(composeVerbStemMake(projectDir, fstcompiler))
 
 
 /*
@@ -80,8 +80,10 @@ object MakefileComposer {
 
 
   /** Compose makefile for verb subdirectory.
+  * This will generate invalid make unless there is at
+  * least one file with verb rules in acceptors/verb.
   */
-  def verbStemMake(projectDir: File, fstcompiler: String) : String = {
+  def composeVerbStemMake(projectDir: File, fstcompiler: String) : String = {
     (s"\nWrite makefile for verb stem trandsducers in project ${projectDir}\n")
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/acceptors/verbstems.a: ")
@@ -117,7 +119,6 @@ object MakefileComposer {
       makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
 
       val makefile = inflDir / "makefile"
-      println("Writing INFLECTION makefile " + makefile)
       new PrintWriter(makefile) { write(makeFileText.toString); close }
   }
 

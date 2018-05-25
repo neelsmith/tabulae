@@ -253,8 +253,8 @@ def testList = List(
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
 
   ("Test composing parser", testParserComposer(_, _, _), "" ),
-  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
-  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
+  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
+  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "pending" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
@@ -618,20 +618,41 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
   val parserFst = projectDir / "latin.fst"
   val lines = Source.fromFile(parserFst).getLines.toVector.filter(_.nonEmpty)
 
+  // tidy up
+  parserFst.delete
+
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
   lines(0).trim == expected
 }
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+
   false
 }
 
 def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val compiler = conf.fstcompile
+
+  // install some verb data
+  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
+
+  val fst = MakefileComposer.composeVerbStemMake(projectDir, compiler)
+
+  println("VERB FST:\n" + fst)
   false
 }
 
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
+  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val compiler = conf.fstcompile
+  MakefileComposer.composeInflectionMake(projectDir, compiler)
+
+  val inflDir = projectDir / "inflection"
+  val mkfile = inflDir / "makefile"
+
+  mkfile.exists
 }
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
