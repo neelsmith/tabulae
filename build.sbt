@@ -255,7 +255,7 @@ def testList = List(
   ("Test composing parser", testParserComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
-  ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "pending" ),
+  ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
 
@@ -637,11 +637,11 @@ def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 
   // install some verb data
   AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
-
   val fst = MakefileComposer.composeVerbStemMake(projectDir, compiler)
+  val lines  = fst.split("\n")
 
-  println("VERB FST:\n" + fst)
-  false
+  val beginning = s"parsers/${corpusName}/acceptors/verbstems.a: "
+  lines(0).startsWith(beginning) && lines(0).size > (beginning.size + 3)
 }
 
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
@@ -670,7 +670,6 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
   expectedAlphabet.exists && moretests
 }
 
-
 // test comopiling and executing a final parser
 def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
@@ -683,7 +682,6 @@ def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Bo
 def testDataTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
-
 
 def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
