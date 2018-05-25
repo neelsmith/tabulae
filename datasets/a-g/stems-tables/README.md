@@ -1,0 +1,1 @@
+This directory defines the morphological lexicon applicable to yours corpus. Each of the six subdirectories represents a distinct category of lexicon entry, and has a README file explaining the tabular format for its specific category.
