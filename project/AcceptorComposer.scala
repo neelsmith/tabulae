@@ -94,7 +94,7 @@ object AcceptorComposer {
 
     fst.append(indeclAcceptor(projectDir) + "\n")
 
-    //fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
+    fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 

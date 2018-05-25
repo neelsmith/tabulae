@@ -232,7 +232,7 @@ def testList = List(
   ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
 
-  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
@@ -471,7 +471,7 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
   val acceptor = projectDir / "acceptor.fst"
   val lines = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
   val expected = "$acceptor$ = $verb_pipeline$"
-  val emptyOk = lines(3).trim == expected.trim
+  val emptyOk = lines(4).trim == expected.trim
 
   // 2. Should include indeclinables if data are present.
   val lexica = projectDir / "lexica"
@@ -485,6 +485,7 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
   val lines2 = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
   val expected2 = "$=indeclclass$ = [#indeclclass#]"
   val dataOk = expected2.trim == lines2(2).trim
+
 
   emptyOk && dataOk
 }
@@ -627,8 +628,17 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val compiler = conf.fstcompile
 
-  false
+  // install some verb data
+  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
+  val fst = MakefileComposer.composeVerbStemMake(projectDir, compiler)
+  val lines  = fst.split("\n")
+
+  MakefileComposer.composeMainMake(projectDir, compiler)
+
+  val mkfile = projectDir / "makefile"
+  mkfile.exists
 }
 
 def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {

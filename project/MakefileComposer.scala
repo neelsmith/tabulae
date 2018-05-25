@@ -72,10 +72,11 @@ object MakefileComposer {
 
     makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
      //later:  ${projectDir.toString}/generator.a ")
+    DataInstaller.dir(projectDir)
 
-    val makeFile = projectDir / "makefile"
-    println("Writing MAIN make file " + makeFile)
-    new PrintWriter(makeFile) { write(makeFileText.toString); close }
+    val makeFile = new File(projectDir, "makefile")
+    new PrintWriter(makeFile) { write(makeFileText.toString); close; }
+
   }
 
 
