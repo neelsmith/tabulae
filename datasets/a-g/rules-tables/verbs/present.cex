@@ -20,3 +20,11 @@ lverbinfl.are_presind15#are_vb#et#3rd#sg#pres#subj#act
 lverbinfl.are_presind16#are_vb#emus#1st#pl#pres#subj#act
 lverbinfl.are_presind17#are_vb#etis#2nd#pl#pres#subj#act
 lverbinfl.are_presind17#are_vb#ent#3rd#pl#pres#subj#act
+
+
+lverbinfl.are_presind19#are_vb#er#1st#sg#pres#subj#pass
+lverbinfl.are_presind19#are_vb#eris#2nd#sg#pres#subj#pass
+lverbinfl.are_presind20#are_vb#etur#3rd#sg#pres#subj#pass
+lverbinfl.are_presind21#are_vb#emur#1st#pl#pres#subj#pass
+lverbinfl.are_presind22#are_vb#emini#2nd#pl#pres#subj#pass
+lverbinfl.are_presind23#are_vb#entur#3rd#pl#pres#subj#pass

@@ -19,3 +19,11 @@ lverbinfl.are_impft15#are_vb#aret#3rd#sg#impft#subj#act
 lverbinfl.are_impft16#are_vb#aremus#1st#pl#impft#subj#act
 lverbinfl.are_impft17#are_vb#aretis#2nd#pl#impft#subj#act
 lverbinfl.are_impft18#are_vb#arent#3rd#pl#impft#subj#act
+
+lverbinfl.are_impft19#are_vb#arer#1st#sg#impft#subj#pass
+lverbinfl.are_impft20#are_vb#areris#2nd#sg#impft#subj#pass
+lverbinfl.are_impft20b#are_vb#arere#2nd#sg#impft#subj#pass
+lverbinfl.are_impft21#are_vb#aretur#3rd#sg#impft#subj#pass
+lverbinfl.are_impft21#are_vb#aremur#1st#pl#impft#subj#pass
+lverbinfl.are_impft22#are_vb#aremini#2nd#pl#impft#subj#pass
+lverbinfl.are_impft23#are_vb#arentur#3rd#pl#impft#subj#pass

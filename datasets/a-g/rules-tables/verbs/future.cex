@@ -1,0 +1,15 @@
+RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice
+lverbinfl.are_fut1#are_vb#abo#1st#sg#fut#indic#act
+lverbinfl.are_fut2#are_vb#abis#2nd#sg#fut#indic#act
+lverbinfl.are_fut3#are_vb#abit#3rd#sg#fut#indic#act
+lverbinfl.are_fut4#are_vb#abimus#1st#pl#fut#indic#act
+lverbinfl.are_fut5#are_vb#abitis#2nd#pl#fut#indic#act
+lverbinfl.are_fut6#are_vb#abunt#3rd#pl#fut#indic#act
+
+lverbinfl.are_fut7#are_vb#abor#1st#sg#fut#indic#pass
+lverbinfl.are_fut8#are_vb#aberis#2nd#sg#fut#indic#pass
+lverbinfl.are_fut8b#are_vb#aber3#2nd#sg#fut#indic#pass
+lverbinfl.are_fut9#are_vb#abitur#3rd#sg#fut#indic#pass
+lverbinfl.are_fut10#are_vb#abimur#1st#pl#fut#indic#pass
+lverbinfl.are_fut11#are_vb#abimini#2nd#pl#fut#indic#pass
+lverbinfl.are_fut12#are_vb#abuntur#3rd#pl#fut#indic#pass
