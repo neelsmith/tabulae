@@ -15,7 +15,9 @@ object VerbRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val verbFst = fstForVerbRules(srcDir)
+
     new PrintWriter(targetFile) { write(verbFst ); close }
+    println("Wrote verb rules to " + targetFile)
   }
 
 
@@ -29,12 +31,19 @@ object VerbRulesInstaller {
     val fileList = filesOpt.get
     println("\tbuilding inflection rules for verbs from " + srcDir)
 
-    val rules = fileList.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
-    val fst = verbRulesToFst(rules.toVector)
-    if (fst.nonEmpty) {
-      "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
-    } else {
+    if (fileList.isEmpty) {
+      println("NO VERB RULES")
       ""
+    } else {
+      val rules = fileList.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
+      val fst = verbRulesToFst(rules.toVector)
+      println("READ FILES " + rules)
+      println("and generated  " + fst)
+      if (fst.nonEmpty) {
+        "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
+      } else {
+        ""
+      }
     }
   }
 

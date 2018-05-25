@@ -10,7 +10,7 @@ object RulesInstaller {
   * @param corpus Name of corpus
   */
   def apply(sourceDir: File, repo: File, corpus: String): Unit = {
-    
+
     val parsers =  DataInstaller.dir(repo / "parsers")
     val corpDir = DataInstaller.dir(parsers / corpus)
     val inflDir = DataInstaller.dir(corpDir / "inflection")
@@ -19,7 +19,8 @@ object RulesInstaller {
 
     //NounRulesInstaller( srcCorpus / "rules-tables/nouns", inflDir / "nouninfl.fst")
     IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
-    //VerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
+    println("INSTALL VERBS NEXT:")
+    VerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
   }
 
 

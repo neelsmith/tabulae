@@ -21,14 +21,21 @@ $ending$ = """
   }
 
   def apply(projectDir: File) : Unit = {
-    val fstText = StringBuilder.newBuilder
-    fstText.append(header)
-    fstText.append( inflectionFsts(projectDir / "inflection").mkString(" |\\\n"))
-    fstText.append ("\n\n$ending$\n")
-
-    val finalText = fstText.toString
+    val indeclFiles = inflectionFsts(projectDir / "inflection")
+    
     val fstFile = projectDir / "inflection.fst"
-    new PrintWriter(fstFile) { write(finalText); close }
+    if (indeclFiles.nonEmpty) {
+      val fstText = StringBuilder.newBuilder
+      fstText.append(header)
+      fstText.append( indeclFiles.mkString(" |\\\n"))
+      fstText.append ("\n\n$ending$\n")
+
+      val finalText = fstText.toString
+
+      new PrintWriter(fstFile) { write(finalText); close }
+    } else {
+      // No fst files for indeclinables
+    }
   }
 
 }

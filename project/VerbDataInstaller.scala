@@ -14,6 +14,7 @@ object VerbDataInstaller {
     val dir =  dataSource / s"${corpus}/stems-tables/verbs-simplex"
     val rulesOpt = (dir) ** "*cex"
     val rulesFiles = rulesOpt.get
+    println("SIMPLEX VERBS:")
     println("\tbuilding simplex verb stems from " + dir)
 
     for (f <- rulesFiles) {

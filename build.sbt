@@ -26,8 +26,7 @@ lazy val root = (project in file(".")).
       fst := buildFst.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value//,
-      //mdebug := currentTest.value
+      cleanAll := cleanAllImpl.value
     ).enablePlugins(TutPlugin)
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
@@ -236,7 +235,7 @@ def testList = List(
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+
 
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
@@ -273,7 +272,9 @@ def testList = List(
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
   ("Test compiling and executing FST parser", testFstBuild(_, _, _), "pending" ),
-  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" )
+  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" ),
+
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" )
 )
 
 
@@ -459,7 +460,10 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
   val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
   val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
-  testData.delete()
+
+  println(lines.mkString("\n"))
+  //testData.delete()
+
   (expectedFile.exists && lines(3) == expectedLine)
 }
 

@@ -1,14 +1,14 @@
 import sbt._
- import Path.rebase
+import Path.rebase
 
 object DataTemplate {
 
   def apply(srcDir: File, targetDir: File): Unit = {
     if (! targetDir.exists){ targetDir.mkdir} else {}
     println("Data template: now " + targetDir + " exists.")
-    //copyMarkdown(srcDir, targetDir)
-    //copyCex(srcDir,targetDir)
-    //copyFst(srcDir,targetDir)
+    copyMarkdown(srcDir, targetDir)
+    copyCex(srcDir,targetDir)
+    copyFst(srcDir,targetDir)
   }
 
 
@@ -18,7 +18,7 @@ object DataTemplate {
 
      val mappings: Seq[(File,File)] = fstFiles pair rebase(srcDir, targetDir)
 
-     println("\ncopying FST files...")
+     println(s"\ncopying FST files from ${srcDir} to ${targetDir}...")
      for (m <- mappings) {
        println("  ..copy " + m._1 + " -> " + m._2)
        IO.copyFile(m._1, m._2)
