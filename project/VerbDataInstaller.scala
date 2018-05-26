@@ -5,7 +5,6 @@ import java.io.PrintWriter
 
 object VerbDataInstaller {
 
-
   /**
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
@@ -17,6 +16,7 @@ object VerbDataInstaller {
 
     println("\tbuilding simplex verb stems from " + dir)
 
+/*
     for (f <- rulesFiles) {
       val fstFile = lexDirectory / "lex-verbs-" + f.getName().replaceFirst(".cex$", ".fst")
       // omit empty lines and header
@@ -24,9 +24,20 @@ object VerbDataInstaller {
       val fstLines = VerbDataInstaller.verbLinesToFst(dataLines)
       new PrintWriter(fstFile) { write(fstLines); close }
     }
+    */
   }
 
-
+  def fstForVerbData(dir: File) : String = {
+    val verbOpt = (dir) ** "*cex"
+    val verbFiles = verbOpt.get
+    println("Look in " + dir + " and got " + verbFiles)
+    val fstLines = for (f <- verbFiles) yield {
+      // omit empty lines and header
+      val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
+      VerbDataInstaller.verbLinesToFst(dataLines)
+    }
+    fstLines.mkString("\n")
+  }
 // model of src cex
 // smyth.n23658_2#lexent.n23658#deic#w_pp3#
 // model of target fst:

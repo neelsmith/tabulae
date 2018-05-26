@@ -50,7 +50,7 @@ def testList = List(
 
   ("Test converting bad data to fst for verbs", testBadVerbDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for verbs", testVerbDataConvert(_, _, _), "" ),
-  ("Test converting verb files in directorty to fst for indeclinable", testVerbFstFromDir(_, _, _), "pending" ),
+  ("Test converting verb files in directory to fst for indeclinable", testVerbFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "pending" ),
 
 )
@@ -307,22 +307,22 @@ def testVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File
 }
 def testVerbFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Should create FST for all files in a directory
-  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+    val goodLine = "ag.v1#lexent.n2280#am#are_vb"
 
-  val dataSource = file ("./test_build/datasets")
+  val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
   val stems = Utils.dir(corpus / "stems-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
 
-  val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
+  val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
+
   // Tidy up
   IO.delete(corpus)
-  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
-  fstFromDir == s"${expected}\n"
-  false
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
+  fstFromDir.trim == expected
 }
 def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Install one data file:
