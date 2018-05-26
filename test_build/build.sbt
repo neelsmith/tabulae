@@ -3,6 +3,7 @@ import scala.sys.process._
 import scala.io.Source
 import java.io.PrintWriter
 
+
 name := "bldtest"
 
 /** Triples of description, function and status. */
@@ -13,6 +14,7 @@ def testList = List(
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
   ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
 )
 
 /** "s" or no "s"? */
@@ -156,6 +158,25 @@ def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot :
   (caughtBadLine && goodParse && readDirOk)
 }
 
+def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
+  val dataSrc = file("./test_build/datasets")
+
+
+  BuildComposer.installAlphabet(dataSrc, repoRoot, "minimum")
+  val workSpace =  repoRoot /  "parsers/minimum"
+  val expectedFile = repoRoot / "parsers/minimum/symbols/alphabet.fst"
+  val itsAlive = expectedFile.exists
+
+  val alphabet = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
+
+  // tidy up
+  println("Delete " + workSpace)
+  IO.delete(workSpace)
+
+
+  (itsAlive && alphabet(1) == expectedLine)
+}
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed

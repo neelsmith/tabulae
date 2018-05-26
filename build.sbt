@@ -15,6 +15,7 @@ val commonSettings = Seq(
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+  
         "edu.holycross.shot.cite" %% "xcite" % "3.3.0"
       ),
 
@@ -212,7 +213,7 @@ def tbdList = List (
   ("Test Configuration object", testConfiguration(_, _, _), "pending" ),
 )
 def testListX = List(
-  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
+
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
@@ -306,20 +307,6 @@ def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
   val actualFiles =  (projectDir / "symbols") ** "*.fst"
   expectedNames == actualFiles.get.map(_.getName).toSet
 }
-
-def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
-  val dataSrc = file(conf.datadir)
-  BuildComposer.installAlphabet(dataSrc, repoRoot, corpusName)
-  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols/alphabet.fst"
-
-  val alphabet = Source.fromFile(expectedFile).getLines.toVector
-  val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
-
-  (expectedFile.exists && alphabet(1) == expectedLine)
-}
-
-
-
 
 
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
