@@ -11,7 +11,8 @@ def testList = List(
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
-  ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "pending" ),
+  ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
+  ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
 )
 
 /** "s" or no "s"? */
@@ -53,7 +54,6 @@ def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
 }
 
 def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
-
   val workSpace = repoRoot / "parsers"
   val verbose = false
   val initialClean = Utils.deleteSubdirs(workSpace, verbose)
@@ -122,6 +122,40 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
 
   (caughtBadLine && goodParse && outputGood && readDirOk)
 }
+
+def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  //  Test conversion of delimited text to FST.
+  // 1:  should object to bad data
+  val caughtBadLine = try {
+    val fst = IndeclRulesInstaller.indeclRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+  // 2: should correctly convert good data.
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
+  val goodParse =  (goodFst ==  expected)
+
+  // 3: should create FST for all files in a directory
+  val dataSource = Utils.dir(file(conf.datadir))
+  val corpus = Utils.dir(dataSource / corpusName)
+  val rules = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(rules / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
+  val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
+
+  // clean up:
+  testData.delete()
+
+  (caughtBadLine && goodParse && readDirOk)
+}
+
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
