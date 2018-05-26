@@ -23,7 +23,7 @@ object AcceptorComposer {
     composeMainAcceptor(projectDir)
     println("\nSecondary generators are necessary for verbs to distinguish prin.part as well as inflectional category")
     copySecondaryAcceptors(repo, corpus)
-    //rewriteSecondaryAcceptors(projectDir)
+    rewriteSecondaryAcceptors(projectDir)
 
     //composeVerbStems(projectDir)
     //composeVerbAcceptor(projectDir)

@@ -165,17 +165,39 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
   println(s"\n\tError: {$msg}\n")
 }
 
+/*
+def fstCompileImp(dataDirectory: File, baseDir: File, corpus: String, conf: Configuration)  = {
+  // Install data and rules, converting tabular data to FST
+  DataInstaller(dataDirectory, baseDir, corpus)
+  RulesInstaller(dataDirectory, baseDir, corpus)
+
+  // Compose makefiles and higher-order FST for build system
+  BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
+
+
+  // Build it!
+  val buildDirectory = baseDir / s"parsers/${corpus}"
+  val inflMakefile = buildDirectory / "inflection/makefile"
+  val makeInfl = s"${conf.make} -f ${inflMakefile}"
+  makeInfl !
+
+  val makefile = buildDirectory / "makefile"
+  val doit = s"${conf.make} -f ${makefile}"
+  doit !
+} */
+
 // Compile FST parser
 def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
-  val buildDirectory = bd / s"parsers/${corpus}"
+  //
   val conf = Configuration(configFile)
 
   println("Conf is " + conf + " from config file " + configFile)
 
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
   println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
-
+  FstCompiler.compile(dataDirectory, bd, corpus, conf)
+/*
 
   // Install data and rules, converting tabular data to FST
   DataInstaller(dataDirectory, bd, corpus)
@@ -192,6 +214,7 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
   val makefile = buildDirectory / "makefile"
   val doit = s"${conf.make} -f ${makefile}"
   doit !
+  */
 }
 
 // Utility tasks
@@ -218,18 +241,17 @@ def testListX = List(
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
 
-  ("Test composing parser", testParserComposer(_, _, _), "" ),
 
 
-  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
-  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
+
+
   ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "" ),
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
 
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
-  ("Test compiling and executing FST parser", testFstBuild(_, _, _), "pending" ),
+
   ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" ),
 )
 
@@ -271,7 +293,6 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
   testOut.delete
   lines(0) == testOutDir.toString + "/"
 }
-
 
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / "parsers"
@@ -318,44 +339,13 @@ def testRewriteAcceptors(corpusName: String, conf: Configuration, repoRoot : Fil
 def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
-
 def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
-
 def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   false
 }
 
-
-def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
-  ParserComposer(projectDir)
-
-  val parserFst = projectDir / "latin.fst"
-  val lines = Source.fromFile(parserFst).getLines.toVector.filter(_.nonEmpty)
-
-  // tidy up
-  parserFst.delete
-
-  val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
-  lines(0).trim == expected
-}
-
-def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
-  val compiler = conf.fstcompile
-
-  // install some verb data
-  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
-  val fst = MakefileComposer.composeVerbStemMake(projectDir, compiler)
-  val lines  = fst.split("\n")
-
-  MakefileComposer.composeMainMake(projectDir, compiler)
-
-  val mkfile = projectDir / "makefile"
-  mkfile.exists
-}
 
 def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
@@ -368,17 +358,6 @@ def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 
   val beginning = s"parsers/${corpusName}/acceptors/verbstems.a: "
   lines(0).startsWith(beginning) && lines(0).size > (beginning.size + 3)
-}
-
-def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
-  val compiler = conf.fstcompile
-  MakefileComposer.composeInflectionMake(projectDir, compiler)
-
-  val inflDir = projectDir / "inflection"
-  val mkfile = inflDir / "makefile"
-
-  mkfile.exists
 }
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
@@ -396,11 +375,6 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
   expectedAlphabet.exists && moretests
 }
 
-// test comopiling and executing a final parser
-def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
-  false
-}
-
 def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
@@ -408,101 +382,3 @@ def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Bo
 def testDataTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
-/*
-def plural[T] (lst : List[T]) : String = {
-  if (lst.size > 1) { "s"} else {""}
-}
-
-def reportResults(results: List[Boolean]): Unit = {
-  val distinctResults = results.distinct
-  if (distinctResults.size == 1 && distinctResults(0)){
-    println("\nAll tests succeeded.")
-  } else {
-    println("\nThere were failures.")
-  }
-  println(s"${results.filter(_ == true).size} passed out of ${results.size} test${plural(results)} executed.")
-  val pending = testList.filter(_._3 == "pending")
-  if (pending.nonEmpty) {
-    println(s"\n${pending.size} test${plural(pending)} pending:")
-    println(pending.map(_._1).mkString("\n"))
-  }
-}
-
-lazy val allBuildTests = inputKey[Unit]("Test using output of args")
-allBuildTests in Test := {
-  val args: Seq[String] = spaceDelimited("<arg>").parsed
-
-  args.size match {
-      //runBuildTests(args(0), conf, baseDirectory.value)
-    case 1 => {
-      try {
-        val conf = Configuration(file("conf.properties"))
-        val f = file(conf.datadir)
-
-        if (f.exists) {
-          val corpusName = args(0)
-          val baseDir = baseDirectory.value
-          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
-          val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            deleteSubdirs(baseDir / "parsers", false)
-
-            print(t._1 + "...")
-            val reslt = t._2(corpusName, conf, baseDir)
-            if (reslt) { println ("success.") } else { println("failed.")}
-            reslt
-          }
-          reportResults(results)
-
-        } else {
-          println("Failed.")
-          println(s"No configuration file ${conf.datadir} exists.")
-        }
-
-      } catch {
-        case t: Throwable => {
-          println("Failed.")
-          println(t)
-        }
-      }
-    }
-
-    case 2 => {
-      try {
-        val conf = Configuration(file(args(1)))
-        val f = file(conf.datadir)
-
-        if (f.exists) {
-          val corpusName = args(0)
-          val baseDir = baseDirectory.value
-          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
-
-          val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            deleteSubdirs(baseDir / "parsers", false)
-            print(t._1 + "...")
-
-            val reslt = t._2(corpusName, conf, baseDir)
-            if (reslt) { println ("success.") } else { println("failed.")}
-            reslt
-          }
-          reportResults(results)
-
-
-        } else {
-          println("Failed.")
-          println(s"No configuration file ${conf.datadir} exists.")
-        }
-
-      } catch {
-        case t: Throwable => {
-          println("Failed.")
-          println(t)
-        }
-      }
-    }
-
-    case _ =>  {
-      println(s"Wrong number args (${args.size}): ${args}")
-      println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
-    }
-  }
-} */

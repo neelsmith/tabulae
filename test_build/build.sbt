@@ -34,6 +34,14 @@ def testList = List(
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
+
+  ("Test composing parser", testParserComposer(_, _, _), "" ),
+
+  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
+  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
+
+  ("Test compiling and executing FST parser", testFstBuild(_, _, _), "" ),
+
 )
 
 /** "s" or no "s"? */
@@ -72,7 +80,6 @@ def installIndeclRuleTable(corpusDir: File ): Unit = {
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
 }
-
 
 def installIndeclRuleFst(corpusDir:  File) : Unit = {
   val lexica = corpusDir / "lexica"
@@ -124,7 +131,6 @@ def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) =
 
 def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
   val dataSrc = file("./test_build/datasets")
-
 
   BuildComposer.installAlphabet(dataSrc, repoRoot, "minimum")
   val workSpace =  repoRoot /  "parsers/minimum"
@@ -421,6 +427,55 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
   val lines = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
   val expected = "$acceptor$ = $squashindeclurn$"
   lines(5).trim == expected.trim
+}
+
+def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  if (!projectDir.exists) {projectDir.mkdir}
+  ParserComposer(projectDir)
+
+  val parserFst = projectDir / "latin.fst"
+  val lines = Source.fromFile(parserFst).getLines.toVector.filter(_.nonEmpty)
+
+  // tidy up
+  //parserFst.delete
+
+  val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
+  lines(0).trim == expected
+}
+
+def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot /s"parsers/${corpusName}"
+  if (!projectDir.exists){projectDir.mkdir}
+  val compiler = conf.fstcompile
+  MakefileComposer.composeInflectionMake(projectDir, compiler)
+
+  val inflDir = projectDir / "inflection"
+  val mkfile = inflDir / "makefile"
+
+  mkfile.exists
+}
+def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  // install some data
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  if (!projectDir.exists){projectDir.mkdir}
+  installIndeclRuleFst(projectDir)
+
+  val compiler = conf.fstcompile
+  MakefileComposer.composeMainMake(projectDir, compiler)
+
+  val mkfile = projectDir / "makefile"
+  mkfile.exists
+}
+
+// test comopiling and executing a final parser
+def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  val cName = "minimum"
+  val dataDirectory = baseDir / "datasets"
+  val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
+
+  FstCompiler.compile(dataDirectory, baseDir, corpusName, conf)
+  false
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")
