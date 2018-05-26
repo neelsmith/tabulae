@@ -181,7 +181,6 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : File): String = {
-  println("LOOKING FOR INDECLS in " + dir)
   if (includeIndecls(dir) ) {
    """
 % Indeclinable form acceptor:
@@ -199,7 +198,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 """
 }
 
-  /** True if data set includes data for indeclinables.
+  /** True if parser lexica include data for indeclinables.
   *
   * @param dir Directory for corpus data set.
   */
@@ -208,20 +207,41 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     indeclSource.exists
   }
 
+
+  /** True if parser lexica include entries for verbs.
+  */
+  def includeVerbs(dir: File): Boolean = {
+    val lexica = dir / "lexica"
+    val verbsSource = lexica ** "lex-verbs*"
+    verbsSource.get.nonEmpty
+  }
+
   /** Compose FST for union of transducers squashing URNs.
   *
   * @param dir Directory for corpus data set.
   */
   def unionOfSquashers(dir: File) : String = {
     val fst = StringBuilder.newBuilder
+    fst.append("% Union of all URN squashers.\n\n$acceptor$ = ")
     //fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
 
-    if (includeIndecls(dir)) {
-      fst.append("$acceptor$ = $squashindeclurn$")
+    def typesList = List(
+      (includeVerbs(_),"$verb_pipeline$" ),
+      (includeIndecls(_),"$squashindeclurn$" ),
+    )
+    val xducerList = for (xducer <- typesList) yield {
+      if (xducer._1(dir)) { xducer._2} else {""}
     }
-    // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
-    fst.append("\n")
-    fst.toString
+    val online = xducerList.filter(_.nonEmpty)
+    if (online.isEmpty) {
+      throw new Exception("AcceptorComposer:  no acceptors recognized.")
+    } else {
+
+      fst.append(xducerList.filter(_.nonEmpty).mkString(" | "))
+      // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
+      fst.append("\n")
+      fst.toString
+    }
   }
 
   /** String defining union of acceptors for each distinct

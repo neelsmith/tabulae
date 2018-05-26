@@ -31,7 +31,7 @@ def testList = List(
 
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
 
-  ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "pending" ),
+  ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
 )
@@ -71,6 +71,15 @@ def installIndeclRuleTable(corpusDir: File ): Unit = {
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
+}
+
+
+def installIndeclRuleFst(corpusDir:  File) : Unit = {
+  val lexica = corpusDir / "lexica"
+  if (! lexica.exists) { lexica.mkdir}
+  val rulesFst = lexica  / "lexicon-indeclinables.fst"
+  val entry = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  new PrintWriter(rulesFst){write(entry);close;}
 }
 
 ////////////////// Tests //////////////////////////////
@@ -360,7 +369,22 @@ def testApplyIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : 
 }
 
 def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  false
+  val corpusDir = repoRoot / s"parsers/${corpusName}"
+  if (! corpusDir.exists) {corpusDir.mkdir}
+
+  // 1. should throw Exception if no data.
+  val noData =  try {
+    AcceptorComposer.unionOfSquashers(corpusDir)
+    false
+  } catch {
+    case t: Throwable => true
+  }
+  // 2. Install some data.
+  installIndeclRuleFst(corpusDir)
+  val actual = AcceptorComposer.unionOfSquashers(corpusDir).split("\n").filter(_.nonEmpty)
+  val expected  =   "$acceptor$ = $squashindeclurn$"
+
+  (noData && actual(1).trim == expected)
 }
 
 
@@ -375,7 +399,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
   if (! datasets.exists) {datasets.mkdir}
   val corpusData = datasets / corpusName
   if (! corpusData.exists) {corpusData.mkdir}
-  installIndeclRuleTable(corpusData)
+  //installIndeclRuleTable(corpusData)
 
 /*
   val workSpace  = file("./test_build")
