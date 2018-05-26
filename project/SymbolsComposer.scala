@@ -12,7 +12,7 @@ object SymbolsComposer {
   //
   def apply(repo: File, corpus: String) : Unit = {
     composeMainFile(repo / s"parsers/${corpus}")
-    copySecondaryFiles(repo, corpus)
+    copySecondaryFiles(repo / "fst/symbols", repo / s"parsers/${corpus}")
     rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
   }
 
@@ -25,10 +25,9 @@ object SymbolsComposer {
   }
 
 
-  def copySecondaryFiles(repo: File, corpus: String) : Unit = {
-    val src = repo / "fst/symbols"
-    val dest = repo / s"parsers/${corpus}/symbols"
-
+  /** Install symbols from src into project in dest.
+  */
+  def copySecondaryFiles(src: File, dest: File) : Unit = {
      val fst = (src) ** "*.fst"
      val fstFiles = fst.get
      val mappings: Seq[(File,File)] = fstFiles pair rebase(src, dest)

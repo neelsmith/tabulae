@@ -15,7 +15,7 @@ val commonSettings = Seq(
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-  
+
         "edu.holycross.shot.cite" %% "xcite" % "3.3.0"
       ),
 
@@ -28,23 +28,15 @@ val commonSettings = Seq(
       cleanAll := cleanAllImpl.value
     )
 
-
-
 lazy val root = (project in file(".")).
     settings( commonSettings:_*).enablePlugins(TutPlugin)
 
-
 lazy val testBuild = (project in file("test_build"))
-
-
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
-
-
-
 
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
@@ -214,8 +206,8 @@ def tbdList = List (
 )
 def testListX = List(
 
-  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
-  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
+
+
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
 
@@ -272,17 +264,10 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
   false
 }
 
-def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  SymbolsComposer.composeMainFile(projectDir)
-
-  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
-  val symbols = Source.fromFile(expectedFile).getLines.toVector
-  val expectedLine = "% symbols.fst"
-  (expectedFile.exists && symbols(0) == expectedLine)
-}
 
 def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+
+  /**
   val projectDir = repoRoot / s"parsers/${corpusName}"
   val phono = projectDir / "symbols/phonology.fst"
 
@@ -298,15 +283,11 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
 
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
+  **/
+  false 
 }
 
-def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
-  val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
-  val actualFiles =  (projectDir / "symbols") ** "*.fst"
-  expectedNames == actualFiles.get.map(_.getName).toSet
-}
+
 
 
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {

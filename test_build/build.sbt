@@ -15,6 +15,8 @@ def testList = List(
   ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
+  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
+  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
 )
 
 /** "s" or no "s"? */
@@ -176,6 +178,27 @@ def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File
 
 
   (itsAlive && alphabet(1) == expectedLine)
+}
+
+def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  SymbolsComposer.composeMainFile(projectDir)
+
+  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
+  val symbols = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "% symbols.fst"
+  (expectedFile.exists && symbols(0) == expectedLine)
+}
+def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  val src =  file("./")
+
+  SymbolsComposer.copySecondaryFiles(src, projectDir)
+  val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
+  val actualFiles =  (projectDir / "symbols") ** "*.fst"
+  //println(s"Looked in ${projectDir}")
+  println("Actually found \n" + actualFiles.toString)
+  expectedNames == actualFiles.get.map(_.getName).toSet
 }
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
