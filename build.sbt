@@ -45,29 +45,10 @@ lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 
 
 
-/** Delete all subdirectories of a given directory.
-* Return names of deleted diretories.
-*
-* @param dir Directory to empty out.
-*/
-def deleteSubdirs(dir: File, verbose: Boolean = true): Vector[String] = {
-  val filesVector = dir.listFiles.toVector
-  val deleted = for (f <- filesVector) yield {
-    if (f.exists && f.isDirectory) {
-      if (verbose) { println("\tdeleting " + f) } else {}
-      IO.delete(f)
-      f.toString
-    } else {
-      ""
-    }
-  }
-  deleted.filter(_.nonEmpty)
-}
-
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
   val parserDir = baseDirectory.value / "parsers"
-  deleteSubdirs(parserDir)
+  Utils.deleteSubdirs(parserDir)
 }
 
 // Generate data directory hierarchy for a new named corpus.
@@ -221,9 +202,7 @@ def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] =
 }
 
 // Utility tasks
-def buildDirectory(repoRoot: File , corpus: String) = {
-  repoRoot / s"parsers/${corpus}"
-}
+
 
 ////////////////////////////////////////////////////////////////
 //
@@ -287,15 +266,8 @@ def testListX = List(
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" )
 )
 
-/*
-def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
-  val expected = repoRoot / s"parsers/${corpus}"
-  (buildDirectory(repoRoot, corpus) == expected)
-}
-*/
-
 def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
-  val corpusDir = DataInstaller.dir(repoRoot / s"parsers/${corpus}")
+  val corpusDir = Utils.dir(repoRoot / s"parsers/${corpus}")
   (corpusDir.isDirectory && corpusDir.exists)
 }
 
@@ -303,7 +275,7 @@ def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
 
   val workSpace = repoRoot / "parsers"
   val verbose = false
-  val initialClean = deleteSubdirs(workSpace, verbose)
+  val initialClean = Utils.deleteSubdirs(workSpace, verbose)
   val examples = List("a","b","c")
   for (ex <- examples) {
     val corpus = workSpace / ex
@@ -311,7 +283,7 @@ def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
   }
   val expected = examples.size
 
-  (deleteSubdirs(workSpace, verbose).size == expected)
+  (Utils.deleteSubdirs(workSpace, verbose).size == expected)
 }
 
 def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
@@ -391,10 +363,10 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   val goodParse =  (goodFst ==  expected)
 
   // 3: should create FST for all files in a directory
-  val dataSource = DataInstaller.dir(file(conf.datadir))
-  val corpus = DataInstaller.dir(dataSource / corpusName)
-  val stems = DataInstaller.dir(corpus / "stems-tables")
-  val indeclSource = DataInstaller.dir(stems / "indeclinables")
+  val dataSource = Utils.dir(file(conf.datadir))
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
@@ -433,10 +405,10 @@ def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot :
   val goodParse =  (goodFst ==  expected)
 
   // 3: should create FST for all files in a directory
-  val dataSource = DataInstaller.dir(file(conf.datadir))
-  val corpus = DataInstaller.dir(dataSource / corpusName)
-  val rules = DataInstaller.dir(corpus / "rules-tables")
-  val indeclSource = DataInstaller.dir(rules / "indeclinables")
+  val dataSource = Utils.dir(file(conf.datadir))
+  val corpus = Utils.dir(dataSource / corpusName)
+  val rules = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(rules / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
@@ -453,9 +425,9 @@ def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot :
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   // must install rules before composint inflection.fst
   val dataSource = file(conf.datadir)
-  val corpus = DataInstaller.dir(dataSource / corpusName)
-  val rules = DataInstaller.dir(corpus / "rules-tables")
-  val indeclSource = DataInstaller.dir(rules / "indeclinables")
+  val corpus = Utils.dir(dataSource / corpusName)
+  val rules = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(rules / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
   val dataLine = "testdata.rule1#nunc"
   val text = s"header line, omitted in parsing\n${dataLine}\n"
@@ -489,7 +461,7 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
 
   // 2. Should include indeclinables if data are present.
   val lexica = projectDir / "lexica"
-  DataInstaller.dir(lexica)
+  Utils.dir(lexica)
   val indeclLexicon= lexica  / "lexicon-indeclinables.fst"
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
@@ -506,9 +478,9 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
 def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {
   // Make directories;
   val projectDir = repoRoot / s"parsers/${corpusName}"
-  DataInstaller.dir(projectDir)
+  Utils.dir(projectDir)
   val acceptorDir = projectDir / "acceptors"
-  DataInstaller.dir(acceptorDir)
+  Utils.dir(acceptorDir)
 
   AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
   val fst = (acceptorDir) ** "*.fst"
@@ -517,7 +489,7 @@ def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File
 def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File) = {
 
   val testOutDir = repoRoot / "parsers"
-  DataInstaller.dir(testOutDir)
+  Utils.dir(testOutDir)
   val testOut = testOutDir / "testfile.fst"
   new PrintWriter(testOut){write("@workdir@\n@workdir@\nUnmodified line\n"); close;}
   AcceptorComposer.rewriteFile(testOut, testOutDir)
@@ -529,9 +501,9 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
 }
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / "parsers"
-  DataInstaller.dir(projectDir)
+  Utils.dir(projectDir)
   val corpus = projectDir / corpusName
-  DataInstaller.dir(corpus)
+  Utils.dir(corpus)
   AcceptorComposer.composeVerbAcceptor(corpus)
 
   val verbFile = corpus / "verb.fst"
@@ -542,12 +514,12 @@ def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 }
 def testWriteVerbStems(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
-  DataInstaller.dir(projectDir)
+  Utils.dir(projectDir)
   val acceptorsDir  = projectDir / "acceptors"
   val acceptorFile = acceptorsDir / "verbstems.fst"
 
   // 1. Should be minimal if no data installed.
-  DataInstaller.dir(acceptorsDir)
+  Utils.dir(acceptorsDir)
   AcceptorComposer.composeVerbStems(projectDir)
   val linesEmpty = Source.fromFile(acceptorFile).getLines.toVector.filter(_.nonEmpty)
   val firstChars = linesEmpty.map(_(0)).distinct
@@ -579,14 +551,14 @@ def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 
 def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
-  DataInstaller.dir(projectDir)
+  Utils.dir(projectDir)
 
   // 1. Should  return empty string if no data:
   val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
   val emptiedOk = emptyFst.isEmpty
 
   // 2. Now try after building some data:
-  val lexDir = DataInstaller.dir(projectDir / "lexica")
+  val lexDir = Utils.dir(projectDir / "lexica")
   val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
@@ -604,7 +576,7 @@ def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 }
 
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
 
   // 1.  Should have minimal pipeline when no data installed
   val minAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
@@ -614,7 +586,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
 
   // 2. Should prdocued same output for top of record when
   // data  installed
-  val lexDir = DataInstaller.dir(projectDir / "lexica")
+  val lexDir = Utils.dir(projectDir / "lexica")
   val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
@@ -627,7 +599,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
 }
 
 def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
   ParserComposer(projectDir)
 
   val parserFst = projectDir / "latin.fst"
@@ -641,7 +613,7 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
 }
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
   val compiler = conf.fstcompile
 
   // install some verb data
@@ -656,7 +628,7 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 }
 
 def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
   val compiler = conf.fstcompile
 
   // install some verb data
@@ -669,7 +641,7 @@ def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 }
 
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = DataInstaller.dir(file(s"parsers/${corpusName}"))
+  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
   val compiler = conf.fstcompile
   MakefileComposer.composeInflectionMake(projectDir, compiler)
 

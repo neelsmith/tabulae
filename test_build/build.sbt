@@ -1,34 +1,22 @@
 import complete.DefaultParsers._
 import scala.sys.process._
 
-
 name := "bldtest"
-bp := bpImpl.evaluated
 
-lazy val bp = inputKey[Unit]("Test build process")
-lazy val bpImpl = Def.inputTaskDyn {
-  val args = spaceDelimited("bp>").parsed
-  val src = file("datasets")
-  val repo = baseDirectory.value
-  val corpus = Corpus(src, repo, "x")
-
-
-  Def.task {
-    println(s"print ${args.size} args:\n" + args.mkString("\n"))
-    println("Yielded this corpus: " + corpus)
-  }
-}
-
+/** Triples of description, function and status. */
 def testList = List(
-
-  ("Test finding build directory", testBuildDirectory(_,_,_), "pending")
+  ("Test finding build directory", testBuildDirectory(_,_,_), "")
 )
 
-
+/** "s" or no "s"? */
 def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
 
+/** Interpret and display list of results.
+*
+* @param results List of test results
+*/
 def reportResults(results: List[Boolean]): Unit = {
   val distinctResults = results.distinct
   if (distinctResults.size == 1 && distinctResults(0)){
@@ -44,8 +32,18 @@ def reportResults(results: List[Boolean]): Unit = {
   }
 }
 
-lazy val allBuildTests = inputKey[Unit]("Test using output of args")
-allBuildTests in Test := {
+////////////////// Tests //////////////////////////////
+//
+
+def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File): Boolean = {
+  val expected = repoRoot / s"parsers/${corpus}"
+  println("Expected build dir " + expected)
+  (Utils.buildDirectory(repoRoot, corpus) == expected)
+}
+
+
+lazy val testAll = inputKey[Unit]("Test using output of args")
+testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
 
   args.size match {
@@ -60,7 +58,7 @@ allBuildTests in Test := {
           val baseDir = baseDirectory.value
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //deleteSubdirs(baseDir / "parsers", false)
+            Utils.deleteSubdirs(baseDir / "parsers", false)
 
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
@@ -81,7 +79,7 @@ allBuildTests in Test := {
         }
       }
     }
-
+/*
     case 2 => {
       try {
         val conf = Configuration(file(args(1)))
@@ -93,7 +91,7 @@ allBuildTests in Test := {
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //deleteSubdirs(baseDir / "parsers", false)
+            Utils.deleteSubdirs(baseDir / "parsers", false)
             print(t._1 + "...")
 
             val reslt = t._2(corpusName, conf, baseDir)
@@ -114,20 +112,11 @@ allBuildTests in Test := {
           println(t)
         }
       }
-    }
+    } */
 
     case _ =>  {
       println(s"Wrong number args (${args.size}): ${args}")
       println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
     }
   }
-}
-
-
-
-def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File): Boolean = {
-  val expected = repoRoot / s"parsers/${corpus}"
-  //(buildDirectory(repoRoot, corpus) == expected)
-  println("Some should happen")
-  false
 }

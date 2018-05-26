@@ -13,7 +13,7 @@ object NounDataInstaller {
   * @param srcDir Project directory.
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = DataInstaller.dir(repo / s"parsers/${corpus}/lexica")
+    val lexDirectory = Utils.dir(repo / s"parsers/${corpus}/lexica")
     val nounsDir = file( s"${dataSource}/${corpus}/stems-tables/nouns")
     val nounsOpt = (nounsDir) ** "*cex"
     val nounsFiles = nounsOpt.get

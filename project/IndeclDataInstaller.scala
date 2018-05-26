@@ -13,8 +13,8 @@ object IndeclDataInstaller {
   * @param corpus Name of corpus
   */
   def apply(dataSource: File, repo: File, corpusName: String) = {
-    val corpus = DataInstaller.dir(repo / s"parsers/${corpusName}")
-    val lexDirectory = DataInstaller.dir(corpus / "lexica")
+    val corpus = Utils.dir(repo / s"parsers/${corpusName}")
+    val lexDirectory = Utils.dir(corpus / "lexica")
 
     val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
     val fst = fstForIndeclData(indeclSourceDir)

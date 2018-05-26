@@ -6,10 +6,24 @@ lverbinfl.are_pft4#are_vb#avimus#1st#pl#pft#indic#act
 lverbinfl.are_pft5#are_vb#avistis#2nd#pl#pft#indic#act
 lverbinfl.are_pft6#are_vb#averunt#3rd#pl#pft#indic#act
 
+lverbinfl.pft7#are_vb#averim#1st#sg#pft#subj#act
+lverbinfl.pft8#are_vb#averis#2nd#sg#pft#subj#act
+lverbinfl.pft9#are_vb#averit#3rd#sg#pft#subj#act
+lverbinfl.pft10#are_vb#averimus#1st#pl#pft#subj#act
+lverbinfl.pft11#are_vb#averistis#2nd#pl#pft#subj#act
+lverbinfl.pft12#are_vb#averint#3rd#pl#pft#subj#act
 
-lverbinfl.pft1#pftact#averim#1st#sg#pft#subj#act
-lverbinfl.pft2#pftact#averis#2nd#sg#pft#subj#act
-lverbinfl.pft3#pftact#averit#3rd#sg#pft#subj#act
-lverbinfl.pft4#pftact#averimus#1st#pl#pft#subj#act
-lverbinfl.pft5#pftact#averistis#2nd#pl#pft#subj#act
-lverbinfl.pft6#pftact#averint#3rd#pl#pft#subj#act
+lverbinfl.are_pft13#pftact#i#1st#sg#pft#indic#act
+lverbinfl.are_pft14#pftact#isti#2nd#sg#pft#indic#act
+lverbinfl.are_pft15#pftact#it#3rd#sg#pft#indic#act
+lverbinfl.are_pft16#pftact#imus#1st#pl#pft#indic#act
+lverbinfl.are_pft17#pftact#istis#2nd#pl#pft#indic#act
+lverbinfl.are_pft18#pftact#erunt#3rd#pl#pft#indic#act
+
+
+lverbinfl.pft19#pftact#erim#1st#sg#pft#subj#act
+lverbinfl.pft20#pftact#eris#2nd#sg#pft#subj#act
+lverbinfl.pft21#pftact#erit#3rd#sg#pft#subj#act
+lverbinfl.pft21#pftact#erimus#1st#pl#pft#subj#act
+lverbinfl.pft22#pftact#eristis#2nd#pl#pft#subj#act
+lverbinfl.pft23#pftact#erint#3rd#pl#pft#subj#act

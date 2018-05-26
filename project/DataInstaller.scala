@@ -13,11 +13,11 @@ Users/nsmith/Desktop/horace
   def apply(dataSource: File, repo: File, corpus: String): Unit = {
     println(s"Convert morphological lexicon tables in ${dataSource} to FST")
 
-    val parsers =  DataInstaller.dir(repo / "parsers")
-    val corpDir = DataInstaller.dir(parsers / corpus)
+    val parsers =  Utils.dir(repo / "parsers")
+    val corpDir = Utils.dir(parsers / corpus)
 
-    val lexDir = DataInstaller.dir(corpDir / "lexica")
-    val inflDir = DataInstaller.dir(corpDir / "inflection")
+    val lexDir = Utils.dir(corpDir / "lexica")
+    val inflDir = Utils.dir(corpDir / "inflection")
 
 
     //NounDataInstaller(dataSource, repo, corpus)
@@ -26,14 +26,5 @@ Users/nsmith/Desktop/horace
   }
 
 
-  /** Make sure directory exists.
-  *
-  * @param d Directory to check.
-  */
-  def dir(d: File) : File = {
-    if (! d.isDirectory) {d.mkdir} else {}
-    require(d.isDirectory, s"File ${d} is not a directory")
-    if (! d.exists) {d.mkdir}
-    d
-  }
+
 }

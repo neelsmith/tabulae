@@ -25,7 +25,7 @@ object AcceptorComposer {
     copySecondaryAcceptors(repo, corpus)
     rewriteSecondaryAcceptors(projectDir)
 
-    composeVerbStems(projectDir)
+    //composeVerbStems(projectDir)
     composeVerbAcceptor(projectDir)
   }
 
@@ -41,15 +41,15 @@ object AcceptorComposer {
     val fst = StringBuilder.newBuilder
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n")
     fst.append("%%%\n%%% Adjust stem  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
-    fst.append("$stems_acceptors$ = \"<" +  projectDir.toString +     "/acceptors/verbstems.a>\"\n")
+    //fst.append("$stems_acceptors$ = \"<" +  projectDir.toString +     "/acceptors/verbstems.a>\"\n")
 
 
     fst.append("%%%\n%%% The URN squasher for verbs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
     fst.append("$=verbclass$ = [#verbclass#]\n")
     fst.append("$squashverburn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$\\:\\:$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>\n\n")
 
-    fst.append("$stems_acceptors$ ||  $squashverburn$\n")
-
+    //fst.append("$stems_acceptors$ ||  $squashverburn$\n")
+    fst.append("$squashverburn$\n")
 
     //fst.append(mainVerbAcceptor)
     val acceptorFile = projectDir / "verb.fst"
@@ -84,7 +84,7 @@ object AcceptorComposer {
   * parser where acceptor.fst should be written.
   */
   def composeMainAcceptor(projectDir: File): Unit = {
-    val dir = DataInstaller.dir(projectDir)
+    val dir = Utils.dir(projectDir)
     val fst = StringBuilder.newBuilder
     // automatically included
     fst.append("#include \"" + dir.toString + "/symbols.fst\"\n")
@@ -94,7 +94,7 @@ object AcceptorComposer {
 
     fst.append(indeclAcceptor(projectDir) + "\n")
 
-    fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
+    //fst.append("$verb_pipeline$ = \"<" + dir.toString + "/verb.a>\"\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -112,7 +112,7 @@ object AcceptorComposer {
   */
   def copySecondaryAcceptors(repo: File, corpus: String): Unit = {
     val src = repo / "fst/acceptors"
-    val dest = DataInstaller.dir(repo / s"parsers/${corpus}/acceptors")
+    val dest = Utils.dir(repo / s"parsers/${corpus}/acceptors")
      val fst = (src) ** "*.fst"
      val fstFiles = fst.get
      val mappings: Seq[(File,File)] = fstFiles pair rebase(src, dest)
@@ -213,9 +213,10 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   */
   def unionOfSquashers(dir: File) : String = {
     val fst = StringBuilder.newBuilder
-    fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
+    //fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
+
     if (includeIndecls(dir)) {
-      fst.append(" | $squashindeclurn$")
+      fst.append("$acceptor$ = $squashindeclurn$")
     }
     // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
     fst.append("\n")
