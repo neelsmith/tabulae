@@ -474,7 +474,7 @@ def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Bool
   val dataDirectory = baseDir / "datasets"
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
 
-  FstCompiler.compile(dataDirectory, baseDir, corpusName, conf)
+  FstCompiler.compile(dataDirectory, baseDir, cName, conf)
   false
 }
 

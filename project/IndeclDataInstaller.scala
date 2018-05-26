@@ -16,10 +16,13 @@ object IndeclDataInstaller {
     val corpus = Utils.dir(repo / s"parsers/${corpusName}")
     val lexDirectory = Utils.dir(corpus / "lexica")
 
+
     val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
+    println("Install indecls from " + indeclSourceDir)
     val fst = fstForIndeclData(indeclSourceDir)
 
     val fstFile = lexDirectory / "lexicon-indeclinables.fst"
+    println(s"write ${fst} to " + fstFile)
     new PrintWriter(fstFile) { write(fst); close }
   }
 
