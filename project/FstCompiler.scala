@@ -9,15 +9,15 @@ object FstCompiler {
     // Install data and rules, converting tabular data to FST
     println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
     DataInstaller(dataDirectory, baseDir, corpus)
-    /*
+
     println(s"Install rules for ${corpus} in ${dataDirectory}...")
     RulesInstaller(dataDirectory, baseDir, corpus)
 
     println("Compose build")
     // Compose makefiles and higher-order FST for build system
     BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
-*/
-/*
+
+
     // Build it!
     val buildDirectory = baseDir / s"parsers/${corpus}"
     val inflMakefile = buildDirectory / "inflection/makefile"
@@ -27,6 +27,6 @@ object FstCompiler {
     val makefile = buildDirectory / "makefile"
     val doit = s"${conf.make} -f ${makefile}"
     doit !
-    */
+    
   }
 }

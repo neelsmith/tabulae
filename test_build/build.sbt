@@ -475,7 +475,9 @@ def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Bool
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
 
   FstCompiler.compile(dataDirectory, baseDir, cName, conf)
-  false
+
+  val parser = baseDir / "/parsers/minimum/latin.a"
+  parser.exists
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")

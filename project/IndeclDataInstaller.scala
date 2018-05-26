@@ -33,9 +33,10 @@ object IndeclDataInstaller {
   * @param dir Directory with CEX data.
   */
   def fstForIndeclData(dir: File) : String = {
+
     val indeclOpt = (dir) ** "*cex"
     val indeclFiles = indeclOpt.get
-
+    println("Look in " + dir + " and got " + indeclFiles)
     val fstLines = for (f <- indeclFiles) yield {
       // omit empty lines and header
       val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)

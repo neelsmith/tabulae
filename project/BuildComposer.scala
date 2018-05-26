@@ -26,6 +26,7 @@ object BuildComposer {
     val corpusDir = "parsers/" + corpus
     val projectDir = repo / corpusDir
 
+    println(s"Install symbols in ${corpus} of " + repo)
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
     InflectionComposer(projectDir)
