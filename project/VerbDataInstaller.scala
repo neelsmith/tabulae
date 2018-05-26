@@ -34,10 +34,10 @@ object VerbDataInstaller {
 
   def verbLineToFst(line: String) : String = {
     val cols = line.split("#")
-
+    println(s"From line ${line}, read ${cols.size} columns")
     if (cols.size < 4) {
-      println("Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
-      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}".toString)
     } else {
 
       val fstBuilder = StringBuilder.newBuilder

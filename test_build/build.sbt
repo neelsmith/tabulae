@@ -23,6 +23,10 @@ def testList = List(
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
   ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
 
+
+
+
+
   ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
   ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
@@ -42,6 +46,12 @@ def testList = List(
 
   ("Test compiling FST parser", testFstBuild(_, _, _), "" ),
   ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
+
+
+  ("Test converting bad data to fst for verbs", testBadVerbDataConvert(_, _, _), "" ),
+  ("Test converting tabular data to fst for verbs", testVerbDataConvert(_, _, _), "" ),
+  ("Test converting verb files in directorty to fst for indeclinable", testVerbFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "pending" ),
 
 )
 
@@ -88,6 +98,27 @@ def installIndeclRuleFst(corpusDir:  File) : Unit = {
   val rulesFst = lexica  / "lexicon-indeclinables.fst"
   val entry = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   new PrintWriter(rulesFst){write(entry);close;}
+}
+
+def installVerbRuleTable(corpusDir: File ): Unit = {
+  /*
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val stems = Utils.dir(corpusDir / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+  */
+}
+
+def installVerbRuleFst(corpusDir:  File) : Unit = {
+  /*
+  val lexica = corpusDir / "lexica"
+  if (! lexica.exists) { lexica.mkdir}
+  val rulesFst = lexica  / "lexicon-indeclinables.fst"
+  val entry = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  new PrintWriter(rulesFst){write(entry);close;}
+  */
 }
 
 ////////////////// Tests //////////////////////////////
@@ -252,6 +283,76 @@ def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   output(0) == expected
 }
+
+
+//////
+
+def testBadVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  //  should object to bad data
+  try {
+    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
+    println("Should never have seent this... " + fst)
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // should correctly convert good data.
+  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
+  goodFst.trim ==  expected
+}
+def testVerbFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Should create FST for all files in a directory
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+
+  val dataSource = file ("./test_build/datasets")
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
+  // Tidy up
+  IO.delete(corpus)
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  fstFromDir == s"${expected}\n"
+  false
+}
+def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Install one data file:
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val dataSource = file ("./test_build/datasets")
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  // Test file copying in apply function
+  // Write some test data in the source work space:
+  val workSpace  = file("./test_build")
+  IndeclDataInstaller(dataSource, workSpace, corpusName)
+
+  // check the results:
+  val resultFile = workSpace / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
+  val output  = Source.fromFile(resultFile).getLines.toVector
+
+  // clean up:
+  IO.delete( workSpace / s"parsers/${corpusName}")
+  IO.delete( workSpace / s"datasets/${corpusName}")
+
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  output(0) == expected
+  false
+}
+//////////
 
 def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
