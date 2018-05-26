@@ -40,7 +40,8 @@ def testList = List(
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
-  ("Test compiling and executing FST parser", testFstBuild(_, _, _), "" ),
+  ("Test compiling FST parser", testFstBuild(_, _, _), "" ),
+  ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
 )
 
@@ -393,7 +394,6 @@ def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : Fil
   (noData && actual(1).trim == expected)
 }
 
-
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   // Install one data file:
   val datasets = repoRoot / "parsers"
@@ -478,6 +478,10 @@ def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Bool
 
   val parser = baseDir / "/parsers/minimum/latin.a"
   parser.exists
+}
+
+def testParserOutput(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")
