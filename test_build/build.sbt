@@ -25,7 +25,7 @@ def testList = List(
 
   ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
-  ("Test converting  rules for indeclinables from files in dir", testFstRulesFromDir(_, _, _), "" ),
+  ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
 
 
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "pending" ),
@@ -219,7 +219,6 @@ def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):
   output(0) == expected
 }
 
-
 def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
@@ -231,15 +230,14 @@ def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot 
   }
 }
 def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
-  // 2: should correctly convert good data.
+  // Should correctly convert good data.
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
   val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
   goodFst ==  expected
 }
 
-
-def testFstRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
 {
   val goodLine = "testdata.rule1#nunc"
   val dataSource = file ("./test_build/datasets")
@@ -255,7 +253,7 @@ def testFstRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File
   val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
 
   // clean up:
-  testData.delete()
+  corpus.delete()
 
   readDirOk
 }
