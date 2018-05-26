@@ -25,11 +25,13 @@ $ending$ = """
   }
 
 
-  /**
+  /**  Working directory for corpus work directory.
+  *
+  * @param projectDir Working directory for a corpus parser.
   */
   def apply(projectDir: File) : Unit = {
+    if (! projectDir.exists) { projectDir.mkdir}
     val indeclFiles = inflectionFsts(projectDir / "inflection")
-
     val fstFile = projectDir / "inflection.fst"
     if (indeclFiles.nonEmpty) {
       val fstText = StringBuilder.newBuilder

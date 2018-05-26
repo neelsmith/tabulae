@@ -27,9 +27,7 @@ def testList = List(
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
   ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
   ("Test composing all ruleas via RulesInstaller", testRulesInstaller(_, _, _), "" ),
-
-
-  //("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 )
 
@@ -263,17 +261,18 @@ def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : F
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
   // Write some test data to work with:
-
-
+  val goodLine = "testdata.rule1#nunc"
   val dataSource = file ("./test_build/datasets")
   val corpus = Utils.dir(dataSource / corpusName)
   val stems = Utils.dir(corpus / "rules-tables")
   val indeclSource = Utils.dir(stems / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
-
-  val goodLine = "testdata.rule1#nunc"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
+
+
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
+  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
 
   RulesInstaller(dataSource, repoRoot, corpusName)
   val target =  file (s"${repoRoot}/parsers/${corpusName}/inflection")
@@ -285,15 +284,28 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File)
 
 
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val goodLine = "testdata.rule1#nunc"
+  // Create and install some test data:
+  val dataSource = repoRoot / "datasets"
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+  RulesInstaller(dataSource, repoRoot, corpusName)
 
-  // Now compose inflection.fst:
+  //
   InflectionComposer(repoRoot / s"parsers/${corpusName}")
   val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
   val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
-  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
-  println(lines.mkString("\n"))
-  //testData.delete()
-  (expectedFile.exists && lines(3) == expectedLine)
+  val expectedLine  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
+
+  // tidy uip
+  IO.delete(corpus)
+
+  (expectedFile.exists && lines(3).trim ==  expectedLine)
+
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")
