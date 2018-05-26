@@ -16,7 +16,7 @@ def testList = List(
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
-  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
+  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
@@ -139,9 +139,7 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
   val projectDir = file(s"test_build/parsers/${corpusName}")
   val phono = projectDir / "symbols/phonology.fst"
 
-  // First install raw source.  Phonology file
-  // should have unexpanded macro:
-
+  // First install raw source.  Phonology file should have unexpanded macro:
   SymbolsComposer.copySecondaryFiles(file( "fst/symbols"), projectDir / "symbols")
 
   val rawLines = Source.fromFile(phono).getLines.toVector
@@ -150,6 +148,9 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
   // Then rewrite phonology with expanded paths:
   SymbolsComposer.rewritePhonologyFile(phono, projectDir)
   val cookedLines = Source.fromFile(phono).getLines.toVector
+
+  //tidy up
+  //IO.delete(projectDir)
 
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
@@ -253,7 +254,7 @@ def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : F
   val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
 
   // clean up:
-  corpus.delete()
+  IO.delete(corpus)
 
   readDirOk
 }
