@@ -16,14 +16,20 @@ def testList = List(
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
-  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
+  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
 
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for Indeclinable data installe", testIndeclApplied(_, _, _), "" ),
+  ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "pending" ),
 
-  ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "pending" ),
+  ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
+  ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
+  ("Test converting  rules for indeclinables from files in dir", testFstRulesFromDir(_, _, _), "" ),
+
+
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "pending" ),
+
 )
 
 /** "s" or no "s"? */
@@ -90,11 +96,71 @@ def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) =
   madeOk && nameMatches
 }
 
+def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
+  val dataSrc = file("./test_build/datasets")
+
+
+  BuildComposer.installAlphabet(dataSrc, repoRoot, "minimum")
+  val workSpace =  repoRoot /  "parsers/minimum"
+  val expectedFile = repoRoot / "parsers/minimum/symbols/alphabet.fst"
+  val itsAlive = expectedFile.exists
+
+  val alphabet = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
+
+  // tidy up
+  IO.delete(workSpace)
+
+
+  (itsAlive && alphabet(1) == expectedLine)
+}
+
+def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  SymbolsComposer.composeMainFile(projectDir)
+
+  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
+  val symbols = Source.fromFile(expectedFile).getLines.toVector
+  val expectedLine = "% symbols.fst"
+  (expectedFile.exists && symbols(0) == expectedLine)
+}
+def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  val src =  file("./")
+
+  SymbolsComposer.copySecondaryFiles(src, projectDir)
+  val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
+  val actualFiles =  (projectDir / "symbols") ** "*.fst"
+  expectedNames == actualFiles.get.map(_.getName).toSet
+}
+
+def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+
+  val projectDir = file(s"test_build/parsers/${corpusName}")
+  val phono = projectDir / "symbols/phonology.fst"
+
+  // First install raw source.  Phonology file
+  // should have unexpanded macro:
+
+  SymbolsComposer.copySecondaryFiles(file( "fst/symbols"), projectDir / "symbols")
+
+  val rawLines = Source.fromFile(phono).getLines.toVector
+  val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
+  (rawLines(7))
+  // Then rewrite phonology with expanded paths:
+  SymbolsComposer.rewritePhonologyFile(phono, projectDir)
+  val cookedLines = Source.fromFile(phono).getLines.toVector
+
+  val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
+  (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
+}
+
 def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
   try {
     val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
+    println("Should never have seent this... " + fst)
     false
   } catch {
     case t : Throwable => true
@@ -125,7 +191,6 @@ def testIndeclFstFromDir(corpusName: String, conf: Configuration, repoRoot : Fil
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   fstFromDir == s"${expected}\n"
 }
-
 def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Install one data file:
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
@@ -155,99 +220,74 @@ def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):
 }
 
 
-
-def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
-  // 1:  should object to bad data
-  val caughtBadLine = try {
+  // Should object to bad data
+  try {
     val fst = IndeclRulesInstaller.indeclRuleToFst("Not a real line")
     false
   } catch {
     case t : Throwable => true
   }
+}
+def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   // 2: should correctly convert good data.
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
   val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
-  val goodParse =  (goodFst ==  expected)
+  goodFst ==  expected
+}
 
-  // 3: should create FST for all files in a directory
-  val dataSource = Utils.dir(file(conf.datadir))
+
+def testFstRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+{
+  val goodLine = "testdata.rule1#nunc"
+  val dataSource = file ("./test_build/datasets")
   val corpus = Utils.dir(dataSource / corpusName)
-  val rules = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(rules / "indeclinables")
+  val stems = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
 
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
   val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
   val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
 
   // clean up:
   testData.delete()
 
-  (caughtBadLine && goodParse && readDirOk)
+  readDirOk
 }
 
-def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
-  val dataSrc = file("./test_build/datasets")
 
+def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  // must install rules before composint inflection.fst
+  val dataSource = file(conf.datadir)
+  val corpus = Utils.dir(dataSource / corpusName)
+  val rules = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(rules / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val dataLine = "testdata.rule1#nunc"
+  val text = s"header line, omitted in parsing\n${dataLine}\n"
+  new PrintWriter(testData){write(text); close;}
 
-  BuildComposer.installAlphabet(dataSrc, repoRoot, "minimum")
-  val workSpace =  repoRoot /  "parsers/minimum"
-  val expectedFile = repoRoot / "parsers/minimum/symbols/alphabet.fst"
-  val itsAlive = expectedFile.exists
+  RulesInstaller(dataSource, repoRoot, corpusName)
+  val installedSource =  (repoRoot / s"parsers/${corpusName}/inflection") ** "*.fst"
+  require(installedSource.get.size > 0, s"Testing inflection composer, but failed to install any FST source for parsers/${corpusName}")
 
-  val alphabet = Source.fromFile(expectedFile).getLines.toVector
-  val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
+  // Now compose inflection.fst:
+  InflectionComposer(repoRoot / s"parsers/${corpusName}")
+  val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
+  val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
+  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
 
-  // tidy up
-  println("Delete " + workSpace)
-  IO.delete(workSpace)
+  println(lines.mkString("\n"))
+  //testData.delete()
 
-
-  (itsAlive && alphabet(1) == expectedLine)
+  (expectedFile.exists && lines(3) == expectedLine)
 }
 
-def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  SymbolsComposer.composeMainFile(projectDir)
-
-  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
-  val symbols = Source.fromFile(expectedFile).getLines.toVector
-  val expectedLine = "% symbols.fst"
-  (expectedFile.exists && symbols(0) == expectedLine)
-}
-def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  val src =  file("./")
-
-  SymbolsComposer.copySecondaryFiles(src, projectDir)
-  val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
-  val actualFiles =  (projectDir / "symbols") ** "*.fst"
-  expectedNames == actualFiles.get.map(_.getName).toSet
-}
-def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-
-  /**
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  val phono = projectDir / "symbols/phonology.fst"
-
-  // First install raw source.  Phonology file
-  // should have unexpanded macro:
-  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
-  val rawLines = Source.fromFile(phono).getLines.toVector
-  val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
-  (rawLines(7))
-  // Then rewrite phonology with expanded paths:
-  SymbolsComposer.rewritePhonologyFile(phono, projectDir)
-  val cookedLines = Source.fromFile(phono).getLines.toVector
-
-  val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
-  (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
-  **/
-  false
-}
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
