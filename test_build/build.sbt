@@ -26,13 +26,13 @@ def testList = List(
   ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
   ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
-  ("Test composing all ruleas via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+  ("Test composing all rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
 
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
-  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
 )
 
@@ -388,41 +388,21 @@ def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : Fil
 }
 
 
-
-def installIndeclRuleFst() : Unit = {
-
-}
-
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   // Install one data file:
-  val datasets = repoRoot / "datasets"
-  if (! datasets.exists) {datasets.mkdir}
+  val datasets = repoRoot / "parsers"
   val corpusData = datasets / corpusName
   if (! corpusData.exists) {corpusData.mkdir}
-  //installIndeclRuleTable(corpusData)
+  installIndeclRuleFst(corpusData)
 
-/*
-  val workSpace  = file("./test_build")
-  IndeclDataInstaller(dataSource, workSpace, corpusName)
-*/
-  // Should prdocued same output for top of record when
-  // data  installed
-/*
-  val lexDir = Utils.dir(projectDir / "lexica")
-  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
-
-
-
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
-  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
+  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(corpusData)
   val lines = expandedAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
-  println(lines.mkString("\n"))
-  val expected = "not what you expected"
-  val expandedOk = lines(2).trim == expected
 
-  expandedOk*/ false
+  val expected = "$acceptor$ = $squashindeclurn$"
 
+  // tidy
+  IO.delete(corpusData)
+  lines(1).trim == expected
 }
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
