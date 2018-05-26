@@ -7,7 +7,7 @@ case class Corpus(dataSource: File, repo: File, corpus: String) {
 
   /** Directory for corpus. */
   def dir : File = {
-    var d = repo / corpus
+    var d = dataSource / corpus
     if (! d.exists) {  d.mkdir } else {}
     d
   }

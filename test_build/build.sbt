@@ -1,11 +1,17 @@
 import complete.DefaultParsers._
 import scala.sys.process._
+import scala.io.Source
+import java.io.PrintWriter
 
 name := "bldtest"
 
 /** Triples of description, function and status. */
 def testList = List(
-  ("Test finding build directory", testBuildDirectory(_,_,_), "")
+  ("Test finding build directory", testBuildDirectory(_,_,_), ""),
+  ("Test verifying directory", testDirCheck(_,_,_), ""),
+  ("Test cleaning build directory", testCleanAll(_,_,_), ""),
+  ("Test Corpus object", testCorpusObject(_, _, _), "" ),
+  ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "pending" ),
 )
 
 /** "s" or no "s"? */
@@ -41,7 +47,81 @@ def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File): Bo
   (Utils.buildDirectory(repoRoot, corpus) == expected)
 }
 
+def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
+  val corpusDir = Utils.dir(repoRoot / s"parsers/${corpus}")
+  (corpusDir.isDirectory && corpusDir.exists)
+}
 
+def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
+
+  val workSpace = repoRoot / "parsers"
+  val verbose = false
+  val initialClean = Utils.deleteSubdirs(workSpace, verbose)
+  val examples = List("a","b","c")
+  for (ex <- examples) {
+    val corpus = workSpace / ex
+    corpus.mkdir
+  }
+  val expected = examples.size
+
+  (Utils.deleteSubdirs(workSpace, verbose).size == expected)
+}
+
+// test creating corpus in local workspace
+def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val src = file("test_build/datasets")
+  println("Create corpus with settings " + src + ", " + repoRoot + ", " + corpusName)
+  val corpus =  Corpus(src, repoRoot, corpusName)
+  val corpDir = corpus.dir
+  val nameMatches = corpDir.toString == s"test_build/datasets/${corpusName}"
+  val madeOk = corpDir.exists
+  // tidy up
+  corpDir.delete
+  madeOk && nameMatches
+}
+
+def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+
+  //  Test conversion of delimited text to FST.
+  // 1:  should object to bad data
+  val caughtBadLine = try {
+    val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+  // 2: should correctly convert good data.
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  val goodParse =  (goodFst ==  expected)
+
+  // 3: should create FST for all files in a directory
+  val dataSource = Utils.dir(file(conf.datadir))
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
+  val readDirOk = fstFromDir == s"${expected}\n"
+
+  // 4.  Test file copying in apply function
+  // Write some test data in the source work space:
+  IndeclDataInstaller(dataSource, repoRoot, corpusName)
+
+  // check the results:
+  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
+  val output  = Source.fromFile(resultFile).getLines.toVector
+  val outputGood = output(0) == expected
+
+  // clean up:
+  testData.delete()
+
+  (caughtBadLine && goodParse && outputGood && readDirOk)
+}
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
@@ -79,7 +159,7 @@ testAll in Test := {
         }
       }
     }
-/*
+
     case 2 => {
       try {
         val conf = Configuration(file(args(1)))
@@ -100,7 +180,6 @@ testAll in Test := {
           }
           reportResults(results)
 
-
         } else {
           println("Failed.")
           println(s"No configuration file ${conf.datadir} exists.")
@@ -112,7 +191,7 @@ testAll in Test := {
           println(t)
         }
       }
-    } */
+    }
 
     case _ =>  {
       println(s"Wrong number args (${args.size}): ${args}")
