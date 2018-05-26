@@ -181,6 +181,7 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : File): String = {
+  println("LOOKING FOR INDECLS in " + dir)
   if (includeIndecls(dir) ) {
    """
 % Indeclinable form acceptor:
@@ -225,7 +226,10 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 
   /** String defining union of acceptors for each distinct
   * analytical pattern, followed by a transducer removing
-  * all analysis-level symbols.*/
+  * all analysis-level symbols.
+  *
+  * @param dir Directory for corpus data set.
+  */
   def topLevelAcceptor(dir : File): String = {
     val constructed  = unionOfSquashers(dir)
   val trail = """

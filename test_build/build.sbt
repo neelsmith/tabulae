@@ -29,6 +29,11 @@ def testList = List(
   ("Test composing all ruleas via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
+  ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
+
+  ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "pending" ),
+  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
 )
 
 /** "s" or no "s"? */
@@ -53,6 +58,19 @@ def reportResults(results: List[Boolean]): Unit = {
     println(s"\n${pending.size} test${plural(pending)} pending:")
     println(pending.map(_._1).mkString("\n"))
   }
+}
+
+/** Install a sample rule file for indeclinables.
+*
+* @param corpusDir Directory for corpus dataset where file should be installed.
+*/
+def installIndeclRuleTable(corpusDir: File ): Unit = {
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val stems = Utils.dir(corpusDir / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
 }
 
 ////////////////// Tests //////////////////////////////
@@ -258,8 +276,7 @@ def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : F
   readDirOk
 }
 
-
-def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   // Write some test data to work with:
   val goodLine = "testdata.rule1#nunc"
   val dataSource = file ("./test_build/datasets")
@@ -282,8 +299,7 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File)
   expectedSet  ==  actualSet
 }
 
-
-def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   val goodLine = "testdata.rule1#nunc"
   // Create and install some test data:
   val dataSource = repoRoot / "datasets"
@@ -306,6 +322,110 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
 
   (expectedFile.exists && lines(3).trim ==  expectedLine)
 
+}
+def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  Utils.dir(projectDir)
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "% Indeclinable form acceptor:"
+
+  (emptiedOk && lines(0) == expected)
+}
+
+def testApplyIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // install data
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  Utils.dir(projectDir)
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  //IndeclRulesInstaller
+  false
+}
+
+def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
+  false
+}
+
+
+
+def installIndeclRuleFst() : Unit = {
+
+}
+
+def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
+  // Install one data file:
+  val datasets = repoRoot / "datasets"
+  if (! datasets.exists) {datasets.mkdir}
+  val corpusData = datasets / corpusName
+  if (! corpusData.exists) {corpusData.mkdir}
+  installIndeclRuleTable(corpusData)
+
+/*
+  val workSpace  = file("./test_build")
+  IndeclDataInstaller(dataSource, workSpace, corpusName)
+*/
+  // Should prdocued same output for top of record when
+  // data  installed
+/*
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+
+
+
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(projectDir)
+  val lines = expandedAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  println(lines.mkString("\n"))
+  val expected = "not what you expected"
+  val expandedOk = lines(2).trim == expected
+
+  expandedOk*/ false
+
+}
+
+def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val projectDir = file(s"parsers/${corpusName}")
+
+  // 1. Should omit indeclinables if not data present.
+  AcceptorComposer.composeMainAcceptor(projectDir)
+  val acceptor = projectDir / "acceptor.fst"
+  val lines = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
+  val expected = "$acceptor$ = $verb_pipeline$"
+  val emptyOk = lines(4).trim == expected.trim
+
+  // 2. Should include indeclinables if data are present.
+  val lexica = projectDir / "lexica"
+  Utils.dir(lexica)
+  val indeclLexicon= lexica  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  AcceptorComposer.composeMainAcceptor(projectDir)
+  val lines2 = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
+  val expected2 = "$=indeclclass$ = [#indeclclass#]"
+  val dataOk = expected2.trim == lines2(2).trim
+
+
+  emptyOk && dataOk
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")
