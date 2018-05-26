@@ -5,8 +5,7 @@ import java.io.PrintWriter
 import scala.io.Source
 
 
-lazy val root = (project in file(".")).
-    settings(
+val commonSettings = Seq(
       name := "tabulae",
       organization := "edu.holycross.shot",
       version := "0.0.1",
@@ -16,7 +15,6 @@ lazy val root = (project in file(".")).
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-
         "edu.holycross.shot.cite" %% "xcite" % "3.3.0"
       ),
 
@@ -27,12 +25,24 @@ lazy val root = (project in file(".")).
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
       cleanAll := cleanAllImpl.value
-    ).enablePlugins(TutPlugin)
+    )
+
+
+
+lazy val root = (project in file(".")).
+    settings( commonSettings:_*).enablePlugins(TutPlugin)
+
+
+lazy val testBuild = (project in file("test_build"))
+
+
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
+
+
 
 
 /** Delete all subdirectories of a given directory.
@@ -219,9 +229,9 @@ def buildDirectory(repoRoot: File , corpus: String) = {
 //
 // Testing the build system
 //
-def testList = List(
+def testListX = List(
 
-  ("Test finding build directory", testBuildDirectory(_,_,_), ""),
+  //("Test finding build directory", testBuildDirectory(_,_,_), ""),
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
 
@@ -237,7 +247,7 @@ def testList = List(
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
 
-  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "" ),
+  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
 
   ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "" ),
@@ -249,7 +259,7 @@ def testList = List(
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
-  ("Test writing verb stems", testWriteVerbStems(_, _, _), "" ),
+  ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
 
   ("Test composing parser", testParserComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
@@ -277,12 +287,12 @@ def testList = List(
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" )
 )
 
-
+/*
 def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File) = {
   val expected = repoRoot / s"parsers/${corpus}"
   (buildDirectory(repoRoot, corpus) == expected)
 }
-
+*/
 
 def testDirCheck(corpus: String, conf: Configuration, repoRoot : File) = {
   val corpusDir = DataInstaller.dir(repoRoot / s"parsers/${corpus}")
@@ -696,7 +706,7 @@ def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Bo
 def testDataTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
-
+/*
 def plural[T] (lst : List[T]) : String = {
   if (lst.size > 1) { "s"} else {""}
 }
@@ -793,4 +803,4 @@ allBuildTests in Test := {
       println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
     }
   }
-}
+} */
