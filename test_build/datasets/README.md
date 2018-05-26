@@ -1,1 +1,1 @@
-This directory is used to compile parsers in this subproject.
+This directory is used to build temporary datasets for testing in this subproject.
