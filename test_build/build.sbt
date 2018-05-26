@@ -12,11 +12,15 @@ def testList = List(
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
-  ("Test installing data for indeclinables", testIndeclDataInstaller(_, _, _), "" ),
-  ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "" ),
-  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
-  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
-  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
+  ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
+  ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
+  ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
+
+
+  ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "pending" ),
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
+  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "pending" ),
+  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "pending" ),
 )
 
 /** "s" or no "s"? */
@@ -84,24 +88,28 @@ def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) =
   madeOk && nameMatches
 }
 
-def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-
+def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   //  Test conversion of delimited text to FST.
-  // 1:  should object to bad data
-  val caughtBadLine = try {
+  //  should object to bad data
+  try {
     val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
     false
   } catch {
     case t : Throwable => true
   }
-  // 2: should correctly convert good data.
+}
+def testIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // should correctly convert good data.
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
   val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
-  val goodParse =  (goodFst ==  expected)
+  goodFst ==  expected
+}
+def testIndeclFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Should create FST for all files in a directory
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
 
-  // 3: should create FST for all files in a directory
-  val dataSource = Utils.dir(file(conf.datadir))
+  val dataSource = file ("./test_build/datasets")
   val corpus = Utils.dir(dataSource / corpusName)
   val stems = Utils.dir(corpus / "stems-tables")
   val indeclSource = Utils.dir(stems / "indeclinables")
@@ -110,11 +118,18 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   new PrintWriter(testData){write(text); close;}
 
   val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
-  val readDirOk = fstFromDir == s"${expected}\n"
+  // Tidy up
+  IO.delete(corpus)
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  fstFromDir == s"${expected}\n"
+}
+/*
+
 
   // 4.  Test file copying in apply function
   // Write some test data in the source work space:
-  IndeclDataInstaller(dataSource, repoRoot, corpusName)
+  val workSpace  = file("./test_build")
+  //IndeclDataInstaller(dataSource, workSpace, corpusName)
 
   // check the results:
   val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
@@ -124,8 +139,8 @@ def testIndeclDataInstaller(corpusName: String, conf: Configuration, repoRoot : 
   // clean up:
   testData.delete()
 
-  (caughtBadLine && goodParse && outputGood && readDirOk)
-}
+  (caughtBadLine && goodParse && outputGood && readDirOk)*/
+
 
 def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
@@ -196,10 +211,9 @@ def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
   SymbolsComposer.copySecondaryFiles(src, projectDir)
   val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
   val actualFiles =  (projectDir / "symbols") ** "*.fst"
-  //println(s"Looked in ${projectDir}")
-  println("Actually found \n" + actualFiles.toString)
   expectedNames == actualFiles.get.map(_.getName).toSet
 }
+
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed

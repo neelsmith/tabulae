@@ -14,15 +14,22 @@ object InflectionComposer {
 
 $ending$ = """
 
+
+
+  /**  Collects .fst files in a given directory.
+  */
   def inflectionFsts(dir: File): Vector[String] = {
     val filesOpt = (dir) ** "*infl.fst"
     val files = filesOpt.get.filter(_.asFile.length > 0)
     files.map(f => "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\"").toVector
   }
 
+
+  /**
+  */
   def apply(projectDir: File) : Unit = {
     val indeclFiles = inflectionFsts(projectDir / "inflection")
-    
+
     val fstFile = projectDir / "inflection.fst"
     if (indeclFiles.nonEmpty) {
       val fstText = StringBuilder.newBuilder

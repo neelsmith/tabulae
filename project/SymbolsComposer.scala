@@ -11,8 +11,14 @@ object SymbolsComposer {
   // to compose files of FST symbols.
   //
   def apply(repo: File, corpus: String) : Unit = {
+    val corpusDir = repo / s"parsers/${corpus}"
+    if (! corpusDir.exists) {corpusDir.mkdir}
+    val fstDir = corpusDir / "fst"
+    if(! fstDir.exists){fstDir.mkdir}
+
     composeMainFile(repo / s"parsers/${corpus}")
-    copySecondaryFiles(repo / "fst/symbols", repo / s"parsers/${corpus}")
+    copySecondaryFiles(repo / "fst/symbols", repo / s"parsers/${corpus}/fst/symbols")
+
     rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
   }
 
@@ -26,6 +32,10 @@ object SymbolsComposer {
 
 
   /** Install symbols from src into project in dest.
+  *
+  * @param src Directory with symbols files (e.g., "fst/symbols"
+  * in this repo).
+  * @param dest Directory where files should be written.
   */
   def copySecondaryFiles(src: File, dest: File) : Unit = {
      val fst = (src) ** "*.fst"

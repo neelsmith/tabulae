@@ -221,6 +221,7 @@ def testListX = List(
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
 
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
+  
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
@@ -284,7 +285,7 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
   **/
-  false 
+  false
 }
 
 
