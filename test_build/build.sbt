@@ -21,7 +21,7 @@ def testList = List(
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "pending" ),
+  ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
 
   ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),

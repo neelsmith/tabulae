@@ -208,7 +208,7 @@ def testListX = List(
 
 
 
-  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
+
 
 
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
@@ -219,9 +219,7 @@ def testListX = List(
   ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
   ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
-
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
-  
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
@@ -233,23 +231,10 @@ def testListX = List(
 
   ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
 
-  /*
-
-  ("Test NounDataInstaller", testNounDataInstaller(_, _, _), "pending" ),
-  ("Test NounRulesInstaller", testNounRulesInstaller(_, _, _), "pending" ),
-
-  ("Test VerbDataInstaller", testVerbDataInstaller(_, _, _), "pending" ),
-  ("Test VerbRulesInstaller", testVerbRulesInstaller(_, _, _), "pending" ),
-
-  ("Test RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
-  */
-
   ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
 
   ("Test compiling and executing FST parser", testFstBuild(_, _, _), "pending" ),
   ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" ),
-
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" )
 )
 
 
@@ -265,58 +250,6 @@ def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
   false
 }
 
-
-def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-
-  /**
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  val phono = projectDir / "symbols/phonology.fst"
-
-  // First install raw source.  Phonology file
-  // should have unexpanded macro:
-  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
-  val rawLines = Source.fromFile(phono).getLines.toVector
-  val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
-  (rawLines(7))
-  // Then rewrite phonology with expanded paths:
-  SymbolsComposer.rewritePhonologyFile(phono, projectDir)
-  val cookedLines = Source.fromFile(phono).getLines.toVector
-
-  val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
-  (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
-  **/
-  false
-}
-
-
-
-
-def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  // must install rules before composint inflection.fst
-  val dataSource = file(conf.datadir)
-  val corpus = Utils.dir(dataSource / corpusName)
-  val rules = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(rules / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val dataLine = "testdata.rule1#nunc"
-  val text = s"header line, omitted in parsing\n${dataLine}\n"
-  new PrintWriter(testData){write(text); close;}
-
-  RulesInstaller(dataSource, repoRoot, corpusName)
-  val installedSource =  (repoRoot / s"parsers/${corpusName}/inflection") ** "*.fst"
-  require(installedSource.get.size > 0, s"Testing inflection composer, but failed to install any FST source for parsers/${corpusName}")
-
-  // Now compose inflection.fst:
-  InflectionComposer(repoRoot / s"parsers/${corpusName}")
-  val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
-  val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
-  val expectedLine = "$ending$ = \"</data/repos/latin/tabulae/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
-
-  println(lines.mkString("\n"))
-  //testData.delete()
-
-  (expectedFile.exists && lines(3) == expectedLine)
-}
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = file(s"parsers/${corpusName}")
@@ -368,6 +301,8 @@ def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File
   testOut.delete
   lines(0) == testOutDir.toString + "/"
 }
+
+
 def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
   val projectDir = repoRoot / "parsers"
   Utils.dir(projectDir)
