@@ -15,7 +15,7 @@ def testList = List(
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
-
+  ("Test converting apply method for Indeclinable data installe", testIndeclApplied(_, _, _), "" ),
 
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "pending" ),
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
@@ -78,7 +78,6 @@ def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
 // test creating corpus in local workspace
 def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
   val src = file("test_build/datasets")
-  println("Create corpus with settings " + src + ", " + repoRoot + ", " + corpusName)
   val corpus =  Corpus(src, repoRoot, corpusName)
   val corpDir = corpus.dir
   val nameMatches = corpDir.toString == s"test_build/datasets/${corpusName}"
@@ -123,23 +122,35 @@ def testIndeclFstFromDir(corpusName: String, conf: Configuration, repoRoot : Fil
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   fstFromDir == s"${expected}\n"
 }
-/*
 
+def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Install one data file:
+  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
+  val dataSource = file ("./test_build/datasets")
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
 
-  // 4.  Test file copying in apply function
+  // Test file copying in apply function
   // Write some test data in the source work space:
   val workSpace  = file("./test_build")
-  //IndeclDataInstaller(dataSource, workSpace, corpusName)
+  IndeclDataInstaller(dataSource, workSpace, corpusName)
 
   // check the results:
-  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
+  val resultFile = workSpace / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
   val output  = Source.fromFile(resultFile).getLines.toVector
-  val outputGood = output(0) == expected
 
   // clean up:
-  testData.delete()
+  IO.delete( workSpace / s"parsers/${corpusName}")
+  IO.delete( workSpace / s"datasets/${corpusName}")
 
-  (caughtBadLine && goodParse && outputGood && readDirOk)*/
+  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  output(0) == expected
+}
+
 
 
 def testIndeclRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {

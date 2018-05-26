@@ -21,7 +21,6 @@ object IndeclDataInstaller {
 
     val fstFile = lexDirectory / "lexicon-indeclinables.fst"
     new PrintWriter(fstFile) { write(fst); close }
-
   }
 
 

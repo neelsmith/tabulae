@@ -17,7 +17,7 @@ object SymbolsComposer {
     if(! fstDir.exists){fstDir.mkdir}
 
     composeMainFile(repo / s"parsers/${corpus}")
-    copySecondaryFiles(repo / "fst/symbols", repo / s"parsers/${corpus}/fst/symbols")
+    copySecondaryFiles(repo / "fst/symbols", repo / s"parsers/${corpus}/symbols")
 
     rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
   }
