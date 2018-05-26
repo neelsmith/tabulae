@@ -12,15 +12,18 @@ def testList = List(
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
+
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
+  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
+  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
+  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
+
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
   ("Test converting apply method for Indeclinable data installe", testIndeclApplied(_, _, _), "" ),
 
   ("Test installing rules for indeclinables", testIndeclRulesInstaller(_, _, _), "pending" ),
-  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
-  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "pending" ),
-  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "pending" ),
 )
 
 /** "s" or no "s"? */
@@ -224,7 +227,27 @@ def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
   val actualFiles =  (projectDir / "symbols") ** "*.fst"
   expectedNames == actualFiles.get.map(_.getName).toSet
 }
+def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
 
+  /**
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  val phono = projectDir / "symbols/phonology.fst"
+
+  // First install raw source.  Phonology file
+  // should have unexpanded macro:
+  SymbolsComposer.copySecondaryFiles(repoRoot, corpusName)
+  val rawLines = Source.fromFile(phono).getLines.toVector
+  val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
+  (rawLines(7))
+  // Then rewrite phonology with expanded paths:
+  SymbolsComposer.rewritePhonologyFile(phono, projectDir)
+  val cookedLines = Source.fromFile(phono).getLines.toVector
+
+  val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
+  (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
+  **/
+  false
+}
 lazy val testAll = inputKey[Unit]("Test using output of args")
 testAll in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
