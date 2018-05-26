@@ -18,9 +18,10 @@ object RulesInstaller {
     val srcCorpus = sourceDir / corpus
 
     //NounRulesInstaller( srcCorpus / "rules-tables/nouns", inflDir / "nouninfl.fst")
+    println("\nInstall rules for indeclinables:")
     IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
-    //println("INSTALL VERBS NEXT:")
-    VerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
+
+    //VerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
   }
 
 

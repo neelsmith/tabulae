@@ -206,11 +206,6 @@ def tbdList = List (
 )
 def testListX = List(
 
-
-
-
-
-
   ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
   ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
 
@@ -225,6 +220,8 @@ def testListX = List(
   ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
 
   ("Test composing parser", testParserComposer(_, _, _), "" ),
+
+
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "" ),
