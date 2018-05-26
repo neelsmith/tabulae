@@ -33,7 +33,7 @@ def testList = List(
 
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
-  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 )
 
 /** "s" or no "s"? */
@@ -406,30 +406,21 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
 }
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = file(s"parsers/${corpusName}")
+
+  // Install one data file:
+  val datasets = repoRoot / "parsers"
+  val corpusData = datasets / corpusName
+  if (! corpusData.exists) {corpusData.mkdir}
+  installIndeclRuleFst(corpusData)
+
 
   // 1. Should omit indeclinables if not data present.
+  val projectDir = repoRoot / s"parsers/${corpusName}"
   AcceptorComposer.composeMainAcceptor(projectDir)
   val acceptor = projectDir / "acceptor.fst"
   val lines = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
-  val expected = "$acceptor$ = $verb_pipeline$"
-  val emptyOk = lines(4).trim == expected.trim
-
-  // 2. Should include indeclinables if data are present.
-  val lexica = projectDir / "lexica"
-  Utils.dir(lexica)
-  val indeclLexicon= lexica  / "lexicon-indeclinables.fst"
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
-
-  AcceptorComposer.composeMainAcceptor(projectDir)
-  val lines2 = Source.fromFile(acceptor).getLines.toVector.filter(_.nonEmpty)
-  val expected2 = "$=indeclclass$ = [#indeclclass#]"
-  val dataOk = expected2.trim == lines2(2).trim
-
-
-  emptyOk && dataOk
+  val expected = "$acceptor$ = $squashindeclurn$"
+  lines(5).trim == expected.trim
 }
 
 lazy val testAll = inputKey[Unit]("Test using output of args")
