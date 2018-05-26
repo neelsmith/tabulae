@@ -40,4 +40,4 @@ The accompanying Scala code library, `edu.holycross.shot.tabulae`, can read the 
 
 ## Under the hood
 
-More information about [how `tabulae` works](notes/narrative)
+More information about [how `tabulae` works](notes/narrative/)
