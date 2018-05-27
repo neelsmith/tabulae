@@ -8,29 +8,22 @@ object VerbDataInstaller {
   /**
   */
   def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = Utils.dir(repo / s"parsers/${corpus}/lexica")
+    val lexDirectory = repo / s"parsers/${corpus}/lexica"
+    if (! lexDirectory.exists) { lexDirectory.mkdir}
 
-    val dir =  dataSource / s"${corpus}/stems-tables/verbs-simplex"
-    val rulesOpt = (dir) ** "*cex"
-    val rulesFiles = rulesOpt.get
-
-    println("\tbuilding simplex verb stems from " + dir)
-
-/*
-    for (f <- rulesFiles) {
-      val fstFile = lexDirectory / "lex-verbs-" + f.getName().replaceFirst(".cex$", ".fst")
-      // omit empty lines and header
-      val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
-      val fstLines = VerbDataInstaller.verbLinesToFst(dataLines)
-      new PrintWriter(fstFile) { write(fstLines); close }
-    }
-    */
+    val verbSourceDir = dataSource / s"${corpus}/stems-tables/verbs-simplex"
+    val fst = fstForVerbData(verbSourceDir)
+    val fstFile = lexDirectory / "lexicon-verbs.fst"
+    new PrintWriter(fstFile){write(fst); close;}
   }
 
+  /** Create FST string for a verb tables in a given directory.
+  *
+  * @param dir Directory with tables of verb data.
+  */
   def fstForVerbData(dir: File) : String = {
     val verbOpt = (dir) ** "*cex"
     val verbFiles = verbOpt.get
-    println("Look in " + dir + " and got " + verbFiles)
     val fstLines = for (f <- verbFiles) yield {
       // omit empty lines and header
       val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
@@ -45,7 +38,6 @@ object VerbDataInstaller {
 
   def verbLineToFst(line: String) : String = {
     val cols = line.split("#")
-    println(s"From line ${line}, read ${cols.size} columns")
     if (cols.size < 4) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}".toString)

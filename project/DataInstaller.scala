@@ -14,12 +14,13 @@ Users/nsmith/Desktop/horace
     println(s"Convert morphological lexicon tables in ${dataSource} to FST")
 
     val parsers =  Utils.dir(repo / "parsers")
+
     val corpDir = Utils.dir(parsers / corpus)
 
     val lexDir = Utils.dir(corpDir / "lexica")
     val inflDir = Utils.dir(corpDir / "inflection")
 
-
+    println("Lex dir? " + lexDir.exists)
     //NounDataInstaller(dataSource, repo, corpus)
     IndeclDataInstaller(dataSource,repo, corpus)
     VerbDataInstaller(dataSource, repo, corpus)

@@ -51,7 +51,7 @@ def testList = List(
   ("Test converting bad data to fst for verbs", testBadVerbDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for verbs", testVerbDataConvert(_, _, _), "" ),
   ("Test converting verb files in directory to fst for indeclinable", testVerbFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "pending" ),
+  ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "" ),
 
 )
 
@@ -326,33 +326,34 @@ def testVerbFstFromDir(corpusName: String, conf: Configuration, repoRoot : File)
 }
 def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Install one data file:
-  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
-  val dataSource = file ("./test_build/datasets")
+  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
   val stems = Utils.dir(corpus / "stems-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
 
+
+  val workDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
+  val lexDir = Utils.dir(workDir / "lexica")
   // Test file copying in apply function
   // Write some test data in the source work space:
-  val workSpace  = file("./test_build")
-  IndeclDataInstaller(dataSource, workSpace, corpusName)
+  VerbDataInstaller(dataSource, repoRoot, corpusName)
 
   // check the results:
-  val resultFile = workSpace / s"parsers/${corpusName}/lexica/lexicon-indeclinables.fst"
+  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-verbs.fst"
   val output  = Source.fromFile(resultFile).getLines.toVector
 
   // clean up:
-  IO.delete( workSpace / s"parsers/${corpusName}")
-  IO.delete( workSpace / s"datasets/${corpusName}")
+  IO.delete( repoRoot / s"parsers/${corpusName}")
+  IO.delete( repoRoot / s"datasets/${corpusName}")
 
-  val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
   output(0) == expected
-  false
 }
-//////////
+///
 
 def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.

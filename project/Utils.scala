@@ -27,9 +27,8 @@ object Utils {
   * @param d Directory to check.
   */
   def dir(d: File) : File = {
-    if (! d.isDirectory) {d.mkdir} else {}
+    if (! d.exists) {d.mkdir} else {}
     require(d.isDirectory, s"File ${d} is not a directory")
-    if (! d.exists) {d.mkdir}
     d
   }
 
