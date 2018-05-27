@@ -7,7 +7,7 @@ import java.io.PrintWriter
 */
 object IndeclRulesInstaller {
 
-  /** Write FST rules for all noun data in a directory
+  /** Write FST rules for all indeclinable data in a directory
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.

@@ -37,10 +37,12 @@ object VerbDataInstaller {
 // <u>smyth.n62274_0</u><u>lexent.n62274</u><#>leip<verb><w_pp1>
 
   def verbLineToFst(line: String) : String = {
+
     val cols = line.split("#")
+
     if (cols.size < 4) {
-      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
-      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}".toString)
+      println(s"${cols.size} is the wrong number of columns for a verb\nCould not parse data line:\n${line}")
+      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
 
       val fstBuilder = StringBuilder.newBuilder
@@ -50,7 +52,6 @@ object VerbDataInstaller {
       val princPart = cols(3)
 
       fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<verb><${princPart}>")
-
       fstBuilder.toString
     }
   }

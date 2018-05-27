@@ -21,7 +21,6 @@ object SymbolsComposer {
     if (! symbolDir.exists) {symbolDir.mkdir  }
     val symbolSrc = repo / "fst/symbols"
 
-    println(s"Copying files from ${symbolSrc} to" + symbolDir)
     copySecondaryFiles(repo / "fst/symbols", symbolDir )
 
     rewritePhonologyFile(repo / s"parsers/${corpus}/symbols/phonology.fst", repo / s"parsers/${corpus}")
@@ -30,7 +29,6 @@ object SymbolsComposer {
   // This only works if you've already installed the source
   // files (eg, by invoking copySecondaryFiles)
   def rewritePhonologyFile(f: File, workDir: File): Unit = {
-    println("Rewriting phonology file " + f)
     val lines = Source.fromFile(f).getLines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     new PrintWriter(f) { write(rewritten); close }

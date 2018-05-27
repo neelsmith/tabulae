@@ -11,7 +11,7 @@ Users/nsmith/Desktop/horace
 	h4
 */
   def apply(dataSource: File, repo: File, corpus: String): Unit = {
-    println(s"Convert morphological lexicon tables in ${dataSource} to FST")
+    //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
 
     val parsers =  Utils.dir(repo / "parsers")
 
@@ -20,7 +20,6 @@ Users/nsmith/Desktop/horace
     val lexDir = Utils.dir(corpDir / "lexica")
     val inflDir = Utils.dir(corpDir / "inflection")
 
-    println("Lex dir? " + lexDir.exists)
     //NounDataInstaller(dataSource, repo, corpus)
     IndeclDataInstaller(dataSource,repo, corpus)
     VerbDataInstaller(dataSource, repo, corpus)

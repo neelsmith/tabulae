@@ -24,12 +24,10 @@ def testList = List(
   ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
 
 
-
-
-
   ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
   ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
+
   ("Test composing all rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
@@ -52,6 +50,15 @@ def testList = List(
   ("Test converting tabular data to fst for verbs", testVerbDataConvert(_, _, _), "" ),
   ("Test converting verb files in directory to fst for indeclinable", testVerbFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "" ),
+
+  ("Test converting bad rules for verbs", testBadVerbsRulesConvert(_, _, _), "" ),
+  ("Test converting  rules for verbs", testConvertVerbsRules(_, _, _), "pending" ),
+  ("Test converting  rules for verbs from files in dir", testVerbRulesFromDir(_, _, _), "pending" ),
+
+  ("Test writing verbs acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
+
+  ("Test apply function of acceptor for indeclinables", testApplyIndeclRulesInstall(_, _, _), "pending" ),
+
 
 )
 
@@ -126,7 +133,6 @@ def installVerbRuleFst(corpusDir:  File) : Unit = {
 
 def testBuildDirectory(corpus: String, conf: Configuration, repoRoot : File): Boolean = {
   val expected = repoRoot / s"parsers/${corpus}"
-  println("Expected build dir " + expected)
   (Utils.buildDirectory(repoRoot, corpus) == expected)
 }
 
@@ -220,6 +226,8 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
 }
 
+
+////// Indeclinables
 def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
@@ -284,9 +292,97 @@ def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):
   output(0) == expected
 }
 
+def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = IndeclRulesInstaller.indeclRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  // Should correctly convert good data.
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
+  goodFst ==  expected
+}
 
-//////
+def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+{
+  val goodLine = "testdata.rule1#nunc"
+  val dataSource = file ("./test_build/datasets")
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "rules-tables")
+  val indeclSource = Utils.dir(stems / "indeclinables")
+  val testData  = indeclSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
 
+  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
+  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
+  val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
+
+  // clean up:
+  IO.delete(corpus)
+
+  readDirOk
+}
+
+def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  Utils.dir(projectDir)
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "% Indeclinable form acceptor:"
+
+  (emptiedOk && lines(0) == expected)
+}
+
+def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // install data
+  println("Install ")
+/*
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  installIndeclRuleTable(projectDir)
+  Utils.dir(projectDir)
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+
+
+  val dataDir = Utils.dir(repoRoot / s"datasets")
+  val corpus = Utils.dir(dataDir / corpusName)
+  val rules = Utils.dir(corpus / "rules-tables")
+  val indecls = Utils.dir(rules / "indeclinables")
+  val testData  = indecls / "madeuptestdata.cex"
+  val hdr = "Unparsed header line\n"
+  val goodLine = "testdata.rule1#nunc\n"
+  new PrintWriter(testData){write(hdr + goodLine); close;}
+
+  println("Indecls dir is " + indecls)
+  IndeclRulesInstaller(indecls, indeclLexicon)
+
+  val lines = Source.fromFile(indeclLexicon).getLines.toVector
+  println(lines.mkString("\n"))
+  */
+  false
+}
+
+////// Verbs
 def testBadVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
@@ -353,19 +449,18 @@ def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
   output(0) == expected
 }
-///
 
-def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testBadVerbsRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
   try {
-    val fst = IndeclRulesInstaller.indeclRuleToFst("Not a real line")
+    val fst = VerbRulesInstaller.verbRuleToFst("Not a real line")
     false
   } catch {
     case t : Throwable => true
   }
 }
-def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testConvertVerbsRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   // Should correctly convert good data.
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
@@ -373,7 +468,7 @@ def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : F
   goodFst ==  expected
 }
 
-def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+def testVerbRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
 {
   val goodLine = "testdata.rule1#nunc"
   val dataSource = file ("./test_build/datasets")
@@ -393,6 +488,45 @@ def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : F
 
   readDirOk
 }
+
+
+def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  Utils.dir(projectDir)
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "% Indeclinable form acceptor:"
+
+  (emptiedOk && lines(0) == expected)
+}
+
+def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // install data
+  val projectDir = repoRoot / s"parsers/${corpusName}"
+  Utils.dir(projectDir)
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
+  val goodLine = "testdata.rule1#nunc"
+  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
+  new PrintWriter(indeclLexicon){write(goodFst);close;}
+
+  //IndeclRulesInstaller
+  false
+}
+
+///
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   // Write some test data to work with:
@@ -441,41 +575,7 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   (expectedFile.exists && lines(3).trim ==  expectedLine)
 
 }
-def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
 
-  // 1. Should  return empty string if no data:
-  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
-  val emptiedOk = emptyFst.isEmpty
-
-  // 2. Now try after building some data:
-  val lexDir = Utils.dir(projectDir / "lexica")
-  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
-
-  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
-  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
-  val expected = "% Indeclinable form acceptor:"
-
-  (emptiedOk && lines(0) == expected)
-}
-
-def testApplyIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  // install data
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
-  val lexDir = Utils.dir(projectDir / "lexica")
-  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
-
-  //IndeclRulesInstaller
-  false
-}
 
 def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   val corpusDir = repoRoot / s"parsers/${corpusName}"

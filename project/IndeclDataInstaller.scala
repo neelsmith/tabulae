@@ -2,7 +2,9 @@ import sbt._
 import scala.io.Source
 import java.io.PrintWriter
 
-
+/** An object for reading data about indeclinable stems,
+* and writing it in SFST notation.
+*/
 object IndeclDataInstaller {
 
   /** Creates FST file for each CEX file of
@@ -16,13 +18,10 @@ object IndeclDataInstaller {
     val corpus = Utils.dir(repo / s"parsers/${corpusName}")
     val lexDirectory = Utils.dir(corpus / "lexica")
 
-
     val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
-    println("Install indecls from " + indeclSourceDir)
     val fst = fstForIndeclData(indeclSourceDir)
 
     val fstFile = lexDirectory / "lexicon-indeclinables.fst"
-    println(s"write ${fst} to " + fstFile)
     new PrintWriter(fstFile) { write(fst); close }
   }
 
@@ -36,7 +35,6 @@ object IndeclDataInstaller {
 
     val indeclOpt = (dir) ** "*cex"
     val indeclFiles = indeclOpt.get
-    println("Look in " + dir + " and got " + indeclFiles)
     val fstLines = for (f <- indeclFiles) yield {
       // omit empty lines and header
       val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)

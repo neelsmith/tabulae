@@ -63,8 +63,8 @@ object VerbRulesInstaller {
 
 
     if (cols.size < 8) {
-      println("Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
-      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
+      throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
 
 

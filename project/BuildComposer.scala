@@ -21,12 +21,10 @@ object BuildComposer {
 
   def apply(dataSource: File, repo: File, corpus: String, fstcompiler: String) : Unit = {
     println("Composing a lot of build things.")
-    //println("Data, repo and corpus are:")
-    //println(List(dataSource, repo, corpus).mkString(", "))
+
     val corpusDir = "parsers/" + corpus
     val projectDir = repo / corpusDir
 
-    println(s"Install symbols in ${corpus} of " + repo)
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
     InflectionComposer(projectDir)
