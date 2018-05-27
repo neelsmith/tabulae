@@ -141,7 +141,7 @@ def installVerbStemTable(corpusDir:  File) : Unit = {
   val verbs = Utils.dir(stems / "verbs-simplex")
   val verbFile = verbs / "madeupdata.cex"
 
-  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(verbFile){write(text); close;}
 }
@@ -149,7 +149,7 @@ def installVerbRuleTable(corpusDir:  File) : Unit = {
   val rules = Utils.dir(corpusDir / "rules-tables")
   val verbs = Utils.dir(rules / "verbs")
   val verbFile = verbs / "madeupdata.cex"
-  val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act\n"
+  val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
 
   new PrintWriter(verbFile){write(goodLine); close;}
 }
@@ -421,14 +421,14 @@ def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot
 }
 def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // should correctly convert good data.
-  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   goodFst.trim ==  expected
 }
 def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Should create FST for all files in a directory
-    val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+    val goodLine = "ag.v1#lexent.n2280#am#conj1"
 
   val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
@@ -442,7 +442,7 @@ def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : F
 
   // Tidy up
   IO.delete(corpus)
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   fstFromDir.trim == expected
 }
 def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
@@ -451,7 +451,7 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
   val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
   installVerbStemTable(corpus)
-  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val stems = Utils.dir(corpus / "stems-tables")
   val verbSource = Utils.dir(stems / "verbs-simplex")
   val testData  = verbSource / "madeuptestdata.cex"
@@ -473,7 +473,7 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
   IO.delete( repoRoot / s"parsers/${corpusName}")
   IO.delete( repoRoot / s"datasets/${corpusName}")
 
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   output(0) == expected
 }
 
@@ -490,9 +490,9 @@ def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRo
 
 def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   // Should correctly convert good data.
-  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
-  val expected = "<are_vb><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+  val expected = "<conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
   goodFst.trim ==  expected
 }
 
@@ -507,7 +507,7 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 
   val fstFromDir = VerbRulesInstaller.fstForVerbRules(verbSource)
   val lines = fstFromDir.split("\n")
-  val expected = "$verbinfl$ =  <are_vb><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+  val expected = "$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
 
   lines(0) == expected
 }
@@ -523,7 +523,7 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File): 
   // 2. Now try after building some data:
   val lexDir = Utils.dir(projectDir / "lexica")
   val verbLexicon= lexDir  / "lexicon-verbs.fst"
-  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
   new PrintWriter(verbLexicon){write(goodFst);close;}
 
@@ -538,7 +538,7 @@ def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   /*
   val lexDir = Utils.dir(projectDir / s"datasets")
   val verbLexicon= lexDir  / "lexicon-verbs.fst"
-  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
   new PrintWriter(verbLexicon){write(goodFst);close;}
 

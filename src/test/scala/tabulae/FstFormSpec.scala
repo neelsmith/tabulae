@@ -20,8 +20,8 @@ class FstFormSpec extends FlatSpec {
   }
 
   it should "construct parsed verb form from FST string input" in {
-    val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><are_vb>"
-    val ruleFst = "<are_vb><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
+    val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><conj1>"
+    val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val fst = stemFst + "::" + ruleFst
     val f = Form(fst)
     f match {

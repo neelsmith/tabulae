@@ -23,7 +23,7 @@ class FstRuleParsingSpec extends FlatSpec {
   }
 
   it should "recognize verb forms" in {
-    val ruleFst = "<are_vb><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
+    val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val rule = FstRule(ruleFst)
     rule match {
       case vr: VerbRule => {

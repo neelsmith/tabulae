@@ -32,7 +32,7 @@ object AcceptorComposer {
   /** Write verb.fst, the top-level transducer for verbs in the
   * the FST chain.  Squashed URN representations are generated for
   * underlying patterns like:
-  * <u>1.1</u><u>2.2</u>am<verb><are_vb>::<are_vb><verb>i<1st><sg><pft><indic><act><u>3.3</u>
+  * <u>1.1</u><u>2.2</u>am<verb><conj1>::<conj1><verb>i<1st><sg><pft><indic><act><u>3.3</u>
   *
   * @param projectDir The directory for the corpus-specific
   * parser where acceptor.fst should be written.

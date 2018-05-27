@@ -1,17 +1,17 @@
 RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice
-lverbinfl.are_pft1#are_vb#avi#1st#sg#pft#indic#act
-lverbinfl.are_pft2#are_vb#avisti#2nd#sg#pft#indic#act
-lverbinfl.are_pft3#are_vb#avit#3rd#sg#pft#indic#act
-lverbinfl.are_pft4#are_vb#avimus#1st#pl#pft#indic#act
-lverbinfl.are_pft5#are_vb#avistis#2nd#pl#pft#indic#act
-lverbinfl.are_pft6#are_vb#averunt#3rd#pl#pft#indic#act
+lverbinfl.are_pft1#conj1#avi#1st#sg#pft#indic#act
+lverbinfl.are_pft2#conj1#avisti#2nd#sg#pft#indic#act
+lverbinfl.are_pft3#conj1#avit#3rd#sg#pft#indic#act
+lverbinfl.are_pft4#conj1#avimus#1st#pl#pft#indic#act
+lverbinfl.are_pft5#conj1#avistis#2nd#pl#pft#indic#act
+lverbinfl.are_pft6#conj1#averunt#3rd#pl#pft#indic#act
 
-lverbinfl.pft7#are_vb#averim#1st#sg#pft#subj#act
-lverbinfl.pft8#are_vb#averis#2nd#sg#pft#subj#act
-lverbinfl.pft9#are_vb#averit#3rd#sg#pft#subj#act
-lverbinfl.pft10#are_vb#averimus#1st#pl#pft#subj#act
-lverbinfl.pft11#are_vb#averistis#2nd#pl#pft#subj#act
-lverbinfl.pft12#are_vb#averint#3rd#pl#pft#subj#act
+lverbinfl.pft7#conj1#averim#1st#sg#pft#subj#act
+lverbinfl.pft8#conj1#averis#2nd#sg#pft#subj#act
+lverbinfl.pft9#conj1#averit#3rd#sg#pft#subj#act
+lverbinfl.pft10#conj1#averimus#1st#pl#pft#subj#act
+lverbinfl.pft11#conj1#averistis#2nd#pl#pft#subj#act
+lverbinfl.pft12#conj1#averint#3rd#pl#pft#subj#act
 
 lverbinfl.are_pft13#pftact#i#1st#sg#pft#indic#act
 lverbinfl.are_pft14#pftact#isti#2nd#sg#pft#indic#act
