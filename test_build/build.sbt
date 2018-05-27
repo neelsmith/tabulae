@@ -69,6 +69,7 @@ def testList = List(
 
 
   ("Test compiling// FST parser", testFstBuild(_, _, _), "" ),
+  ("Test compiling// FST parser", testBuildWithVerb(_, _, _), "" ),
   ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
   // do we need these?
@@ -715,6 +716,20 @@ def testFstBuild(corpusName: String, conf: Configuration, repoRoot : File) : Boo
   FstCompiler.compile(dataDirectory, repoRoot, cName, conf)
 
   val parser = repoRoot / "/parsers/minimum/latin.a"
+  parser.exists
+}
+
+def testBuildWithVerb(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
+  val cName = "minimum+verb"
+  val dataDirectory = repoRoot / "datasets"
+  val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
+
+  val target = repoRoot / s"parsers/${cName}"
+  IO.delete(target)
+  Utils.dir(target)
+  FstCompiler.compile(dataDirectory, repoRoot, cName, conf)
+
+  val parser = repoRoot / "/parsers/minimum+verb/latin.a"
   parser.exists
 }
 

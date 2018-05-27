@@ -92,7 +92,11 @@ object AcceptorComposer {
     //fst.append(nounAcceptor(projectDir) + "\n")
     //fst.append(irregNounAcceptor(projectDir) + "\n")
 
+// MANAGE IN A FOR COMPR
+
     fst.append(indeclAcceptor(projectDir) + "\n")
+    fst.append(verbAcceptor(projectDir) + "\n")
+
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -156,9 +160,9 @@ object AcceptorComposer {
     """
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
-
-$squashverburn$
 """
+//$squashverburn$
+
 } else { "" }
 }
   /** String defining final noun acceptor transducer.*/
