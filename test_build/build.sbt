@@ -53,7 +53,7 @@ def testList = List(
 
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbsInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
 
   ("Test writing verbs acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
 
@@ -483,18 +483,15 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 {
   // Install inflectional table of data
   val corpus = Utils.dir(repoRoot / s"datasets/${corpusName}")
-  installVerbStemTable(corpus)
+  val rules  = Utils.dir(corpus / "rules-tables")
+  val verbSource = Utils.dir(rules / "verbs")
+  installVerbRuleTable(corpus)
 
-/*
+  val fstFromDir = VerbRulesInstaller.fstForVerbRules(verbSource)
+  val lines = fstFromDir.split("\n")
+  val expected = "$verbinfl$ =  <are_vb><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
 
-  val fstFromDir =VerbRulesInstaller.fstForVerbRules(indeclSource)
-  val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
-
-  // clean up:
-  //IO.delete(corpus)
-
-  readDirOk*/
-  false
+  lines(0) == expected
 }
 
 
