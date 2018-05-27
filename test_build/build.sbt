@@ -24,11 +24,11 @@ def testList = List(
   ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
 
 
-  ("Test converting bad rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
-  ("Test converting  rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
-  ("Test converting  rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
+  ("Test converting bad inflectional rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
+  ("Test converting inflectional rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
 
-  ("Test composing all rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
@@ -46,14 +46,14 @@ def testList = List(
   ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
 
-  ("Test converting bad data to fst for verbs", testBadVerbDataConvert(_, _, _), "" ),
-  ("Test converting tabular data to fst for verbs", testVerbDataConvert(_, _, _), "" ),
-  ("Test converting verb files in directory to fst for indeclinable", testVerbFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for verb data installer", testVerbDataApplied(_, _, _), "" ),
+  ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
-  ("Test converting bad rules for verbs", testBadVerbsRulesConvert(_, _, _), "" ),
-  ("Test converting  rules for verbs", testConvertVerbsRules(_, _, _), "pending" ),
-  ("Test converting  rules for verbs from files in dir", testVerbRulesFromDir(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for verbs", testConvertVerbsInflRules(_, _, _), "" ),
+  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "pending" ),
 
   ("Test writing verbs acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
 
@@ -107,16 +107,7 @@ def installIndeclRuleFst(corpusDir:  File) : Unit = {
   new PrintWriter(rulesFst){write(entry);close;}
 }
 
-def installVerbRuleTable(corpusDir: File ): Unit = {
-  /*
-  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
-  val stems = Utils.dir(corpusDir / "stems-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-  */
-}
+
 
 def installVerbRuleFst(corpusDir:  File) : Unit = {
   /*
@@ -127,7 +118,23 @@ def installVerbRuleFst(corpusDir:  File) : Unit = {
   new PrintWriter(rulesFst){write(entry);close;}
   */
 }
+def installVerbStemTable(corpusDir:  File) : Unit = {
+  val stems = Utils.dir(corpusDir / "stems-tables")
+  val verbs = Utils.dir(stems / "verbs-simplex")
+  val verbFile = verbs / "madeupdata.cex"
 
+  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(verbFile){write(text); close;}
+}
+def installVerbRuleTable(corpusDir:  File) : Unit = {
+  val rules = Utils.dir(corpusDir / "rules-tables")
+  val verbs = Utils.dir(rules / "verbs")
+  val verbFile = verbs / "madeupdata.cex"
+  val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act\n"
+
+  new PrintWriter(verbFile){write(goodLine); close;}
+}
 ////////////////// Tests //////////////////////////////
 //
 
@@ -383,7 +390,7 @@ def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repoRoo
 }
 
 ////// Verbs
-def testBadVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
   try {
@@ -394,14 +401,14 @@ def testBadVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : F
     case t : Throwable => true
   }
 }
-def testVerbDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#are_vb"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
   goodFst.trim ==  expected
 }
-def testVerbFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Should create FST for all files in a directory
     val goodLine = "ag.v1#lexent.n2280#am#are_vb"
 
@@ -420,11 +427,13 @@ def testVerbFstFromDir(corpusName: String, conf: Configuration, repoRoot : File)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><are_vb>"
   fstFromDir.trim == expected
 }
-def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Install one data file:
-  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
+
   val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
+  installVerbStemTable(corpus)
+  val goodLine = "ag.v1#lexent.n2280#am#are_vb"
   val stems = Utils.dir(corpus / "stems-tables")
   val verbSource = Utils.dir(stems / "verbs-simplex")
   val testData  = verbSource / "madeuptestdata.cex"
@@ -450,7 +459,7 @@ def testVerbDataApplied(corpusName: String, conf: Configuration, repoRoot : File
   output(0) == expected
 }
 
-def testBadVerbsRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
   try {
@@ -460,33 +469,32 @@ def testBadVerbsRulesConvert(corpusName: String, conf: Configuration, repoRoot :
     case t : Throwable => true
   }
 }
-def testConvertVerbsRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+
+def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
   // Should correctly convert good data.
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
-  goodFst ==  expected
+  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  val expected = "<are_vb><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+  goodFst.trim ==  expected
 }
 
-def testVerbRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
-{
-  val goodLine = "testdata.rule1#nunc"
-  val dataSource = file ("./test_build/datasets")
-  val corpus = Utils.dir(dataSource / corpusName)
-  val stems = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
 
-  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
-  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
+def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+{
+  // Install inflectional table of data
+  val corpus = Utils.dir(repoRoot / s"datasets/${corpusName}")
+  installVerbStemTable(corpus)
+
+/*
+
+  val fstFromDir =VerbRulesInstaller.fstForVerbRules(indeclSource)
   val readDirOk = fstFromDir == "$indeclinfl$ = " + expected + "\n\n$indeclinfl$\n"
 
   // clean up:
-  IO.delete(corpus)
+  //IO.delete(corpus)
 
-  readDirOk
+  readDirOk*/
+  false
 }
 
 
