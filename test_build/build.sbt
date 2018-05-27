@@ -49,10 +49,18 @@ def testList = List(
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
 
+
+  // Top-level inflectional rules
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+
+
   // Top-level acceptors
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
+
+
 
   ("Test composing parser", testParserComposer(_, _, _), "" ),
 
@@ -60,7 +68,7 @@ def testList = List(
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
 
-  ("Test compiling// FST parser", testFstBuild(_, _, _), "pending" ),
+  ("Test compiling// FST parser", testFstBuild(_, _, _), "" ),
   ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
   // do we need these?
@@ -68,9 +76,6 @@ def testList = List(
   ("Test apply function of acceptor for indeclinables", testApplyIndeclRulesInstall(_, _, _), "pending" ),
 
 
-    // Top-level inflectional rules
-    ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
-    ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 )
 
@@ -699,14 +704,17 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 }
 
 // test comopiling and executing a final parser
-def testFstBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+def testFstBuild(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
   val cName = "minimum"
-  val dataDirectory = baseDir / "datasets"
+  val dataDirectory = repoRoot / "datasets"
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
 
-  FstCompiler.compile(dataDirectory, baseDir, cName, conf)
+  val target = repoRoot / s"parsers/${cName}"
+  IO.delete(target)
+  Utils.dir(target)
+  FstCompiler.compile(dataDirectory, repoRoot, cName, conf)
 
-  val parser = baseDir / "/parsers/minimum/latin.a"
+  val parser = repoRoot / "/parsers/minimum/latin.a"
   parser.exists
 }
 

@@ -13,8 +13,10 @@ object VerbDataInstaller {
 
     val verbSourceDir = dataSource / s"${corpus}/stems-tables/verbs-simplex"
     val fst = fstForVerbData(verbSourceDir)
-    val fstFile = lexDirectory / "lexicon-verbs.fst"
-    new PrintWriter(fstFile){write(fst); close;}
+    if (fst.nonEmpty){
+      val fstFile = lexDirectory / "lexicon-verbs.fst"
+      new PrintWriter(fstFile){write(fst); close;}
+    } else {}
   }
 
   /** Create FST string for a verb tables in a given directory.
