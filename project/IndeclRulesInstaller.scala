@@ -15,7 +15,9 @@ object IndeclRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val indeclFst = fstForIndeclRules(srcDir)
-    new PrintWriter(targetFile) { write(indeclFst ); close }
+    if (indeclFst.nonEmpty) {
+      new PrintWriter(targetFile) { write(indeclFst ); close }
+    }
   }
 
 

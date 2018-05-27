@@ -15,8 +15,9 @@ object VerbRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val verbFst = fstForVerbRules(srcDir)
-
-    new PrintWriter(targetFile) { write(verbFst ); close }
+    if (verbFst.nonEmpty) {
+      new PrintWriter(targetFile) { write(verbFst ); close }
+    }
   }
 
 

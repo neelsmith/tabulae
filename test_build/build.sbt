@@ -8,31 +8,48 @@ name := "bldtest"
 
 /** Triples of description, function and status. */
 def testList = List(
+  // utilities
   ("Test finding build directory", testBuildDirectory(_,_,_), ""),
   ("Test verifying directory", testDirCheck(_,_,_), ""),
   ("Test cleaning build directory", testCleanAll(_,_,_), ""),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 
+  // FST symbol system
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
+
+  //////////////// Indeclinables.
+  // Stem data
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
   ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
-
-
+  // Inflectional rules
   ("Test converting bad inflectional rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
   ("Test converting inflectional rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
-
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
-
+  //  Acceptor:
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
 
+
+
+  //////////////// Verbs.
+  // stems
+  ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
+  // inflectional rules
+  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for verbs", testConvertVerbsInflRules(_, _, _), "" ),
+  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
+  // acceptor
+  ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
+
+  // Top-level acceptors
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
@@ -42,23 +59,18 @@ def testList = List(
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
-  ("Test compiling FST parser", testFstBuild(_, _, _), "" ),
+
+  ("Test compiling// FST parser", testFstBuild(_, _, _), "pending" ),
   ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
-
-  ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
-  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
-  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
-
-  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for verbs", testConvertVerbsInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
-
-  ("Test writing verbs acceptor string", testIndeclAcceptor(_, _, _), "pending" ),
-
+  // do we need these?
+  ("Test apply function of acceptor for verbs", testApplyVerbAcceptor(_, _, _), "pending" ),
   ("Test apply function of acceptor for indeclinables", testApplyIndeclRulesInstall(_, _, _), "pending" ),
 
+
+    // Top-level inflectional rules
+    ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+    ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 )
 
@@ -496,54 +508,59 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 
 
 def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
+  val projectDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
 
   // 1. Should  return empty string if no data:
-  val emptyFst = AcceptorComposer.indeclAcceptor(projectDir)
+  val emptyFst = AcceptorComposer.verbAcceptor(projectDir)
   val emptiedOk = emptyFst.isEmpty
 
   // 2. Now try after building some data:
   val lexDir = Utils.dir(projectDir / "lexica")
-  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
+  val verbLexicon= lexDir  / "lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  new PrintWriter(verbLexicon){write(goodFst);close;}
 
-  val indeclFst = AcceptorComposer.indeclAcceptor(projectDir)
-  val lines = indeclFst.split("\n").toVector.filter(_.nonEmpty)
-  val expected = "% Indeclinable form acceptor:"
-
+  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
+  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "$=verbclass$ = [#verbclass#]"
   (emptiedOk && lines(0) == expected)
 }
 
 def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // install data
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
-  val lexDir = Utils.dir(projectDir / "lexica")
-  val indeclLexicon= lexDir  / "lexicon-indeclinables.fst"
-  val goodLine = "testdata.rule1#nunc"
-  val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
-  new PrintWriter(indeclLexicon){write(goodFst);close;}
+  /*
+  val lexDir = Utils.dir(projectDir / s"datasets")
+  val verbLexicon= lexDir  / "lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#are_vb#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  new PrintWriter(verbLexicon){write(goodFst);close;}
 
-  //IndeclRulesInstaller
+
+  val data =
+  VerbRulesInstaller()*/
   false
 }
 
 ///
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  // Write some test data to work with:
   val goodLine = "testdata.rule1#nunc"
-  val dataSource = file ("./test_build/datasets")
+  // Write some test data to work with:
+  val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
+  // are we leaving junk from another test lying around?
+  val parserDir = repoRoot / s"parsers/${corpusName}"
+  IO.delete(parserDir)
+  IO.delete(corpus)
+  Utils.dir(parserDir)
+  Utils.dir(corpus)
+
   val stems = Utils.dir(corpus / "rules-tables")
   val indeclSource = Utils.dir(stems / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
-
 
   val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
   val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
@@ -561,6 +578,12 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   // Create and install some test data:
   val dataSource = repoRoot / "datasets"
   val corpus = Utils.dir(dataSource / corpusName)
+  // are we leaving junk from another test lying around?
+  val parserDir = repoRoot / s"parsers/${corpusName}"
+  IO.delete(parserDir)
+  IO.delete(corpus)
+  Utils.dir(parserDir)
+  Utils.dir(corpus)
   val stems = Utils.dir(corpus / "rules-tables")
   val indeclSource = Utils.dir(stems / "indeclinables")
   val testData  = indeclSource / "madeuptestdata.cex"
@@ -568,7 +591,7 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   new PrintWriter(testData){write(text); close;}
   RulesInstaller(dataSource, repoRoot, corpusName)
 
-  //
+
   InflectionComposer(repoRoot / s"parsers/${corpusName}")
   val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
   val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)

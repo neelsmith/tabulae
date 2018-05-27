@@ -151,14 +151,15 @@ object AcceptorComposer {
 
 
   /** String defining final step of main verb acceptor. */
-  def mainVerbAcceptor(dir : File): String = {
+  def verbAcceptor(dir : File): String = {
+    if (includeVerbs(dir) ) {
     """
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 
-$stem_acceptors$ || $aug$ || $squashverburn$
+$squashverburn$
 """
-
+} else { "" }
 }
   /** String defining final noun acceptor transducer.*/
   def nounAcceptor(dir : File): String = {
@@ -210,7 +211,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   */
   def includeVerbs(dir: File): Boolean = {
     val lexica = dir / "lexica"
-    val verbsSource = lexica ** "lex-verbs*"
+    val verbsSource = lexica ** "lexicon-verbs.fst"
     verbsSource.get.nonEmpty
   }
 
@@ -224,7 +225,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     //fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
 
     def typesList = List(
-      (includeVerbs(_),"$verb_pipeline$" ),
+      (includeVerbs(_),"$squashverburn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
     )
     val xducerList = for (xducer <- typesList) yield {
