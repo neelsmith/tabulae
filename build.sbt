@@ -16,7 +16,9 @@ val commonSettings = Seq(
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
 
-        "edu.holycross.shot.cite" %% "xcite" % "3.3.0"
+        "edu.holycross.shot.cite" %% "xcite" % "3.3.0",
+        "edu.holycross.shot" %% "latphone" % "1.4.0"
+
       ),
 
       tutTargetDirectory := file("docs"),
