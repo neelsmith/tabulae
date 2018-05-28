@@ -10,7 +10,7 @@ val alphalist = Vector(
 )
 
 import java.io.PrintWriter
-def writeFst(dir: File) = {
+def writeFst(dir: File =  agDir) = {
   for (a <- alphalist) {
     val outFile = new File(dir, a._2)
     new PrintWriter(outFile){write(a._1.fstString); close;}
