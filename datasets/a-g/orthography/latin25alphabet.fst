@@ -2,6 +2,6 @@
 
 #consonant# =  sxnytfmqbglpchrkzd
 
-#vowel# = aeo
+#vowel# = euaio
 
 #letter# = #consonant# #vowel#

@@ -6,7 +6,8 @@ val agDir = new File("datasets/a-g/orthography")
 val alphalist = Vector(
   (Latin23Alphabet, "latin23alphabet.fst"),
   (Latin24Alphabet, "latin24alphabet.fst"),
-  (Latin25Alphabet, "latin25alphabet.fst")
+  (Latin25Alphabet, "latin25alphabet.fst"),
+  (Latin25MacrosAlphabet, "latin25macrosAlphabet.fst")
 )
 
 import java.io.PrintWriter
