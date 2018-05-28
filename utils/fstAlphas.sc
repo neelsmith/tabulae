@@ -1,7 +1,7 @@
 import edu.holycross.shot.latin._
 import java.io.File
 
-val agDir = new File("datasets/a-g")
+val agDir = new File("datasets/a-g/orthography")
 
 val alphalist = Vector(
   (Latin23Alphabet, "latin23alphabet.fst"),
