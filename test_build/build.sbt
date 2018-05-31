@@ -50,6 +50,23 @@ def testList = List(
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
 
 
+
+  //////////////// Nouns.
+  // stems
+  ("Test converting bad stem data to fst for nouns", testBadNounStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem data to fst for nouns", testNounStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
+
+  // inflectional rules
+  ("Test converting bad inflectional rules for nouns", testBadNounInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "pending" ),
+  // acceptor
+  ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
+
+
+
   // Top-level inflectional rules
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
@@ -549,6 +566,22 @@ def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 }
 
 ///
+
+
+
+///////////   Nouns
+def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testNounStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testNounStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testBadNounInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testConvertNounInflRules(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+
+////
+
+
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   val goodLine = "testdata.rule1#nunc"
