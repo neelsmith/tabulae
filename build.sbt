@@ -34,6 +34,8 @@ lazy val root = (project in file(".")).
     settings( commonSettings:_*).enablePlugins(TutPlugin)
 
 lazy val testBuild = (project in file("test_build"))
+lazy val testWordLists = (project in file("test_wordlists"))
+
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")

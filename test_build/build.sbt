@@ -6,6 +6,8 @@ import java.io.PrintWriter
 
 name := "bldtest"
 
+
+
 /** Triples of description, function and status. */
 def testList = List(
   // utilities
@@ -34,8 +36,6 @@ def testList = List(
   //  Acceptor:
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
 
-
-
   //////////////// Verbs.
   // stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
@@ -48,8 +48,6 @@ def testList = List(
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
-
-
 
   //////////////// Nouns.
   // stems
@@ -65,6 +63,19 @@ def testList = List(
   // acceptor
   ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
 
+  //////////////// Adjectives.
+  // stems
+  ("Test converting bad stem data to fst for adjectives", testBadAdjectiveStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem data to fst for adjectives", testAdjectiveStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for adjectives", testAdjectiveStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for adjectives stem data installer", testAdjectiveStemDataApplied(_, _, _), "pending" ),
+
+  // inflectional rules
+  ("Test converting bad inflectional rules for adjectives", testBadAdjectiveInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for adjectives", testConvertAdjectiveInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for adjectives from files in dir", testAdjectiveInflRulesFromDir(_, _, _), "pending" ),
+  // acceptor
+  ("Test writing adjectives acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
 
 
   // Top-level inflectional rules
@@ -85,17 +96,22 @@ def testList = List(
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
 
-  ("Test compiling// FST parser", testFstBuild(_, _, _), "" ),
-  ("Test compiling// FST parser", testBuildWithVerb(_, _, _), "" ),
-  ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
 
   // do we need these?
   ("Test apply function of acceptor for verbs", testApplyVerbAcceptor(_, _, _), "pending" ),
   ("Test apply function of acceptor for indeclinables", testApplyIndeclRulesInstall(_, _, _), "pending" ),
 
-
-
 )
+
+/** Triples of description, function and status. */
+def integrationList = {
+  List(
+    ("Test compiling// FST parser", testFstBuild(_, _, _), "" ),
+    ("Test compiling// FST parser", testBuildWithVerb(_, _, _), "" ),
+    ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
+  )
+}
+
 
 /** "s" or no "s"? */
 def plural[T] (lst : List[T]) : String = {
@@ -106,7 +122,7 @@ def plural[T] (lst : List[T]) : String = {
 *
 * @param results List of test results
 */
-def reportResults(results: List[Boolean]): Unit = {
+def reportResults(results: List[Boolean]) = {//, testList : Vector[String]): Unit = {
   val distinctResults = results.distinct
   if (distinctResults.size == 1 && distinctResults(0)){
     println("\nAll tests succeeded.")
@@ -582,6 +598,19 @@ def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :
 ////
 
 
+/////////// Adjectives
+
+
+def testBadAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testBadAdjectiveInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testConvertAdjectiveInflRules(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testAdjectiveInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+
+/////
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   val goodLine = "testdata.rule1#nunc"
@@ -770,8 +799,49 @@ def testParserOutput(corpusName: String, conf: Configuration, baseDir : File) : 
   false
 }
 
-lazy val testAll = inputKey[Unit]("Test using output of args")
-testAll in Test := {
+lazy val listEm = inputKey[Unit]("get a list")
+listEm in Test := {
+  println("Do universe with " + testList)
+}
+
+lazy val testIntegration = inputKey[Unit]("Integration tests")
+testIntegration in Test := {
+    val args: Seq[String] = spaceDelimited("<arg>").parsed
+    println("Integration tests " + args)
+
+    args.size match {
+      case 1 => {
+        val conf = Configuration(file("conf.properties"))
+        val f = file(conf.datadir)
+
+        if (f.exists) {
+          val corpusName = args(0)
+          val baseDir = baseDirectory.value
+          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
+          val results = for (t <- integrationList.filter(_._3 != "pending")) yield {
+            Utils.deleteSubdirs(baseDir / "parsers", false)
+
+            print(t._1 + "...")
+            val reslt = t._2(corpusName, conf, baseDir)
+            if (reslt) { println ("success.") } else { println("failed.")}
+            reslt
+          }
+          reportResults(results)//,integrationList)
+
+        } else {
+          println("Failed.")
+          println(s"No configuration file ${conf.datadir} exists.")
+        }
+      }
+      case _ =>  {
+        println(s"Wrong number args (${args.size}): ${args}")
+        println("Usage: unitTests CORPUS [CONFIG_FILE]")
+      }
+    }
+}
+
+lazy val unitTests = inputKey[Unit]("Unit tests")
+unitTests in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
 
   args.size match {
@@ -793,7 +863,7 @@ testAll in Test := {
             if (reslt) { println ("success.") } else { println("failed.")}
             reslt
           }
-          reportResults(results)
+          reportResults(results) //, testList)
 
         } else {
           println("Failed.")
@@ -826,7 +896,7 @@ testAll in Test := {
             if (reslt) { println ("success.") } else { println("failed.")}
             reslt
           }
-          reportResults(results)
+          reportResults(results)//, testList)
 
         } else {
           println("Failed.")
@@ -843,7 +913,7 @@ testAll in Test := {
 
     case _ =>  {
       println(s"Wrong number args (${args.size}): ${args}")
-      println("Usage: allBuildTests CORPUS [CONFIG_FILE]")
+      println("Usage: unitTests CORPUS [CONFIG_FILE]")
     }
   }
 }

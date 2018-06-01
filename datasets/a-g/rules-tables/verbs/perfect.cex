@@ -6,20 +6,19 @@ lverbinfl.are_pft4#conj1#avimus#1st#pl#pft#indic#act
 lverbinfl.are_pft5#conj1#avistis#2nd#pl#pft#indic#act
 lverbinfl.are_pft6#conj1#averunt#3rd#pl#pft#indic#act
 
-lverbinfl.pft7#conj1#averim#1st#sg#pft#subj#act
-lverbinfl.pft8#conj1#averis#2nd#sg#pft#subj#act
-lverbinfl.pft9#conj1#averit#3rd#sg#pft#subj#act
-lverbinfl.pft10#conj1#averimus#1st#pl#pft#subj#act
-lverbinfl.pft11#conj1#averistis#2nd#pl#pft#subj#act
-lverbinfl.pft12#conj1#averint#3rd#pl#pft#subj#act
+lverbinfl.are_pft7#conj1#averim#1st#sg#pft#subj#act
+lverbinfl.are_pft8#conj1#averis#2nd#sg#pft#subj#act
+lverbinfl.are_pft9#conj1#averit#3rd#sg#pft#subj#act
+lverbinfl.are_pft10#conj1#averimus#1st#pl#pft#subj#act
+lverbinfl.are_pft11#conj1#averistis#2nd#pl#pft#subj#act
+lverbinfl.are_pft12#conj1#averint#3rd#pl#pft#subj#act
 
-lverbinfl.are_pft13#pftact#i#1st#sg#pft#indic#act
-lverbinfl.are_pft14#pftact#isti#2nd#sg#pft#indic#act
-lverbinfl.are_pft15#pftact#it#3rd#sg#pft#indic#act
-lverbinfl.are_pft16#pftact#imus#1st#pl#pft#indic#act
-lverbinfl.are_pft17#pftact#istis#2nd#pl#pft#indic#act
-lverbinfl.are_pft18#pftact#erunt#3rd#pl#pft#indic#act
-
+lverbinfl.pft13#pftact#i#1st#sg#pft#indic#act
+lverbinfl.pft14#pftact#isti#2nd#sg#pft#indic#act
+lverbinfl.pft15#pftact#it#3rd#sg#pft#indic#act
+lverbinfl.pft16#pftact#imus#1st#pl#pft#indic#act
+lverbinfl.pft17#pftact#istis#2nd#pl#pft#indic#act
+lverbinfl.pft18#pftact#erunt#3rd#pl#pft#indic#act
 
 lverbinfl.pft19#pftact#erim#1st#sg#pft#subj#act
 lverbinfl.pft20#pftact#eris#2nd#sg#pft#subj#act
@@ -27,3 +26,17 @@ lverbinfl.pft21#pftact#erit#3rd#sg#pft#subj#act
 lverbinfl.pft21#pftact#erimus#1st#pl#pft#subj#act
 lverbinfl.pft22#pftact#eristis#2nd#pl#pft#subj#act
 lverbinfl.pft23#pftact#erint#3rd#pl#pft#subj#act
+
+lverbinfl.ere_pft1#conj2#ui#1st#sg#pft#indic#act
+lverbinfl.ere_pft2#conj2#uisti#2nd#sg#pft#indic#act
+lverbinfl.ere_pft3#conj2#uit#3rd#sg#pft#indic#act
+lverbinfl.ere_pft4#conj2#uimus#1st#pl#pft#indic#act
+lverbinfl.ere_pft5#conj2#uistis#2nd#pl#pft#indic#act
+lverbinfl.ere_pft6#conj2#uerunt#3rd#pl#pft#indic#act
+
+lverbinfl.ere_pft7#conj2#uerim#1st#sg#pft#subj#act
+lverbinfl.ere_pft8#conj2#ueris#2nd#sg#pft#subj#act
+lverbinfl.ere_pft9#conj2#uerit#3rd#sg#pft#subj#act
+lverbinfl.ere_pft10#conj2#uerimus#1st#pl#pft#subj#act
+lverbinfl.ere_pft11#conj2#ueristis#2nd#pl#pft#subj#act
+lverbinfl.ere_pft12#conj2#uerint#3rd#pl#pft#subj#act

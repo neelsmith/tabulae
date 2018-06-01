@@ -29,8 +29,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Verb stem types
-#regular# = <conj1><pftact>
-%<are_vb><pftact>
+#regular# = <conj1><conj2><conj3><conj3io><conj4><c1pres><c2pres><c3pres><c4pres><c3iopres><pftact><pftpass>
+
 
 #verbclass#  = #regular#
 
