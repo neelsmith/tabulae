@@ -11,7 +11,7 @@ See the project web site: <https://neelsmith.github.io/tabulae>.
 
 ## Status
 
-The current version (0.0.1)
+See a [scorecard for the current version](https://github.com/neelsmith/tabulae/wiki/Scorecard) (0.0.1)
 
 ## Acknowledgments
 
