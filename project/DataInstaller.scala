@@ -23,6 +23,7 @@ Users/nsmith/Desktop/horace
     //NounDataInstaller(dataSource, repo, corpus)
     IndeclDataInstaller(dataSource,repo, corpus)
     VerbDataInstaller(dataSource, repo, corpus)
+    IrregVerbDataInstaller(dataSource, repo, corpus)
   }
 
 

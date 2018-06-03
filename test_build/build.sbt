@@ -78,6 +78,23 @@ def testList = List(
   ("Test writing adjectives acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
 
 
+
+
+  //////////////// Irreg. verbs.
+  // stems
+  ("Test converting bad stem data to fst for irregular verbs", testBadIrregVerbStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem data to fst for irregular verbs", testIrregVerbStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for irregular verbs stem data installer", testIrregVerbStemDataApplied(_, _, _), "pending" ),
+
+  // inflectional rules
+  ("Test converting bad inflectional rules for irregular verbs", testBadIrregVerbInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for irregular verbs", testConvertIrregVerbInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for irregular verbs from files in dir", testIrregVerbInflRulesFromDir(_, _, _), "pending" ),
+  // acceptor
+  ("Test writing adjectives acceptor string", testIrregVerbAcceptor(_, _, _), "pending" ),
+
+
   // Top-level inflectional rules
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
@@ -798,6 +815,170 @@ def testBuildWithVerb(corpusName: String, conf: Configuration, repoRoot : File) 
 def testParserOutput(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
+
+//// Irreg. verbs
+
+def testBadIrregVerbStemDataConvert(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  //  Test conversion of delimited text to FST.
+  //  should object to bad data
+  try {
+    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
+    println("Should never have seent this... " + fst)
+    false
+  } catch {
+    case t : Throwable => true
+  }
+  false
+}
+def testIrregVerbStemDataConvert(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+def testIrregVerbStemFstFromDir(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+
+
+// inflectional rules
+def testBadIrregVerbInflRulesConvert(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+def testConvertIrregVerbInflRules(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+def testIrregVerbInflRulesFromDir(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+
+// acceptor
+def testIrregVerbAcceptor(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+
+/*(
+
+////// Verbs
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+
+}
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // should correctly convert good data.
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  goodFst.trim ==  expected
+}
+def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Should create FST for all files in a directory
+    val goodLine = "ag.v1#lexent.n2280#am#conj1"
+
+  val dataSource = repoRoot / "datasets"
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
+
+  // Tidy up
+  IO.delete(corpus)
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  fstFromDir.trim == expected
+}
+def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Install one data file:
+
+  val dataSource = repoRoot / "datasets"
+  val corpus = Utils.dir(dataSource / corpusName)
+  installVerbStemTable(corpus)
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val stems = Utils.dir(corpus / "stems-tables")
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+
+  val workDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
+  val lexDir = Utils.dir(workDir / "lexica")
+  // Test file copying in apply function
+  // Write some test data in the source work space:
+  VerbDataInstaller(dataSource, repoRoot, corpusName)
+
+  // check the results:
+  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-verbs.fst"
+  val output  = Source.fromFile(resultFile).getLines.toVector
+
+  // clean up:
+  IO.delete( repoRoot / s"parsers/${corpusName}")
+  IO.delete( repoRoot / s"datasets/${corpusName}")
+
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  output(0) == expected
+}
+
+def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = VerbRulesInstaller.verbRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+  // Should correctly convert good data.
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  val expected = "<conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+  goodFst.trim ==  expected
+}
+
+
+def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+{
+  // Install inflectional table of data
+  val corpus = Utils.dir(repoRoot / s"datasets/${corpusName}")
+  val rules  = Utils.dir(corpus / "rules-tables")
+  val verbSource = Utils.dir(rules / "verbs")
+  installVerbRuleTable(corpus)
+
+  val fstFromDir = VerbRulesInstaller.fstForVerbRules(verbSource)
+  val lines = fstFromDir.split("\n")
+  val expected = "$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+
+  lines(0) == expected
+}
+
+
+def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  val projectDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.verbAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = Utils.dir(projectDir / "lexica")
+  val verbLexicon= lexDir  / "lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  new PrintWriter(verbLexicon){write(goodFst);close;}
+
+  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
+  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "$=verbclass$ = [#verbclass#]"
+  (emptiedOk && lines(0) == expected)
+}
+
+)
+*/
 
 lazy val listEm = inputKey[Unit]("get a list")
 listEm in Test := {
