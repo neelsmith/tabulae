@@ -1,9 +1,5 @@
 import complete.DefaultParsers._
 import scala.sys.process._
-/*
-import better.files._
-import better.files.File._
-import java.io.{File => JFile}*/
 
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
@@ -12,11 +8,19 @@ import java.io.File
 name := "postest"
 
 
-
 /** Triples of description, function and status. */
 def testList = List(
+
+  // Test all inflectional rules installers
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
+  // inflectional rules for verbs
+  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
+
+
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
 )
 
 /** "s" or no "s"? */
@@ -43,6 +47,12 @@ def reportResults(results: List[Boolean]) = {//, testList : Vector[String]): Uni
   }
 }
 
+def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
+  val verbFile = verbsDir/"madeupdata.cex"
+  val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
+  verbFile.overwrite(goodLine)
+
+}
 
 ////////////////// Tests //////////////////////////////
 //
@@ -61,6 +71,45 @@ def testInvariantCopy(corpusName: String, conf: Configuration, repoRoot : File):
   )
   val actualFiles = inflTarget.glob("*.fst").toSet
   actualFiles == expectedFiles
+}
+
+
+def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = VerbRulesInstaller.verbRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+def testConvertVerbInflRules(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  val expected = "<conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+  goodFst.trim ==  expected
+}
+
+def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+  // Install inflectional table of data
+  val repo = repoRoot.toScala
+  val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
+  installVerbRuleTable(verbData)
+
+  val fstFromDir = VerbRulesInstaller.fstForVerbRules(verbData)
+
+  val lines = fstFromDir.split("\n").toVector
+  val expected = "$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
+
+  println(lines)
+  lines(0) == expected
+
+
+  // tidy up
+
 }
 
 

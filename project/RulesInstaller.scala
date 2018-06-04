@@ -23,34 +23,25 @@ object RulesInstaller {
 
     val repo = jrepo.toScala
     val sourceDir = jsourceDir.toScala
-/*
-    val parsers =  repo/"parsers"
 
-    val corpDir = parsers/corpus
-    if (! corpDir.exists()) { mkdirs(corpDir)}
-*/
     val inflDir = mkdirs(repo/"parsers"/corpus/"inflection")
-
-
-
     val srcCorpus = sourceDir/corpus
 
 
     val nounsSrc = srcCorpus/"rules-tables/nouns"
     val nounsFst = inflDir/"nouninfl.fst"
-    NounRulesInstaller( nounsSrc.toJava,nounsFst.toJava )
+    NounRulesInstaller( nounsSrc,nounsFst )
 
     //IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
 
 
-/*
-    val verbsSrc = mkdirs(srcCorpus/"rules-tables/verbs")
+    val verbsSrc = srcCorpus/"rules-tables/verbs"
     val verbsFst = inflDir/"verbinfl.fst"
-    VerbRulesInstaller(verbsSrc.toJava, verbsFst.toJava )
-*/
+    VerbRulesInstaller(verbsSrc, verbsFst )
+
     //IrregVerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
 
-    val inflFst = (repo/"fst/inflection").createIfNotExists()
+    val inflFst = mkdirs(repo/"fst/inflection")
     installInvariants(inflFst, inflDir)
   }
 
@@ -68,7 +59,6 @@ object RulesInstaller {
     }
     val fsts = fstSrc.glob("*.fst").toVector
     for (fst <- fsts) {
-      println("File to copy: " + fst)
       cp(fst, fstTarget)
     }
   }

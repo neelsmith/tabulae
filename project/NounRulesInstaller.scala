@@ -1,6 +1,7 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
+import better.files._
+import better.files.File._
+import better.files.Dsl._
+import java.io.{File => JFile}
 
 
 /** Object for converting tabular source to FST statements.
@@ -16,7 +17,7 @@ object NounRulesInstaller {
   def apply(srcDir: File, targetFile: File): Unit = {
     val nounFst = fstForNounRules(srcDir)
     println(s"Write ${nounFst.size} chars of noun rules to " + targetFile)
-    new PrintWriter(targetFile) { write(nounFst ); close }
+    //new PrintWriter(targetFile) { write(nounFst ); close }
   }
 
 
@@ -26,11 +27,12 @@ object NounRulesInstaller {
   * @param srcDir Directory with lexical tables.
   */
   def fstForNounRules(srcDir: File) : String = {
-    val nounsOpt = (srcDir) ** "*cex"
-    val nounsFiles = nounsOpt.get
+
+    val nounsFiles = srcDir.glob("*.cex").toVector
     println("\tbuilding inflection rules for nouns from " + srcDir)
 
-    val rules = nounsFiles.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
+    val rules = nounsFiles.flatMap(f =>
+      f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = nounRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
       "$nouninfl$ = " + fst + "\n\n$nouninfl$\n"

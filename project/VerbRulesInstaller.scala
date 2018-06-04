@@ -1,7 +1,8 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
 
+import better.files._
+import better.files.File._
+import better.files.Dsl._
+import java.io.{File => JFile}
 
 /** Object for converting tabular source to FST statements.
 */
@@ -15,9 +16,7 @@ object VerbRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val verbFst = fstForVerbRules(srcDir)
-    if (verbFst.nonEmpty) {
-      new PrintWriter(targetFile) { write(verbFst ); close }
-    }
+    targetFile.overwrite(verbFst)
   }
 
 
@@ -27,14 +26,14 @@ object VerbRulesInstaller {
   * @param srcDir Directory with lexical tables.
   */
   def fstForVerbRules(srcDir: File) : String = {
-    val filesOpt = (srcDir) ** "*cex"
-    val fileList = filesOpt.get
-
+    //val filesOpt = (srcDir) ** "*cex"
+    val fileList = srcDir.glob("*.cex").toVector
     if (fileList.isEmpty) {
       ""
     } else {
-      val rules = fileList.flatMap(f => Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
-      val fst = verbRulesToFst(rules.toVector)
+      val rules = fileList.flatMap(f => f.lines.toVector.filter(_.nonEmpty).drop(1) ) //Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
+
+      val fst = verbRulesToFst(rules)
 
       if (fst.nonEmpty) {
         "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
