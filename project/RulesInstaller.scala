@@ -1,11 +1,7 @@
 
-import scala.io.Source
-import java.io.PrintWriter
-
 import better.files._
 import better.files.File._
 import better.files.Dsl._
-import java.io.{File => JFile}
 
 object RulesInstaller {
 
@@ -19,10 +15,7 @@ object RulesInstaller {
   * a subdirectory of the repository's parsers directory named
   * for the corpus.
   */
-  def apply(jsourceDir: JFile, jrepo: JFile, corpus: String): Unit = {
-
-    val repo = jrepo.toScala
-    val sourceDir = jsourceDir.toScala
+  def apply(sourceDir: File, repo: File, corpus: String): Unit = {
 
     val inflDir = mkdirs(repo/"parsers"/corpus/"inflection")
     val srcCorpus = sourceDir/corpus
