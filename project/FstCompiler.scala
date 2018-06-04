@@ -8,7 +8,7 @@ object FstCompiler {
   def compile(dataDirectory: File, baseDir: File, corpus: String, conf: Configuration) : Unit = {
     // Install data and rules, converting tabular data to FST
     //println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
-    DataInstaller(dataDirectory, baseDir, corpus)
+    //DataInstaller(dataDirectory, baseDir, corpus)
 
     //println(s"Install rules for ${corpus} in ${dataDirectory}...")
     //RulesInstaller(dataDirectory, baseDir, corpus)

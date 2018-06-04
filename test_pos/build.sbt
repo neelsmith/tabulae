@@ -18,14 +18,16 @@ def testList = List(
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
 
+
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
+
 )
 
 /** "s" or no "s"? */
@@ -170,7 +172,6 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
   val resultFile = repo/"parsers"/corpusName/"lexica/lexicon-verbs.fst"
   val output = resultFile.lines.toVector
 
-
   // clean up:
   (repo/"datasets").delete()
 
@@ -180,35 +181,21 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
 
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  /*
-  val goodLine = "testdata.rule1#nunc"
-  // Write some test data to work with:
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  // are we leaving junk from another test lying around?
-  val parserDir = repoRoot / s"parsers/${corpusName}"
-  IO.delete(parserDir)
-  IO.delete(corpus)
-  Utils.dir(parserDir)
-  Utils.dir(corpus)
 
-  val stems = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
+  // Write some test data in the source work space:
+  // Install inflectional table of data
+  val repo = repoRoot.toScala
+  val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
+  installVerbRuleTable(verbData)
 
-  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
-  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
+  RulesInstaller(repo/"datasets", repo, corpusName)
 
+  val actualFiles =  (repo/"parsers"/corpusName/"inflection").glob("*.fst")
+  val actualSet = actualFiles.map(_.name).toSet
+  println("Actual file set:  " + actualSet)
+  val expectedSet = Set("verbinfl.fst", "irreginfl.fst", "indeclinfl.fst")
 
-  RulesInstaller(dataSource, repoRoot, corpusName)
-  val target =  file (s"${repoRoot}/parsers/${corpusName}/inflection")
-  val installedSource = target ** "*.fst"
-  val actualSet = installedSource.get.map(_.getName).toSet
-  val expectedSet = Set("indeclinfl.fst")
-  expectedSet  ==  actualSet*/
-  false
+  expectedSet  ==  actualSet
 }
 
 lazy val posTests = inputKey[Unit]("Unit tests")
