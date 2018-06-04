@@ -29,6 +29,8 @@ def testList = List(
   ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
   ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
   ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
+
+
   // Inflectional rules
   ("Test converting bad inflectional rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
@@ -42,10 +44,7 @@ def testList = List(
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
-  // inflectional rules
-  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for verbs", testConvertVerbsInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
+
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
 
@@ -56,10 +55,7 @@ def testList = List(
   ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "pending" ),
   ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
 
-  // inflectional rules
-  ("Test converting bad inflectional rules for nouns", testBadNounInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "pending" ),
+
   // acceptor
   ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
 
@@ -527,42 +523,6 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
   output(0) == expected
 }
 
-def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
-  //  Test conversion of delimited text to FST.
-  // Should object to bad data
-  try {
-    val fst = VerbRulesInstaller.verbRuleToFst("Not a real line")
-    false
-  } catch {
-    case t : Throwable => true
-  }
-}
-
-def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
-  // Should correctly convert good data.
-  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
-  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
-  val expected = "<conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
-  goodFst.trim ==  expected
-}
-
-
-def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
-{
-  // Install inflectional table of data
-  val corpus = Utils.dir(repoRoot / s"datasets/${corpusName}")
-  val rules  = Utils.dir(corpus / "rules-tables")
-  val verbSource = Utils.dir(rules / "verbs")
-  installVerbRuleTable(corpus)
-
-  val fstFromDir = VerbRulesInstaller.fstForVerbRules(verbSource)
-  val lines = fstFromDir.split("\n")
-  val expected = "$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
-
-  lines(0) == expected
-}
-
-
 def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   val projectDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
 
@@ -607,9 +567,9 @@ def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot
 def testNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
 def testNounStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
 def testNounStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testBadNounInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testConvertNounInflRules(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+
+
+
 def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
 
 ////
