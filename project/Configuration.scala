@@ -1,4 +1,4 @@
-import sbt._
+import java.io.File
 import scala.io.Source
 import java.io.PrintWriter
 

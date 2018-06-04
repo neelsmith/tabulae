@@ -15,6 +15,7 @@ val commonSettings = Seq(
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+        "com.github.pathikrit" %% "better-files" % "3.5.0",
 
         "edu.holycross.shot.cite" %% "xcite" % "3.3.0",
         "edu.holycross.shot" %% "latphone" % "1.5.0"
@@ -35,6 +36,8 @@ lazy val root = (project in file(".")).
 
 lazy val testBuild = (project in file("test_build"))
 lazy val testWordLists = (project in file("test_wordlists"))
+
+lazy val testPoS = (project in file("test_pos"))
 
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")

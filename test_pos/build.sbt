@@ -16,7 +16,7 @@ name := "postest"
 /** Triples of description, function and status. */
 def testList = List(
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 )
 
 /** "s" or no "s"? */

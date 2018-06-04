@@ -11,7 +11,7 @@ object FstCompiler {
     DataInstaller(dataDirectory, baseDir, corpus)
 
     //println(s"Install rules for ${corpus} in ${dataDirectory}...")
-    RulesInstaller(dataDirectory, baseDir, corpus)
+    //RulesInstaller(dataDirectory, baseDir, corpus)
 
     //println("Compose build")
     // Compose makefiles and higher-order FST for build system

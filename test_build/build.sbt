@@ -22,7 +22,7 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
-
+  ("Test copying FST for invariant rules", testInvariantFst(_, _, _), "" ),
   //////////////// Indeclinables.
   // Stem data
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
@@ -96,7 +96,7 @@ def testList = List(
 
 
   // Top-level inflectional rules
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
   ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 
@@ -629,34 +629,6 @@ def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 
 /////
 
-def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  val goodLine = "testdata.rule1#nunc"
-  // Write some test data to work with:
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  // are we leaving junk from another test lying around?
-  val parserDir = repoRoot / s"parsers/${corpusName}"
-  IO.delete(parserDir)
-  IO.delete(corpus)
-  Utils.dir(parserDir)
-  Utils.dir(corpus)
-
-  val stems = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-
-  val expected = "<nunc><indecl><u>testdata" + "\\" + ".rule1</u>"
-  val fstFromDir = IndeclRulesInstaller.fstForIndeclRules(indeclSource)
-
-  RulesInstaller(dataSource, repoRoot, corpusName)
-  val target =  file (s"${repoRoot}/parsers/${corpusName}/inflection")
-  val installedSource = target ** "*.fst"
-  val actualSet = installedSource.get.map(_.getName).toSet
-  val expectedSet = Set("indeclinfl.fst")
-  expectedSet  ==  actualSet
-}
 
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
   val goodLine = "testdata.rule1#nunc"
@@ -674,7 +646,7 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   val testData  = indeclSource / "madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   new PrintWriter(testData){write(text); close;}
-  RulesInstaller(dataSource, repoRoot, corpusName)
+  /*RulesInstaller(dataSource, repoRoot, corpusName)
 
 
   InflectionComposer(repoRoot / s"parsers/${corpusName}")
@@ -686,7 +658,8 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   IO.delete(corpus)
 
   (expectedFile.exists && lines(3).trim ==  expectedLine)
-
+*/
+  false
 }
 
 
@@ -854,6 +827,11 @@ def testIrregVerbInflRulesFromDir(corpusName: String, conf: Configuration, baseD
 
 // acceptor
 def testIrregVerbAcceptor(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  false
+}
+
+def testInvariantFst(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+  val src = baseDir / "fst/inflection"
   false
 }
 
