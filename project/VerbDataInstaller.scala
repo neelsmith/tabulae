@@ -1,13 +1,20 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
-
+import better.files._
+import better.files.File._
+import better.files.Dsl._
+import java.io.{File => JFile}
 
 object VerbDataInstaller {
 
-  /**
+  /** Write FST rules for all verb stem data in a directory
+  * of tabular files.
+  *
+  * @param srcDir Directory with inflectional rules.
+  * @param targetFile File to write FST statements to.
   */
-  def apply(dataSource: File, repo: File, corpus: String) = {
+  def apply(srcDir: File, targetFile: File) = {//, corpus: String) = {
+    val verbFst = fstForVerbData(srcDir)
+    targetFile.overwrite(verbFst)
+    /*
     val lexDirectory = repo / s"parsers/${corpus}/lexica"
     if (! lexDirectory.exists) { lexDirectory.mkdir}
 
@@ -17,6 +24,7 @@ object VerbDataInstaller {
       val fstFile = lexDirectory / "lexicon-verbs.fst"
       new PrintWriter(fstFile){write(fst); close;}
     } else {}
+    */
   }
 
   /** Create FST string for a verb tables in a given directory.
@@ -24,11 +32,10 @@ object VerbDataInstaller {
   * @param dir Directory with tables of verb data.
   */
   def fstForVerbData(dir: File) : String = {
-    val verbOpt = (dir) ** "*cex"
-    val verbFiles = verbOpt.get
+    val verbFiles = dir.glob("*.cex").toVector
     val fstLines = for (f <- verbFiles) yield {
       // omit empty lines and header
-      val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
+      val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1) //Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
       VerbDataInstaller.verbLinesToFst(dataLines)
     }
     fstLines.mkString("\n")

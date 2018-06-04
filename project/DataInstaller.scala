@@ -21,9 +21,9 @@ Users/nsmith/Desktop/horace
     val inflDir = Utils.dir(corpDir / "inflection")
 
     //NounDataInstaller(dataSource, repo, corpus)
-    IndeclDataInstaller(dataSource,repo, corpus)
-    VerbDataInstaller(dataSource, repo, corpus)
-    IrregVerbDataInstaller(dataSource, repo, corpus)
+    //IndeclDataInstaller(dataSource,repo, corpus)
+    //VerbDataInstaller(dataSource, repo, corpus)
+    //IrregVerbDataInstaller(dataSource, repo, corpus)
   }
 
 

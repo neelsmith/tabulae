@@ -20,9 +20,9 @@ def testList = List(
 
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
-  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "pending" ),
+  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
 
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
@@ -57,6 +57,12 @@ def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
   val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
   verbFile.overwrite(goodLine)
 
+}
+def installVerbStemTable(verbsDir:  ScalaFile) : Unit = {
+  val verbFile = verbsDir/"madeupdata.cex"
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  verbFile.overwrite(text)
 }
 
 ////////////////// Tests //////////////////////////////
@@ -127,69 +133,49 @@ def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot
   }
 }
 def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  /*
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   goodFst.trim ==  expected
-  */
-  false
 }
 def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  /*
+  val repo = repoRoot.toScala
+
   // Should create FST for all files in a directory
-    val goodLine = "ag.v1#lexent.n2280#am#conj1"
-
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  val stems = Utils.dir(corpus / "stems-tables")
-  val verbSource = Utils.dir(stems / "verbs-simplex")
-  val testData  = verbSource / "madeuptestdata.cex"
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val verbSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-simplex")
+  val testData = verbSource/"madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-
+  testData.overwrite(text)
   val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
-
   // Tidy up
-  IO.delete(corpus)
+  //   (repo/"datasets").delete()
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   fstFromDir.trim == expected
-  */
-  false
+
 }
 def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   // Install one data file:
-/*
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  installVerbStemTable(corpus)
-  val goodLine = "ag.v1#lexent.n2280#am#conj1"
-  val stems = Utils.dir(corpus / "stems-tables")
-  val verbSource = Utils.dir(stems / "verbs-simplex")
-  val testData  = verbSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
+  val repo = repoRoot.toScala
+  val verbsDir = repo/"datasets"/corpusName/"stems-tables/verbs-simplex"
+  installVerbStemTable(verbsDir)
 
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
 
-  val workDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
-  val lexDir = Utils.dir(workDir / "lexica")
-  // Test file copying in apply function
   // Write some test data in the source work space:
-  VerbDataInstaller(dataSource, repoRoot, corpusName)
+  VerbDataInstaller(verbsDir, destDir/"lexicon-verbs.fst")
 
   // check the results:
-  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-verbs.fst"
-  val output  = Source.fromFile(resultFile).getLines.toVector
+  val resultFile = repo/"parsers"/corpusName/"lexica/lexicon-verbs.fst"
+  val output = resultFile.lines.toVector
+
 
   // clean up:
-  IO.delete( repoRoot / s"parsers/${corpusName}")
-  IO.delete( repoRoot / s"datasets/${corpusName}")
+  (repo/"datasets").delete()
 
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   output(0) == expected
-  */
-  false
 }
 
 
