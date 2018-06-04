@@ -3,7 +3,6 @@ import scala.sys.process._
 
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
-import java.io.File
 
 name := "postest"
 
@@ -15,9 +14,15 @@ def testList = List(
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
 
   // inflectional rules for verbs
-  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
+
+  // verb stems
+  ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "pending" ),
 
 
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "pending" ),
@@ -103,13 +108,88 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 
   val lines = fstFromDir.split("\n").toVector
   val expected = "$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>lverbinfl\\.are\\_presind1</u>"
-
-  println(lines)
-  lines(0) == expected
-
-
   // tidy up
+  (repo/"datasets").delete()
 
+  lines(0) == expected
+}
+
+
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  //  should object to bad data
+  try {
+    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
+    println("Should never have seent this... " + fst)
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  /*
+  // should correctly convert good data.
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  goodFst.trim ==  expected
+  */
+  false
+}
+def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  /*
+  // Should create FST for all files in a directory
+    val goodLine = "ag.v1#lexent.n2280#am#conj1"
+
+  val dataSource = repoRoot / "datasets"
+  val corpus = Utils.dir(dataSource / corpusName)
+  val stems = Utils.dir(corpus / "stems-tables")
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+  val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
+
+  // Tidy up
+  IO.delete(corpus)
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  fstFromDir.trim == expected
+  */
+  false
+}
+def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+  // Install one data file:
+/*
+  val dataSource = repoRoot / "datasets"
+  val corpus = Utils.dir(dataSource / corpusName)
+  installVerbStemTable(corpus)
+  val goodLine = "ag.v1#lexent.n2280#am#conj1"
+  val stems = Utils.dir(corpus / "stems-tables")
+  val verbSource = Utils.dir(stems / "verbs-simplex")
+  val testData  = verbSource / "madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  new PrintWriter(testData){write(text); close;}
+
+
+  val workDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
+  val lexDir = Utils.dir(workDir / "lexica")
+  // Test file copying in apply function
+  // Write some test data in the source work space:
+  VerbDataInstaller(dataSource, repoRoot, corpusName)
+
+  // check the results:
+  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-verbs.fst"
+  val output  = Source.fromFile(resultFile).getLines.toVector
+
+  // clean up:
+  IO.delete( repoRoot / s"parsers/${corpusName}")
+  IO.delete( repoRoot / s"datasets/${corpusName}")
+
+  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  output(0) == expected
+  */
+  false
 }
 
 
