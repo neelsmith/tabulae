@@ -894,7 +894,6 @@ unitTests in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
 
   args.size match {
-      //runBuildTests(args(0), conf, baseDirectory.value)
     case 1 => {
       try {
         val conf = Configuration(file("conf.properties"))
