@@ -17,7 +17,7 @@ def testList = List(
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
-
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
@@ -25,7 +25,7 @@ def testList = List(
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
 
 
 )
@@ -58,7 +58,6 @@ def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
   val verbFile = verbsDir/"madeupdata.cex"
   val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
   verbFile.overwrite(goodLine)
-
 }
 def installVerbStemTable(verbsDir:  ScalaFile) : Unit = {
   val verbFile = verbsDir/"madeupdata.cex"

@@ -1,5 +1,6 @@
-import sbt._
-import java.io.PrintWriter
+import better.files._
+import better.files.File._
+import better.files.Dsl._
 
 /** Factory object for composing and writing to a file the top-level
 * transducer defining inflectional rules, inflection.fst, in the root of
@@ -16,23 +17,35 @@ $ending$ = """
 
 
 
-  /**  Collects .fst files in a given directory.
+  /**  Collects .fst files in a given directory and
+  * composes fst identifiers for corresponding .a files.
+  *
+  * @param dir Directory with .fst files.
   */
   def inflectionFsts(dir: File): Vector[String] = {
-    val filesOpt = (dir) ** "*infl.fst"
-    val files = filesOpt.get.filter(_.asFile.length > 0)
-    files.map(f => "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\"").toVector
+    val files = dir.glob("*infl.fst").toVector
+    files.map(f => "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\"")
   }
 
 
   /**  Working directory for corpus work directory.
   *
-  * @param projectDir Working directory for a corpus parser.
+  * @param projectDir Working directory for a corpus parser,
+  * e.g., REPO/parsers/CORPUS.
   */
   def apply(projectDir: File) : Unit = {
-    if (! projectDir.exists) { projectDir.mkdir}
-    val indeclFiles = inflectionFsts(projectDir / "inflection")
-    val fstFile = projectDir / "inflection.fst"
+    val inflFiles = inflectionFsts(projectDir / "inflection")
+
+    val fstText = StringBuilder.newBuilder
+    fstText.append(header)
+    fstText.append( inflFiles.mkString(" |\\\n"))
+    fstText.append ("\n\n$ending$\n")
+    val finalText = fstText.toString
+
+    val fstFile = projectDir/"inflection.fst"
+    fstFile.overwrite(finalText)
+    /*
+
     if (indeclFiles.nonEmpty) {
       val fstText = StringBuilder.newBuilder
       fstText.append(header)
@@ -44,7 +57,7 @@ $ending$ = """
       new PrintWriter(fstFile) { write(finalText); close }
     } else {
       // No fst files for indeclinables
-    }
+    }*/
   }
 
 }

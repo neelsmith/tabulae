@@ -7,9 +7,9 @@ object RulesInstaller {
 
   /** Format compilable FST rules for a named corpus.
   *
-  * @param jsourceDir Base directory of data set.  Inflectional
+  * @param sourceDir Base directory of data set.  Inflectional
   * rules are drawn from tables here.
-  * @param jrepo Base directory of the Tabulae repository.  Fst with
+  * @param repo Base directory of the Tabulae repository.  Fst with
   * inflectional rules in FST for invariant forms are drawn from here.
   * @param corpus Name of corpus.  All rules are installed in
   * a subdirectory of the repository's parsers directory named
@@ -26,7 +26,6 @@ object RulesInstaller {
     //NounRulesInstaller( nounsSrc,nounsFst )
 
     //IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
-
 
     val verbsSrc = srcCorpus/"rules-tables/verbs"
     val verbsFst = inflDir/"verbinfl.fst"

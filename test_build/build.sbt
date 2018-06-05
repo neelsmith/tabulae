@@ -3,10 +3,10 @@ import scala.sys.process._
 import scala.io.Source
 import java.io.PrintWriter
 
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
 
 name := "bldtest"
-
-
 
 /** Triples of description, function and status. */
 def testList = List(
@@ -22,7 +22,7 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 
-  ("Test copying FST for invariant rules", testInvariantFst(_, _, _), "" ),
+
   //////////////// Indeclinables.
   // Stem data
   ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
@@ -39,11 +39,9 @@ def testList = List(
   ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
 
   //////////////// Verbs.
-  // stems
-  ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
-  ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
-  ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
+
+
+
 
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
@@ -91,9 +89,7 @@ def testList = List(
   ("Test writing adjectives acceptor string", testIrregVerbAcceptor(_, _, _), "pending" ),
 
 
-  // Top-level inflectional rules
 
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 
   // Top-level acceptors
@@ -108,7 +104,8 @@ def testList = List(
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
-
+  // Top-level inflectional rules
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
   // do we need these?
   ("Test apply function of acceptor for verbs", testApplyVerbAcceptor(_, _, _), "pending" ),
@@ -454,74 +451,6 @@ def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repoRoo
 }
 
 ////// Verbs
-def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  //  Test conversion of delimited text to FST.
-  //  should object to bad data
-  try {
-    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
-    println("Should never have seent this... " + fst)
-    false
-  } catch {
-    case t : Throwable => true
-  }
-}
-def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  // should correctly convert good data.
-  val goodLine = "ag.v1#lexent.n2280#am#conj1"
-  val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
-  goodFst.trim ==  expected
-}
-def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  // Should create FST for all files in a directory
-    val goodLine = "ag.v1#lexent.n2280#am#conj1"
-
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  val stems = Utils.dir(corpus / "stems-tables")
-  val verbSource = Utils.dir(stems / "verbs-simplex")
-  val testData  = verbSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-
-  val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
-
-  // Tidy up
-  IO.delete(corpus)
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
-  fstFromDir.trim == expected
-}
-def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  // Install one data file:
-
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  installVerbStemTable(corpus)
-  val goodLine = "ag.v1#lexent.n2280#am#conj1"
-  val stems = Utils.dir(corpus / "stems-tables")
-  val verbSource = Utils.dir(stems / "verbs-simplex")
-  val testData  = verbSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-
-
-  val workDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
-  val lexDir = Utils.dir(workDir / "lexica")
-  // Test file copying in apply function
-  // Write some test data in the source work space:
-  VerbDataInstaller(dataSource, repoRoot, corpusName)
-
-  // check the results:
-  val resultFile = repoRoot / s"parsers/${corpusName}/lexica/lexicon-verbs.fst"
-  val output  = Source.fromFile(resultFile).getLines.toVector
-
-  // clean up:
-  IO.delete( repoRoot / s"parsers/${corpusName}")
-  IO.delete( repoRoot / s"datasets/${corpusName}")
-
-  val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
-  output(0) == expected
-}
 
 def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
   val projectDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
@@ -589,37 +518,28 @@ def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
 
 /////
 
+def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
+  val verbFile = verbsDir/"madeupdata.cex"
+  val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
+  verbFile.overwrite(goodLine)
+}
 
 def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  val goodLine = "testdata.rule1#nunc"
-  // Create and install some test data:
-  val dataSource = repoRoot / "datasets"
-  val corpus = Utils.dir(dataSource / corpusName)
-  // are we leaving junk from another test lying around?
-  val parserDir = repoRoot / s"parsers/${corpusName}"
-  IO.delete(parserDir)
-  IO.delete(corpus)
-  Utils.dir(parserDir)
-  Utils.dir(corpus)
-  val stems = Utils.dir(corpus / "rules-tables")
-  val indeclSource = Utils.dir(stems / "indeclinables")
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  new PrintWriter(testData){write(text); close;}
-  /*RulesInstaller(dataSource, repoRoot, corpusName)
+  val repo = repoRoot.toScala
+  val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
+  installVerbRuleTable(verbData)
 
+  RulesInstaller(repo/"datasets", repo, corpusName)
+  InflectionComposer(repo/"parsers"/corpusName)
 
-  InflectionComposer(repoRoot / s"parsers/${corpusName}")
-  val expectedFile = repoRoot / s"parsers/${corpusName}/inflection.fst"
-  val lines = Source.fromFile(expectedFile).getLines.toVector.filter(_.nonEmpty)
-  val expectedLine  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
+  val outputFile = repo/"parsers"/corpusName/"inflection.fst"
+  val actualLines = outputFile.lines.toVector.filter(_.nonEmpty)
 
   // tidy uip
-  IO.delete(corpus)
+  (repo/"datasets"/corpusName).delete()
 
-  (expectedFile.exists && lines(3).trim ==  expectedLine)
-*/
-  false
+  val expectedStart  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
+  (outputFile.exists && actualLines(3).trim.startsWith(expectedStart) )
 }
 
 
@@ -790,10 +710,7 @@ def testIrregVerbAcceptor(corpusName: String, conf: Configuration, baseDir : Fil
   false
 }
 
-def testInvariantFst(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
-  val src = baseDir / "fst/inflection"
-  false
-}
+
 
 /*(
 

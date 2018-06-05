@@ -27,7 +27,7 @@ object BuildComposer {
 
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
-    InflectionComposer(projectDir)
+    //InflectionComposer(projectDir)
     AcceptorComposer(repo, corpus)
     ParserComposer(projectDir)
     MakefileComposer(projectDir, fstcompiler)
