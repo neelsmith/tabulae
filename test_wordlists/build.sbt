@@ -1,8 +1,5 @@
 import complete.DefaultParsers._
 import scala.sys.process._
-import scala.io.Source
-import java.io.PrintWriter
-
 
 name := "wordlisttest"
 
@@ -83,7 +80,7 @@ wordlists in Test := {
 
   println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + datadir + "\n\trepository base: " + baseDir + "\n")
   val results = for (t <- testList.filter(_._3 != "pending")) yield {
-    Utils.deleteSubdirs(baseDir / "parsers", false)
+    //Utils.deleteSubdirs(baseDir / "parsers", false)
 
     print(t._1 + "...")
     val reslt = t._2(corpusName, conf, baseDir)

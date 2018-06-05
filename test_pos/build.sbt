@@ -216,7 +216,7 @@ posTests in Test := {
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
 
-            Utils.deleteSubdirs(baseDir / "parsers", false)
+          //  Utils.deleteSubdirs(baseDir / "parsers", false)
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
             if (reslt) { println ("success.") } else { println("failed.")}
