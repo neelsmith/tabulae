@@ -94,7 +94,7 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
 }
 
 def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
-  println("\n\tUsage: corpu CORPUSNAME [CONFIGFILE]\n")
+  println("\n\tUsage: corpus CORPUSNAME [CONFIGFILE]\n")
   //println("\t-r option = replace (delete) existing dataset\n")
 }
 
@@ -105,7 +105,7 @@ lazy val utilsImpl = Def.inputTaskDyn {
 
   args.size match {
     case 1 => {
-      def conf = Configuration(file("config.properties"))
+      def conf = Configuration(file("conf.properties"))
       Def.task {
         UtilsInstaller(bdFile, args.head, conf)
       }
@@ -137,7 +137,7 @@ lazy val buildFst = Def.inputTaskDyn {
   val args = spaceDelimited("corpus>").parsed
   args.size match {
     case 1 => {
-      val config =  bdFile / "config.properties"
+      val config =  bdFile / "conf.properties"
       if (! config.exists()) {
         error("Configuration file " + config + " does not exist.\n")
       } else {
