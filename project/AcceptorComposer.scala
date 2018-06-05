@@ -84,19 +84,16 @@ object AcceptorComposer {
   * parser where acceptor.fst should be written.
   */
   def composeMainAcceptor(projectDir: File): Unit = {
-    val dir = Utils.dir(projectDir)
+    //val dir = Utils.dir(projectDir)
     val fst = StringBuilder.newBuilder
     // automatically included
-    fst.append("#include \"" + dir.toString + "/symbols.fst\"\n")
-
+    fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
     //fst.append(nounAcceptor(projectDir) + "\n")
     //fst.append(irregNounAcceptor(projectDir) + "\n")
 
-// MANAGE IN A FOR COMPR
-
+    // MANAGE IN A FOR COMPR
     fst.append(indeclAcceptor(projectDir) + "\n")
     fst.append(verbAcceptor(projectDir) + "\n")
-
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -113,6 +110,7 @@ object AcceptorComposer {
   * @param corpus Corpus to build
   */
   def copySecondaryAcceptors(repo: File, corpus: String): Unit = {
+    /*
     val src = repo / "fst/acceptors"
     val dest = Utils.dir(repo / s"parsers/${corpus}/acceptors")
      val fst = (src) ** "*.fst"
@@ -121,6 +119,7 @@ object AcceptorComposer {
      for (m <- mappings) {
        IO.copyFile(m._1, m._2)
      }
+     */
   }
 
 

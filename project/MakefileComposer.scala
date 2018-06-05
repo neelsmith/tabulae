@@ -72,7 +72,7 @@ object MakefileComposer {
 
     makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
      //later:  ${projectDir.toString}/generator.a ")
-    Utils.dir(projectDir)
+    //Utils.dir(projectDir)
 
     val makeFile = new File(projectDir, "makefile")
     new PrintWriter(makeFile) { write(makeFileText.toString); close; }
@@ -110,7 +110,7 @@ object MakefileComposer {
 
 
       val inflDir = projectDir / "inflection"
-      Utils.dir(inflDir)
+      //Utils.dir(inflDir)
       val inflFst = (inflDir) ** "*fst"
       val inflFstFiles = inflFst.get
 

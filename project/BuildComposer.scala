@@ -2,6 +2,9 @@ import sbt._
 import java.io.PrintWriter
 
 
+import better.files.{File => ScalaFile, _}
+
+
 /** Object for composing all files that are generated from source,
 * rather than built from templates or data sets.  These include
 * the necessary makefiles, created by [[MakefileComposer]], and
@@ -27,7 +30,7 @@ object BuildComposer {
 
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
-    //InflectionComposer(projectDir)
+    InflectionComposer(projectDir.toScala)
     AcceptorComposer(repo, corpus)
     ParserComposer(projectDir)
     MakefileComposer(projectDir, fstcompiler)

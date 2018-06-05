@@ -15,6 +15,7 @@ object IndeclDataInstaller {
   * @param corpus Name of corpus
   */
   def apply(dataSource: File, repo: File, corpusName: String) = {
+    /*
     val corpus = Utils.dir(repo / s"parsers/${corpusName}")
     val lexDirectory = Utils.dir(corpus / "lexica")
 
@@ -23,6 +24,7 @@ object IndeclDataInstaller {
 
     val fstFile = lexDirectory / "lexicon-indeclinables.fst"
     new PrintWriter(fstFile) { write(fst); close }
+    */
   }
 
 
