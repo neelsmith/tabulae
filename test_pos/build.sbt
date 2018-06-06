@@ -205,7 +205,8 @@ posTests in Test := {
       //runBuildTests(args(0), conf, baseDirectory.value)
     case 1 => {
       try {
-        val conf = Configuration(file("conf.properties"))
+        val confFile = file("conf.properties").toScala
+        val conf = Configuration(confFile)
 
         val f = file(conf.datadir)
 

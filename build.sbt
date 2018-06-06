@@ -72,7 +72,8 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
     }
 
     case 2 => {
-      def conf = Configuration(file(args(1)))
+      val confFile = file(args(1)).toScala
+      def conf = Configuration(confFile)
       println("CONFIG FROM " + conf)
       val destDir = if (conf.datadir.head == '/') {
         val configuredBase = new File(conf.datadir)
@@ -108,15 +109,16 @@ lazy val utilsImpl = Def.inputTaskDyn {
 
   args.size match {
     case 1 => {
-      def conf = Configuration(file("conf.properties"))
+      val confFile = file("conf.properties").toScala
+      def conf = Configuration(confFile)
       Def.task {
         UtilsInstaller(bdFile, args.head, conf)
       }
     }
 
     case 2 => {
-
-      def conf = Configuration(file(args(1)))
+      val confFile = file("conf.properties").toScala
+      def conf = Configuration(confFile)
       Def.task {
         UtilsInstaller(bdFile, args.head, conf)
       }
@@ -140,7 +142,7 @@ lazy val buildFst = Def.inputTaskDyn {
   val args = spaceDelimited("corpus>").parsed
   args.size match {
     case 1 => {
-      val config =  bdFile / "conf.properties"
+      val config =  (bdFile / "conf.properties").toScala
       if (! config.exists()) {
         error("Configuration file " + config + " does not exist.\n")
       } else {
@@ -150,7 +152,7 @@ lazy val buildFst = Def.inputTaskDyn {
     }
 
     case 2 => {
-      val confFile = bdFile / args(1)
+      val confFile = (bdFile / args(1)).toScala
       if (! confFile.exists()) {
         error("Configuration file " + confFile + " does not exist.\n")
 
@@ -197,9 +199,10 @@ def fstCompileImp(dataDirectory: File, baseDir: File, corpus: String, conf: Conf
 } */
 
 // Compile FST parser
-def fstCompile(corpus : String, configFile: File) : Def.Initialize[Task[Unit]] = Def.task {
+def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
   //
+
   val conf = Configuration(configFile)
 
   println("Conf is " + conf + " from config file " + configFile)

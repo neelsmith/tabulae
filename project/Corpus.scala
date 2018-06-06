@@ -1,8 +1,8 @@
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
-import java.io.File
 
-case class Corpus(dataSource: ScalaFile, repo: File, corpus: String) {
+
+case class Corpus(dataSource: ScalaFile, repo: ScalaFile, corpus: String) {
 
   /** Directory for corpus. */
   def dir : ScalaFile = {

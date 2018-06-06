@@ -1,6 +1,9 @@
 import complete.DefaultParsers._
 import scala.sys.process._
 
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
+
 name := "wordlisttest"
 
 
@@ -75,7 +78,9 @@ wordlists in Test := {
   val corpusName = "testcorpus"
   val datadir = "datasets"
   val baseDir = baseDirectory.value
-  val conf = Configuration(new File("conf.properties"))
+
+  val confFile = file("conf.properties").toScala
+  val conf = Configuration(confFile)
 
 
   println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + datadir + "\n\trepository base: " + baseDir + "\n")

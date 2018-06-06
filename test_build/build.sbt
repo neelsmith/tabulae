@@ -227,7 +227,7 @@ def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) =
   val repo = repoRoot.toScala
 
   val src = file"test_build/datasets"
-  val corpus =  Corpus(src, repoRoot, corpusName)
+  val corpus =  Corpus(src, repo, corpusName)
   val corpDir = corpus.dir
   val madeOk = corpDir.exists
   val expectedDir = repo/"datasets"/corpusName
@@ -861,7 +861,7 @@ lazy val testIntegration = inputKey[Unit]("Integration tests")
 testIntegration in Test := {
     val args: Seq[String] = spaceDelimited("<arg>").parsed
     println("Integration tests " + args)
-
+/*
     args.size match {
       case 1 => {
         val conf = Configuration(file("conf.properties"))
@@ -890,7 +890,7 @@ testIntegration in Test := {
         println(s"Wrong number args (${args.size}): ${args}")
         println("Usage: unitTests CORPUS [CONFIG_FILE]")
       }
-    }
+    }*/
 }
 
 lazy val unitTests = inputKey[Unit]("Unit tests")
@@ -900,7 +900,8 @@ unitTests in Test := {
   args.size match {
     case 1 => {
       try {
-        val conf = Configuration(file("conf.properties"))
+        val confFile = file("conf.properties").toScala
+        val conf = Configuration(confFile)
         val f = file(conf.datadir)
 
         if (f.exists) {
@@ -939,43 +940,10 @@ unitTests in Test := {
       }
     }
 
-    case 2 => {
-      try {
-        val conf = Configuration(file(args(1)))
-        val f = file(conf.datadir)
-
-        if (f.exists) {
-          val corpusName = args(0)
-          val baseDir = baseDirectory.value
-          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
-
-          val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //Utils.deleteSubdirs(baseDir / "parsers", false)
-            print(t._1 + "...")
-
-            val reslt = t._2(corpusName, conf, baseDir)
-            //if (reslt) { println ("success.") } else { println("failed.")}
-            //reslt
-            false
-          }
-          reportResults(results)//, testList)
-
-        } else {
-          println("Failed.")
-          println(s"No configuration file ${conf.datadir} exists.")
-        }
-
-      } catch {
-        case t: Throwable => {
-          println("Failed.")
-          println(t)
-        }
-      }
-    }
 
     case _ =>  {
       println(s"Wrong number args (${args.size}): ${args}")
-      println("Usage: unitTests CORPUS [CONFIG_FILE]")
+      println("Usage: unitTests CORPUS")
     }
   }
 }

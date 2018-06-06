@@ -1,14 +1,13 @@
-import java.io.File
-import scala.io.Source
-import java.io.PrintWriter
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
 
 
 case class Configuration(fstcompile: String, fstinfl: String, make: String, datadir: String = "datasets") {
 
-  require(new File(fstcompile).exists(), "No fst compiler named " + fstcompile + " found.")
-  require(new File(fstinfl).exists(), "No file named " + fstinfl + " found.")
-  require(new File(make).exists(), "No file named " + make + " found.")
-  require(new File(datadir).exists(), "No directory named " + datadir + " found.")
+  require(ScalaFile(fstcompile).exists(), "No fst compiler named " + fstcompile + " found.")
+  require(ScalaFile(fstinfl).exists(), "No file named " + fstinfl + " found.")
+  require(ScalaFile(make).exists(), "No file named " + make + " found.")
+  require(ScalaFile(datadir).exists(), "No directory named " + datadir + " found.")
 }
 
 
@@ -20,8 +19,8 @@ object Configuration {
   *
   * @config Configuration file.
   */
-  def apply(config: File): Configuration = {
-    val lines = Source.fromFile(config).getLines.toVector.filter(_.nonEmpty).filter(_(0) != '#')
+  def apply(config: ScalaFile): Configuration = {
+    val lines = config.lines.toVector.filter(_.nonEmpty).filter(_(0) != '#')
     val mapped = lines.map( l => {
       val parts = l.split("=")
       parts(0).trim -> parts(1).trim
