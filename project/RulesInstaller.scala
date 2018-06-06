@@ -33,7 +33,7 @@ object RulesInstaller {
 
     //IrregVerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
 
-    val inflFst = mkdirs(repo/"fst/inflection")
+    val inflFst = repo/"fst/inflection"
     installInvariants(inflFst, inflDir)
   }
 

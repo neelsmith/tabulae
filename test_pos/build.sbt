@@ -17,7 +17,7 @@ def testList = List(
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
 
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
@@ -25,7 +25,7 @@ def testList = List(
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
-
+  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
 
 )
@@ -69,8 +69,8 @@ def installVerbStemTable(verbsDir:  ScalaFile) : Unit = {
 ////////////////// Tests //////////////////////////////
 //
 
-def testInvariantCopy(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
-  val repo = repoRoot.toScala
+def testInvariantCopy(corpusName: String, conf: Configuration, repo : ScalaFile): Boolean = {
+
   val parser = repo/"parsers"/corpusName
   val inflTarget = parser/"inflection"
   val inflSrc = repo/"fst/inflection"
@@ -86,7 +86,7 @@ def testInvariantCopy(corpusName: String, conf: Configuration, repoRoot : File):
 }
 
 
-def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
   try {
@@ -97,7 +97,7 @@ def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRo
   }
 }
 
-def testConvertVerbInflRules(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+def testConvertVerbInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
   // Should correctly convert good data.
   val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
@@ -105,9 +105,9 @@ def testConvertVerbInflRules(corpusName: String, conf: Configuration, repoRoot :
   goodFst.trim ==  expected
 }
 
-def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File): Boolean = {
+def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
   // Install inflectional table of data
-  val repo = repoRoot.toScala
+
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
 
@@ -122,7 +122,7 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 }
 
 
-def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
   try {
@@ -133,15 +133,15 @@ def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot
     case t : Throwable => true
   }
 }
-def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   goodFst.trim ==  expected
 }
-def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  val repo = repoRoot.toScala
+def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+
 
   // Should create FST for all files in a directory
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
@@ -156,9 +156,9 @@ def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : F
   fstFromDir.trim == expected
 
 }
-def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // Install one data file:
-  val repo = repoRoot.toScala
+
   val verbsDir = repo/"datasets"/corpusName/"stems-tables/verbs-simplex"
   installVerbStemTable(verbsDir)
 
@@ -179,11 +179,11 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
 }
 
 
-def testRulesInstaller(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
+def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
 
   // Write some test data in the source work space:
   // Install inflectional table of data
-  val repo = repoRoot.toScala
+
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
 
@@ -208,16 +208,19 @@ posTests in Test := {
         val confFile = file("conf.properties").toScala
         val conf = Configuration(confFile)
 
-        val f = file(conf.datadir)
+        val f = file(conf.datadir).toScala
 
         if (f.exists) {
           val corpusName = args(0)
-          val baseDir = baseDirectory.value
+          val baseDir = baseDirectory.value.toScala
           println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
 
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-
-          //  Utils.deleteSubdirs(baseDir / "parsers", false)
+            val subdirs = (baseDir/"parsers").children.filter(_.isDirectory)
+            for (d <- subdirs) {
+              d.delete()
+            }
+          
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
             if (reslt) { println ("success.") } else { println("failed.")}
