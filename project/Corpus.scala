@@ -1,14 +1,16 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
 import java.io.File
 
-case class Corpus(dataSource: File, repo: File, corpus: String) {
+case class Corpus(dataSource: ScalaFile, repo: File, corpus: String) {
 
   /** Directory for corpus. */
-  def dir : File = {
-    var d = dataSource / corpus
-    if (! d.exists) {  d.mkdir } else {}
+  def dir : ScalaFile = {
+    val d =  dataSource/corpus
+    if (!d.exists) {
+      mkdir(d)
+    }
     d
   }
+
 }

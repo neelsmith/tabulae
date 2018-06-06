@@ -10,7 +10,7 @@ name := "bldtest"
 /** Triples of description, function and status. */
 def testList = List(
   // utilities
-  ("Test cleaning build directory", testCleanAll(_,_,_), ""),
+  ("Test cleaning build directory", testCleanAll(_,_,_), "pending"),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
 /*
   // FST symbol system
@@ -224,14 +224,17 @@ def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
 
 // test creating corpus in local workspace
 def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
+  val repo = repoRoot.toScala
+
   val src = file"test_build/datasets"
-  val corpus =  Corpus(src.toJava, repoRoot, corpusName)
+  val corpus =  Corpus(src, repoRoot, corpusName)
   val corpDir = corpus.dir
-  val nameMatches = corpDir.toString == s"test_build/datasets/${corpusName}"
   val madeOk = corpDir.exists
+  val expectedDir = repo/"datasets"/corpusName
   // tidy up
-  corpDir.delete
-  madeOk && nameMatches
+  corpDir.delete()
+
+  madeOk && (corpDir == expectedDir)
 }
 
 def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
@@ -246,7 +249,7 @@ def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File
   val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
 
   // tidy up
-  IO.delete(workSpace)
+  //IO.delete(workSpace)
 
 
   //(itsAlive && alphabet(1) == expectedLine)
@@ -541,6 +544,7 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
   val actualLines = outputFile.lines.toVector.filter(_.nonEmpty)
 
   // tidy uip
+  println("DELETE CORPUS " + repo/"datasets"/corpusName)
   (repo/"datasets"/corpusName).delete()
 
   val expectedStart  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
@@ -906,9 +910,11 @@ unitTests in Test := {
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
             //(baseDir/"parsers").delete()
             //mkdir(baseDir/"parsers")
-            val subdirs = (baseDir/"parsers").collectChildren(_.isDirectory)
+            val subdirs = (baseDir/"parsers").children.filter(_.isDirectory) //collectChildren(_.isDirectory)
+            println("subdirs is " + subdirs.toVector)
             for (d <- subdirs) {
-              d.delete()
+              //d.delete()
+              println("DELETE AT LINE 914" + d)
             }
 
 
