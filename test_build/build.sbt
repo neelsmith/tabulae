@@ -174,7 +174,7 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repo : ScalaF
   val cookedLines = phono.lines.toVector
 
   //tidy up
-  //IO.delete(projectDir)
+  projectDir.delete()
 
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
