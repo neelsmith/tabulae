@@ -10,111 +10,14 @@ name := "bldtest"
 /** Triples of description, function and status. */
 def testList = List(
   // utilities
-  ("Test cleaning build directory", testCleanAll(_,_,_), "pending"),
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
-/*
   // FST symbol system
-  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "pending" ),
+  ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "pending" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "pending" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
-*/
-
-
-
-/*
-  //////////////// Indeclinables.
-  // Stem data
-  ("Test converting bad data to fst for indeclinable", testBadIndeclDataConvert(_, _, _), "" ),
-  ("Test converting tabular data to fst for indeclinable", testIndeclDataConvert(_, _, _), "" ),
-  ("Test converting files in directorty to fst for indeclinable", testIndeclFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for Indeclinable data installed", testIndeclApplied(_, _, _), "" ),
-
-
-  // Inflectional rules
-  ("Test converting bad inflectional rules for indeclinables", testBadIndeclRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for indeclinables", testConvertIndeclRules(_, _, _), "" ),
-  ("Test converting inflectional rules for indeclinables from files in dir", testIndeclRulesFromDir(_, _, _), "" ),
-  //  Acceptor:
-  ("Test writing indeclinables acceptor string", testIndeclAcceptor(_, _, _), "" ),
-
-  //////////////// Verbs.
-
-*/
-
-
-  // acceptor
-  ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "pending" ),
-
-
-/*
-  //////////////// Nouns.
-  // stems
-  ("Test converting bad stem data to fst for nouns", testBadNounStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem data to fst for nouns", testNounStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
-
-
-  // acceptor
-  ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
-
-  //////////////// Adjectives.
-  // stems
-  ("Test converting bad stem data to fst for adjectives", testBadAdjectiveStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem data to fst for adjectives", testAdjectiveStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem files in directory to fst for adjectives", testAdjectiveStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for adjectives stem data installer", testAdjectiveStemDataApplied(_, _, _), "pending" ),
-
-  // inflectional rules
-  ("Test converting bad inflectional rules for adjectives", testBadAdjectiveInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for adjectives", testConvertAdjectiveInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for adjectives from files in dir", testAdjectiveInflRulesFromDir(_, _, _), "pending" ),
-  // acceptor
-  ("Test writing adjectives acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
-
-
-
-
-  //////////////// Irreg. verbs.
-  // stems
-  ("Test converting bad stem data to fst for irregular verbs", testBadIrregVerbStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem data to fst for irregular verbs", testIrregVerbStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for irregular verbs stem data installer", testIrregVerbStemDataApplied(_, _, _), "pending" ),
-
-  // inflectional rules
-  ("Test converting bad inflectional rules for irregular verbs", testBadIrregVerbInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for irregular verbs", testConvertIrregVerbInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for irregular verbs from files in dir", testIrregVerbInflRulesFromDir(_, _, _), "pending" ),
-  // acceptor
-  ("Test writing adjectives acceptor string", testIrregVerbAcceptor(_, _, _), "pending" ),
-
-*/
-
-
-
-  // Top-level acceptors
-  ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "pending" ),
-  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
-  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
-
-
-
-  ("Test composing parser", testParserComposer(_, _, _), "pending" ),
-
-  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
-  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
-
-  // Top-level inflectional rules
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "pending" ),
-
-  // do we need these?
-  /*("Test apply function of acceptor for verbs", testApplyVerbAcceptor(_, _, _), "pending" ),
-  ("Test apply function of acceptor for indeclinables", testApplyIndeclRulesInstall(_, _, _), "pending" ),
-  */
-
 )
+
 
 /** Triples of description, function and status. */
 def integrationList = {
@@ -205,26 +108,9 @@ def installVerbRuleTable(corpusDir:  File) : Unit = {
 
 
 
-def testCleanAll(corpus: String, conf: Configuration, repoRoot : File) = {
-  /*
-  val workSpace = repoRoot / "parsers"
-  val verbose = false
-  val initialClean = Utils.deleteSubdirs(workSpace, verbose)
-  val examples = List("a","b","c")
-  for (ex <- examples) {
-    val corpus = workSpace / ex
-    corpus.mkdir
-  }
-  val expected = examples.size
-
-  (Utils.deleteSubdirs(workSpace, verbose).size == expected)
-  */
-  false
-}
-
 // test creating corpus in local workspace
-def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val repo = repoRoot.toScala
+def testCorpusObject(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  //
 
   val src = file"test_build/datasets"
   val corpus =  Corpus(src, repo, corpusName)
@@ -237,26 +123,20 @@ def testCorpusObject(corpusName: String, conf: Configuration, repoRoot : File) =
   madeOk && (corpDir == expectedDir)
 }
 
-def testAlphabetInstall(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
-  val dataSrc = file("./test_build/datasets")
+def testAlphabetInstall(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
 
-  BuildComposer.installAlphabet(dataSrc, repoRoot, "minimum")
-  val workSpace =  repoRoot /  "parsers/minimum"
-  val expectedFile = repoRoot / "parsers/minimum/symbols/alphabet.fst"
-  val itsAlive = expectedFile.exists
+  val dataSrc = repo/"datasets"
+  BuildComposer.installAlphabet(dataSrc, repo, "minimum")
 
-  val alphabet = "" //Source.fromFile(expectedFile).getLines.toVector
+  val expectedFile = repo/"parsers/minimum/symbols/alphabet.fst"
+  val alphabetLines = expectedFile.lines.toVector
   val expectedLine = "#consonant# = bcdfghjklmnpqrstvxz"
 
-  // tidy up
-  //IO.delete(workSpace)
-
-
-  //(itsAlive && alphabet(1) == expectedLine)
-  false
+  alphabetLines(1) == expectedLine
 }
 
-def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testMainSymbolsComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  /*
   val projectDir = repoRoot / s"parsers/${corpusName}"
   SymbolsComposer.composeMainFile(projectDir)
 
@@ -264,9 +144,11 @@ def testMainSymbolsComposer(corpusName: String, conf: Configuration, repoRoot : 
   val symbols = ""//Source.fromFile(expectedFile).getLines.toVector
   val expectedLine = "% symbols.fst"
   //(expectedFile.exists && symbols(0) == expectedLine)
+  */
   false
 }
-def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testSymbolsDir(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  /*
   val projectDir = repoRoot / s"parsers/${corpusName}"
   val src =  file("./")
 
@@ -274,9 +156,11 @@ def testSymbolsDir(corpusName: String, conf: Configuration, repoRoot : File) = {
   val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
   val actualFiles =  (projectDir / "symbols") ** "*.fst"
   expectedNames == actualFiles.get.map(_.getName).toSet
+  */
+  false
 }
 
-def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testPhonologyComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 /*
   val projectDir = file(s"test_build/parsers/${corpusName}")
   val phono = projectDir / "symbols/phonology.fst"
@@ -297,11 +181,12 @@ def testPhonologyComposer(corpusName: String, conf: Configuration, repoRoot : Fi
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
   */
+  false
 }
 
 /*
 ////// Indeclinables
-def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
   try {
@@ -312,14 +197,14 @@ def testBadIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot :
     case t : Throwable => true
   }
 }
-def testIndeclDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testIndeclDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // should correctly convert good data.
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
   val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
   val expected = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
   goodFst ==  expected
 }
-def testIndeclFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testIndeclFstFromDir(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // Should create FST for all files in a directory
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
 
@@ -339,7 +224,7 @@ def testIndeclFstFromDir(corpusName: String, conf: Configuration, repoRoot : Fil
 
   fail
 }
-def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testIndeclApplied(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // Install one data file:
   val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
   val dataSource = file ("./test_build/datasets")
@@ -367,7 +252,7 @@ def testIndeclApplied(corpusName: String, conf: Configuration, repoRoot : File):
   output(0) == expected
 }
 
-def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
   try {
@@ -377,7 +262,7 @@ def testBadIndeclRulesConvert(corpusName: String, conf: Configuration, repoRoot 
     case t : Throwable => true
   }
 }
-def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testConvertIndeclRules(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =  {
   // Should correctly convert good data.
   val goodLine = "testdata.rule1#nunc"
   val goodFst = IndeclRulesInstaller.indeclRuleToFst(goodLine)
@@ -385,7 +270,7 @@ def testConvertIndeclRules(corpusName: String, conf: Configuration, repoRoot : F
   goodFst ==  expected
 }
 
-def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =
 {
   val goodLine = "testdata.rule1#nunc"
   val dataSource = file ("./test_build/datasets")
@@ -406,7 +291,7 @@ def testIndeclRulesFromDir(corpusName: String, conf: Configuration, repoRoot : F
   readDirOk
 }
 
-def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testIndeclAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   val projectDir = repoRoot / s"parsers/${corpusName}"
   Utils.dir(projectDir)
 
@@ -430,7 +315,7 @@ def testIndeclAcceptor(corpusName: String, conf: Configuration, repoRoot : File)
 */
 
 /*
-def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // install data
   println("Install ")
 
@@ -460,9 +345,9 @@ def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repoRoo
 } */
 
 ////// Verbs
+/*
+def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
 
-def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
-  val repo = repoRoot.toScala
   val projectDir = repo/"parsers"/corpusName
 
   // 1. Should  return empty string if no data:
@@ -482,7 +367,8 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File): 
   (emptiedOk && lines(0) == expected)
 }
 
-def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+
+def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // install data
   /*
   val lexDir = Utils.dir(projectDir / s"datasets")
@@ -496,44 +382,45 @@ def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : Fi
   VerbRulesInstaller()*/
   false
 }
+*/
 
 ///
 
 
 /*
 ///////////   Nouns
-def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testNounStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testNounStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testNounStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testNounStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testNounStemFstFromDir(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testNounStemDataApplied(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
 */
 
 
-def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+//def testNounAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
 
 ////
 
 /*
 /////////// Adjectives
-def testBadAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testBadAdjectiveInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testConvertAdjectiveInflRules(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testAdjectiveInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
-def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= { false }
+def testBadAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testBadAdjectiveInflRulesConvert(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testConvertAdjectiveInflRules(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testAdjectiveInflRulesFromDir(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
+def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= { false }
 */
 /////
-
+/*
 def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
   val verbFile = verbsDir/"madeupdata.cex"
   val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
   verbFile.overwrite(goodLine)
 }
-
-def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  val repo = repoRoot.toScala
+*/
+def testInflectionComposer(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
+/*
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
 
@@ -549,11 +436,12 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repoRoot : F
 
   val expectedStart  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
   (outputFile.exists && actualLines(3).trim.startsWith(expectedStart) )
+  */false
 }
 
 
-def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : File) :  Boolean= {
-  val repo = repoRoot.toScala
+def testUnionOfSquashers(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
+
   val corpusDir = mkdirs(repo/"parsers"/corpusName)
 
   // 1. should throw Exception if no data.
@@ -571,8 +459,8 @@ def testUnionOfSquashers(corpusName: String, conf: Configuration, repoRoot : Fil
   (noData && actual(1).trim == expected)
 }
 
-def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val repo = repoRoot.toScala
+def testTopLevelAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+
   // Install one data file:
   val datasets = repo/"parsers"
   val corpusData = mkdirs(datasets/corpusName)
@@ -589,8 +477,8 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repoRoot : Fil
   false
 }
 
-def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val repo = repoRoot.toScala
+def testMainAcceptorComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+
   // Install one data file:
   val datasets = repo/"parsers"
   val corpusData = mkdirs(datasets/corpusName)
@@ -607,8 +495,8 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repoRoot :
   lines(5).trim == expected.trim
 }
 
-def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val projectDir = repoRoot / s"parsers/${corpusName}"
+def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  /*val projectDir = repoRoot / s"parsers/${corpusName}"
   if (!projectDir.exists) {projectDir.mkdir}
   ParserComposer(projectDir)
 
@@ -619,13 +507,13 @@ def testParserComposer(corpusName: String, conf: Configuration, repoRoot : File)
   //parserFst.delete
 
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
-  //lines(0).trim == expected
+  //lines(0).trim == expected*/
   false
 }
 
-def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
+def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 
-  val repo = repoRoot.toScala
+
   val projectDir = mkdirs(repo/"parsers"/corpusName)
 
   val compiler = conf.fstcompile
@@ -637,8 +525,8 @@ def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo
   mkfile.exists
 }
 
-def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  val repo = repoRoot.toScala
+def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+
   val projectDir = mkdirs(repo/"parsers"/corpusName)
 
   // install some data
@@ -652,8 +540,8 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 }
 
 // test comopiling and executing a final parser
-def testFstBuild(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
-  val repo = repoRoot.toScala
+def testFstBuild(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
+/*
   val cName = "minimum"
   val dataDirectory = repo/"datasets"
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
@@ -665,10 +553,11 @@ def testFstBuild(corpusName: String, conf: Configuration, repoRoot : File) : Boo
 
   val parser = repoRoot/"/parsers/minimum/latin.a"
   parser.exists
+  */false
 }
 
-def testBuildWithVerb(corpusName: String, conf: Configuration, repoRoot : File) : Boolean = {
-  val repo = repoRoot.toScala
+def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
+/*
   val cName = "minimum+verb"
   val dataDirectory = repo/"datasets"
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
@@ -680,6 +569,7 @@ def testBuildWithVerb(corpusName: String, conf: Configuration, repoRoot : File) 
 
   val parser = repoRoot/"/parsers/minimum+verb/latin.a"
   parser.exists
+  */ false
 }
 
 def testParserOutput(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
@@ -732,17 +622,17 @@ def testIrregVerbAcceptor(corpusName: String, conf: Configuration, baseDir : Fil
 /*(
 
 ////// Verbs
-def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
 
 }
-def testVerbStemDataConvert(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   goodFst.trim ==  expected
 }
-def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // Should create FST for all files in a directory
     val goodLine = "ag.v1#lexent.n2280#am#conj1"
 
@@ -761,7 +651,7 @@ def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repoRoot : F
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   fstFromDir.trim == expected
 }
-def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // Install one data file:
 
   val dataSource = repoRoot / "datasets"
@@ -793,7 +683,7 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repoRoot : 
   output(0) == expected
 }
 
-def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =  {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
   try {
@@ -804,7 +694,7 @@ def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repoRo
   }
 }
 
-def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =  {
+def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =  {
   // Should correctly convert good data.
   val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
@@ -813,7 +703,7 @@ def testConvertVerbsInflRules(corpusName: String, conf: Configuration, repoRoot 
 }
 
 
-def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot : File) : Boolean =
+def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean =
 {
   // Install inflectional table of data
   val corpus = Utils.dir(repoRoot / s"datasets/${corpusName}")
@@ -829,7 +719,7 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repoRoot :
 }
 
 
-def testVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File):  Boolean = {
+def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   val projectDir = Utils.dir(repoRoot / s"parsers/${corpusName}")
 
   // 1. Should  return empty string if no data:
@@ -857,40 +747,10 @@ listEm in Test := {
   println("Do universe with " + testList)
 }
 
-lazy val testIntegration = inputKey[Unit]("Integration tests")
-testIntegration in Test := {
+lazy val integrationTests = inputKey[Unit]("Integration tests")
+integrationTests in Test := {
     val args: Seq[String] = spaceDelimited("<arg>").parsed
     println("Integration tests " + args)
-/*
-    args.size match {
-      case 1 => {
-        val conf = Configuration(file("conf.properties"))
-        val f = file(conf.datadir)
-
-        if (f.exists) {
-          val corpusName = args(0)
-          val baseDir = baseDirectory.value
-          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
-          val results = for (t <- integrationList.filter(_._3 != "pending")) yield {
-            //Utils.deleteSubdirs(baseDir / "parsers", false)
-
-            print(t._1 + "...")
-            val reslt = t._2(corpusName, conf, baseDir)
-            if (reslt) { println ("success.") } else { println("failed.")}
-            reslt
-          }
-          reportResults(results)//,integrationList)
-
-        } else {
-          println("Failed.")
-          println(s"No configuration file ${conf.datadir} exists.")
-        }
-      }
-      case _ =>  {
-        println(s"Wrong number args (${args.size}): ${args}")
-        println("Usage: unitTests CORPUS [CONFIG_FILE]")
-      }
-    }*/
 }
 
 lazy val unitTests = inputKey[Unit]("Unit tests")
@@ -902,28 +762,27 @@ unitTests in Test := {
       try {
         val confFile = file("conf.properties").toScala
         val conf = Configuration(confFile)
-        val f = file(conf.datadir)
+        val f = file(conf.datadir).toScala
 
         if (f.exists) {
           val corpusName = args(0)
           val baseDir = baseDirectory.value.toScala
-          println("\nExecuting tests of build system with settings:\n\tcorpus:          " + corpusName + "\n\tdata source:     " + conf.datadir + "\n\trepository base: " + baseDir + "\n")
+          println("\nExecuting tests of build system with settings:" +
+            "\n\tcorpus:          " + corpusName +
+            "\n\tdata source:     " + conf.datadir +
+            "\n\trepository base: " + baseDir +
+            "\n"
+          )
           val results = for (t <- testList.filter(_._3 != "pending")) yield {
-            //(baseDir/"parsers").delete()
-            //mkdir(baseDir/"parsers")
-            val subdirs = (baseDir/"parsers").children.filter(_.isDirectory) //collectChildren(_.isDirectory)
-            println("subdirs is " + subdirs.toVector)
+            val subdirs = (baseDir/"parsers").children.filter(_.isDirectory)
             for (d <- subdirs) {
-              //d.delete()
-              println("DELETE AT LINE 914" + d)
+              d.delete()
             }
 
-
             print(t._1 + "...")
-            val reslt = t._2(corpusName, conf, baseDir.toJava)
+            val reslt = t._2(corpusName, conf, baseDir)
             if (reslt) { println ("success.") } else { println("failed.")}
             reslt
-
           }
           reportResults(results)
 

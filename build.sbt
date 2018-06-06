@@ -382,6 +382,7 @@ def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot :
 }
 
 def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
+  /*
   val buildDirectory = baseDir / s"parsers/${corpus}"
 
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { baseDir / "datasets" }
@@ -394,6 +395,7 @@ def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Bo
 
 
   expectedAlphabet.exists && moretests
+  */false
 }
 
 def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
