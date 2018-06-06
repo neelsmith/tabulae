@@ -1,7 +1,7 @@
 import better.files._
 import better.files.File._
 import better.files.Dsl._
-import java.io.{File => JFile}
+
 
 object VerbDataInstaller {
 
