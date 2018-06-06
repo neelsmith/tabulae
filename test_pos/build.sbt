@@ -181,15 +181,11 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
   output(0) == expected
 }
 
-
 def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
-
   // Write some test data in the source work space:
   // Install inflectional table of data
-
   val verbData = repo/"datasets"/corpusName/"rules-tables/verbs"
   if (!verbData.exists) {mkdirs(verbData)}
-
   installVerbRuleTable(verbData)
 
   RulesInstaller(repo/"datasets", repo, corpusName)
@@ -201,11 +197,8 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFil
   expectedSet  ==  actualSet
 }
 
-
 def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
-
   val projectDir = repo/"parsers"/corpusName
-  println("Work in " + projectDir)
 
   // 1. Should  return empty string if no data:
   val emptyFst = AcceptorComposer.verbAcceptor(projectDir)
