@@ -15,8 +15,7 @@ def testList = List(
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
-
-  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
+  ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
 )
 
 
@@ -157,27 +156,29 @@ def testSymbolsDir(corpusName: String, conf: Configuration, repo : ScalaFile) = 
 }
 
 def testPhonologyComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-/*
-  val projectDir = file(s"test_build/parsers/${corpusName}")
-  val phono = projectDir / "symbols/phonology.fst"
+
+
+  val projectDir = repo/"parsers"/corpusName
+  val phono = projectDir/"symbols/phonology.fst"
 
   // First install raw source.  Phonology file should have unexpanded macro:
-  SymbolsComposer.copySecondaryFiles(file( "fst/symbols"), projectDir / "symbols")
+  val targetDir = repo/"parsers"/corpusName/"symbols"
+  val src =  file("fst/symbols").toScala
+  SymbolsComposer.copyFst(src,targetDir)
 
-  val rawLines = Source.fromFile(phono).getLines.toVector
+  val rawLines = phono.lines.toVector
   val expectedRaw = """#include "@workdir@symbols/alphabet.fst""""
-  (rawLines(7))
+  //(rawLines(7))
   // Then rewrite phonology with expanded paths:
   SymbolsComposer.rewritePhonologyFile(phono, projectDir)
-  val cookedLines = Source.fromFile(phono).getLines.toVector
+  val cookedLines = phono.lines.toVector
 
   //tidy up
   //IO.delete(projectDir)
 
   val expectedCooked = s"""#include "${projectDir}/symbols/alphabet.fst""""
   (rawLines(7) == expectedRaw && cookedLines(7) == expectedCooked)
-  */
-  false
+
 }
 
 /*
