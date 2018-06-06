@@ -13,8 +13,9 @@ def testList = List(
   ("Test Corpus object", testCorpusObject(_, _, _), "" ),
   // FST symbol system
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
+  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "pending" ),
-  ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "pending" ),
+
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
 )
 
@@ -136,10 +137,11 @@ def testAlphabetInstall(corpusName: String, conf: Configuration, repo : ScalaFil
 }
 
 def testMainSymbolsComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-  /*
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  SymbolsComposer.composeMainFile(projectDir)
 
+
+  val projectDir = repo/"parsers"/corpusName
+  SymbolsComposer.composeMainFile(projectDir)
+/*
   val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
   val symbols = ""//Source.fromFile(expectedFile).getLines.toVector
   val expectedLine = "% symbols.fst"
@@ -148,16 +150,14 @@ def testMainSymbolsComposer(corpusName: String, conf: Configuration, repo : Scal
   false
 }
 def testSymbolsDir(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-  /*
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  val src =  file("./")
 
-  SymbolsComposer.copySecondaryFiles(src, projectDir)
+  val targetDir = repo/"parsers"/corpusName/"symbols"
+  val src =  file("fst/symbols").toScala
+
+  SymbolsComposer.copyFst(src, targetDir)
   val expectedNames = Set("markup.fst", "phonology.fst", "morphsymbols.fst",	"stemtypes.fst")
-  val actualFiles =  (projectDir / "symbols") ** "*.fst"
-  expectedNames == actualFiles.get.map(_.getName).toSet
-  */
-  false
+  val actualFiles =  targetDir.glob("*.fst").toVector
+  expectedNames == actualFiles.map(_.name).toSet
 }
 
 def testPhonologyComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {

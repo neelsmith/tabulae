@@ -1,5 +1,4 @@
 
-
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
 
@@ -14,11 +13,8 @@ object BuildComposer {
 
 
   def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpus: String): Unit = {
-    println("ALPHABET: data source " + dataSrc)
     val symbolsDir = repo/"parsers"/corpus/"symbols"
-    println("Symbols dir: " + symbolsDir)
     mkdirs(symbolsDir)
-    println("Exists? " + symbolsDir.exists())
     (dataSrc/corpus/"orthography/alphabet.fst").copyTo(symbolsDir/"alphabet.fst")
   }
 
