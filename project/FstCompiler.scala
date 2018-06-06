@@ -1,6 +1,4 @@
-import sbt._
 import scala.sys.process._
-
 
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
@@ -18,7 +16,7 @@ object FstCompiler {
 
     //println("Compose build")
     // Compose makefiles and higher-order FST for build system
-    BuildComposer(dataDirectory.toJava, baseDir.toJava, corpus, conf.fstcompile)
+    BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
 
 
     // Build it!
