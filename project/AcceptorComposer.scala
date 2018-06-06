@@ -215,7 +215,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   def includeVerbs(dir: ScalaFile): Boolean = {
     val lexica = dir/"lexica"
     val verbsSource = lexica/"lexicon-verbs.fst"
-    verbsSource.lines.nonEmpty
+    verbsSource.exists && verbsSource.lines.nonEmpty
   }
 
   /** Compose FST for union of transducers squashing URNs.

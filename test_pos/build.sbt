@@ -27,7 +27,7 @@ def testList = List(
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
   // acceptor
-  ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "pending" ),
+  ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
 
 
 
@@ -187,14 +187,15 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFil
   // Write some test data in the source work space:
   // Install inflectional table of data
 
-  val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
+  val verbData = repo/"datasets"/corpusName/"rules-tables/verbs"
+  if (!verbData.exists) {mkdirs(verbData)}
+
   installVerbRuleTable(verbData)
 
   RulesInstaller(repo/"datasets", repo, corpusName)
 
   val actualFiles =  (repo/"parsers"/corpusName/"inflection").glob("*.fst")
   val actualSet = actualFiles.map(_.name).toSet
-  println("Actual file set:  " + actualSet)
   val expectedSet = Set("verbinfl.fst", "irreginfl.fst", "indeclinfl.fst")
 
   expectedSet  ==  actualSet
@@ -204,6 +205,7 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFil
 def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
 
   val projectDir = repo/"parsers"/corpusName
+  println("Work in " + projectDir)
 
   // 1. Should  return empty string if no data:
   val emptyFst = AcceptorComposer.verbAcceptor(projectDir)
@@ -211,6 +213,7 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):
 
   // 2. Now try after building some data:
   val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
   val verbLexicon= lexDir/"lexicon-verbs.fst"
   val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
