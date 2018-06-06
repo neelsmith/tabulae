@@ -14,7 +14,7 @@ def testList = List(
   // FST symbol system
   ("Test installing the alphabet", testAlphabetInstall(_, _, _), "" ),
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
-  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "pending" ),
+  ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
 
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "pending" ),
 )
@@ -137,17 +137,13 @@ def testAlphabetInstall(corpusName: String, conf: Configuration, repo : ScalaFil
 }
 
 def testMainSymbolsComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-
-
   val projectDir = repo/"parsers"/corpusName
   SymbolsComposer.composeMainFile(projectDir)
-/*
-  val expectedFile = repoRoot / s"parsers/${corpusName}/symbols.fst"
-  val symbols = ""//Source.fromFile(expectedFile).getLines.toVector
+
+  val expectedFile = repo/"parsers"/corpusName/"symbols.fst"
+  val symbolLines = expectedFile.lines.toVector
   val expectedLine = "% symbols.fst"
-  //(expectedFile.exists && symbols(0) == expectedLine)
-  */
-  false
+  symbolLines(0) == expectedLine
 }
 def testSymbolsDir(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 

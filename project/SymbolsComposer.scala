@@ -13,11 +13,21 @@ object SymbolsComposer {
   // Works with a repository directory and a corpus name
   // to compose files of FST symbols.
   //
+  /** Create all FST files defining symbols of a
+  * parser's FST alphabet.
+  *
+  * @param repo Root of tabulae repository.  Source data
+  * will be drawn from repo/fst/symbols.
+  * @param corpus Name of corpus.  Output will be written
+  * in the pasers/CORPUS build space.
+  */
   def apply(repo: ScalaFile, corpus: String) : Unit = {
     val fstDir = repo/"parsers"/corpus/"fst"
     if (! fstDir.exists) { mkdirs(fstDir)}
-
-    composeMainFile(repo/"parsers"/corpus)
+    val corpusDir = repo/"parsers"/corpus
+    println("Corpus dir is " + corpusDir)
+    println("Exits? " + corpusDir.exists())
+    composeMainFile(corpusDir)
     val symbolDir = repo/"parsers"/corpus/"symbols"
     if (! symbolDir.exists) {mkdirs(symbolDir)}
     val symbolSrc = repo/"fst/symbols"
@@ -51,7 +61,13 @@ object SymbolsComposer {
      }
   }
 
+
+  /** Write file symbols.fst in project directory.
+  *
+  * @param projectDir Directory for parser.
+  */
   def composeMainFile(projectDir: ScalaFile): Unit = {
+    if (! projectDir.exists()) { mkdirs(projectDir)}
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 
