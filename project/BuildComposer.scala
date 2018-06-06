@@ -12,6 +12,13 @@ import better.files.Dsl._
 object BuildComposer {
 
 
+  /** Install alphabet file.
+  *
+  * @param dataSrc Source for corpus-specific data subdirectories.
+  * @param repo Root of tabulae repository.
+  * @param corpus Name of corpus.  Alphabet file will be copied from
+  * data source area to repo/parsers/CORPUS space.
+  */
   def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpus: String): Unit = {
     val symbolsDir = repo/"parsers"/corpus/"symbols"
     mkdirs(symbolsDir)

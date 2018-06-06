@@ -18,7 +18,6 @@ def testList = List(
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs from files in dir", testVerbInflRulesFromDir(_, _, _), "" ),
 
-
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
@@ -26,6 +25,10 @@ def testList = List(
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
+  // acceptor
+  ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "pending" ),
+
 
 
 )
@@ -197,6 +200,29 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFil
   expectedSet  ==  actualSet
 }
 
+
+def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
+
+  val projectDir = repo/"parsers"/corpusName
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.verbAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  // 2. Now try after building some data:
+  val lexDir = projectDir/"lexica"
+  val verbLexicon= lexDir/"lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  verbLexicon.overwrite(goodFst)
+
+  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
+  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "$=verbclass$ = [#verbclass#]"
+  (emptiedOk && lines(0) == expected)
+}
+
+
 lazy val posTests = inputKey[Unit]("Unit tests")
 posTests in Test := {
   val args: Seq[String] = spaceDelimited("<arg>").parsed
@@ -220,7 +246,7 @@ posTests in Test := {
             for (d <- subdirs) {
               d.delete()
             }
-          
+
             print(t._1 + "...")
             val reslt = t._2(corpusName, conf, baseDir)
             if (reslt) { println ("success.") } else { println("failed.")}

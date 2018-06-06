@@ -1,8 +1,5 @@
-import sbt._
-import java.io.PrintWriter
-import scala.io.Source
-
-import Path.rebase
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
 
 /** Factory object for composing and writing to a file the top-level
 * acceptor transducer, acceptor.fst, in the root of the project FST build.
@@ -18,12 +15,12 @@ object AcceptorComposer {
   * @param repo Root of Kanónes repository.
   * @param corpus Corpus to build acceptor for.
   */
-  def apply(repo: File, corpus: String): Unit = {
-    val projectDir =  repo / s"parsers/${corpus}"
+  def apply(repo: ScalaFile, corpus: String): Unit = {
+    val projectDir =  repo/"parsers"/corpus
     composeMainAcceptor(projectDir)
-    println("\nSecondary generators are necessary for verbs to distinguish prin.part as well as inflectional category")
-    copySecondaryAcceptors(repo, corpus)
-    rewriteSecondaryAcceptors(projectDir)
+    //println("\nSecondary generators are necessary for verbs to distinguish prin.part as well as inflectional category")
+    //copySecondaryAcceptors(repo, corpus)
+    //rewriteSecondaryAcceptors(projectDir)
 
     //composeVerbStems(projectDir)
     //composeVerbAcceptor(projectDir)
@@ -37,7 +34,7 @@ object AcceptorComposer {
   * @param projectDir The directory for the corpus-specific
   * parser where acceptor.fst should be written.
   */
-  def composeVerbAcceptor(projectDir: File): Unit = {
+  def composeVerbAcceptor(projectDir: ScalaFile): Unit = {
     val fst = StringBuilder.newBuilder
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n")
     fst.append("%%%\n%%% Adjust stem  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
@@ -52,8 +49,8 @@ object AcceptorComposer {
     fst.append("$squashverburn$\n")
 
     //fst.append(mainVerbAcceptor)
-    val acceptorFile = projectDir / "verb.fst"
-    new PrintWriter(acceptorFile) { write(fst.toString); close }
+    val acceptorFile = projectDir/"verb.fst"
+    acceptorFile.overwrite(fst.toString)
   }
 
   /** Write verb_stems.fst, the union of all acceptors
@@ -62,18 +59,17 @@ object AcceptorComposer {
   * @param projectDir  The directory for the corpus-specific
   * parser where verb_stems.fst should be written.
   */
-  def composeVerbStems(projectDir: File): Unit = {
+  def composeVerbStems(projectDir: ScalaFile): Unit = {
 
-    val src = projectDir / "acceptors/verb"
-    val fileOpt = (src) ** "*fst"
-    val fileList = fileOpt.get
+    val src = projectDir/"acceptors/verb"
+    val fileList = src.glob("*.fst").toVector
 
     val fileNames = for (f <- fileList) yield {
-      "\"<" + f.getAbsolutePath().replaceFirst(".fst$", ".a") + ">\""
+      "\"<" + f.toString.replaceFirst(".fst$", ".a") + ">\""
     }
     val heading = "% verbstems.fst\n% A transducer to generate principal part stems for inflected forms of verbs.\n\n"
-    val acceptorFile = projectDir / "acceptors/verbstems.fst"
-    new PrintWriter(acceptorFile) { write(heading + fileNames.mkString(" || ")); close }
+    val acceptorFile = projectDir/"acceptors/verbstems.fst"
+    acceptorFile.overwrite(heading + fileNames.mkString(" || "))
   }
 
   /** Write acceptor.fst, the final transducer in the
@@ -83,22 +79,22 @@ object AcceptorComposer {
   * @param projectDir The directory for the corpus-specific
   * parser where acceptor.fst should be written.
   */
-  def composeMainAcceptor(projectDir: File): Unit = {
-    //val dir = Utils.dir(projectDir)
+  def composeMainAcceptor(projectDir: ScalaFile): Unit = {
+    if (! projectDir.exists()) {mkdirs(projectDir)}
     val fst = StringBuilder.newBuilder
     // automatically included
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
     //fst.append(nounAcceptor(projectDir) + "\n")
     //fst.append(irregNounAcceptor(projectDir) + "\n")
 
-    // MANAGE IN A FOR COMPR
+    // MANAGE IN A FOR COMPREHENSION
     fst.append(indeclAcceptor(projectDir) + "\n")
     fst.append(verbAcceptor(projectDir) + "\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
-    val acceptorFile = projectDir / "acceptor.fst"
-    new PrintWriter(acceptorFile) { write(fst.toString); close }
+    val acceptorFile = projectDir/"acceptor.fst"
+    acceptorFile.overwrite(fst.toString)
   }
 
 
@@ -109,7 +105,7 @@ object AcceptorComposer {
   * @param repo Root of the Kanónes repository.
   * @param corpus Corpus to build
   */
-  def copySecondaryAcceptors(repo: File, corpus: String): Unit = {
+  def copySecondaryAcceptors(repo: ScalaFile, corpus: String): Unit = {
     /*
     val src = repo / "fst/acceptors"
     val dest = Utils.dir(repo / s"parsers/${corpus}/acceptors")
@@ -131,10 +127,10 @@ object AcceptorComposer {
   * @param workDir Actual directory where corpus-specific
   * parser is to be built.
   */
-  def rewriteFile(f: File, workDir: File): Unit = {
-    val lines = Source.fromFile(f).getLines.toVector
+  def rewriteFile(f: ScalaFile, workDir: ScalaFile): Unit = {
+    val lines = f.lines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
-    new PrintWriter(f) { write(rewritten); close }
+    f.overwrite(rewritten)
   }
 
   /** Filter secondary acceptor files, replacing ant-style
@@ -143,6 +139,7 @@ object AcceptorComposer {
   * @param projectDir Directory where corpus-specific parser
   * is to be built.
   */
+  /*
   def rewriteSecondaryAcceptors(projectDir: File) : Unit = {
     val dir = projectDir / "acceptors"
     val fst = (dir) ** "*.fst"
@@ -150,11 +147,11 @@ object AcceptorComposer {
     for (f <- fstFiles) {
       rewriteFile(f, projectDir)
     }
-  }
+  }*/
 
 
   /** String defining final step of main verb acceptor. */
-  def verbAcceptor(dir : File): String = {
+  def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {
     """
 $=verbclass$ = [#verbclass#]
@@ -165,7 +162,7 @@ $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 } else { "" }
 }
   /** String defining final noun acceptor transducer.*/
-  def nounAcceptor(dir : File): String = {
+  def nounAcceptor(dir : ScalaFile): String = {
     """
 % Noun acceptor:
 $=nounclass$ = [#nounclass#]
@@ -174,7 +171,7 @@ $squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 }
 
   /** String defining final acceptor transducer for irregular nouns.*/
-  def irregNounAcceptor(dir : File): String = {
+  def irregNounAcceptor(dir : ScalaFile): String = {
     """
 % Irregular noun acceptor
 $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+ $gender$ $case$ $number$ <irregnoun>  $separator$+ <irregnoun><noun><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
@@ -182,7 +179,7 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 }
 
 /** String defining final acceptor transducer for indeclinable forms.*/
-def indeclAcceptor (dir : File): String = {
+def indeclAcceptor (dir : ScalaFile): String = {
   if (includeIndecls(dir) ) {
    """
 % Indeclinable form acceptor:
@@ -192,7 +189,7 @@ $squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>
 }
 
 /** String defining final adjective acceptor transducer.  */
-def adjAcceptor(dir : File): String = {
+def adjAcceptor(dir : ScalaFile): String = {
   """
 % adjective acceptor:
 $=adjectiveclass$ = [#adjectiveclass#]
@@ -204,25 +201,28 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   *
   * @param dir Directory for corpus data set.
   */
-  def includeIndecls(dir: File): Boolean = {
-    val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
+  def includeIndecls(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-indeclinables.fst"
     indeclSource.exists
   }
 
 
   /** True if parser lexica include entries for verbs.
+  *
+  * @param dir Root directory of work space (repo/parsers/CORPUS).
+  *
   */
-  def includeVerbs(dir: File): Boolean = {
-    val lexica = dir / "lexica"
-    val verbsSource = lexica ** "lexicon-verbs.fst"
-    verbsSource.get.nonEmpty
+  def includeVerbs(dir: ScalaFile): Boolean = {
+    val lexica = dir/"lexica"
+    val verbsSource = lexica/"lexicon-verbs.fst"
+    verbsSource.lines.nonEmpty
   }
 
   /** Compose FST for union of transducers squashing URNs.
   *
   * @param dir Directory for corpus data set.
   */
-  def unionOfSquashers(dir: File) : String = {
+  def unionOfSquashers(dir: ScalaFile) : String = {
     val fst = StringBuilder.newBuilder
     fst.append("% Union of all URN squashers.\n\n$acceptor$ = ")
     //fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
@@ -252,7 +252,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   *
   * @param dir Directory for corpus data set.
   */
-  def topLevelAcceptor(dir : File): String = {
+  def topLevelAcceptor(dir : ScalaFile): String = {
     val constructed  = unionOfSquashers(dir)
   val trail = """
 %% Put all symbols in 2 categories:  pass

@@ -343,27 +343,6 @@ def testApplyIndeclRulesInstall(corpusName: String, conf: Configuration, repo : 
 
 ////// Verbs
 /*
-def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
-
-  val projectDir = repo/"parsers"/corpusName
-
-  // 1. Should  return empty string if no data:
-  val emptyFst = AcceptorComposer.verbAcceptor(projectDir.toJava)
-  val emptiedOk = emptyFst.isEmpty
-
-  // 2. Now try after building some data:
-  val lexDir = projectDir/"lexica"
-  val verbLexicon= lexDir/"lexicon-verbs.fst"
-  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
-  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
-  verbLexicon.overwrite(goodFst)
-
-  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir.toJava)
-  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
-  val expected = "$=verbclass$ = [#verbclass#]"
-  (emptiedOk && lines(0) == expected)
-}
-
 
 def testApplyVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
   // install data
@@ -443,14 +422,14 @@ def testUnionOfSquashers(corpusName: String, conf: Configuration, repo : ScalaFi
 
   // 1. should throw Exception if no data.
   val noData =  try {
-    AcceptorComposer.unionOfSquashers(corpusDir.toJava)
+    AcceptorComposer.unionOfSquashers(corpusDir)
     false
   } catch {
     case t: Throwable => true
   }
   // 2. Install some data.
   //installIndeclRuleFst(corpusDir)
-  val actual = AcceptorComposer.unionOfSquashers(corpusDir.toJava).split("\n").filter(_.nonEmpty)
+  val actual = AcceptorComposer.unionOfSquashers(corpusDir).split("\n").filter(_.nonEmpty)
   val expected  =   "$acceptor$ = $squashindeclurn$"
 
   (noData && actual(1).trim == expected)
@@ -463,7 +442,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repo : ScalaFi
   val corpusData = mkdirs(datasets/corpusName)
   //installIndeclRuleFst(corpusData)
 
-  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(corpusData.toJava)
+  val expandedAcceptorFst = AcceptorComposer.topLevelAcceptor(corpusData)
   val lines = expandedAcceptorFst.split("\n").toVector.filter(_.nonEmpty)
 
   val expected = "$acceptor$ = $squashindeclurn$"
@@ -485,7 +464,7 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repo : Sca
 
   // 1. Should omit indeclinables if not data present.
   val projectDir = repo/"parsers"/corpusName
-  AcceptorComposer.composeMainAcceptor(projectDir.toJava)
+  AcceptorComposer.composeMainAcceptor(projectDir)
   val acceptor = projectDir/"acceptor.fst"
   val lines = acceptor.lines.toVector.filter(_.nonEmpty)
   val expected = "$acceptor$ = $squashindeclurn$"
@@ -514,7 +493,7 @@ def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo
   val projectDir = mkdirs(repo/"parsers"/corpusName)
 
   val compiler = conf.fstcompile
-  MakefileComposer.composeInflectionMake(projectDir.toJava, compiler)
+  MakefileComposer.composeInflectionMake(projectDir, compiler)
 
   val inflDir = projectDir/"inflection"
   val mkfile = inflDir/"makefile"
@@ -530,7 +509,7 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : Sca
   //installIndeclRuleFst(projectDir)
 
   val compiler = conf.fstcompile
-  MakefileComposer.composeMainMake(projectDir.toJava, compiler)
+  MakefileComposer.composeMainMake(projectDir, compiler)
 
   val mkfile = projectDir/"makefile"
   mkfile.exists
