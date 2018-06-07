@@ -26,7 +26,7 @@ def testList = List(
   ("Test composing empty parser", testEmptyParserComposer(_, _, _), "" ),
   ("Test composing parser for empty lexica", testParserComposerForEmptyLexica(_, _, _), "" ),
 
-  ("Test composing parser", testParserComposer(_, _, _), "pending" ),
+  ("Test composing parser", testParserComposer(_, _, _), "" ),
 
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
@@ -517,7 +517,6 @@ def testEmptyParserComposer(corpusName: String, conf: Configuration, repo : Scal
 
 def testParserComposerForEmptyLexica(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = mkdirs(repo/"parsers"/corpusName)
-
   try {
     ParserComposer(projectDir)
     false
@@ -530,7 +529,11 @@ def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile
   val projectDir = repo/"parsers"/corpusName
   if (!projectDir.exists) {mkdirs(projectDir)}
 
-  // Only works if we've installed a lexicon and data...
+  // Only works if we've installed a lexicon with some data...
+  val verbData = repo/"datasets"/corpusName/"stems-tables/verbs"
+  if (!verbData.exists) {mkdirs(verbData)}
+  installVerbStemTable(repo/"datasets"/corpusName)
+  DataInstaller(repo/"datasets", repo, corpusName)
 
   ParserComposer(projectDir)
 
