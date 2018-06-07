@@ -16,6 +16,24 @@ def testList = List(
   ("Test composing files in symbols dir", testSymbolsDir(_, _, _), "" ),
   ("Test composing symbols.fst", testMainSymbolsComposer(_, _, _), "" ),
   ("Test composing phonology symbols", testPhonologyComposer(_, _, _), "" ),
+
+  // Top-level acceptors
+  ("Test empty union of squashers", testEmptySquashers(_, _, _), "" ),
+  ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
+
+
+
+  ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "pending" ),
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
+
+  ("Test composing parser", testParserComposer(_, _, _), "pending" ),
+
+  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
+  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
+
+  // Top-level inflectional rules
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "pending" ),
+
 )
 
 
@@ -83,30 +101,25 @@ def installVerbRuleFst(corpusDir:  File) : Unit = {
   */
 }
 
-def installVerbStemTable(corpusDir:  File) : Unit = {
-  /*val stems = corpusDir / "stems-tables"
-  val verbs = stems / "verbs-simplex"
-  val verbFile = verbs / "madeupdata.cex"
+def installVerbStemTable(corpusDir:  ScalaFile) : Unit = {
+
+  val stems = corpusDir/"stems-tables"
+  println("INstall verb stems in " + stems)
+  val verbs = stems/"verbs-simplex"
+    if (! verbs.exists) {mkdirs(verbs)}
+  val verbFile = verbs/"madeupdata.cex"
 
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val text = s"header line, omitted in parsing\n${goodLine}"
-  //new PrintWriter(verbFile){write(text); close;}
-  */
+  verbFile.overwrite(text)
 }
-def installVerbRuleTable(corpusDir:  File) : Unit = {
-  /*val rules = corpusDir / "rules-tables"
-  val verbs = rules / "verbs"
-  val verbFile = verbs / "madeupdata.cex"
+def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
+  val verbFile = verbsDir/"madeupdata.cex"
   val goodLine = "RuleUrn#InflectionClasses#Ending#Person#Number#Tense#Mood#Voice\nlverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act\n"
-
-//  new PrintWriter(verbFile){write(goodLine); close;}
-*/
+  verbFile.overwrite(goodLine)
 }
 ////////////////// Tests //////////////////////////////
 //
-
-
-
 
 // test creating corpus in local workspace
 def testCorpusObject(corpusName: String, conf: Configuration, repo : ScalaFile) = {
@@ -415,8 +428,7 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repo : Scala
   */false
 }
 
-
-def testUnionOfSquashers(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
+def testEmptySquashers(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
 
   val corpusDir = mkdirs(repo/"parsers"/corpusName)
 
@@ -427,12 +439,23 @@ def testUnionOfSquashers(corpusName: String, conf: Configuration, repo : ScalaFi
   } catch {
     case t: Throwable => true
   }
-  // 2. Install some data.
-  //installIndeclRuleFst(corpusDir)
-  val actual = AcceptorComposer.unionOfSquashers(corpusDir).split("\n").filter(_.nonEmpty)
-  val expected  =   "$acceptor$ = $squashindeclurn$"
+  noData
+}
 
-  (noData && actual(1).trim == expected)
+def testUnionOfSquashers(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
+
+  val corpusDir = mkdirs(repo/"parsers"/corpusName)
+
+  // Install some verb stem data.
+  val verbData = repo/"datasets"/corpusName/"stems-tables/verbs"
+  if (!verbData.exists) {mkdirs(verbData)}
+  installVerbStemTable(repo/"datasets"/corpusName)
+  DataInstaller(repo/"datasets", repo, corpusName)
+  val actual = AcceptorComposer.unionOfSquashers(corpusDir).split("\n").filter(_.nonEmpty).toVector
+  val expected  =   "$acceptor$ = $squashverburn$"
+  // tidy up:
+  (repo/"datasets"/corpusName).delete()
+  actual(1).trim == expected
 }
 
 def testTopLevelAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile) = {

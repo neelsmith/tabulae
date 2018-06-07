@@ -17,7 +17,8 @@ object RulesInstaller {
   */
   def apply(sourceDir: File, repo: File, corpus: String): Unit = {
 
-    val inflDir = mkdirs(repo/"parsers"/corpus/"inflection")
+    val inflDir = repo/"parsers"/corpus/"inflection"
+    if (! inflDir.exists) {mkdirs(inflDir)}
     val srcCorpus = sourceDir/corpus
 
 

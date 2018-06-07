@@ -41,10 +41,9 @@ object BuildComposer {
     println("Data source is " + dataSource)
     println("Repo is " + repo)
 
-    //val corpusDir = repo/"parsers"/corpus
-    //val projectDir = repo / corpusDir
 
-    //SymbolsComposer(repo, corpus)
+
+    SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
     //InflectionComposer(projectDir.toScala)
     //AcceptorComposer(repo, corpus)
