@@ -370,22 +370,24 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : Sca
 
 // test comopiling and executing a final parser
 def testFstBuild(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
-/*
-  val cName = "minimum"
-  val dataDirectory = repo/"datasets"
-  val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
+  /*
+    val cName = "minimum"
+    val dataDirectory = repo/"datasets"
+    val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
 
-  val target = repo/"parsers"/cName
-  //IO.delete(target)
+    val target = repo/"parsers"/cName
+    //IO.delete(target)
 
-  FstCompiler.compile(dataDirectory, repo, cName, conf)
+    FstCompiler.compile(dataDirectory, repo, cName, conf)
 
-  val parser = repoRoot/"/parsers/minimum/latin.a"
-  parser.exists
-  */false
+    val parser = repoRoot/"/parsers/minimum/latin.a"
+    parser.exists
+    */
+  false
 }
 
-def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
+
+def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 /*
   val cName = "minimum+verb"
   val dataDirectory = repo/"datasets"
@@ -401,7 +403,7 @@ def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile)
   */ false
 }
 
-def testParserOutput(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
+def testParserOutput(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   false
 }
 
@@ -413,8 +415,55 @@ listEm in Test := {
 
 lazy val integrationTests = inputKey[Unit]("Integration tests")
 integrationTests in Test := {
-    val args: Seq[String] = spaceDelimited("<arg>").parsed
-    println("Integration tests " + args)
+  val args: Seq[String] = spaceDelimited("<arg>").parsed
+
+  args.size match {
+    case 1 => {
+      try {
+        val confFile = file("conf.properties").toScala
+        val conf = Configuration(confFile)
+        val f = file(conf.datadir).toScala
+
+        if (f.exists) {
+          val corpusName = args(0)
+          val baseDir = baseDirectory.value.toScala
+          println("\nExecuting tests of build system with settings:" +
+            "\n\tcorpus:          " + corpusName +
+            "\n\tdata source:     " + conf.datadir +
+            "\n\trepository base: " + baseDir +
+            "\n"
+          )
+          val results = for (t <- integrationList.filter(_._3 != "pending")) yield {
+            val subdirs = (baseDir/"parsers").children.filter(_.isDirectory)
+            for (d <- subdirs) {
+              d.delete()
+            }
+
+            print(t._1 + "...")
+            val reslt = t._2(corpusName, conf, baseDir)
+            if (reslt) { println ("success.") } else { println("failed.")}
+            reslt
+          }
+          reportResults(results)
+
+        } else {
+          println("Failed.")
+          println(s"No configuration file ${conf.datadir} exists.")
+        }
+
+      } catch {
+        case t: Throwable => {
+          println("Failed.")
+          println(t)
+        }
+      }
+    }
+
+    case _ =>  {
+      println(s"Wrong number args (${args.size}): ${args}")
+      println("Usage: unitTests CORPUS")
+    }
+  }
 }
 
 lazy val unitTests = inputKey[Unit]("Unit tests")
