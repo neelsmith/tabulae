@@ -33,7 +33,7 @@ def testList = List(
   ("Test composing parser", testParserComposer(_, _, _), "" ),
 
 
-  ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "pending" ),
+  ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "" ),
 
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),

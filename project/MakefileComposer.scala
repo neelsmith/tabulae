@@ -41,6 +41,12 @@ object MakefileComposer {
     dir.children.filter(_.isDirectory).toVector
   }
 
+
+
+  /** Compose main makefile for parser.
+  *
+  * @
+  */
   def composeMainMake(projectDir: ScalaFile, fstcompiler: String): Unit = {
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
@@ -97,7 +103,11 @@ object MakefileComposer {
   //  new PrintWriter(makefile) { write(makeFileText.toString); close }
   }
 
-  /** Compose makefile for inflection subdirectory.
+  /** Compose makefile for inflection subdirectory.  This requires
+  * that data already be installed in projectDir/inflection.
+  *
+  * @param projectDir  Directory for corpus-specific parser.
+  * @param fstcompiler Path to binary FST compiler.
   */
   def composeInflectionMake(projectDir: ScalaFile, fstcompiler: String) : Unit = {
       val inflDir = projectDir/"inflection"
