@@ -1,10 +1,10 @@
-import sbt._
-import Path.rebase
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
 
 object DataTemplate {
 
-  def apply(srcDir: File, targetDir: File): Unit = {
-    if (! targetDir.exists){ targetDir.mkdir} else {}
+  def apply(srcDir: ScalaFile, targetDir: ScalaFile): Unit = {
+    if (! targetDir.exists){ mkdirs(targetDir)} else {}
     println("Data template: now " + targetDir + " exists.")
     copyMarkdown(srcDir, targetDir)
     copyCex(srcDir,targetDir)
@@ -12,42 +12,24 @@ object DataTemplate {
   }
 
 
-  def copyFst(srcDir: File, targetDir: File): Unit = {
-     val fst = (srcDir) ** "*.fst"
-     val fstFiles = fst.get
-
-     val mappings: Seq[(File,File)] = fstFiles pair rebase(srcDir, targetDir)
-
-     println(s"\ncopying FST files from ${srcDir} to ${targetDir}...")
-     for (m <- mappings) {
-       println("  ..copy " + m._1 + " -> " + m._2)
-       IO.copyFile(m._1, m._2)
+  def copyFst(srcDir: ScalaFile, targetDir: ScalaFile): Unit = {
+     val fstFiles = srcDir.glob("*.fst").toVector
+     for (f <- fstFiles) {
+       f.copyToDirectory(targetDir)
      }
   }
 
-  def copyCex(srcDir: File, targetDir: File): Unit = {
-     val cex = (srcDir) ** "*.cex"
-     val cexFiles = cex.get
-
-     val mappings: Seq[(File,File)] = cexFiles pair rebase(srcDir, targetDir)
-
-     println("\ncopying CEX files...")
-     for (m <- mappings) {
-       println("  ..copy " + m._1 + " -> " + m._2)
-       IO.copyFile(m._1, m._2)
+  def copyCex(srcDir: ScalaFile, targetDir: ScalaFile): Unit = {
+     val fstFiles = srcDir.glob("*.cex").toVector
+     for (f <- fstFiles) {
+       f.copyToDirectory(targetDir)
      }
   }
 
-  def copyMarkdown(srcDir: File, targetDir: File): Unit = {
-     val readmes = (srcDir) ** "*.md"
-     val readmeFiles = readmes.get
-
-     val mappings: Seq[(File,File)] = readmeFiles pair rebase(srcDir, targetDir)
-
-     println("\ncopying markdown files...")
-     for (m <- mappings) {
-       println("  ..copy " + m._1 + " -> " + m._2)
-       IO.copyFile(m._1, m._2)
+  def copyMarkdown(srcDir: ScalaFile, targetDir: ScalaFile): Unit = {
+     val fstFiles = srcDir.glob("*.fmdst").toVector
+     for (f <- fstFiles) {
+       f.copyToDirectory(targetDir)
      }
   }
 }

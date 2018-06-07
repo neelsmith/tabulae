@@ -66,7 +66,7 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
       Def.task {
         val srcDir = baseDirectory.value / "datatemplate"
         println("\nCreate directory tree for new corpus " + args.head + " in " + destDir + "\n")
-        DataTemplate(srcDir, destDir)
+        DataTemplate(srcDir.toScala, destDir.toScala)
         println("\n\nDone.  Template is in " + destDir)
       }
     }
