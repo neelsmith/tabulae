@@ -26,7 +26,6 @@ object VerbRulesInstaller {
   * @param srcDir Directory with lexical tables.
   */
   def fstForVerbRules(srcDir: File) : String = {
-    //val filesOpt = (srcDir) ** "*cex"
     val fileList = srcDir.glob("*.cex").toVector
     if (fileList.isEmpty) {
       ""
