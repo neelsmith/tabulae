@@ -12,8 +12,6 @@ object MakefileComposer {
   * @param fstcompiler Full path to FST compiler.
   */
   def apply(projectDir: ScalaFile, fstcompiler: String) : Unit = {
-    //val inflDir = projectDir / "inflection"
-
     composeInflectionMake(projectDir, fstcompiler)
     composeVerbStemMake(projectDir, fstcompiler)
 
@@ -42,16 +40,17 @@ object MakefileComposer {
   }
 
 
-
   /** Compose main makefile for parser.
   *
   * @
   */
   def composeMainMake(projectDir: ScalaFile, fstcompiler: String): Unit = {
+    val acceptorDir = projectDir/"acceptors"
+    if (!acceptorDir.exists) { throw new Exception("MakefileComposer: no acceptors installed.")}
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
 
-    val dotAs = dotAsForFst(projectDir/"acceptors").mkString(" ")
+    val dotAs = dotAsForFst(acceptorDir).mkString(" ")
     makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
 
     makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
@@ -113,8 +112,6 @@ object MakefileComposer {
       val inflDir = projectDir/"inflection"
       if (! inflDir.exists) {
         throw new Exception("MakefileComposer: no inflection rules installed.")
-      } else {
-        println (s"\nWrite makefile for inflection rules in project ${projectDir}\n")
       }
 
       val makeFileText = StringBuilder.newBuilder

@@ -35,6 +35,7 @@ def testList = List(
 
   ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
+  ("Test composing makefile with empty acceptors", testMainMakefileComposerEmptyAcceptors(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
 
   // Top-level inflectional rules
@@ -571,11 +572,22 @@ def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
   RulesInstaller(repo/"datasets", repo, corpusName)
-  
+
   MakefileComposer.composeInflectionMake(projectDir, compiler)
 
   val mkfile = projectDir/"inflection/makefile"
   mkfile.exists
+}
+
+def testMainMakefileComposerEmptyAcceptors(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  val projectDir = mkdirs(repo/"parsers"/corpusName)
+  val compiler = conf.fstcompile
+  try {
+    MakefileComposer.composeMainMake(projectDir, compiler)
+    false
+  } catch {
+    case t: Throwable => true
+  }
 }
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
@@ -665,7 +677,7 @@ def testIrregVerbInflRulesFromDir(corpusName: String, conf: Configuration, baseD
   false
 }
 
-// acceptor
+// testMainMakefileComposeror
 def testIrregVerbAcceptor(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
   false
 }
