@@ -36,6 +36,11 @@ def testList = List(
   ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing makefile with empty acceptors", testMainMakefileComposerEmptyAcceptors(_, _, _), "" ),
+
+
+    ("Test assemblingAcceptorsDir", testAcceptorDirectory(_, _, _), "pending" ),
+
+
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
 
   // Top-level inflectional rules
@@ -76,35 +81,8 @@ def reportResults(results: List[Boolean]) : Unit = {
   }
 }
 
-/** Install a sample rule file for indeclinables.
-*
-* @param corpusDir Directory for corpus dataset where file should be installed.
-*/
-def installIndeclRuleTable(corpusDir: File ): Unit = {
-  val goodLine = "StemUrn#LexicalEntity#Stem#PoS"
-  val stems = corpusDir / "stems-tables"
-  val indeclSource = stems / "indeclinables"
-  val testData  = indeclSource / "madeuptestdata.cex"
-  val text = s"header line, omitted in parsing\n${goodLine}"
-  //new PrintWriter(testData){write(text); close;}
-}
 
-def installIndeclRuleFst(corpusDir:  File) : Unit = {
-  val lexica = corpusDir / "lexica"
-  if (! lexica.exists) { lexica.mkdir}
-  val rulesFst = lexica  / "lexicon-indeclinables.fst"
-  val entry = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
-  //new PrintWriter(rulesFst){write(entry);close;}
-}
-def installVerbRuleFst(corpusDir:  File) : Unit = {
-  /*
-  val lexica = corpusDir / "lexica"
-  if (! lexica.exists) { lexica.mkdir}
-  val rulesFst = lexica  / "lexicon-indeclinables.fst"
-  val entry = "<u>StemUrn</u><u>LexicalEntity</u>Stem<indecl><PoS>"
-  new PrintWriter(rulesFst){write(entry);close;}
-  */
-}
+
 
 def installVerbStemTable(corpusDir:  ScalaFile) : Unit = {
 
@@ -579,6 +557,12 @@ def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo
   mkfile.exists
 }
 
+def testAcceptorDirectory(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  false
+}
+
+
+
 def testMainMakefileComposerEmptyAcceptors(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = mkdirs(repo/"parsers"/corpusName)
   val compiler = conf.fstcompile
@@ -595,7 +579,13 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : Sca
   val projectDir = mkdirs(repo/"parsers"/corpusName)
 
   // install some data
-  //installIndeclRuleFst(projectDir)
+  val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
+  val verbLexicon= lexDir/"lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  verbLexicon.overwrite(goodFst)
+  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
 
   val compiler = conf.fstcompile
   MakefileComposer.composeMainMake(projectDir, compiler)
