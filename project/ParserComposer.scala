@@ -1,5 +1,6 @@
-import sbt._
-import java.io.PrintWriter
+import better.files.{File => ScalaFile, _}
+import better.files.Dsl._
+
 
 /** Write the top-level transducer, latin.fst.
 */
@@ -16,15 +17,14 @@ object ParserComposer {
   *
   * @param projectDir Directory where parser is to be written.
   */
-  def apply(projectDir: File) : Unit = {
+  def apply(projectDir: ScalaFile) : Unit = {
+    if (! projectDir.exists){mkdirs(projectDir)}
     val latin = StringBuilder.newBuilder
     latin.append(header)
     latin.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n" )
 
-
     latin.append("% Dynamically loaded lexica of stems:\n$stems$ = ")
-    latin.append(lexiconFiles(projectDir / "lexica").mkString(" |\\\n") + "\n\n")
-
+    latin.append(lexiconFiles(projectDir/"lexica").mkString(" |\\\n") + "\n\n")
 
     latin.append("% Dynamically loaded inflectional rules:\n$ends$ = \"<" + projectDir.toString + "/inflection.a>\"")
 
@@ -37,10 +37,8 @@ object ParserComposer {
     latin.append("% Final transducer:\n")
     latin.append("$morph$ || $acceptor$\n\n")
 
-
-    val latinFile = projectDir / "latin.fst"
-    new PrintWriter(latinFile) { write(latin.toString); close }
-
+    val latinFile = projectDir/"latin.fst"
+    latinFile.overwrite(latin.toString)
   }
 
 
@@ -51,9 +49,8 @@ object ParserComposer {
   *
   * @param dir Root directory for all lexicon files.
   */
-  def lexiconFiles(dir: File): Vector[String] = {
-    val filesOpt = (dir) ** "*.fst"
-    val files = filesOpt.get
+  def lexiconFiles(dir: ScalaFile): Vector[String] = {
+    val files = dir.glob("*.fst").toVector
     files.map(f => "\"" + f.toString() + "\"").toVector
   }
 

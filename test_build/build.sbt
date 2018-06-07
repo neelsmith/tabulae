@@ -22,14 +22,13 @@ def testList = List(
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
-
   ("Test composing parser", testParserComposer(_, _, _), "pending" ),
 
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
 
   // Top-level inflectional rules
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "pending" ),
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
 
 )
 
@@ -405,7 +404,7 @@ def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
 }
 */
 def testInflectionComposer(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
-/*
+
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
 
@@ -417,11 +416,11 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repo : Scala
 
   // tidy uip
   println("DELETE CORPUS " + repo/"datasets"/corpusName)
-  (repo/"datasets"/corpusName).delete()
+  //(repo/"datasets"/corpusName).delete()
 
-  val expectedStart  = "$ending$ = " + "\"<" + repoRoot + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
+  val expectedStart  = "$ending$ = " + "\"<" + repo + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
   (outputFile.exists && actualLines(3).trim.startsWith(expectedStart) )
-  */false
+
 }
 
 def testEmptySquashers(corpusName: String, conf: Configuration, repo : ScalaFile) :  Boolean= {
@@ -502,19 +501,19 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repo : Sca
 }
 
 def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-  /*val projectDir = repoRoot / s"parsers/${corpusName}"
-  if (!projectDir.exists) {projectDir.mkdir}
+  val projectDir = repo/"parsers"/corpusName
+  if (!projectDir.exists) {mkdirs(projectDir)}
+
   ParserComposer(projectDir)
 
-  val parserFst = projectDir / "latin.fst"
-  val lines = "" //Source.fromFile(parserFst).getLines.toVector.filter(_.nonEmpty)
+  val parserFst = projectDir/"latin.fst"
+  val lines = parserFst.lines.toVector.filter(_.nonEmpty)
 
   // tidy up
   //parserFst.delete
 
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
-  //lines(0).trim == expected*/
-  false
+  lines(0).trim == expected
 }
 
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
