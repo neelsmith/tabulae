@@ -13,7 +13,7 @@ object MakefileComposer {
   */
   def apply(projectDir: ScalaFile, fstcompiler: String) : Unit = {
     composeInflectionMake(projectDir, fstcompiler)
-    composeVerbStemMake(projectDir, fstcompiler)
+    //composeVerbStemMake(projectDir, fstcompiler)
 
     composeMainMake(projectDir, fstcompiler)
   }
@@ -57,7 +57,7 @@ object MakefileComposer {
     if (acceptorDir.exists) {
       val dotAs = dotAsForFst(acceptorDir).mkString(" ")
       makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
-    } 
+    }
 
     makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
     makeFileText.append(composeVerbStemMake(projectDir, fstcompiler))
@@ -100,8 +100,11 @@ object MakefileComposer {
       val inflFstFiles = inflDir.glob("*.fst")
       val dotAs = inflFstFiles.map(_.toString().replaceFirst(".fst$", ".a"))
       makeFileText.append(dotAs.mkString(" ") + "\n")
+      makeFileText.toString
+    } else {
+      ""
     }
-    makeFileText.toString
+
   }
 
   /** Compose makefile for inflection subdirectory.  This requires

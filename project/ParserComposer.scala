@@ -33,7 +33,7 @@ object ParserComposer {
 
     latin.append("% Dynamically loaded inflectional rules:\n$ends$ = \"<" + projectDir.toString + "/inflection.a>\"")
 
-    latin.append("\n\n% Morphology data is the crossing of stems and endings:\n$morph$ = $stems$ $separator$ $separator$ $ends$\n\n")
+    latin.append("\n\n% Morphology data is the crossing of stems and endings:\n$morph$ = $stems$ <div> $ends$\n\n")
 
     latin.append("% Acceptor filters for content satisfying requirements for")
     latin.append("% morphological analysis and maps from underlying to surface form.\n")
