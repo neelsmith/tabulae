@@ -44,9 +44,8 @@ def testList = List(
 /** Triples of description, function and status. */
 def integrationList = {
   List(
-    ("Test compiling// FST parser", testFstBuild(_, _, _), "pending" ),
     ("Test compiling// FST parser", testBuildWithAG(_, _, _), "" ),
-    ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
+    ("Test output of FST parser", testParserOutput(_, _, _), "" ),
   )
 }
 
@@ -369,24 +368,6 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : Sca
 }
 
 // test comopiling and executing a final parser
-def testFstBuild(corpusName: String, conf: Configuration, repo : ScalaFile) : Boolean = {
-  /*
-    val cName = "minimum"
-    val dataDirectory = repo/"datasets"
-    val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
-
-    val target = repo/"parsers"/cName
-    //IO.delete(target)
-
-    FstCompiler.compile(dataDirectory, repo, cName, conf)
-
-    val parser = repoRoot/"/parsers/minimum/latin.a"
-    parser.exists
-    */
-  false
-}
-
-
 def testBuildWithAG(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 
   val cName = "a-g"
@@ -402,7 +383,18 @@ def testBuildWithAG(corpusName: String, conf: Configuration, repo : ScalaFile) =
 }
 
 def testParserOutput(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-  false
+    val cName = "a-g"
+    val dataDirectory = repo/"datasets"
+    val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
+
+    val target = repo/"parsers"/cName
+    mkdirs(target)
+    FstCompiler.compile(dataDirectory, repo, cName, conf)
+
+    val parser = repo/"parsers"/cName/"latin.a"
+
+
+    false
 }
 
 

@@ -18,7 +18,6 @@ val commonSettings = Seq(
 
         "edu.holycross.shot.cite" %% "xcite" % "3.3.0",
         "edu.holycross.shot" %% "latphone" % "1.5.0"
-
       ),
 
       tutTargetDirectory := file("docs"),
@@ -96,14 +95,11 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
     }
   }
 }
-
 def templateUsage: Def.Initialize[Task[Unit]] = Def.task {
   println("\n\tUsage: corpus CORPUSNAME [CONFIGFILE]\n")
   //println("\t-r option = replace (delete) existing dataset\n")
 }
-
 lazy val utilsImpl = Def.inputTaskDyn {
-
   val args = spaceDelimited("corpus>").parsed
   val bdFile = baseDirectory.value
 
@@ -122,7 +118,6 @@ lazy val utilsImpl = Def.inputTaskDyn {
       Def.task {
         UtilsInstaller(bdFile.toScala, args.head, conf)
       }
-
     }
   }
 }
@@ -177,32 +172,9 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
   println(s"\n\tError: {$msg}\n")
 }
 
-/*
-def fstCompileImp(dataDirectory: File, baseDir: File, corpus: String, conf: Configuration)  = {
-  // Install data and rules, converting tabular data to FST
-  DataInstaller(dataDirectory, baseDir, corpus)
-  RulesInstaller(dataDirectory, baseDir, corpus)
-
-  // Compose makefiles and higher-order FST for build system
-  BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
-
-
-  // Build it!
-  val buildDirectory = baseDir / s"parsers/${corpus}"
-  val inflMakefile = buildDirectory / "inflection/makefile"
-  val makeInfl = s"${conf.make} -f ${inflMakefile}"
-  makeInfl !
-
-  val makefile = buildDirectory / "makefile"
-  val doit = s"${conf.make} -f ${makefile}"
-  doit !
-} */
-
 // Compile FST parser
 def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
-  //
-
   val conf = Configuration(configFile)
 
   println("Conf is " + conf + " from config file " + configFile)
@@ -210,198 +182,4 @@ def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Uni
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
   println("Data directory from " + conf.datadir + " == "+ dataDirectory)
   FstCompiler.compile(dataDirectory.toScala, bd.toScala, corpus, conf)
-/*
-
-  // Install data and rules, converting tabular data to FST
-  DataInstaller(dataDirectory, bd, corpus)
-  RulesInstaller(dataDirectory, bd, corpus)
-
-  // Compose makefiles and higher-order FST for build system
-  BuildComposer(dataDirectory, bd, corpus, conf.fstcompile)
-
-  // Build it!
-  val inflMakefile = buildDirectory / "inflection/makefile"
-  val makeInfl = s"${conf.make} -f ${inflMakefile}"
-  makeInfl !
-
-  val makefile = buildDirectory / "makefile"
-  val doit = s"${conf.make} -f ${makefile}"
-  doit !
-  */
-}
-
-// Utility tasks
-
-
-////////////////////////////////////////////////////////////////
-//
-// Testing the build system
-//
-def tbdList = List (
-  ("Test Configuration object", testConfiguration(_, _, _), "pending" ),
-)
-def testListX = List(
-
-  ("Test copying secondary acceptors", testAcceptorCopying(_, _, _), "pending" ),
-  ("Test rewriting acceptor file", testAcceptorRewrite(_, _, _), "" ),
-
-  ("Test writing main verb acceptor file", testWriteVerbAcceptor(_, _, _), "" ),
-  ("Test writing noun acceptor string", testNounAcceptor(_, _, _), "pending" ),
-  ("Test writing irregular noun acceptor string", testIrregNounAcceptor(_, _, _), "pending" ),
-  ("Test writing adjective acceptor string", testAdjectiveAcceptor(_, _, _), "pending" ),
-
-
-
-  ("Test writing verb stems", testWriteVerbStems(_, _, _), "pending" ),
-
-
-
-
-
-  ("Test composing verb makefile", testVerbMakefileComposer(_, _, _), "" ),
-
-  ("Test making Corpus template", testCorpusTemplate(_, _, _), "pending" ) ,
-
-  ("Test DataTemplate", testDataTemplate(_, _, _), "pending" ),
-
-
-  ("Test compiling utilities", testUtilsBuild(_, _, _), "pending" ),
-)
-
-
-
-
-
-
-
-def testConfiguration(corpus: String, conf: Configuration, repoRoot : File) = {
-  println("Test configuration object")
-  // Should throw Exception if any of these don't exist
-//fstcompile: String, fstinfl: String, make: String, datadir
-  false
-}
-
-
-def testAcceptorCopying(corpusName: String, conf: Configuration, repoRoot : File) = {/*
-
-  // Make directories;
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
-  val acceptorDir = projectDir / "acceptors"
-  Utils.dir(acceptorDir)
-
-  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
-  val fst = (acceptorDir) ** "*.fst"
-  fst.get.size > 0
-  */
-}
-def testAcceptorRewrite(corpusName: String, conf: Configuration, repoRoot : File) = {
-/*
-  val testOutDir = repoRoot / "parsers"
-  Utils.dir(testOutDir)
-  val testOut = testOutDir / "testfile.fst"
-  new PrintWriter(testOut){write("@workdir@\n@workdir@\nUnmodified line\n"); close;}
-  AcceptorComposer.rewriteFile(testOut, testOutDir)
-  val lines = Source.fromFile(testOut).getLines.toVector.filter(_.nonEmpty)
-
-  //clean up:
-  testOut.delete
-  lines(0) == testOutDir.toString + "/"
-  */
-}
-
-def testWriteVerbAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  /*
-  val projectDir = repoRoot / "parsers"
-  Utils.dir(projectDir)
-  val corpus = projectDir / corpusName
-  Utils.dir(corpus)
-  AcceptorComposer.composeVerbAcceptor(corpus)
-
-  val verbFile = corpus / "verb.fst"
-  val lines = Source.fromFile(verbFile).getLines.toVector.filter(_.nonEmpty)
-  val expected = "#include \""  + corpus + "/symbols.fst\""
-
-  lines(0).trim == expected.trim
-  */
-}
-def testWriteVerbStems(corpusName: String, conf: Configuration, repoRoot : File) = {
-  /*
-  val projectDir = repoRoot / s"parsers/${corpusName}"
-  Utils.dir(projectDir)
-  val acceptorsDir  = projectDir / "acceptors"
-  val acceptorFile = acceptorsDir / "verbstems.fst"
-
-  // 1. Should be minimal if no data installed.
-  Utils.dir(acceptorsDir)
-  AcceptorComposer.composeVerbStems(projectDir)
-  val linesEmpty = Source.fromFile(acceptorFile).getLines.toVector.filter(_.nonEmpty)
-  val firstChars = linesEmpty.map(_(0)).distinct
-  val emptyOk = firstChars.size == 1 && firstChars(0) == '%'
-  // tidy up
-  acceptorFile.delete
-
-  // 2. Should accommodate data if installed.
-  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
-  AcceptorComposer.composeVerbStems(projectDir)
-
-  val expectedStart = "\"<" + projectDir + "/acceptors/verb/"
-  val fullLines = Source.fromFile(acceptorFile).getLines.toVector
-  val expandedOk =  fullLines(3).startsWith(expectedStart)
-
-  emptyOk  && expandedOk */
-}
-def testRewriteAcceptors(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
-}
-
-def testNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
-}
-def testIrregNounAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
-}
-def testAdjectiveAcceptor(corpusName: String, conf: Configuration, repoRoot : File) = {
-  false
-}
-
-
-def testVerbMakefileComposer(corpusName: String, conf: Configuration, repoRoot : File) = {
-  /*
-  val projectDir = Utils.dir(file(s"parsers/${corpusName}"))
-  val compiler = conf.fstcompile
-
-  // install some verb data
-  AcceptorComposer.copySecondaryAcceptors(repoRoot, corpusName)
-  val fst = MakefileComposer.composeVerbStemMake(projectDir, compiler)
-  val lines  = fst.split("\n")
-
-  val beginning = s"parsers/${corpusName}/acceptors/verbstems.a: "
-  lines(0).startsWith(beginning) && lines(0).size > (beginning.size + 3)
-  */
-}
-
-def testCorpusTemplate(corpus: String, conf: Configuration, baseDir : File) : Boolean = {
-  /*
-  val buildDirectory = baseDir / s"parsers/${corpus}"
-
-  val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { baseDir / "datasets" }
-  println("Data directory  " +  dataDirectory + buildDirectory )
-
-  BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
-  val expectedAlphabet = baseDir / "parsers/x/symbols/alphabet.fst"
-
-  val moretests = false
-
-
-  expectedAlphabet.exists && moretests
-  */false
-}
-
-def testUtilsBuild(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
-  false
-}
-
-def testDataTemplate(corpusName: String, conf: Configuration, baseDir : File) : Boolean = {
-  false
 }

@@ -18,7 +18,6 @@ object FstCompiler {
     // Compose makefiles and higher-order FST for build system
     BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
 
-
     // Build it!
     val buildDirectory = baseDir/"parsers"/corpus
     val inflMakefile = buildDirectory/"inflection/makefile"
@@ -28,6 +27,5 @@ object FstCompiler {
     val makefile = buildDirectory / "makefile"
     val doit = s"${conf.make} -f ${makefile}"
     doit !
-
   }
 }
