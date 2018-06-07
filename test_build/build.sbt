@@ -102,9 +102,8 @@ def installVerbRuleFst(corpusDir:  File) : Unit = {
 def installVerbStemTable(corpusDir:  ScalaFile) : Unit = {
 
   val stems = corpusDir/"stems-tables"
-  println("INstall verb stems in " + stems)
   val verbs = stems/"verbs-simplex"
-    if (! verbs.exists) {mkdirs(verbs)}
+  if (! verbs.exists) {mkdirs(verbs)}
   val verbFile = verbs/"madeupdata.cex"
 
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
@@ -475,7 +474,7 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repo : ScalaFi
   val expected = "$acceptor$ = $squashverburn$"
 
   // tidy
-  //corpusData.delete()
+  corpusData.delete()
 
   lines(1).trim == expected
 }
