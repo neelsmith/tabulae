@@ -34,7 +34,7 @@ $ending$ = """
   * e.g., REPO/parsers/CORPUS.
   */
   def apply(projectDir: File) : Unit = {
-    val inflFiles = inflectionFsts(projectDir / "inflection")
+    val inflFiles = inflectionFsts(projectDir/"inflection")
 
     val fstText = StringBuilder.newBuilder
     fstText.append(header)

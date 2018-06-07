@@ -22,6 +22,8 @@ def testList = List(
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
+
+  ("Test composing empty parser", testEmptyParserComposer(_, _, _), "" ),
   ("Test composing parser", testParserComposer(_, _, _), "pending" ),
 
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
@@ -498,6 +500,18 @@ def testMainAcceptorComposer(corpusName: String, conf: Configuration, repo : Sca
   val expected = "$acceptor$ = $squashverburn$"
   lines(4).trim == expected.trim
 }
+
+def testEmptyParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  val projectDir = repo/"parsers"/corpusName
+
+  try {
+    ParserComposer(projectDir)
+    false
+  } catch {
+    case t: Throwable => true
+  }
+}
+
 
 def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = repo/"parsers"/corpusName

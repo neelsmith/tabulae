@@ -45,10 +45,12 @@ object BuildComposer {
 
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)
-    //InflectionComposer(projectDir.toScala)
-    //AcceptorComposer(repo, corpus)
-    //ParserComposer(projectDir)
-    //MakefileComposer(projectDir, fstcompiler)
+
+    InflectionComposer(repo/"parsers"/corpus)
+    AcceptorComposer(repo, corpus)
+
+    ParserComposer(repo/"parsers"/corpus)
+    MakefileComposer(repo/"parsers"/corpus, fstcompiler)
 
     //GeneratorComposer(repo, corpus)
   }

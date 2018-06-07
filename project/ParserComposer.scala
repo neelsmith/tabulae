@@ -18,7 +18,7 @@ object ParserComposer {
   * @param projectDir Directory where parser is to be written.
   */
   def apply(projectDir: ScalaFile) : Unit = {
-    if (! projectDir.exists){mkdirs(projectDir)}
+    if (! projectDir.exists){throw new Exception("ParserComposer:  cannot compose parser FST for empty or non-existent directory.")}
     val latin = StringBuilder.newBuilder
     latin.append(header)
     latin.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n" )
