@@ -86,7 +86,7 @@ lazy val corpusTemplateImpl = Def.inputTaskDyn {
       }
 
       Def.task {
-        UtilsInstaller(baseDirectory.value, args.head,conf)
+        UtilsInstaller(baseDirectory.value.toScala, args.head,conf)
       }
     }
 
@@ -112,7 +112,7 @@ lazy val utilsImpl = Def.inputTaskDyn {
       val confFile = file("conf.properties").toScala
       def conf = Configuration(confFile)
       Def.task {
-        UtilsInstaller(bdFile, args.head, conf)
+        UtilsInstaller(bdFile.toScala, args.head, conf)
       }
     }
 
@@ -120,7 +120,7 @@ lazy val utilsImpl = Def.inputTaskDyn {
       val confFile = file("conf.properties").toScala
       def conf = Configuration(confFile)
       Def.task {
-        UtilsInstaller(bdFile, args.head, conf)
+        UtilsInstaller(bdFile.toScala, args.head, conf)
       }
 
     }

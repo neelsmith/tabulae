@@ -1,8 +1,4 @@
-/*import sbt._
-import java.io.PrintWriter
-import scala.io.Source
-import Path.rebase
-*/
+
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
 
