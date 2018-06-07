@@ -21,8 +21,7 @@ def testList = List(
   ("Test empty union of squashers", testEmptySquashers(_, _, _), "" ),
   ("Test writing union of squashers string", testUnionOfSquashers(_, _, _), "" ),
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
-
-  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "pending" ),
+  ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
   ("Test composing parser", testParserComposer(_, _, _), "pending" ),
 
@@ -480,21 +479,26 @@ def testTopLevelAcceptor(corpusName: String, conf: Configuration, repo : ScalaFi
 }
 
 def testMainAcceptorComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-
-  // Install one data file:
   val datasets = repo/"parsers"
   val corpusData = mkdirs(datasets/corpusName)
 
-  //installIndeclRuleFst(corpusData)
-
+  // Install some verb stem data.
+  val verbData = repo/"datasets"/corpusName/"stems-tables/verbs"
+  if (!verbData.exists) {mkdirs(verbData)}
+  installVerbStemTable(repo/"datasets"/corpusName)
+  DataInstaller(repo/"datasets", repo, corpusName)
 
   // 1. Should omit indeclinables if not data present.
   val projectDir = repo/"parsers"/corpusName
   AcceptorComposer.composeMainAcceptor(projectDir)
   val acceptor = projectDir/"acceptor.fst"
   val lines = acceptor.lines.toVector.filter(_.nonEmpty)
-  val expected = "$acceptor$ = $squashindeclurn$"
-  lines(5).trim == expected.trim
+
+  // tidy
+  (repo/"datasets"/corpusName).delete()
+
+  val expected = "$acceptor$ = $squashverburn$"
+  lines(4).trim == expected.trim
 }
 
 def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
