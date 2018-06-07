@@ -24,6 +24,8 @@ def testList = List(
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
   ("Test composing empty parser", testEmptyParserComposer(_, _, _), "" ),
+  ("Test composing parser for empty lexica", testParserComposerForEmptyLexica(_, _, _), "" ),
+
   ("Test composing parser", testParserComposer(_, _, _), "pending" ),
 
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
@@ -513,9 +515,22 @@ def testEmptyParserComposer(corpusName: String, conf: Configuration, repo : Scal
 }
 
 
+def testParserComposerForEmptyLexica(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  val projectDir = mkdirs(repo/"parsers"/corpusName)
+
+  try {
+    ParserComposer(projectDir)
+    false
+  } catch {
+    case t: Throwable => true
+  }
+}
+
 def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = repo/"parsers"/corpusName
   if (!projectDir.exists) {mkdirs(projectDir)}
+
+  // Only works if we've installed a lexicon and data...
 
   ParserComposer(projectDir)
 
