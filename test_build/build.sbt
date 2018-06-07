@@ -34,13 +34,10 @@ def testList = List(
 
 
   ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "" ),
-
-  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
+  ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
 
   // Top-level inflectional rules
-
-
 )
 
 
@@ -569,11 +566,16 @@ def testEmptyInflectionMakefileComposer(corpusName: String, conf: Configuration,
 def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = mkdirs(repo/"parsers"/corpusName)
   val compiler = conf.fstcompile
+
+  // install some inflectional rules;
+  val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
+  installVerbRuleTable(verbData)
+  RulesInstaller(repo/"datasets", repo, corpusName)
+  
   MakefileComposer.composeInflectionMake(projectDir, compiler)
 
-  false
-  //val mkfile = projectDir/"inflection/makefile"
-  //mkfile.exists
+  val mkfile = projectDir/"inflection/makefile"
+  mkfile.exists
 }
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
