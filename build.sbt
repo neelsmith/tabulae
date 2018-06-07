@@ -1,8 +1,6 @@
 import complete.DefaultParsers._
 import scala.sys.process._
-import java.io.File
-import java.io.PrintWriter
-import scala.io.Source
+
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
 
@@ -49,8 +47,10 @@ lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
   val parserDir = baseDirectory.value / "parsers"
-  //Utils.deleteSubdirs(parserDir)
-  println("REWORK THIS")
+  val subdirs = (parserDir.toScala).children.filter(_.isDirectory)
+  for (d <- subdirs) {
+    d.delete()
+  }
   Vector.empty[String]
 }
 
@@ -208,7 +208,7 @@ def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Uni
   println("Conf is " + conf + " from config file " + configFile)
 
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
-  println("Data reictory from " + conf.datadir + " == "+ dataDirectory)
+  println("Data directory from " + conf.datadir + " == "+ dataDirectory)
   FstCompiler.compile(dataDirectory.toScala, bd.toScala, corpus, conf)
 /*
 

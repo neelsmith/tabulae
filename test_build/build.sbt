@@ -35,13 +35,12 @@ def testList = List(
 
   ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "" ),
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "" ),
-  ("Test composing makefile with empty acceptors", testMainMakefileComposerEmptyAcceptors(_, _, _), "" ),
+  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "" ),
 
 
-    ("Test assemblingAcceptorsDir", testAcceptorDirectory(_, _, _), "pending" ),
-
-
-  ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
+  // These may not be relevant
+  ("Test assemblingAcceptorsDir", testAcceptorDirectory(_, _, _), "pending" ),
+  ("Test composing makefile with empty acceptors", testMainMakefileComposerEmptyAcceptors(_, _, _), "pending" ),
 
   // Top-level inflectional rules
 )
@@ -558,6 +557,18 @@ def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo
 }
 
 def testAcceptorDirectory(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  val projectDir = mkdirs(repo/"parsers"/corpusName)
+
+  // install some data
+  val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
+  val verbLexicon= lexDir/"lexicon-verbs.fst"
+  val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
+  val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
+  verbLexicon.overwrite(goodFst)
+
+  AcceptorComposer(repo, corpusName)
+
   false
 }
 
@@ -585,7 +596,8 @@ def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : Sca
   val goodLine = "lverbinfl.are_presind1#conj1#o#1st#sg#pres#indic#act"
   val goodFst = VerbRulesInstaller.verbRuleToFst(goodLine)
   verbLexicon.overwrite(goodFst)
-  val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
+  val acceptorFst = AcceptorComposer(repo, corpusName)
+
 
   val compiler = conf.fstcompile
   MakefileComposer.composeMainMake(projectDir, compiler)

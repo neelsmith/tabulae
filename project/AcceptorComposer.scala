@@ -23,7 +23,7 @@ object AcceptorComposer {
     //rewriteSecondaryAcceptors(projectDir)
 
     //composeVerbStems(projectDir)
-    //composeVerbAcceptor(projectDir)
+    composeVerbAcceptor(projectDir)
   }
 
   /** Write verb.fst, the top-level transducer for verbs in the
@@ -98,25 +98,6 @@ object AcceptorComposer {
   }
 
 
-  /** Copy all .fst files within the `fst/acceptors` branch
-  * of the tree to the corresponding location in the build area
-  * for a named corpus.
-  *
-  * @param repo Root of the Kanónes repository.
-  * @param corpus Corpus to build
-  */
-  def copySecondaryAcceptors(repo: ScalaFile, corpus: String): Unit = {
-    /*
-    val src = repo / "fst/acceptors"
-    val dest = Utils.dir(repo / s"parsers/${corpus}/acceptors")
-     val fst = (src) ** "*.fst"
-     val fstFiles = fst.get
-     val mappings: Seq[(File,File)] = fstFiles pair rebase(src, dest)
-     for (m <- mappings) {
-       IO.copyFile(m._1, m._2)
-     }
-     */
-  }
 
 
   /** Rewrite a single file by replacing all occurrences of
@@ -132,22 +113,6 @@ object AcceptorComposer {
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     f.overwrite(rewritten)
   }
-
-  /** Filter secondary acceptor files, replacing ant-style
-  * variable with actual value.
-  *
-  * @param projectDir Directory where corpus-specific parser
-  * is to be built.
-  */
-  /*
-  def rewriteSecondaryAcceptors(projectDir: File) : Unit = {
-    val dir = projectDir / "acceptors"
-    val fst = (dir) ** "*.fst"
-    val fstFiles = fst.get
-    for (f <- fstFiles) {
-      rewriteFile(f, projectDir)
-    }
-  }*/
 
 
   /** String defining final step of main verb acceptor. */

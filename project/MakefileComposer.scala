@@ -45,17 +45,22 @@ object MakefileComposer {
   * @
   */
   def composeMainMake(projectDir: ScalaFile, fstcompiler: String): Unit = {
+    if (! projectDir.exists) {
+      throw new Exception("Cannot compose main makefile for nonexistent directory " + projectDir)
+    }
+
     val acceptorDir = projectDir/"acceptors"
-    if (!acceptorDir.exists) { throw new Exception("MakefileComposer: no acceptors installed.")}
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
 
-    val dotAs = dotAsForFst(acceptorDir).mkString(" ")
-    makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
+
+    if (acceptorDir.exists) {
+      val dotAs = dotAsForFst(acceptorDir).mkString(" ")
+      makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
+    } 
 
     makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
     makeFileText.append(composeVerbStemMake(projectDir, fstcompiler))
-
 
 /*
     for (d <- subDirs(projectDir / "acceptors")) {
@@ -87,19 +92,16 @@ object MakefileComposer {
   * least one file with verb rules in acceptors/verb.
   */
   def composeVerbStemMake(projectDir: ScalaFile, fstcompiler: String) : String = {
-    (s"\nWrite makefile for verb stem trandsducers in project ${projectDir}\n")
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/acceptors/verbstems.a: ")
     val inflDir = projectDir/"acceptors/verb"
-    val inflFstFiles = inflDir.glob("*.fst").toVector
-    val dotAs = inflFstFiles.map(_.toString().replaceFirst(".fst$", ".a"))
 
-    makeFileText.append(dotAs.mkString(" ") + "\n")
+    if (inflDir.exists) {
+      val inflFstFiles = inflDir.glob("*.fst")
+      val dotAs = inflFstFiles.map(_.toString().replaceFirst(".fst$", ".a"))
+      makeFileText.append(dotAs.mkString(" ") + "\n")
+    }
     makeFileText.toString
-    //makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
-
-  //  val makefile = projectDir / "acceptors/verb/makefile"
-  //  new PrintWriter(makefile) { write(makeFileText.toString); close }
   }
 
   /** Compose makefile for inflection subdirectory.  This requires
