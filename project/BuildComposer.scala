@@ -37,11 +37,9 @@ object BuildComposer {
   * @param fstcompiler:  Explicit path to SFST compiler binary.
   */
   def apply(dataSource: ScalaFile, repo: ScalaFile, corpus: String, fstcompiler: String) : Unit = {
-    println("Composing a lot of build things.")
-    println("Data source is " + dataSource)
-    println("Repo is " + repo)
-
-
+    println("Composing a lot of build things")
+    println("from data source " + dataSource)
+    println("and tabulae repo " + repo)
 
     SymbolsComposer(repo, corpus)
     installAlphabet(dataSource, repo, corpus)

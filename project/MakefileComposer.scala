@@ -100,12 +100,15 @@ object MakefileComposer {
   /** Compose makefile for inflection subdirectory.
   */
   def composeInflectionMake(projectDir: ScalaFile, fstcompiler: String) : Unit = {
-      (s"\nWrite makefile for inflection rules in project ${projectDir}\n")
+      val inflDir = projectDir/"inflection"
+      if (! inflDir.exists) {
+        throw new Exception("MakefileComposer: no inflection rules installed.")
+      } else {
+        println (s"\nWrite makefile for inflection rules in project ${projectDir}\n")
+      }
+
       val makeFileText = StringBuilder.newBuilder
       makeFileText.append(s"${projectDir.toString}/inflection.a: ")
-
-
-      val inflDir = projectDir / "inflection"
       val inflFstFiles = inflDir.glob("*.fst").toVector
 
       val dotAs = inflFstFiles.filter(!_.isEmpty).map(_.toString().replaceFirst(".fst$", ".a"))

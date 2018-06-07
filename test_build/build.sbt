@@ -23,16 +23,23 @@ def testList = List(
   ("Test writing top-level acceptor string", testTopLevelAcceptor(_, _, _), "" ),
   ("Test composing final acceptor acceptor.fst", testMainAcceptorComposer(_, _, _), "" ),
 
+
+  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+
+
   ("Test composing empty parser", testEmptyParserComposer(_, _, _), "" ),
   ("Test composing parser for empty lexica", testParserComposerForEmptyLexica(_, _, _), "" ),
 
   ("Test composing parser", testParserComposer(_, _, _), "" ),
 
+
+  ("Test composing inflection makefile for empty directory", testEmptyInflectionMakefileComposer(_, _, _), "pending" ),
+
   ("Test composing inflection makefile", testInflectionMakefileComposer(_, _, _), "pending" ),
   ("Test composing main makefile", testMainMakefileComposer(_, _, _), "pending" ),
 
   // Top-level inflectional rules
-  ("Test composing inflection.fst", testInflectionComposer(_, _, _), "" ),
+
 
 )
 
@@ -541,24 +548,32 @@ def testParserComposer(corpusName: String, conf: Configuration, repo : ScalaFile
   val lines = parserFst.lines.toVector.filter(_.nonEmpty)
 
   // tidy up
-  //parserFst.delete
+  (repo/"datasets"/corpusName).delete()
 
   val expected = "%% latin.fst : a Finite State Transducer for ancient latin morphology"
   lines(0).trim == expected
 }
 
-def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
-
-
+def testEmptyInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
   val projectDir = mkdirs(repo/"parsers"/corpusName)
+  val compiler = conf.fstcompile
+  try {
+    MakefileComposer.composeInflectionMake(projectDir, compiler)
+    false
+  } catch {
+    case t: Throwable => true
+  }
 
+}
+
+def testInflectionMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+  val projectDir = mkdirs(repo/"parsers"/corpusName)
   val compiler = conf.fstcompile
   MakefileComposer.composeInflectionMake(projectDir, compiler)
 
-  val inflDir = projectDir/"inflection"
-  val mkfile = inflDir/"makefile"
-
-  mkfile.exists
+  false
+  //val mkfile = projectDir/"inflection/makefile"
+  //mkfile.exists
 }
 
 def testMainMakefileComposer(corpusName: String, conf: Configuration, repo : ScalaFile) = {
