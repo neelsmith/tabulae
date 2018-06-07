@@ -414,9 +414,8 @@ def testInflectionComposer(corpusName: String, conf: Configuration, repo : Scala
   val outputFile = repo/"parsers"/corpusName/"inflection.fst"
   val actualLines = outputFile.lines.toVector.filter(_.nonEmpty)
 
-  // tidy uip
-  println("DELETE CORPUS " + repo/"datasets"/corpusName)
-  //(repo/"datasets"/corpusName).delete()
+  // tidy up
+  (repo/"datasets"/corpusName).delete()
 
   val expectedStart  = "$ending$ = " + "\"<" + repo + "/parsers/" + corpusName + "/inflection/indeclinfl.a>\""
   (outputFile.exists && actualLines(3).trim.startsWith(expectedStart) )
