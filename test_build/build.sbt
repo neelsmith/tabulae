@@ -45,7 +45,7 @@ def testList = List(
 def integrationList = {
   List(
     ("Test compiling// FST parser", testFstBuild(_, _, _), "pending" ),
-    ("Test compiling// FST parser", testBuildWithVerb(_, _, _), "" ),
+    ("Test compiling// FST parser", testBuildWithAG(_, _, _), "" ),
     ("Test output of FST parser", testParserOutput(_, _, _), "pending" ),
   )
 }
@@ -387,9 +387,9 @@ def testFstBuild(corpusName: String, conf: Configuration, repo : ScalaFile) : Bo
 }
 
 
-def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile) = {
+def testBuildWithAG(corpusName: String, conf: Configuration, repo : ScalaFile) = {
 
-  val cName = "minimum+verb"
+  val cName = "a-g"
   val dataDirectory = repo/"datasets"
   val conf = Configuration("/usr/local/bin/fst-compiler", "/usr/local/bin/fst-infl", "/usr/bin/make")
 
@@ -397,7 +397,7 @@ def testBuildWithVerb(corpusName: String, conf: Configuration, repo : ScalaFile)
   mkdirs(target)
   FstCompiler.compile(dataDirectory, repo, cName, conf)
 
-  val parser = repo/"/parsers/minimum+verb/latin.a"
+  val parser = repo/"parsers"/cName/"latin.a"
   parser.exists
 }
 
