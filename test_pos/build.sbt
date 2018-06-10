@@ -24,10 +24,26 @@ def testList = List(
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
 
+
+
+  /////////
+  // inflectional rules for nouns
+  ("Test converting bad inflectional rules for nouns", testBadNounsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "pending" ),
+
+  // noun stems
+  ("Test converting bad stem data to fst for nouns", testBadNounStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem data to fst for nouns", testNounStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
+
+
   ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
+  ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
 
 
 
@@ -180,6 +196,19 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   output(0) == expected
 }
+
+
+def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+
+def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
   // Write some test data in the source work space:

@@ -392,9 +392,19 @@ def testParserOutput(corpusName: String, conf: Configuration, repo : ScalaFile) 
     FstCompiler.compile(dataDirectory, repo, cName, conf)
 
     val parser = repo/"parsers"/cName/"latin.a"
+    val fstparse = "/usr/local/bin/fst-parse"
+    val words = "amo\namas\namabam\nnoli\namavi\n"
+    val wordList = repo/"parsers/tempwords.txt"
+    val parsedOutput = repo/"parsers/tempoutput.txt"
+    wordList.overwrite(words)
+    val cmd = fstparse + " " + parser.toString + " " + wordList + " " + parsedOutput
+    println("Execute " + cmd)
+    cmd !
+    val rslts = parsedOutput.lines.toVector
+    println("Results: " + rslts.mkString("\n\n"))
 
 
-    false
+    (rslts.size == 5) && (rslts.filter(_.contains( "no analysis")).size == 1)
 }
 
 
