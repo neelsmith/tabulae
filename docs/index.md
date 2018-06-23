@@ -37,6 +37,9 @@ The accompanying Scala code library, `edu.holycross.shot.tabulae`, can read the 
 
 -   [status](status)
 
+## Testing
+
+Summary of [sbt tasks for testing](testing).
 
 ## Under the hood
 
