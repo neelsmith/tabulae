@@ -22,7 +22,7 @@
 %
 #person# = <1st><2nd><3rd>
 % number already defined in noun morphology
-#tense# = <pres><impft><pft><plupft>
+#tense# = <pres><impft><fut><futpft><pft><plupft>
 #mood# = <indic><subj><imptv>
 #voice# = <act><pass>
 
