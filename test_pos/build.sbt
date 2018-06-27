@@ -13,6 +13,9 @@ def testList = List(
   // Test all inflectional rules installers
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
 
+  ("Test converting bad stem data for invariants", testBadInvariantStemData(_, _, _), "" ),
+  ("Test converting  stem data for invariants", testConvertInvariantStem(_, _, _), "" ),
+ /*
   // inflectional rules for verbs
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
@@ -45,7 +48,7 @@ def testList = List(
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
   ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
 
-
+*/
 
 )
 
@@ -87,7 +90,7 @@ def installVerbStemTable(verbsDir:  ScalaFile) : Unit = {
 
 ////////////////// Tests //////////////////////////////
 //
-
+// Invariants: rules
 def testInvariantCopy(corpusName: String, conf: Configuration, repo : ScalaFile): Boolean = {
 
   val parser = repo/"parsers"/corpusName
@@ -103,6 +106,47 @@ def testInvariantCopy(corpusName: String, conf: Configuration, repo : ScalaFile)
   val actualFiles = inflTarget.glob("*.fst").toSet
   actualFiles == expectedFiles
 }
+
+
+// Invariants: stems
+def testBadInvariantStemData(corpusName: String, conf: Configuration, repo : ScalaFile): Boolean = {
+  try {
+    val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testConvertInvariantStem(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // should correctly convert good data.
+  //  //StemUrn#LexicalEntity#Stem#PoS
+  // cum n11872 prep
+  val goodLine = "demo.n1#lexent.n11872#cum#indeclprep"
+  val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
+  println("GOOD FST == " + goodFst)
+  val expected = "<u>demo\\.n1</u><u>lexent\\.n11872</u>cum<indeclprep>"
+  goodFst.trim ==  expected
+}
+/*
+
+
+
+
+def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  //  should object to bad data
+  try {
+    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
+    println("Should never have seent this... " + fst)
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+
+
+
 
 
 def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
@@ -141,18 +185,8 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sc
 }
 
 
-def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  //  Test conversion of delimited text to FST.
-  //  should object to bad data
-  try {
-    val fst = VerbDataInstaller.verbLineToFst("Not a real line")
-    println("Should never have seent this... " + fst)
-    false
-  } catch {
-    case t : Throwable => true
-  }
-}
-def testVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+def testVerb
+StemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
@@ -246,7 +280,7 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):
   val expected = "$=verbclass$ = [#verbclass#]"
   (emptiedOk && lines(0) == expected)
 }
-
+*/
 
 lazy val posTests = inputKey[Unit]("Unit tests")
 posTests in Test := {

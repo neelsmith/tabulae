@@ -3,7 +3,7 @@
 
 
 % Other editorial tags:
-#separator# = \:
+#separator# = <div>
 $separator$ = [#separator#]
 
 % URNs:

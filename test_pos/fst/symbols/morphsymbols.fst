@@ -22,7 +22,7 @@
 %
 #person# = <1st><2nd><3rd>
 % number already defined in noun morphology
-#tense# = <pres><impft><pft><plupft>
+#tense# = <pres><impft><fut><futpft><pft><plupft>
 #mood# = <indic><subj><imptv>
 #voice# = <act><pass>
 
@@ -31,6 +31,11 @@
 #finiteform# = <infin><ptcpl>
 
 #morphtag# = #pos# #gender# #case# #number# #person# #tense# #mood# #voice# #degree# #finiteform#
+
+%
+% 4. Indeclinable forms:
+%
+#indecl# = <indeclprep><indeclconj><indeclinterj>
 
 
 % Consider whether those belong here or elsewhere...?
