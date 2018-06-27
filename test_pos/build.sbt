@@ -12,12 +12,12 @@ def testList = List(
 
   // Test all inflectional rules installers
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
-
+  // Stem rules for indeclinables
   ("Test converting bad stem data for invariants", testBadInvariantStemData(_, _, _), "" ),
   ("Test converting  stem data for invariants", testConvertInvariantStem(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testInvariantStemFstFromDir(_, _, _), "" ),
 
-
-
+/*
   // inflectional rules for verbs
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
@@ -26,11 +26,12 @@ def testList = List(
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
-
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
- /*
+ */
 
+
+ /*
 
   /////////
   // inflectional rules for nouns
@@ -130,6 +131,19 @@ def testConvertInvariantStem(corpusName: String, conf: Configuration, repo :  Sc
   goodFst.trim ==  expected
 }
 
+def testInvariantStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should create FST for all files in a directory
+  val goodLine = "demo.n1#lexent.n11872#cum#indeclprep"
+  val indeclSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/indeclinables")
+  val testData = indeclSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+  val fstFromDir = IndeclDataInstaller.fstForIndeclData(indeclSource)
+  // Tidy up
+  (repo/"datasets").delete()
+  val expected = "<u>demo\\.n1</u><u>lexent\\.n11872</u>cum<indeclprep>"
+  fstFromDir.trim == expected
+}
 
 
 
