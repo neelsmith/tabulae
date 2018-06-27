@@ -33,7 +33,6 @@
 
 #verbclass#  = #regular#
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Indeclinable type
 #indeclclass# = <conjunct><exclam><prepos>
