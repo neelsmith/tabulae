@@ -17,16 +17,6 @@ object IndeclDataInstaller {
   def apply(dataSource: File, targetFile: File) = {
     val indeclFst = fstForIndeclData(dataSource)
     targetFile.overwrite(indeclFst)
-    /*
-    val corpus = Utils.dir(repo / s"parsers/${corpusName}")
-    val lexDirectory = Utils.dir(corpus / "lexica")
-
-    val indeclSourceDir = file( s"${dataSource}/${corpusName}/stems-tables/indeclinables")
-    val fst = fstForIndeclData(indeclSourceDir)
-
-    val fstFile = lexDirectory / "lexicon-indeclinables.fst"
-    new PrintWriter(fstFile) { write(fst); close }
-    */
   }
 
 
