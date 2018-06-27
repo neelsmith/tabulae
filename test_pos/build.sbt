@@ -15,7 +15,9 @@ def testList = List(
 
   ("Test converting bad stem data for invariants", testBadInvariantStemData(_, _, _), "" ),
   ("Test converting  stem data for invariants", testConvertInvariantStem(_, _, _), "" ),
- /*
+
+
+
   // inflectional rules for verbs
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
@@ -24,9 +26,10 @@ def testList = List(
   // verb stems
   ("Test converting bad stem data to fst for verbs", testBadVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
+
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
-
+ /*
 
 
   /////////
@@ -123,11 +126,10 @@ def testConvertInvariantStem(corpusName: String, conf: Configuration, repo :  Sc
   // cum n11872 prep
   val goodLine = "demo.n1#lexent.n11872#cum#indeclprep"
   val goodFst = IndeclDataInstaller.indeclLineToFst(goodLine)
-  println("GOOD FST == " + goodFst)
   val expected = "<u>demo\\.n1</u><u>lexent\\.n11872</u>cum<indeclprep>"
   goodFst.trim ==  expected
 }
-/*
+
 
 
 
@@ -185,14 +187,14 @@ def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sc
 }
 
 
-def testVerb
-StemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+def testVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // should correctly convert good data.
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val goodFst = VerbDataInstaller.verbLineToFst(goodLine)
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   goodFst.trim ==  expected
 }
+
 def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
 
 
@@ -231,7 +233,7 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
   output(0) == expected
 }
 
-
+/*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
