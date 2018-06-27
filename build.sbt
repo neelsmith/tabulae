@@ -24,6 +24,7 @@ val commonSettings = Seq(
       tutSourceDirectory := file("src/main/tut"),
 
       fst := buildFst.evaluated,
+      parse := parseWords.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
       cleanAll := cleanAllImpl.value
@@ -39,6 +40,7 @@ lazy val testPoS = (project in file("test_pos"))
 
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
+lazy val parse = inputKey[Unit]("Run a binary parse against a word list")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
@@ -163,6 +165,20 @@ lazy val buildFst = Def.inputTaskDyn {
     }
   }
 }
+
+
+lazy val parseWords = Def.inputTaskDyn {
+  val bdFile= baseDirectory.value
+  val args = spaceDelimited("corpus>").parsed
+  Def.task {
+    println("Args to parse:  " + args)
+    // need 3? corpus, conffile, wordlist
+    val confFile = file("conf.properties").toScala
+    val conf = Configuration(confFile)
+    println("Conf is " + conf + " from config file " + args(1))
+  }
+}
+
 
 def usage: Def.Initialize[Task[Unit]] = Def.task {
   println("\n\tUsage: fst CORPUS [CONFIGFILE] \n")

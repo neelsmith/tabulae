@@ -1,6 +1,7 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
+import better.files._
+import better.files.File._
+import better.files.Dsl._
+
 
 /** An object for reading data about indeclinable stems,
 * and writing it in SFST notation.
@@ -11,10 +12,11 @@ object IndeclDataInstaller {
   * noun stems.
   *
   * @param dataSource Root directory of morphological data set.
-  * @param repo Root directory  of tabulae repository.
-  * @param corpus Name of corpus
+  * @param targetFile File to write FST statements to.
   */
-  def apply(dataSource: File, repo: File, corpusName: String) = {
+  def apply(dataSource: File, targetFile: File) = {
+    val indeclFst = fstForIndeclData(dataSource)
+    targetFile.overwrite(indeclFst)
     /*
     val corpus = Utils.dir(repo / s"parsers/${corpusName}")
     val lexDirectory = Utils.dir(corpus / "lexica")
@@ -34,12 +36,11 @@ object IndeclDataInstaller {
   * @param dir Directory with CEX data.
   */
   def fstForIndeclData(dir: File) : String = {
+    val indeclFiles = dir.glob("*.cex").toVector
 
-    val indeclOpt = (dir) ** "*cex"
-    val indeclFiles = indeclOpt.get
     val fstLines = for (f <- indeclFiles) yield {
       // omit empty lines and header
-      val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
+      val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1)
       IndeclDataInstaller.indeclLinesToFst(dataLines)
     }
     fstLines.mkString("\n")
@@ -66,7 +67,7 @@ object IndeclDataInstaller {
       val pos = cols(3)
 
 
-      fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<indecl><${pos}>")
+      fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<${pos}>")
       fstBuilder.toString
 
     }

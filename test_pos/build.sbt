@@ -16,6 +16,7 @@ def testList = List(
   ("Test converting bad stem data for invariants", testBadInvariantStemData(_, _, _), "" ),
   ("Test converting  stem data for invariants", testConvertInvariantStem(_, _, _), "" ),
   ("Test converting stem files in directory to fst for verbs", testInvariantStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for indeclinable stem data installer", testIndeclStemDataApplied(_, _, _), "" ),
 
 /*
   // inflectional rules for verbs
@@ -145,6 +146,31 @@ def testInvariantStemFstFromDir(corpusName: String, conf: Configuration, repo : 
   fstFromDir.trim == expected
 }
 
+def testIndeclStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Install one data file:
+  val indeclsDir = repo/"datasets"/corpusName/"stems-tables/indeclinables"
+  val goodLine = "demo.n1#lexent.n11872#cum#indeclprep"
+  val indeclSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/indeclinables")
+  val testData = indeclSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+
+  // Write some test data in the source work space:
+  IndeclDataInstaller(indeclsDir, destDir/"lexicon-indeclinables.fst")
+
+  // check the results:
+  val resultFile = repo/"parsers"/corpusName/"lexica/lexicon-indeclinables.fst"
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  //val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
+  val expected = "<u>demo\\.n1</u><u>lexent\\.n11872</u>cum<indeclprep>"
+  output(0) == expected
+}
 
 
 
