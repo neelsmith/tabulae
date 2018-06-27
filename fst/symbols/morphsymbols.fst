@@ -32,6 +32,11 @@
 
 #morphtag# = #pos# #gender# #case# #number# #person# #tense# #mood# #voice# #degree# #finiteform#
 
+%
+% 4. Indeclinable forms:
+%
+#indecl# = <indeclprep><indeclconj><indeclinterj>
+
 
 % Consider whether those belong here or elsewhere...?
 
