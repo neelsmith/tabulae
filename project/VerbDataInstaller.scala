@@ -13,7 +13,10 @@ object VerbDataInstaller {
   */
   def apply(srcDir: File, targetFile: File) = {//, corpus: String) = {
     val verbFst = fstForVerbData(srcDir)
-    targetFile.overwrite(verbFst)
+    if (verbFst.nonEmpty) {
+      targetFile.overwrite(verbFst)
+    } else {}
+
   }
 
   /** Create FST string for a verb tables in a given directory.

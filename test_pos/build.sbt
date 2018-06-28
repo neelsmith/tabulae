@@ -284,7 +284,6 @@ def testBadIrregVerbStemDataConvert(corpusName: String, conf: Configuration, rep
     case t : Throwable => true
   }
 }
-
 def testIrregVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
 
   val goodLine = "ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act"
@@ -292,7 +291,6 @@ def testIrregVerbStemDataConvert(corpusName: String, conf: Configuration, repo :
   val expected = "<u>ag\\.irrv1</u><u>lexent\\.n46529</u><#>sum<1st><sg><pres><indic><act><irregcverb>"
   goodFst.trim ==  expected
 }
-
 def testIrregVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
 
     // Should create FST for all files in a directory
@@ -311,7 +309,6 @@ def testIrregVerbStemFstFromDir(corpusName: String, conf: Configuration, repo : 
     fstFromDir.trim == expected
 
 }
-
 def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
   val goodLine = "ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act"
   val goodFst = IrregVerbDataInstaller.verbLineToFst(goodLine)
@@ -329,13 +326,11 @@ def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :
   val output = resultFile.lines.toVector
 
   // clean up:
-  //(repo/"datasets").delete()
+  (repo/"datasets").delete()
 
   val expected = "<u>ag\\.irrv1</u><u>lexent\\.n46529</u><#>sum<1st><sg><pres><indic><act><irregcverb>"
 
   output(0) == expected
-
-
 }
 
 

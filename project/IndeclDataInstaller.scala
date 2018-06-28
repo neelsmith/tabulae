@@ -16,7 +16,10 @@ object IndeclDataInstaller {
   */
   def apply(dataSource: File, targetFile: File) = {
     val indeclFst = fstForIndeclData(dataSource)
-    targetFile.overwrite(indeclFst)
+    if (indeclFst.nonEmpty) {
+      targetFile.overwrite(indeclFst)
+    } else {}
+
   }
 
 

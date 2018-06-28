@@ -23,7 +23,7 @@ object AcceptorComposer {
     //rewriteSecondaryAcceptors(projectDir)
 
     //composeVerbStems(projectDir)
-    composeVerbAcceptor(projectDir)
+    //composeVerbAcceptor(projectDir)
   }
 
   /** Write verb.fst, the top-level transducer for verbs in the
@@ -168,7 +168,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   */
   def includeIndecls(dir: ScalaFile): Boolean = {
     val indeclSource = dir/"lexica/lexicon-indeclinables.fst"
-    indeclSource.exists
+    indeclSource.exists && indeclSource.lines.nonEmpty
   }
 
 
@@ -183,6 +183,11 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     verbsSource.exists && verbsSource.lines.nonEmpty
   }
 
+  def includeIrregVerbs(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+
   /** Compose FST for union of transducers squashing URNs.
   *
   * @param dir Directory for corpus data set.
@@ -195,6 +200,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
+      (includeIrregVerbs(_), "$squashirregverburn$")
     )
     val xducerList = for (xducer <- typesList) yield {
       if (xducer._1(dir)) { xducer._2} else {""}
@@ -203,7 +209,6 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     if (online.isEmpty) {
       throw new Exception("AcceptorComposer:  no acceptors recognized.")
     } else {
-
       fst.append(xducerList.filter(_.nonEmpty).mkString(" | "))
       // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
       fst.append("\n")
