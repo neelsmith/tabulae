@@ -344,8 +344,7 @@ def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :
   output(0) == expected
 }
 
-
-
+// irreg adverbs
 def testBadIrregAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   try {
     val fst = IrregAdverbDataInstaller.adverbLineToFst("Not a real line")
@@ -355,7 +354,12 @@ def testBadIrregAdvStemDataConvert(corpusName: String, conf: Configuration, repo
   }
 }
 def testIrregAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+
+  val goodLine = "ag.irradv1#lexent.n31151#non#pos"
+  val goodFst = IrregAdverbDataInstaller.adverbLineToFst(goodLine)
+  val expected = "<u>ag\\.irradv1</u><u>lexent\\.n31151</u>non<pos><irregadv>"
+  goodFst.trim ==  expected
+
 }
 def testIrregAdvStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   false
@@ -375,7 +379,11 @@ def testBadIrregNounStemDataConvert(corpusName: String, conf: Configuration, rep
 }
 
 def testIrregNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val goodLine = "ag.irrn1m#lexent.n5575#bos#masc#nom#sg"
+  val goodFst = IrregNounDataInstaller.nounLineToFst(goodLine)
+  println("\n\n" + goodFst)
+  val expected = "<u>ag\\.irrn1m</u><u>lexent\\.n5575</u>bos<masc><nom><sg><irregnoun>"
+  goodFst.trim ==  expected
 }
 
 def testIrregNounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {

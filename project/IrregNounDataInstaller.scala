@@ -34,14 +34,12 @@ object IrregNounDataInstaller {
   }
 
   def nounLineToFst(line: String) : String = {
-
     val cols = line.split("#")
 
     if (cols.size < 4) {
       println(s"${cols.size} is the wrong number of columns for an noun\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
-
 
       //ag.irrn1m#lexent.n5575#bos#masc#nom#sg
       val fstBuilder = StringBuilder.newBuilder
