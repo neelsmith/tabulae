@@ -13,9 +13,9 @@ def testList = List(
   // Test all inflectional rules installers
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
   // Stem rules for indeclinables
-  ("Test converting bad stem data for invariants", testBadInvariantStemData(_, _, _), "" ),
-  ("Test converting  stem data for invariants", testConvertInvariantStem(_, _, _), "" ),
-  ("Test converting stem files in directory to fst for verbs", testInvariantStemFstFromDir(_, _, _), "" ),
+  ("Test converting bad stem data for invariants", testBadIndeclStemData(_, _, _), "" ),
+  ("Test converting  stem data for invariants", testConvertIndeclStem(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testIndeclStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for indeclinable stem data installer", testIndeclStemDataApplied(_, _, _), "" ),
 
 
@@ -126,7 +126,7 @@ def testInvariantCopy(corpusName: String, conf: Configuration, repo : ScalaFile)
 
 
 // Invariants: stems
-def testBadInvariantStemData(corpusName: String, conf: Configuration, repo : ScalaFile): Boolean = {
+def testBadIndeclStemData(corpusName: String, conf: Configuration, repo : ScalaFile): Boolean = {
   try {
     val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
     false
@@ -134,7 +134,7 @@ def testBadInvariantStemData(corpusName: String, conf: Configuration, repo : Sca
     case t : Throwable => true
   }
 }
-def testConvertInvariantStem(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+def testConvertIndeclStem(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // should correctly convert good data.
   //  //StemUrn#LexicalEntity#Stem#PoS
   // cum n11872 prep
@@ -144,7 +144,7 @@ def testConvertInvariantStem(corpusName: String, conf: Configuration, repo :  Sc
   goodFst.trim ==  expected
 }
 
-def testInvariantStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+def testIndeclStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // Should create FST for all files in a directory
   val goodLine = "demo.n1#lexent.n11872#cum#indeclprep"
   val indeclSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/indeclinables")
@@ -186,6 +186,8 @@ def testIndeclStemDataApplied(corpusName: String, conf: Configuration, repo :  S
 
 
 
+
+// Regular verbs
 def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   //  Test conversion of delimited text to FST.
   //  should object to bad data
@@ -197,11 +199,6 @@ def testBadVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  
     case t : Throwable => true
   }
 }
-
-
-
-
-
 
 def testBadVerbsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
   //  Test conversion of delimited text to FST.
@@ -285,6 +282,8 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
   output(0) == expected
 }
 
+
+// irreg verbs
 def testBadIrregVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   try {
     val fst = IrregVerbDataInstaller.verbLineToFst("Not a real line")
