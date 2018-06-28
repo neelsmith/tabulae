@@ -16,12 +16,13 @@ object DataInstaller {
   def apply(dataSource: File, repo: File, corpusName: String): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
     val lexica = mkdirs(repo/"parsers"/corpusName/"lexica")
-    if (! lexica.exists){mkdirs(lexica)}
+    //if (! lexica.exists){mkdirs(lexica)}
     //NounDataInstaller(dataSource, repo, corpus)
-    //IndeclDataInstaller(dataSource,repo, corpus)
+
+    val indeclTarget = lexica/"lexicon-indeclinables.fst"
+    IndeclDataInstaller(dataSource/corpusName/"stems-tables/indeclinables",indeclTarget)
 
     val verbsTarget = lexica/"lexicon-verbs.fst"
-
     VerbDataInstaller(dataSource/corpusName/"stems-tables/verbs-simplex", verbsTarget)
     //IrregVerbDataInstaller(dataSource, repo, corpus)
   }

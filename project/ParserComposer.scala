@@ -29,6 +29,7 @@ object ParserComposer {
     latin.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n" )
 
     latin.append("% Dynamically loaded lexica of stems:\n$stems$ = ")
+
     latin.append(lexiconFiles(lexica).mkString(" |\\\n") + "\n\n")
 
     latin.append("% Dynamically loaded inflectional rules:\n$ends$ = \"<" + projectDir.toString + "/inflection.a>\"")
@@ -56,7 +57,7 @@ object ParserComposer {
   */
   def lexiconFiles(dir: ScalaFile): Vector[String] = {
     val files = dir.glob("*.fst").toVector
-    files.map(f => "\"" + f.toString() + "\"").toVector
+    files.filter(_.nonEmpty).map(f => "\"" + f.toString() + "\"").toVector
   }
 
 }

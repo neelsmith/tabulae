@@ -27,11 +27,11 @@ object IndeclDataInstaller {
   */
   def fstForIndeclData(dir: File) : String = {
     val indeclFiles = dir.glob("*.cex").toVector
-
-    val fstLines = for (f <- indeclFiles) yield {
+    println("\n\nLOOK AT INDECL FILES from " + dir + " == " + indeclFiles + "\n\n")
+    val fstLines = for (f <- indeclFiles.filter(_.nonEmpty)) yield {
       // omit empty lines and header
       val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1)
-      IndeclDataInstaller.indeclLinesToFst(dataLines)
+      indeclLinesToFst(dataLines)
     }
     fstLines.mkString("\n")
   }
@@ -59,7 +59,6 @@ object IndeclDataInstaller {
 
       fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<${pos}>")
       fstBuilder.toString
-
     }
   }
 

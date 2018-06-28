@@ -1,21 +1,21 @@
-
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
 
 import scala.sys.process._
 
-
-
+/**  Build transducers for debugging parts of the whole pipeline.
+*/
 object UtilsInstaller {
 
   def apply(repo: ScalaFile, corpus: String, conf: Configuration): Unit = {
     println(s"Install utility transducers in ${repo} for ${corpus}")
 
     val projectDir = repo/"parsers"/corpus
-    if (! projectDir.exists){mkdirs(projectDir)}
+    val utilsDir = projectDir/"utils"
+    if (! utilsDir.exists){mkdirs(utilsDir)}
 
     cpUtils(repo, corpus)
-    writeMakefile(projectDir)
+    writeMakefile(projectDir, conf.fstcompile)
 
     val rawlex =  s"${conf.fstcompile} ${projectDir}/utils/rawlex.fst ${projectDir}/utils/rawlex.a"
     rawlex !
@@ -27,11 +27,11 @@ object UtilsInstaller {
 
   }
 
-  def writeMakefile(dir: ScalaFile): Unit = {
+  def writeMakefile(dir: ScalaFile, compiler: String): Unit = {
     val makeText = StringBuilder.newBuilder
     makeText.append(s"${dir}/utils/rawaccepted.a: ${dir}/symbols.fst ${dir}/symbols/phonology.fst ${dir}/inflection.a ${dir}/acceptor.a\n")
     makeText.append("%.a: %.fst\n")
-    makeText.append("\tfst-compiler $< $@\n")
+    makeText.append("\t" + compiler + " $< $@\n")
     (dir / "utils/makefile").overwrite(makeText.toString)
   }
 
@@ -61,7 +61,7 @@ object UtilsInstaller {
 
   def lexiconFiles(dir: ScalaFile): Vector[String] = {
     val files = dir.glob("*.fst").toVector
-    files.map(f => "\"" + f.toString() + "\"")
+    files.filter(_.nonEmpty)map(f => "\"" + f.toString() + "\"")
   }
 
 

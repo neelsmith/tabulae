@@ -24,7 +24,14 @@ $ending$ = """
   */
   def inflectionFsts(dir: File): Vector[String] = {
     val files = dir.glob("*infl.fst").toVector
-    files.map(f => "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\"")
+    val fst = files.map(f => {
+      if (f.isEmpty) {
+        ""
+      } else {
+        "\"<" + f.toString().replaceFirst(".fst$", ".a") + ">\""
+      }
+    })
+    fst.filter(_.nonEmpty)
   }
 
 

@@ -59,8 +59,10 @@ object MakefileComposer {
       makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
     }
 
-    makeFileText.append(s"${projectDir.toString}/acceptor.a: ${projectDir.toString}/verb.a\n\n")
-    makeFileText.append(composeVerbStemMake(projectDir, fstcompiler))
+    //makeFileText.append(s"${projectDir.toString}/acceptor.a: ")
+    // collect dotAs?
+    //${projectDir.toString}/verb.a\n\n")
+
 
 /*
     for (d <- subDirs(projectDir / "acceptors")) {
@@ -91,6 +93,7 @@ object MakefileComposer {
   * This will generate invalid make unless there is at
   * least one file with verb rules in acceptors/verb.
   */
+  /*
   def composeVerbStemMake(projectDir: ScalaFile, fstcompiler: String) : String = {
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/acceptors/verbstems.a: ")
@@ -106,6 +109,7 @@ object MakefileComposer {
     }
 
   }
+  */
 
   /** Compose makefile for inflection subdirectory.  This requires
   * that data already be installed in projectDir/inflection.
@@ -123,7 +127,8 @@ object MakefileComposer {
       makeFileText.append(s"${projectDir.toString}/inflection.a: ")
       val inflFstFiles = inflDir.glob("*.fst").toVector
 
-      val dotAs = inflFstFiles.filter(!_.isEmpty).map(_.toString().replaceFirst(".fst$", ".a"))
+      //this works correctly:
+      val dotAs = inflFstFiles.filter(_.nonEmpty).map(_.toString().replaceFirst(".fst$", ".a"))
 
       makeFileText.append(dotAs.mkString(" ") + "\n")
       makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")

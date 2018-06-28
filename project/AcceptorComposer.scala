@@ -146,11 +146,10 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : ScalaFile): String = {
-  if (includeIndecls(dir) ) {
-   """
+  if (includeIndecls(dir) ) {  """
 % Indeclinable form acceptor:
-$=indeclclass$ = [#indeclclass#]
-$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$  $separator$+  $=indeclclass$ <indecl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+$=indeclclass$ = [#indecl#]
+$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $=indeclclass$ <div>   $=indeclclass$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """ } else { "" }
 }
 
@@ -223,7 +222,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   val trail = """
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.
-#analysissymbol# = #editorial# #urntag# <noun><verb><indecl><ptcpl><infin><vadj><adj><adv> #morphtag# #stemtype#  #separator#
+#analysissymbol# = #editorial# #urntag# #indecl# <noun><verb><indecl><ptcpl><infin><vadj><adj><adv> #morphtag# #stemtype#  #separator#
 #surfacesymbol# = #letter# #diacritic#
 ALPHABET = [#surfacesymbol#] [#analysissymbol#]:<>
 $stripsym$ = .+
