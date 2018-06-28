@@ -32,13 +32,14 @@ def testList = List(
   // irregular verbs:
   ("Test converting bad stem data to fst for verbs", testBadIrregVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for irregular verbs", testIrregVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
 /*
 
 
   // verb stems
 
 
-  ("Test converting stem files in directory to fst for verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
+
   ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
 
 */
@@ -301,17 +302,30 @@ def testIrregVerbStemDataConvert(corpusName: String, conf: Configuration, repo :
   goodFst.trim ==  expected
 }
 
+def testIrregVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
+
+    // Should create FST for all files in a directory
+    val goodLine = "ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act"
+    val goodFst = IrregVerbDataInstaller.verbLineToFst(goodLine)
+
+    val verbSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/verbs")
+    val testData = verbSource/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+
+    val fstFromDir = IrregVerbDataInstaller.fstForIrregVerbData(verbSource)
+    // Tidy up
+    //   (repo/"datasets").delete()
+    val expected = "<u>ag\\.irrv1</u><u>lexent\\.n46529</u><#>sum<1st><sg><pres><indic><act><irregcverb>"
+    fstFromDir.trim == expected
+
+}
+
+def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
+  false
+}
 
 
-/*
-
-
-  // irregular verb stems
-
-  ("Test converting stem files in directory to fst for verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
-  ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
-
-*/
 
 /*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
