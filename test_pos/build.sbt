@@ -29,7 +29,20 @@ def testList = List(
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
+  // irregular verbs:
+  ("Test converting bad stem data to fst for verbs", testBadIrregVerbStemDataConvert(_, _, _), "" ),
 
+/*
+
+
+  // verb stems
+
+
+  ("Test converting stem data to fst for verbs", testIrregVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
+
+*/
 
 
  /*
@@ -272,6 +285,26 @@ def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   output(0) == expected
 }
+
+def testBadIrregVerbStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregVerbDataInstaller.verbLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+/*
+
+
+  // irregular verb stems
+
+  ("Test converting stem data to fst for verbs", testIrregVerbStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
+
+*/
 
 /*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }

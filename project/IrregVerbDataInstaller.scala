@@ -1,35 +1,32 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
+import better.files._
+import better.files.File._
+import better.files.Dsl._
 
 
 object IrregVerbDataInstaller {
 
-  /**
+  /** Creates FST file for each CEX file of
+  * irregular verb stems.
+  *
+  * @param dataSource Root directory of morphological data set.
+  * @param targetFile File to write FST statements to.
   */
-  def apply(dataSource: File, repo: File, corpus: String) = {
-    val lexDirectory = repo / s"parsers/${corpus}/lexica"
-    if (! lexDirectory.exists) { lexDirectory.mkdir}
-
-    val verbSourceDir = dataSource / s"${corpus}/stems-tables/verbs-simplex"
-    val fst = fstForVerbData(verbSourceDir)
-    if (fst.nonEmpty){
-      val fstFile = lexDirectory / "lexicon-verbs.fst"
-      new PrintWriter(fstFile){write(fst); close;}
-    } else {}
+  def apply(dataSource: File, targetFile: File) = {
+    val irregVerbFst = fstForIrregVerbData(dataSource)
+    targetFile.overwrite(irregVerbFst)
   }
 
   /** Create FST string for a verb tables in a given directory.
   *
   * @param dir Directory with tables of verb data.
   */
-  def fstForVerbData(dir: File) : String = {
-    val verbOpt = (dir) ** "*cex"
-    val verbFiles = verbOpt.get
-    val fstLines = for (f <- verbFiles) yield {
+  def fstForIrregVerbData(dir: File) : String = {
+    val verbFiles = dir.glob("*.cex").toVector
+
+    val fstLines = for (f <- verbFiles.filter(_.nonEmpty)) yield {
       // omit empty lines and header
-      val dataLines = Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
-      VerbDataInstaller.verbLinesToFst(dataLines)
+      val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1)
+      verbLinesToFst(dataLines)
     }
     fstLines.mkString("\n")
   }
