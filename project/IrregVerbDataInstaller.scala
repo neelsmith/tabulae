@@ -48,9 +48,15 @@ object IrregVerbDataInstaller {
       val ruleUrn = cols(0).replaceAll("_","\\\\_").replaceAll("\\.","\\\\.")
       val lexent = cols(1).replaceAll("_","\\_").replaceAll("\\.","\\\\.")
       val inflString = "<#>" + cols(2) //.toFstAlphabet(cols(2))
-      val princPart = cols(3)
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<verb><${princPart}>")
+//"ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act"
+      val pers = cols(3)
+      val num = cols(4)
+      val tns = cols(5)
+      val mood = cols(6)
+      val vce = cols(7)
+//<u>ag\.irrv1</u><u>lexent\.n46529</u><#>sum<1st><sg><pres><indic><act><irregcverb>
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${pers}><${num}><${tns}><${mood}><${vce}><irregcverb>")
       fstBuilder.toString
     }
   }
