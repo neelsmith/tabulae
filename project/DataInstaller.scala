@@ -24,7 +24,9 @@ object DataInstaller {
 
     val verbsTarget = lexica/"lexicon-verbs.fst"
     VerbDataInstaller(dataSource/corpusName/"stems-tables/verbs-simplex", verbsTarget)
-    //IrregVerbDataInstaller(dataSource, repo, corpus)
+
+    val irregVerbsTarget = lexica/"lexicon-irregverbs.fst"
+    IrregVerbDataInstaller(dataSource/corpusName/"irregular-stems/verbs", irregVerbsTarget)
   }
 
 }

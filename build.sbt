@@ -189,7 +189,7 @@ def error(msg: String): Def.Initialize[Task[Unit]] = Def.task {
 }
 
 // Compile FST parser
-def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Unit]] = Def.task {
+def fstCompile(corpus : String, configFile: ScalaFile, replace: Boolean = true) : Def.Initialize[Task[Unit]] = Def.task {
   val bd = baseDirectory.value
   val conf = Configuration(configFile)
 
@@ -197,5 +197,5 @@ def fstCompile(corpus : String, configFile: ScalaFile) : Def.Initialize[Task[Uni
 
   val dataDirectory = if (conf.datadir.head == '/') { file(conf.datadir)} else { bd / "datasets" }
   println("Data directory from " + conf.datadir + " == "+ dataDirectory)
-  FstCompiler.compile(dataDirectory.toScala, bd.toScala, corpus, conf)
+  FstCompiler.compile(dataDirectory.toScala, bd.toScala, corpus, conf, replace)
 }

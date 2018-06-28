@@ -6,7 +6,8 @@ import better.files.Dsl._
 
 object FstCompiler {
 
-  def compile(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration) : Unit = {
+
+  def compileAll(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration) : Unit = {
     // Install data and rules, converting tabular data to FST
     //println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
     DataInstaller(dataDirectory, baseDir, corpus)
@@ -27,5 +28,23 @@ object FstCompiler {
     val makefile = buildDirectory / "makefile"
     val doit = s"${conf.make} -f ${makefile}"
     doit !
+  }
+  def compile(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration, replaceExisting: Boolean = true) : Unit = {
+
+    val projectDir = baseDir/"parsers"/corpus
+    if (projectDir.exists) {
+      replaceExisting match {
+        case true => {
+          projectDir.delete()
+          compileAll(dataDirectory, baseDir, corpus, conf)
+        }
+        case false => {
+          println("Directory " + projectDir + " exists, and setting to delete exising parser is false.")
+          println("Cowardly refusing to continue.")
+        }
+      }
+    } else {
+      compileAll(dataDirectory, baseDir, corpus, conf)
+    }
   }
 }

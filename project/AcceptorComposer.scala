@@ -18,59 +18,6 @@ object AcceptorComposer {
   def apply(repo: ScalaFile, corpus: String): Unit = {
     val projectDir =  repo/"parsers"/corpus
     composeMainAcceptor(projectDir)
-    //println("\nSecondary generators are necessary for verbs to distinguish prin.part as well as inflectional category")
-    //copySecondaryAcceptors(repo, corpus)
-    //rewriteSecondaryAcceptors(projectDir)
-
-    //composeVerbStems(projectDir)
-    //composeVerbAcceptor(projectDir)
-  }
-
-  /** Write verb.fst, the top-level transducer for verbs in the
-  * the FST chain.  Squashed URN representations are generated for
-  * underlying patterns like:
-  * <u>1.1</u><u>2.2</u>am<verb><conj1>::<conj1><verb>i<1st><sg><pft><indic><act><u>3.3</u>
-  *
-  * @param projectDir The directory for the corpus-specific
-  * parser where acceptor.fst should be written.
-  */
-  def composeVerbAcceptor(projectDir: ScalaFile): Unit = {
-    val fst = StringBuilder.newBuilder
-    fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n")
-    fst.append("%%%\n%%% Adjust stem  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
-    //fst.append("$stems_acceptors$ = \"<" +  projectDir.toString +     "/acceptors/verbstems.a>\"\n")
-
-
-    fst.append("%%%\n%%% The URN squasher for verbs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n%%%\n")
-    fst.append("$=verbclass$ = [#verbclass#]\n")
-    fst.append("$squashverburn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>  <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>\n\n")
-
-
-    //fst.append("$stems_acceptors$ ||  $squashverburn$\n")
-    fst.append("$squashverburn$\n")
-
-    //fst.append(mainVerbAcceptor)
-    val acceptorFile = projectDir/"verb.fst"
-    acceptorFile.overwrite(fst.toString)
-  }
-
-  /** Write verb_stems.fst, the union of all acceptors
-  * in acceptors/verb, for a corpus-specific parser.
-  *
-  * @param projectDir  The directory for the corpus-specific
-  * parser where verb_stems.fst should be written.
-  */
-  def composeVerbStems(projectDir: ScalaFile): Unit = {
-
-    val src = projectDir/"acceptors/verb"
-    val fileList = src.glob("*.fst").toVector
-
-    val fileNames = for (f <- fileList) yield {
-      "\"<" + f.toString.replaceFirst(".fst$", ".a") + ">\""
-    }
-    val heading = "% verbstems.fst\n% A transducer to generate principal part stems for inflected forms of verbs.\n\n"
-    val acceptorFile = projectDir/"acceptors/verbstems.fst"
-    acceptorFile.overwrite(heading + fileNames.mkString(" || "))
   }
 
   /** Write acceptor.fst, the final transducer in the
@@ -91,6 +38,7 @@ object AcceptorComposer {
     // MANAGE IN A FOR COMPREHENSION
     fst.append(indeclAcceptor(projectDir) + "\n")
     fst.append(verbAcceptor(projectDir) + "\n")
+    fst.append(irregVerbAcceptor(projectDir) + "\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -113,6 +61,15 @@ object AcceptorComposer {
     val lines = f.lines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
     f.overwrite(rewritten)
+  }
+
+
+  def irregVerbAcceptor(dir : ScalaFile): String = {
+    if (includeIrregVerbs(dir) ) {
+      """
+$squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+[#person#] [#number#] [#tense#] [#mood#] [#voice#]<irregcverb><div><irregcverb><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+    } else {""}
   }
 
 
@@ -227,7 +184,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   val trail = """
 %% Put all symbols in 2 categories:  pass
 %% surface symbols through, suppress analytical symbols.
-#analysissymbol# = #editorial# #urntag# #indecl# <noun><verb><indecl><ptcpl><infin><vadj><adj><adv> #morphtag# #stemtype#  #separator#
+#analysissymbol# = #editorial# #urntag# #indecl# #pos# #morphtag# #stemtype#  #separator#
 #surfacesymbol# = #letter# #diacritic#
 ALPHABET = [#surfacesymbol#] [#analysissymbol#]:<>
 $stripsym$ = .+

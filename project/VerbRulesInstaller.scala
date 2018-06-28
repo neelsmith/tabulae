@@ -16,7 +16,9 @@ object VerbRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val verbFst = fstForVerbRules(srcDir)
-    targetFile.overwrite(verbFst)
+    if(verbFst.nonEmpty) {
+      targetFile.overwrite(verbFst)
+    } else {}
   }
 
 
