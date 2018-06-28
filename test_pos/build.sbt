@@ -33,16 +33,7 @@ def testList = List(
   ("Test converting bad stem data to fst for verbs", testBadIrregVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for irregular verbs", testIrregVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
-/*
-
-
-  // verb stems
-
-
-
   ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
-
-*/
 
 
  /*
@@ -322,7 +313,29 @@ def testIrregVerbStemFstFromDir(corpusName: String, conf: Configuration, repo : 
 }
 
 def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
-  false
+  val goodLine = "ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act"
+  val goodFst = IrregVerbDataInstaller.verbLineToFst(goodLine)
+  val verbsDir = repo/"datasets"/corpusName/"irregular-stems/verbs"
+  val testData = verbsDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreg-verbs.fst"
+  IrregVerbDataInstaller(verbsDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  //(repo/"datasets").delete()
+
+  val expected = "<u>ag\\.irrv1</u><u>lexent\\.n46529</u><#>sum<1st><sg><pres><indic><act><irregcverb>"
+
+  output(0) == expected
+
+
 }
 
 
