@@ -35,6 +35,17 @@ def testList = List(
   ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
 
+  //irreg adverbs:
+  ("Test converting bad stem data to fst for adverbs", testBadIrregAdvStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for irregular adverbs", testIrregAdvStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular adverbs", testIrregAdvStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for adverb stem data installer", testIrregAdvStemDataApplied(_, _, _), "" ),
+  // irreg nouns:
+  ("Test converting bad stem data to fst for nouns", testBadIrregNounStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for irregular nouns", testIrregNounStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular nouns", testIrregNounStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for nouns stem data installer", testIrregNounStemDataApplied(_, _, _), "" ),
+
 
  /*
 
@@ -334,6 +345,45 @@ def testIrregVerbStemDataApplied(corpusName: String, conf: Configuration, repo :
 }
 
 
+
+def testBadIrregAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregAdverbDataInstaller.adverbLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testIrregAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+def testIrregAdvStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+def testIrregAdvStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+
+// irreg nouns
+def testBadIrregNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregNounDataInstaller.nounLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+def testIrregNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+
+def testIrregNounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+def testIrregNounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
 
 /*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }

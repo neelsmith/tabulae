@@ -13,7 +13,9 @@ object IrregVerbDataInstaller {
   */
   def apply(dataSource: File, targetFile: File) = {
     val irregVerbFst = fstForIrregVerbData(dataSource)
-    targetFile.overwrite(irregVerbFst)
+    if (irregVerbFst.nonEmpty) {
+      targetFile.overwrite(irregVerbFst)
+    } else {}
   }
 
   /** Create FST string for a verb tables in a given directory.
