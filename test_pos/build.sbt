@@ -369,21 +369,43 @@ def testIrregAdvStemFstFromDir(corpusName: String, conf: Configuration, repo :  
   // Should create FST for all files in a directory
   val goodLine = "ag.irradv1#lexent.n31151#non#pos"
   val goodFst = IrregAdverbDataInstaller.adverbLineToFst(goodLine)
-
   val adverbSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/adverbs")
-  println("MADE ADV SOURCE " + adverbSource)
   val testData = adverbSource/"madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   testData.overwrite(text)
-  println("Wrote " + testData)
+
   val fstFromDir = IrregAdverbDataInstaller.fstForIrregAdverbData(adverbSource)
   // Tidy up
-  //(repo/"datasets").delete()
+  (repo/"datasets").delete()
   val expected = "<u>ag\\.irradv1</u><u>lexent\\.n31151</u>non<pos><irregadv>"
   fstFromDir.trim == expected
 }
 def testIrregAdvStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val ds = mkdir(repo/"datasets")
+  val cdir = mkdir(ds/corpusName)
+  val irregDir = mkdir(cdir/"irregular-stems")
+  val adverbsDir = mkdir(irregDir/"adverbs")
+  val goodLine = "ag.irradv1#lexent.n31151#non#pos"
+  val goodFst = IrregAdverbDataInstaller.adverbLineToFst(goodLine)
+
+  val testData = adverbsDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreg-verbs.fst"
+  IrregAdverbDataInstaller(adverbsDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  val expected = "<u>ag\\.irradv1</u><u>lexent\\.n31151</u>non<pos><irregadv>"
+  val rslt = output(0) == expected
+  rslt
 }
 
 // irreg nouns
