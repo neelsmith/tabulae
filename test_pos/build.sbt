@@ -18,7 +18,7 @@ def testList = List(
   ("Test converting stem files in directory to fst for verbs", testInvariantStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for indeclinable stem data installer", testIndeclStemDataApplied(_, _, _), "" ),
 
-/*
+
   // inflectional rules for verbs
   ("Test converting bad inflectional rules for verbs", testBadVerbsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for verbs", testConvertVerbInflRules(_, _, _), "" ),
@@ -29,7 +29,7 @@ def testList = List(
   ("Test converting stem data to fst for verbs", testVerbStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for verbs", testVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for verb stem data installer", testVerbStemDataApplied(_, _, _), "" ),
- */
+
 
 
  /*

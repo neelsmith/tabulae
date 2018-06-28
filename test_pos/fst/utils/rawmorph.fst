@@ -12,6 +12,6 @@ $ends$ = "<@workdir@inflection.a>"
 
 
 % Morphology data is the crossing of stems and endings:
-$morph$ = $stems$  $separator$ $separator$ $ends$
+$morph$ = $stems$  <div> $ends$
 
 $morph$
