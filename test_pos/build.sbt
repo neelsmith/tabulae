@@ -69,9 +69,9 @@ def testList = List(
 
   /////////
   // inflectional rules for adjectives
-  ("Test converting bad inflectional rules for adjectives", testBadAdjsInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for adjectives", testConvertAdjInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for adjectivesfrom files in dir", testAdjInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for adjectives", testBadAdjsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for adjectives", testConvertAdjInflRules(_, _, _), "" ),
+  ("Test converting  inflectional rules for adjectives from files in dir", testAdjInflRulesFromDir(_, _, _), "" ),
 
   // adjective stems
   ("Test converting bad stem data to fst for  adjectives", testBadAdjStemDataConvert(_, _, _), "pending" ),
@@ -573,6 +573,8 @@ def testIrregPronounStemDataApplied(corpusName: String, conf: Configuration, rep
   rslt
 }
 
+
+// nounSource
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   //  Test conversion of delimited text to FST.
   // Should object to bad data
@@ -597,7 +599,6 @@ def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sc
     val nounFile = nounDir/"madeupdata.cex"
     val text = s"header line, omitted in parsing\n${goodLine.trim}"
     nounFile.overwrite(text + "\n")
-
     val fstFromDir = NounRulesInstaller.fstForNounRules(nounDir)
     val lines = fstFromDir.split("\n").toVector
     // tidy up
@@ -618,9 +619,40 @@ def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile)
 
 
 // adjs
-def testBadAdjsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testConvertAdjInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadAdjsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = AdjectiveRulesInstaller.adjectiveRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testConvertAdjInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "adjnfl.us_a_um1#us_a_um#a#fem#nom#sg#pos"
+  val goodFst = AdjectiveRulesInstaller.adjectiveRuleToFst(goodLine)
+  val expected = "<us_a_um><adj>a<fem><nom><sg><u>adjnfl\\.us\\_a\\_um1</u>"
+  goodFst.trim ==  expected
+}
+def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    val goodLine = "adjnfl.us_a_um1#us_a_um#a#fem#nom#sg#pos"
+  val adjDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/adjectives")
+  val adjFile = adjDir/"madeupdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine.trim}"
+  adjFile.overwrite(text + "\n")
+
+  val fstFromDir = AdjectiveRulesInstaller.fstForAdjectiveRules(adjDir)
+  val lines = fstFromDir.split("\n").toVector
+  // tidy up
+  (repo/"datasets").delete()
+
+  val expected = "$adjectiveinfl$ =  <us_a_um><adj>a<fem><nom><sg><u>adjnfl\\.us\\_a\\_um1</u>"
+
+  lines(0) == expected
+
+}
 
 def testBadAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
