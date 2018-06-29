@@ -478,7 +478,7 @@ def testIrregNounStemDataApplied(corpusName: String, conf: Configuration, repo :
 // irreg pronouns
 def testBadIrregPronounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   try {
-    val fst = IrregProounDataInstaller.nounLineToFst("Not a real line")
+    val fst = IrregPronounDataInstaller.pronounLineToFst("Not a real line")
     false
   } catch {
     case t : Throwable => true
