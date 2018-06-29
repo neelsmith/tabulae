@@ -27,6 +27,15 @@ object DataInstaller {
 
     val irregVerbsTarget = lexica/"lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSource/corpusName/"irregular-stems/verbs", irregVerbsTarget)
+
+    val irregNounsTarget = lexica/"lexicon-irregnouns.fst"
+    IrregNounDataInstaller(dataSource/corpusName/"irregular-stems/nouns", irregNounsTarget)
+
+    val irregAdverbsTarget = lexica/"lexicon-irregadverbs.fst"
+    IrregAdverbDataInstaller(dataSource/corpusName/"irregular-stems/adverbs", irregAdverbsTarget)
+
+    val irregPronounsTarget = lexica/"lexicon-irregpronouns.fst"
+    IrregPronounDataInstaller(dataSource/corpusName/"irregular-stems/pronouns", irregPronounsTarget)
   }
 
 }

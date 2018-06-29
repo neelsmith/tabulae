@@ -35,7 +35,8 @@ $ending$ = """
   }
 
 
-  /**  Working directory for corpus work directory.
+  /**  Compose file "inflection.fst" in parser root, which simply
+  * aggregates all .a files from the subdirectory "inflection".
   *
   * @param projectDir Working directory for a corpus parser,
   * e.g., REPO/parsers/CORPUS.
@@ -51,20 +52,6 @@ $ending$ = """
 
     val fstFile = projectDir/"inflection.fst"
     fstFile.overwrite(finalText)
-    /*
-
-    if (indeclFiles.nonEmpty) {
-      val fstText = StringBuilder.newBuilder
-      fstText.append(header)
-      fstText.append( indeclFiles.mkString(" |\\\n"))
-      fstText.append ("\n\n$ending$\n")
-
-      val finalText = fstText.toString
-
-      new PrintWriter(fstFile) { write(finalText); close }
-    } else {
-      // No fst files for indeclinables
-    }*/
   }
 
 }

@@ -29,6 +29,15 @@ object FstCompiler {
     val doit = s"${conf.make} -f ${makefile}"
     doit !
   }
+
+
+  /**  Compose a parser in FST from tabular source data, and compile it to binary form.
+  *
+  * @param dataDirectory
+  * @param baseDir
+  * @param corpus
+  * @param conf
+  */
   def compile(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration, replaceExisting: Boolean = true) : Unit = {
 
     val projectDir = baseDir/"parsers"/corpus

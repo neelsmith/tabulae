@@ -36,8 +36,9 @@ object ParserComposer {
 
     latin.append("\n\n% Morphology data is the crossing of stems and endings:\n$morph$ = $stems$ <div> $ends$\n\n")
 
-    latin.append("% Acceptor filters for content satisfying requirements for")
-    latin.append("% morphological analysis and maps from underlying to surface form.\n")
+    latin.append("% Acceptor (1) filters for content satisfying requirements for\n")
+    latin.append("% morphological analysis and  (2) maps from underlying to surface form\n")
+    latin.append("% by suppressing analytical symbols, and allowing only surface strings.\n")
     latin.append("$acceptor$ = \"<" + projectDir.toString + "/acceptor.a>\"\n\n" )
 
     latin.append("% Final transducer:\n")

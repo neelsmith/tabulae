@@ -39,6 +39,9 @@ object AcceptorComposer {
     fst.append(indeclAcceptor(projectDir) + "\n")
     fst.append(verbAcceptor(projectDir) + "\n")
     fst.append(irregVerbAcceptor(projectDir) + "\n")
+    fst.append(irregNounAcceptor(projectDir) + "\n")
+    fst.append(irregAdverbAcceptor(projectDir) + "\n")
+    fst.append(irregPronounAcceptor(projectDir) + "\n")
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
@@ -63,7 +66,10 @@ object AcceptorComposer {
     f.overwrite(rewritten)
   }
 
-
+  def includeIrregVerbs(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
   def irregVerbAcceptor(dir : ScalaFile): String = {
     if (includeIrregVerbs(dir) ) {
       """
@@ -72,6 +78,44 @@ $squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]
     } else {""}
   }
 
+
+
+  def includeIrregNouns(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregNounAcceptor(dir : ScalaFile): String = {
+    if (includeIrregNouns(dir) ) {
+      """
+$squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregnoun> <div> <irregnoun> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+    } else {""}
+  }
+
+
+  def includeIrregPronouns(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregpronouns.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregPronounAcceptor(dir : ScalaFile): String = {
+    if (includeIrregPronouns(dir) ) {
+      """
+$squashirregpronurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregpron> <div> <irregpron> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+    } else {""}
+  }
+
+  def includeIrregAdverbs(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregadverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregAdverbAcceptor(dir : ScalaFile): String = {
+    if (includeIrregAdverbs(dir) ) {
+      """
+$squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $degree$ <irregadv> <div> <irregadv> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+    } else {""}
+  }
 
   /** String defining final step of main verb acceptor. */
   def verbAcceptor(dir : ScalaFile): String = {
@@ -93,13 +137,7 @@ $squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 """
 }
 
-  /** String defining final acceptor transducer for irregular nouns.*/
-  def irregNounAcceptor(dir : ScalaFile): String = {
-    """
-% Irregular noun acceptor
-$squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+ $gender$ $case$ $number$ <irregnoun>  $separator$+ <irregnoun><noun><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
-"""
-}
+
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : ScalaFile): String = {
@@ -140,10 +178,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     verbsSource.exists && verbsSource.lines.nonEmpty
   }
 
-  def includeIrregVerbs(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
-    indeclSource.exists && indeclSource.lines.nonEmpty
-  }
+
 
   /** Compose FST for union of transducers squashing URNs.
   *
@@ -157,7 +192,10 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
-      (includeIrregVerbs(_), "$squashirregverburn$")
+      (includeIrregVerbs(_), "$squashirregverburn$"),
+      (includeIrregNouns(_), "$squashirregnounurn$"),
+      (includeIrregAdverbs(_), "$squashirregadvurn$"),
+      (includeIrregPronouns(_), "$squashirregpronurn$")
     )
     val xducerList = for (xducer <- typesList) yield {
       if (xducer._1(dir)) { xducer._2} else {""}
