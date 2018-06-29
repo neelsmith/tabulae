@@ -62,8 +62,8 @@ def testList = List(
   // noun stems
   ("Test converting bad stem data to fst for nouns", testBadNounStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for nouns", testNounStemDataConvert(_, _, _), "" ),
-  ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for nouns", testNounStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "" ),
 
 
 
@@ -627,8 +627,43 @@ def testNounStemDataConvert(corpusName: String, conf: Configuration, repo :  Sca
   val expected = "<u>ag\\.nom1</u><u>lexent\\.n43951</u>serv<noun><masc><us_i>"
   goodFst.trim ==  expected
 }
-def testNounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testNounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should create FST for all files in a directory
+  val goodLine = "ag.nom1#lexent.n43951#serv#masc#us_i"
+
+  val nounSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/nouns")
+  val testData = nounSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val fstFromDir = NounDataInstaller.fstForNounData(nounSource)
+  // Tidy up
+  (repo/"datasets").delete()
+  val expected = "<u>ag\\.nom1</u><u>lexent\\.n43951</u>serv<noun><masc><us_i>"
+  fstFromDir.trim == expected
+}
+def testNounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    val goodLine = "ag.nom1#lexent.n43951#serv#masc#us_i"
+    val nounSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/nouns")
+    val testData = nounSource/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+
+    val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+
+    // Write some test data in the source work space:
+    NounDataInstaller(nounSource, destDir/"lexicon-nouns.fst")
+
+    // check the results:
+    val resultFile = repo/"parsers"/corpusName/"lexica/lexicon-nouns.fst"
+    val output = resultFile.lines.toVector
+
+    // clean up:
+    (repo/"datasets").delete()
+
+    val expected = "<u>ag\\.nom1</u><u>lexent\\.n43951</u>serv<noun><masc><us_i>"
+    output(0) == expected
+}
 
 
 def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
