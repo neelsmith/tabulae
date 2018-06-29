@@ -45,6 +45,11 @@ def testList = List(
   ("Test converting stem data to fst for irregular nouns", testIrregNounStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for irregular nouns", testIrregNounStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for nouns stem data installer", testIrregNounStemDataApplied(_, _, _), "" ),
+  // irreg pronouns
+  ("Test converting bad stem data to fst for pronouns", testBadIrregPronounStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for irregular pronouns", testIrregPronounStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular pronouns", testIrregPronounStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for pronouns stem data installer", testIrregPronounStemDataApplied(_, _, _), "" ),
 
 
  /*
@@ -430,11 +435,9 @@ def testIrregNounStemFstFromDir(corpusName: String, conf: Configuration, repo : 
   val goodFst = IrregNounDataInstaller.nounLineToFst(goodLine)
 
   val nounSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/nouns")
-  println("MADE NOUN SOURCE " + nounSource)
   val testData = nounSource/"madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine}"
   testData.overwrite(text)
-  println("Wrote " + testData)
   val fstFromDir = IrregNounDataInstaller.fstForIrregNounData(nounSource)
   // Tidy up
   (repo/"datasets").delete()
@@ -442,9 +445,56 @@ def testIrregNounStemFstFromDir(corpusName: String, conf: Configuration, repo : 
   fstFromDir.trim == expected
 }
 def testIrregNounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val ds = mkdir(repo/"datasets")
+  val cdir = mkdir(ds/corpusName)
+  val irregDir = mkdir(cdir/"irregular-stems")
+  val nounsDir = mkdir(irregDir/"nouns")
+  val goodLine = "ag.irrn1m#lexent.n5575#bos#masc#nom#sg"
+  val goodFst = IrregNounDataInstaller.nounLineToFst(goodLine)
+
+
+  val testData = nounsDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreg-nouns.fst"
+  IrregNounDataInstaller(nounsDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  val expected = "<u>ag\\.irrn1m</u><u>lexent\\.n5575</u>bos<masc><nom><sg><irregnoun>"
+  val rslt = output(0) == expected
+  rslt
 }
 
+
+
+// irreg pronouns
+def testBadIrregPronounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregProounDataInstaller.nounLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+
+def testIrregPronounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+false
+}
+
+def testIrregPronounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+false
+}
+def testIrregPronounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
 /*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
