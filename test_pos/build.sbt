@@ -486,14 +486,55 @@ def testBadIrregPronounStemDataConvert(corpusName: String, conf: Configuration, 
 }
 
 def testIrregPronounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-false
+  val goodLine = "ag.irrpron1#lexent.n20640#hic#masc#nom#sg"
+  val goodFst = IrregPronounDataInstaller.pronounLineToFst(goodLine)
+  val expected = "<u>ag\\.irrpron1</u><u>lexent\\.n20640</u>hic<masc><nom><sg><irregpron>"
+  goodFst.trim ==  expected
 }
 
 def testIrregPronounStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-false
+  val goodLine = "ag.irrpron1#lexent.n20640#hic#masc#nom#sg"
+  val goodFst = IrregPronounDataInstaller.pronounLineToFst(goodLine)
+  val expected = "<u>ag\\.irrpron1</u><u>lexent\\.n20640</u>hic<masc><nom><sg><irregpron>"
+
+  val pronounSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/pronouns")
+  val testData = pronounSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+  val fstFromDir = IrregPronounDataInstaller.fstForIrregPronounData(pronounSource)
+  // Tidy up
+  (repo/"datasets").delete()
+
+  fstFromDir.trim == expected
 }
 def testIrregPronounStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val goodLine = "ag.irrpron1#lexent.n20640#hic#masc#nom#sg"
+  val goodFst = IrregPronounDataInstaller.pronounLineToFst(goodLine)
+  val expected = "<u>ag\\.irrpron1</u><u>lexent\\.n20640</u>hic<masc><nom><sg><irregpron>"
+
+
+  val ds = mkdir(repo/"datasets")
+  val cdir = mkdir(ds/corpusName)
+  val irregDir = mkdir(cdir/"irregular-stems")
+  val nounsDir = mkdir(irregDir/"pronouns")
+
+  val testData = nounsDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreg-pronouns.fst"
+  IrregPronounDataInstaller(nounsDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  val rslt = output(0) == expected
+  rslt
 }
 /*
 def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
