@@ -49,7 +49,7 @@ object NounRulesInstaller {
   def nounRuleToFst(line: String) : String = {
     val cols = line.split("#")
     if (cols.size < 6) {
-      println("Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
 
@@ -62,7 +62,7 @@ object NounRulesInstaller {
       val grammCase = cols(4)
       val grammNumber = cols(5)
 
-      fst.append(s" <${inflClass}><noun>${inflString}<${grammGender}><${grammCase}><${grammNumber}> <u>${ruleUrn}</u>").toString
+      fst.append(s" <${inflClass}><noun>${inflString}<${grammGender}><${grammCase}><${grammNumber}><u>${ruleUrn}</u>").toString
     }
   }
 

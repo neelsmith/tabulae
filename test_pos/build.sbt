@@ -52,12 +52,11 @@ def testList = List(
   ("Test converting apply method for pronouns stem data installer", testIrregPronounStemDataApplied(_, _, _), "" ),
 
 
- /*
 
   /////////
   // inflectional rules for nouns
-  ("Test converting bad inflectional rules for nouns", testBadNounsInflRulesConvert(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for nouns", testBadNounsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "pending" ),
 
   // noun stems
@@ -67,13 +66,48 @@ def testList = List(
   ("Test converting apply method for noun stem data installer", testNounStemDataApplied(_, _, _), "pending" ),
 
 
-  ("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
+  /////////
+  // inflectional rules for adjectives
+  ("Test converting bad inflectional rules for adjectives", testBadAdjsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for adjectives", testConvertAdjInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for adjectivesfrom files in dir", testAdjInflRulesFromDir(_, _, _), "pending" ),
+
+  // adjective stems
+  ("Test converting bad stem data to fst for  adjectives", testBadAdjStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem data to fst for adjectives", testAdjStemDataConvert(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for adjectives", testAdjStemFstFromDir(_, _, _), "pending" ),
+  ("Test converting apply method for adjective stem data installer", testAdjStemDataApplied(_, _, _), "pending" ),
+
+
+
+
+    /////////
+    // inflectional rules for adverbs
+    ("Test converting bad inflectional rules for adverbs", testBadAdvInflRulesConvert(_, _, _), "pending" ),
+    ("Test converting  inflectional rules for adverbs", testConvertAdvInflRules(_, _, _), "pending" ),
+    ("Test converting  inflectional rules for adverbs from files in dir", testAdvInflRulesFromDir(_, _, _), "pending" ),
+
+    // adjective stems
+    ("Test converting bad stem data to fst for noadverbsuns", testBadAdvStemDataConvert(_, _, _), "pending" ),
+    ("Test converting stem data to fst for adverbs", testAdvStemDataConvert(_, _, _), "pending" ),
+    ("Test converting stem files in directory to fst for adverbs", testAdvStemFstFromDir(_, _, _), "pending" ),
+    ("Test converting apply method for adverbs stem data installer", testAdvStemDataApplied(_, _, _), "pending" ),
+
+
+
+
+
+  //("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+
+
+
 
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
-  ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
-
-*/
+  //("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
+  //("Test writing nouns acceptor string", testAdjAcceptor(_, _, _), "pending" ),
+  //("Test writing indecl acceptor string", testNounAcceptor(_, _, _), "pending" ),
 
 )
 
@@ -97,7 +131,10 @@ def reportResults(results: List[Boolean]) = {//, testList : Vector[String]): Uni
   val pending = testList.filter(_._3 == "pending")
   if (pending.nonEmpty) {
     println(s"\n${pending.size} test${plural(pending)} pending:")
-    println(pending.map(_._1).mkString("\n"))
+    for (png <- pending){
+      println("\t" + png._1)
+    }
+    println("\n")
   }
 }
 
@@ -229,7 +266,6 @@ def testConvertVerbInflRules(corpusName: String, conf: Configuration, repo :  Sc
 
 def testVerbInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile): Boolean = {
   // Install inflectional table of data
-
   val verbData = mkdirs(repo/"datasets"/corpusName/"rules-tables/verbs")
   installVerbRuleTable(verbData)
 
@@ -536,10 +572,40 @@ def testIrregPronounStemDataApplied(corpusName: String, conf: Configuration, rep
   val rslt = output(0) == expected
   rslt
 }
-/*
-def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadNounsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = NounRulesInstaller.nounRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "nouninfl.a_ae1#a_ae#a#fem#nom#sg"
+  val goodFst = NounRulesInstaller.nounRuleToFst(goodLine)
+  val expected = "<a_ae><noun>a<fem><nom><sg><u>nouninfl\\.a\\_ae1</u>"
+  goodFst.trim ==  expected
+}
+def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    val goodLine = "nouninfl.a_ae1#a_ae#a#fem#nom#sg"
+    val goodFst = NounRulesInstaller.nounRuleToFst(goodLine)
+    val expected = "<a_ae><noun>a<fem><nom><sg><u>nouninfl\\.a\\_ae1</u>"
+
+    val nounDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/nouns")
+    val nounFile = nounDir/"madeupdata.cex"
+    nounFile.overwrite(goodFst)
+
+    val fstFromDir = NounRulesInstaller.fstForNounRules(nounDir)
+    val lines = fstFromDir.split("\n").toVector
+    // tidy up
+    (repo/"datasets").delete()
+    
+    lines(0) == expected
+}
 
 def testBadNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testNounStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
@@ -548,6 +614,35 @@ def testNounStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
 
 
 def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+
+// adjs
+def testBadAdjsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertAdjInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+
+def testAdjAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+// adverbs
+def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertAdvInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdvStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdvStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testAdvAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+
+
 
 def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
   // Write some test data in the source work space:
@@ -585,7 +680,7 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):
   val expected = "$=verbclass$ = [#verbclass#]"
   (emptiedOk && lines(0) == expected)
 }
-*/
+
 
 lazy val posTests = inputKey[Unit]("Unit tests")
 posTests in Test := {
