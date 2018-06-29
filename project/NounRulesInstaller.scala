@@ -17,7 +17,7 @@ object NounRulesInstaller {
   def apply(srcDir: File, targetFile: File): Unit = {
     val nounFst = fstForNounRules(srcDir)
     println(s"Write ${nounFst.size} chars of noun rules to " + targetFile)
-    //new PrintWriter(targetFile) { write(nounFst ); close }
+
   }
 
 
@@ -29,7 +29,7 @@ object NounRulesInstaller {
   def fstForNounRules(srcDir: File) : String = {
 
     val nounsFiles = srcDir.glob("*.cex").toVector
-    println("\tbuilding inflection rules for nouns from " + srcDir)
+    println("\n\tbuilding inflection rules for nouns from " + srcDir)
 
     val rules = nounsFiles.flatMap(f =>
       f.lines.toVector.filter(_.nonEmpty).drop(1))
@@ -49,7 +49,7 @@ object NounRulesInstaller {
   def nounRuleToFst(line: String) : String = {
     val cols = line.split("#")
     if (cols.size < 6) {
-      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
+      println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
 

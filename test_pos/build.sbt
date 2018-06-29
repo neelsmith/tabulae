@@ -57,7 +57,7 @@ def testList = List(
   // inflectional rules for nouns
   ("Test converting bad inflectional rules for nouns", testBadNounsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for nouns", testConvertNounInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for nouns from files in dir", testNounInflRulesFromDir(_, _, _), "" ),
 
   // noun stems
   ("Test converting bad stem data to fst for nouns", testBadNounStemDataConvert(_, _, _), "pending" ),
@@ -592,18 +592,19 @@ def testConvertNounInflRules(corpusName: String, conf: Configuration, repo :  Sc
 }
 def testNounInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     val goodLine = "nouninfl.a_ae1#a_ae#a#fem#nom#sg"
-    val goodFst = NounRulesInstaller.nounRuleToFst(goodLine)
-    val expected = "<a_ae><noun>a<fem><nom><sg><u>nouninfl\\.a\\_ae1</u>"
 
     val nounDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/nouns")
     val nounFile = nounDir/"madeupdata.cex"
-    nounFile.overwrite(goodFst)
+    val text = s"header line, omitted in parsing\n${goodLine.trim}"
+    nounFile.overwrite(text + "\n")
 
     val fstFromDir = NounRulesInstaller.fstForNounRules(nounDir)
     val lines = fstFromDir.split("\n").toVector
     // tidy up
     (repo/"datasets").delete()
-    
+
+    val expected = "$nouninfl$ =  <a_ae><noun>a<fem><nom><sg><u>nouninfl\\.a\\_ae1</u>"
+
     lines(0) == expected
 }
 
