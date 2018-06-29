@@ -105,9 +105,9 @@ def testList = List(
 
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
-  //("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "pending" ),
+  ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "" ),
   //("Test writing nouns acceptor string", testAdjAcceptor(_, _, _), "pending" ),
-  //("Test writing indecl acceptor string", testNounAcceptor(_, _, _), "pending" ),
+
 
 )
 
@@ -666,7 +666,31 @@ def testNounStemDataApplied(corpusName: String, conf: Configuration, repo :  Sca
 }
 
 
-def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val projectDir = repo/"parsers"/corpusName
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.nounAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  val goodStemLine = "ag.nom1#lexent.nX#femin#fem#a_ae"
+
+  // 2. Now try after building some data:
+  val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
+  val nounLexicon= lexDir/"lexicon-nouns.fst"
+
+  val goodFst = NounDataInstaller.nounLineToFst(goodStemLine)
+  nounLexicon.overwrite(goodFst)
+
+  val acceptorFst = AcceptorComposer.nounAcceptor(projectDir)
+  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "$=nounclass$ = [#nounclass#]"
+  println("\n\nRESULTS:\n" + expected + "\n" + lines.mkString("\n"))
+
+  (emptiedOk && lines(1) == expected)
+
+}
 
 
 // adjs

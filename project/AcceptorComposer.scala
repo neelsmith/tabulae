@@ -32,12 +32,13 @@ object AcceptorComposer {
     val fst = StringBuilder.newBuilder
     // automatically included
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
-    //fst.append(nounAcceptor(projectDir) + "\n")
-    //fst.append(irregNounAcceptor(projectDir) + "\n")
 
-    // MANAGE IN A FOR COMPREHENSION
+    // MANAGE THESE IN A FOR COMPREHENSION
     fst.append(indeclAcceptor(projectDir) + "\n")
+
     fst.append(verbAcceptor(projectDir) + "\n")
+    fst.append(nounAcceptor(projectDir) + "\n")
+
     fst.append(irregVerbAcceptor(projectDir) + "\n")
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
@@ -117,7 +118,18 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
     } else {""}
   }
 
-  /** String defining final step of main verb acceptor. */
+
+  /** True if parser lexica include entries for verbs.
+  *
+  * @param dir Root directory of work space (repo/parsers/CORPUS).
+  *
+  */
+  def includeVerbs(dir: ScalaFile): Boolean = {
+    val lexica = dir/"lexica"
+    val verbsSource = lexica/"lexicon-verbs.fst"
+    verbsSource.exists && verbsSource.lines.nonEmpty
+  }
+  /** String defining verb acceptor. */
   def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {
     """
@@ -128,13 +140,19 @@ $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 
 } else { "" }
 }
+
+
+  def includeNouns(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-nouns.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
   /** String defining final noun acceptor transducer.*/
   def nounAcceptor(dir : ScalaFile): String = {
-    """
+  if (includeNouns(dir) ) {  """
 % Noun acceptor:
 $=nounclass$ = [#nounclass#]
-$squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$   $separator$+ $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
-"""
+$squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$   <div> $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
 }
 
 
@@ -167,16 +185,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   }
 
 
-  /** True if parser lexica include entries for verbs.
-  *
-  * @param dir Root directory of work space (repo/parsers/CORPUS).
-  *
-  */
-  def includeVerbs(dir: ScalaFile): Boolean = {
-    val lexica = dir/"lexica"
-    val verbsSource = lexica/"lexicon-verbs.fst"
-    verbsSource.exists && verbsSource.lines.nonEmpty
-  }
+
 
 
 
@@ -191,6 +200,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
+      (includeNouns(_),"$squashnounurn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),

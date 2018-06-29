@@ -24,7 +24,7 @@ object RulesInstaller {
 
     val nounsSrc = srcCorpus/"rules-tables/nouns"
     val nounsFst = inflDir/"nouninfl.fst"
-    //NounRulesInstaller( nounsSrc,nounsFst )
+    NounRulesInstaller( nounsSrc,nounsFst )
 
     //IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
 

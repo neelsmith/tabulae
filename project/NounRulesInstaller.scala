@@ -16,8 +16,9 @@ object NounRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val nounFst = fstForNounRules(srcDir)
-    println(s"Write ${nounFst.size} chars of noun rules to " + targetFile)
-
+      if(nounFst.nonEmpty) {
+        targetFile.overwrite(nounFst)
+      } else {}
   }
 
 
