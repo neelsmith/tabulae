@@ -1,6 +1,8 @@
-import sbt._
-import scala.io.Source
-import java.io.PrintWriter
+import better.files._
+import better.files.File._
+import better.files.Dsl._
+import java.io.{File => JFile}
+
 
 
 object NounDataInstaller {
@@ -47,10 +49,10 @@ object NounDataInstaller {
     } else {
       val fstBuilder = StringBuilder.newBuilder
       val ruleUrn = cols(0).replaceAll("_","\\\\_").replaceAll("\\.","\\\\.")
-      val declClass = cols(1).replaceAll("_","\\_").replaceAll("\\.","\\\\.")
-      val lexEntity = cols(2)
-      val stem = cols(3)
-      val gender = cols(4)
+      val lexEntity = cols(1).replaceAll("_","\\_").replaceAll("\\.","\\\\.")
+      val  stem = cols(2)
+      val  gender = cols(3)
+      val declClass = cols(4)
 
       //fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<verb><${princPart}>")
 
