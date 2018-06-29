@@ -51,6 +51,8 @@ $tense$ = [#tense#]
 $mood$ = [#mood#]
 $voice$ = [#voice#]
 
+$degree$ = [#degree#]
+
 
 % Identity variables for the transducers:
 $=gender$ = [#gender#]
