@@ -30,8 +30,6 @@ object ParticipleRulesInstaller {
   def fstForParticipleRules(srcDir: File) : String = {
 
     val participlesFiles = srcDir.glob("*.cex").toVector
-    println("\n\tbuilding inflection rules for participles from " + srcDir)
-
     val rules = participlesFiles.flatMap(f =>
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = participleRulesToFst(rules.toVector)
@@ -49,7 +47,8 @@ object ParticipleRulesInstaller {
   */
   def participleRuleToFst(line: String) : String = {
     val cols = line.split("#")
-    if (cols.size < 6) {
+    //"lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
+    if (cols.size < 8) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
@@ -62,8 +61,10 @@ object ParticipleRulesInstaller {
       val grammGender = cols(3)
       val grammCase = cols(4)
       val grammNumber = cols(5)
+      val tense = cols(6)
+      val voice = cols(7)
 
-      fst.append(s" <${inflClass}><participle>${inflString}<${grammGender}><${grammCase}><${grammNumber}><u>${ruleUrn}</u>").toString
+      fst.append(s" <${inflClass}><participle>${inflString}<${grammGender}><${grammCase}><${grammNumber}><${tense}><${voice}><u>${ruleUrn}</u>").toString
     }
   }
 

@@ -119,8 +119,8 @@ def testList = List(
   /////////
   // inflectional rules for participles
   ("Test converting bad inflectional rules for participles", testBadPtpclsInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for participles", testConvertPtpclsInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for participles from files in dir", testPtpclsInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for participles", testConvertPtpclsInflRules(_, _, _), "" ),
+  ("Test converting  inflectional rules for participles from files in dir", testPtpclsInflRulesFromDir(_, _, _), "" ),
 
 
   /////////
@@ -306,8 +306,29 @@ def testBadPtpclsInflRulesConvert(corpusName: String, conf: Configuration, repo 
     case t : Throwable => true
   }
 }
-def testConvertPtpclsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertPtpclsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
+  val goodFst = ParticipleRulesInstaller.participleRuleToFst(goodLine)
+  val expected = "<conj1><participle>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
+  goodFst.trim ==  expected
+}
+def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
+  val goodFst = ParticipleRulesInstaller.participleRuleToFst(goodLine)
+  val expected = "$participleinfl$ =  <conj1><participle>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
+
+    val ptcplsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/infinitives")
+    val ptcplFile = ptcplsDir/"madeupdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine.trim}"
+    ptcplFile.overwrite(text + "\n")
+    val fstFromDir = ParticipleRulesInstaller.fstForParticipleRules(ptcplsDir)
+    val lines = fstFromDir.split("\n").toVector
+    // tidy up
+    (repo/"datasets").delete()
+    println("LINES:\n\n"  + lines)
+    lines(0) == expected
+}
 
 def testBadGerundivesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
