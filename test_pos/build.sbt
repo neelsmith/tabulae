@@ -310,13 +310,13 @@ def testConvertPtpclsInflRules(corpusName: String, conf: Configuration, repo :  
   // Should correctly convert good data.
   val goodLine = "lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
   val goodFst = ParticipleRulesInstaller.participleRuleToFst(goodLine)
-  val expected = "<conj1><participle>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
+  val expected = "<conj1><ptcpl>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
   goodFst.trim ==  expected
 }
 def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
   val goodFst = ParticipleRulesInstaller.participleRuleToFst(goodLine)
-  val expected = "$participleinfl$ =  <conj1><participle>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
+  val expected = "$participleinfl$ =  <conj1><ptcpl>ans<masc><nom><sg><pres><act><u>lverbinfl\\.are\\_ptcpl1</u>"
 
     val ptcplsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/infinitives")
     val ptcplFile = ptcplsDir/"madeupdata.cex"
