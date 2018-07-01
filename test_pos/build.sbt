@@ -74,8 +74,8 @@ def testList = List(
   ("Test converting  inflectional rules for adjectives from files in dir", testAdjInflRulesFromDir(_, _, _), "" ),
 
   // adjective stems
-  ("Test converting bad stem data to fst for  adjectives", testBadAdjStemDataConvert(_, _, _), "pending" ),
-  ("Test converting stem data to fst for adjectives", testAdjStemDataConvert(_, _, _), "pending" ),
+  ("Test converting bad stem data to fst for  adjectives", testBadAdjStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for adjectives", testAdjStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for adjectives", testAdjStemFstFromDir(_, _, _), "pending" ),
   ("Test converting apply method for adjective stem data installer", testAdjStemDataApplied(_, _, _), "pending" ),
 
@@ -83,19 +83,11 @@ def testList = List(
 
 
     /////////
-    // inflectional rules for adverbs
+    // inflectional rules for adverbs.
+    // No need for stems, since they are built on adj. stems.
     ("Test converting bad inflectional rules for adverbs", testBadAdvInflRulesConvert(_, _, _), "pending" ),
     ("Test converting  inflectional rules for adverbs", testConvertAdvInflRules(_, _, _), "pending" ),
     ("Test converting  inflectional rules for adverbs from files in dir", testAdvInflRulesFromDir(_, _, _), "pending" ),
-
-    // adjective stems
-    ("Test converting bad stem data to fst for noadverbsuns", testBadAdvStemDataConvert(_, _, _), "pending" ),
-    ("Test converting stem data to fst for adverbs", testAdvStemDataConvert(_, _, _), "pending" ),
-    ("Test converting stem files in directory to fst for adverbs", testAdvStemFstFromDir(_, _, _), "pending" ),
-    ("Test converting apply method for adverbs stem data installer", testAdvStemDataApplied(_, _, _), "pending" ),
-
-
-
 
 
   //("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
@@ -686,10 +678,7 @@ def testNounAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile)
   val acceptorFst = AcceptorComposer.nounAcceptor(projectDir)
   val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
   val expected = "$=nounclass$ = [#nounclass#]"
-  println("\n\nRESULTS:\n" + expected + "\n" + lines.mkString("\n"))
-
   (emptiedOk && lines(1) == expected)
-
 }
 
 
@@ -729,8 +718,23 @@ def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sca
 
 }
 
-def testBadAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  //  Test conversion of delimited text to FST.
+  // Should object to bad data
+  try {
+    val fst = AdjectiveDataInstaller.adjectiveLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
+  val goodFst = AdjectiveDataInstaller.adjectiveLineToFst(goodLine)
+  val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+  goodFst.trim ==  expected
+}
 def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
@@ -742,10 +746,6 @@ def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  
 def testConvertAdvInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
-def testBadAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdvStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdvStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdvStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 def testAdvAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
