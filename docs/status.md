@@ -18,13 +18,11 @@ The current version of `tabulae` can install inflectional rules for:
 -   adjectives
 -   adverbs
 -   indeclinable prepositions, conjunctions and exclamations
-
+-   infinitive verb forms
+-   participles
 
 In development: installation of rules for:
 
-
--   infinitive verb forms
--   participles
 -   gerundives
 -   gerunds
 -   supines
