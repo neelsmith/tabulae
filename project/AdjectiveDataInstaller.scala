@@ -14,10 +14,8 @@ object AdjectiveDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(srcDir: File, targetFile: File) = {
-    println("\n\nGet adject data from " + srcDir)
     val adjectiveFst = fstForAdjectiveData(srcDir)
     println("fst " + adjectiveFst)
-
 
     if (adjectiveFst.nonEmpty) {
       targetFile.overwrite(adjectiveFst)

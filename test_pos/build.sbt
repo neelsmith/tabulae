@@ -50,7 +50,11 @@ def testList = List(
   ("Test converting stem data to fst for irregular pronouns", testIrregPronounStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for irregular pronouns", testIrregPronounStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for pronouns stem data installer", testIrregPronounStemDataApplied(_, _, _), "" ),
-
+  // irreg adjs:
+  ("Test converting bad stem data to fst for adjectives", testBadIrregAdjectiveStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for irregular adjectives", testIrregAdjectiveStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular adjectives", testIrregAdjectiveStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for adjectives stem data installer", testIrregAdjectiveStemDataApplied(_, _, _), "" ),
 
 
   /////////
@@ -469,8 +473,21 @@ def testIrregPronounStemDataApplied(corpusName: String, conf: Configuration, rep
 }
 
 
-////////// Regular morphology
+/// irreg adjs
+def testBadIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregAdjectiveDataInstaller.adjectiveLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  { false }
+def testIrregAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
+
+////////// Regular morphology
 
 
 // Regular verbs
