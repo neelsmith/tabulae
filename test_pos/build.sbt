@@ -98,7 +98,8 @@ def testList = List(
   // acceptor
   ("Test writing verbs acceptor string", testVerbAcceptor(_, _, _), "" ),
   ("Test writing nouns acceptor string", testNounAcceptor(_, _, _), "" ),
-  //("Test writing nouns acceptor string", testAdjAcceptor(_, _, _), "pending" ),
+  ("Test writing adjectives acceptor string", testAdjAcceptor(_, _, _), "" ),
+  ("Test writing adverbs acceptor string", testAdvAcceptor(_, _, _), "" ),
 
 
 )
@@ -695,13 +696,13 @@ def testBadAdjsInflRulesConvert(corpusName: String, conf: Configuration, repo : 
 }
 def testConvertAdjInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // Should correctly convert good data.
-  val goodLine = "adjnfl.us_a_um1#us_a_um#a#fem#nom#sg#pos"
+  val goodLine = "adjnfl.us_a_um#us_a_um#a#fem#nom#sg#pos"
   val goodFst = AdjectiveRulesInstaller.adjectiveRuleToFst(goodLine)
-  val expected = "<us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um1</u>"
+  val expected = "<us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um</u>"
   goodFst.trim ==  expected
 }
 def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-    val goodLine = "adjnfl.us_a_um1#us_a_um#a#fem#nom#sg#pos"
+    val goodLine = "adjnfl.us_a_um#us_a_um#a#fem#nom#sg#pos"
   val adjDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/adjectives")
   val adjFile = adjDir/"madeupdata.cex"
   val text = s"header line, omitted in parsing\n${goodLine.trim}"
@@ -712,7 +713,7 @@ def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sca
   // tidy up
   (repo/"datasets").delete()
 
-  val expected = "$adjectiveinfl$ =  <us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um1</u>"
+  val expected = "$adjectiveinfl$ =  <us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um</u>"
 
   lines(0) == expected
 
@@ -775,7 +776,28 @@ def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  Scal
 }
 
 
-def testAdjAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val projectDir = repo/"parsers"/corpusName
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.nounAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+
+  val goodStemLine = "ag.adj1#lexent.n42553#san#us_a_um"
+
+  // 2. Now try after building some data:
+  val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
+  val adjLexicon= lexDir/"lexicon-adjectives.fst"
+
+  val goodFst = AdjectiveDataInstaller.adjectiveLineToFst(goodStemLine)
+  adjLexicon.overwrite(goodFst)
+
+  val acceptorFst = AcceptorComposer.adjectiveAcceptor(projectDir)
+  val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
+  val expected = "$=adjectiveclass$ = [#adjectiveclass#]"
+  (emptiedOk && lines(1) == expected)
+}
 
 // adverbs
 def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
@@ -788,14 +810,14 @@ def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  
 }
 def testConvertAdvInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // Should correctly convert good data.
-  val goodLine = "advnfl.us_a_um1#us_a_um#e#pos"
+  val goodLine = "advnfl.us_a_um#us_a_um#e#pos"
   val goodFst = AdverbRulesInstaller.adverbRuleToFst(goodLine)
-  val expected = "<us_a_um><adj>e<pos><u>advnfl\\.us\\_a\\_um1</u>"
+  val expected = "<us_a_um><adv>e<pos><u>advnfl\\.us\\_a\\_um</u>"
   goodFst.trim ==  expected
 }
 def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     // Should create FST for all files in a directory
-    val goodLine = "advnfl.us_a_um1#us_a_um#e#pos"
+    val goodLine = "advnfl.us_a_um#us_a_um#e#pos"
     val advSource = mkdirs(repo/"datasets"/corpusName/"rules-tables/adjectives")
     val testData = advSource/"madeuptestdata.cex"
     val text = s"header line, omitted in parsing\n${goodLine}"
@@ -805,30 +827,34 @@ def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sca
     // Tidy up
     (repo/"datasets").delete()
 
-    val expected = "$adverbinfl$ =  <us_a_um><adj>e<pos><u>advnfl\\.us\\_a\\_um1</u>"
+    val expected = "$adverbinfl$ =  <us_a_um><adv>e<pos><u>advnfl\\.us\\_a\\_um</u>"
     lines(0) == expected
 }
 
 
-def testAdvAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdvAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+
+  val projectDir = repo/"parsers"/corpusName
+
+  // 1. Should  return empty string if no data:
+  val emptyFst = AcceptorComposer.adverbAcceptor(projectDir)
+  val emptiedOk = emptyFst.isEmpty
+  require(emptiedOk)
+
+  // 2. Now try after building some data:
+  val goodStemLine = "ag.adj1#lexent.n42553#san#us_a_um"
+  val lexDir = projectDir/"lexica"
+  mkdirs(lexDir)
+  val adjLexicon= lexDir/"lexicon-adjectives.fst"
+
+  val goodFst = AdjectiveDataInstaller.adjectiveLineToFst(goodStemLine)
+  adjLexicon.overwrite(goodFst)
+
+  val acceptorFst = AcceptorComposer.adverbAcceptor(projectDir)
+
+  (acceptorFst.contains("$squashadvurn$") && acceptorFst.contains("$=adjectiveclass$ = [#adjectiveclass#]"))
 
 
-
-
-def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
-  // Write some test data in the source work space:
-  // Install inflectional table of data
-  val verbData = repo/"datasets"/corpusName/"rules-tables/verbs"
-  if (!verbData.exists) {mkdirs(verbData)}
-  installVerbRuleTable(verbData)
-
-  RulesInstaller(repo/"datasets", repo, corpusName)
-
-  val actualFiles =  (repo/"parsers"/corpusName/"inflection").glob("*.fst")
-  val actualSet = actualFiles.map(_.name).toSet
-  val expectedSet = Set("verbinfl.fst", "irreginfl.fst", "indeclinfl.fst")
-
-  expectedSet  ==  actualSet
 }
 
 def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):  Boolean = {
@@ -851,6 +877,25 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):
   val expected = "$=verbclass$ = [#verbclass#]"
   (emptiedOk && lines(0) == expected)
 }
+
+
+def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFile) :  Boolean= {
+  // Write some test data in the source work space:
+  // Install inflectional table of data
+  val verbData = repo/"datasets"/corpusName/"rules-tables/verbs"
+  if (!verbData.exists) {mkdirs(verbData)}
+  installVerbRuleTable(verbData)
+
+  RulesInstaller(repo/"datasets", repo, corpusName)
+
+  val actualFiles =  (repo/"parsers"/corpusName/"inflection").glob("*.fst")
+  val actualSet = actualFiles.map(_.name).toSet
+  val expectedSet = Set("verbinfl.fst", "irreginfl.fst", "indeclinfl.fst")
+
+  expectedSet  ==  actualSet
+}
+
+
 
 
 lazy val posTests = inputKey[Unit]("Unit tests")

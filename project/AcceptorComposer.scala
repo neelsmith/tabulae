@@ -38,6 +38,8 @@ object AcceptorComposer {
 
     fst.append(verbAcceptor(projectDir) + "\n")
     fst.append(nounAcceptor(projectDir) + "\n")
+    fst.append(adjectiveAcceptor(projectDir) + "\n")
+    fst.append(adverbAcceptor(projectDir) + "\n")
 
     fst.append(irregVerbAcceptor(projectDir) + "\n")
     fst.append(irregNounAcceptor(projectDir) + "\n")
@@ -155,6 +157,31 @@ $squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 """ } else { "" }
 }
 
+
+def includeAdjectives(dir: ScalaFile): Boolean = {
+  val indeclSource = dir/"lexica/lexicon-adjectives.fst"
+  indeclSource.exists && indeclSource.lines.nonEmpty
+}
+/** String defining final noun acceptor transducer.*/
+def adjectiveAcceptor(dir : ScalaFile): String = {
+if (includeAdjectives(dir) ) {  """
+% Adjective acceptor:
+$=adjectiveclass$ = [#adjectiveclass#]
+$squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj>$=adjectiveclass$   <div> $=adjectiveclass$  <adj> [#stemchars#]* $=gender$ $case$ $number$ $degree$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
+
+
+
+
+/** String defining final noun acceptor transducer.*/
+def adverbAcceptor(dir : ScalaFile): String = {
+  // use adjective stems for regular formation of advs:
+if (includeAdjectives(dir) ) {  """
+$=adjectiveclass$ = [#adjectiveclass#]
+$squashadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj>$=adjectiveclass$   <div> $=adjectiveclass$  <adv> [#stemchars#]* $degree$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
 
 
 /** String defining final acceptor transducer for indeclinable forms.*/

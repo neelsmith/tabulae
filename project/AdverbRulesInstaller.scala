@@ -58,7 +58,7 @@ object AdverbRulesInstaller {
       val inflString = cols(2)
       val degree = cols(3)
 
-      fst.append(s" <${inflClass}><adj>${inflString}<${degree}><u>${ruleUrn}</u>").toString
+      fst.append(s" <${inflClass}><adv>${inflString}<${degree}><u>${ruleUrn}</u>").toString
     }
   }
 
