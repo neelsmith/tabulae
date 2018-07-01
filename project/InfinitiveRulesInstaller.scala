@@ -52,7 +52,6 @@ object InfinitiveRulesInstaller {
   def infinitiveRuleToFst(line: String) : String = {
     val cols = line.split("#")
     //lverbinfl.are_inf1#conj1#are#pres#act
-    println("\nINF RULE in " + cols.size + " columns.")
     if (cols.size < 5) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")

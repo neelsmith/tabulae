@@ -113,12 +113,12 @@ def testList = List(
   // inflectional rules for infinitives
   ("Test converting bad inflectional rules for infinitives", testBadInfinsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for infinitives", testConvertInfinsInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for infinitives from files in dir", testInfinsjInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for infinitives from files in dir", testInfinsInflRulesFromDir(_, _, _), "" ),
 
 
   /////////
   // inflectional rules for participles
-  ("Test converting bad inflectional rules for participles", testBadPtpclsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for participles", testBadPtpclsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for participles", testConvertPtpclsInflRules(_, _, _), "pending" ),
   ("Test converting  inflectional rules for participles from files in dir", testPtpclsInflRulesFromDir(_, _, _), "pending" ),
 
@@ -278,13 +278,34 @@ def testConvertInfinsInflRules(corpusName: String, conf: Configuration, repo :  
   // Should correctly convert good data.
   val goodLine = "lverbinfl.are_inf1#conj1#are#pres#act"
   val goodFst = InfinitiveRulesInstaller.infinitiveRuleToFst(goodLine)
-
   val expected = "<conj1><infin>are<pres><act><u>lverbinfl\\.are\\_inf1</u>"
   goodFst.trim ==  expected
 }
-def testInfinsjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testInfinsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "lverbinfl.are_inf1#conj1#are#pres#act"
+  val goodFst = InfinitiveRulesInstaller.infinitiveRuleToFst(goodLine)
 
-def testBadPtpclsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+  val expected = "$infinitiveinfl$ =  <conj1><infin>are<pres><act><u>lverbinfl\\.are\\_inf1</u>"
+  val infinDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/infinitives")
+  val infinFile = infinDir/"madeupdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine.trim}"
+  infinFile.overwrite(text + "\n")
+  val fstFromDir = InfinitiveRulesInstaller.fstForInfinitiveRules(infinDir)
+  val lines = fstFromDir.split("\n").toVector
+  // tidy up
+  (repo/"datasets").delete()
+
+  lines(0) == expected
+}
+
+def testBadPtpclsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = ParticipleRulesInstaller.participleRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
 def testConvertPtpclsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
