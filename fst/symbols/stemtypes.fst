@@ -30,7 +30,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Indeclinable type
-#indeclclass# = <conjunct><exclam><prepos>
+#indeclclass# = <indeclconj><indeclinterj><indeclprep>
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
