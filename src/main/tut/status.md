@@ -3,6 +3,47 @@ title: Status of tabulae
 layout: page
 ---
 
-The current version of `tabulae` can parse verbs, nouns and indeclinable forms.
 
-Other "parts of speech" are in development.
+## Regular stems
+
+The current version of `tabulae` can install data from any stem type.
+
+
+##  Regular rules
+
+The current version of `tabulae` can install inflectional rules for:
+
+-   conjugated verbs
+-   nouns
+-   adjectives
+-   adverbs
+-   indeclinable prepositions, conjunctions and exclamations
+
+
+In development: installation of rules for:
+
+
+-   infinitive verb forms
+-   participles
+-   gerundives
+-   gerunds
+-   supines
+
+
+[yes]:  https://raw.githubusercontent.com/wiki/neelsmith/tabulae/images/yes.png
+
+[no]:  https://raw.githubusercontent.com/wiki/neelsmith/tabulae/images/no.png
+
+## Irregular forms
+
+The current version of `tabulae` can install irregular forms of:
+
+
+-   nouns
+-   pronouns
+-   verbs
+-   adverbs
+
+In development:
+
+-  installation of irregular adjectives
