@@ -64,7 +64,7 @@ object ParticipleRulesInstaller {
       val tense = cols(6)
       val voice = cols(7)
 
-      fst.append(s" <${inflClass}><participle>${inflString}<${grammGender}><${grammCase}><${grammNumber}><${tense}><${voice}><u>${ruleUrn}</u>").toString
+      fst.append(s" <${inflClass}><ptcpl>${inflString}<${grammGender}><${grammCase}><${grammNumber}><${tense}><${voice}><u>${ruleUrn}</u>").toString
     }
   }
 

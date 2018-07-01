@@ -37,6 +37,14 @@ object RulesInstaller {
     val verbsFst = inflDir/"verbinfl.fst"
     VerbRulesInstaller(verbsSrc, verbsFst )
 
+    val infinSrc = srcCorpus/"rules-tables/infinitives"
+    val infinFst = inflDir/"infininfl.fst"
+    InfinitiveRulesInstaller( infinSrc,infinFst )
+
+    val ptcplSrc = srcCorpus/"rules-tables/participles"
+    val ptcplFst = inflDir/"ptcplinfl.fst"
+    ParticipleRulesInstaller( ptcplSrc,ptcplFst  )
+
 
     val inflFst = repo/"fst/inflection"
     installInvariants(inflFst, inflDir)

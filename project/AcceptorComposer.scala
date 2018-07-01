@@ -37,9 +37,13 @@ object AcceptorComposer {
     fst.append(indeclAcceptor(projectDir) + "\n")
 
     fst.append(verbAcceptor(projectDir) + "\n")
+    fst.append(infinitiveAcceptor(projectDir) + "\n")
+    fst.append(participleAcceptor(projectDir) + "\n")
+
     fst.append(nounAcceptor(projectDir) + "\n")
     fst.append(adjectiveAcceptor(projectDir) + "\n")
     fst.append(adverbAcceptor(projectDir) + "\n")
+
 
     fst.append(irregVerbAcceptor(projectDir) + "\n")
     fst.append(irregNounAcceptor(projectDir) + "\n")
@@ -54,6 +58,12 @@ object AcceptorComposer {
 
 
 
+  def includeInfinitives(dir: ScalaFile): Boolean = {
+    includeVerbs(dir)
+  }
+  def includeParticiples(dir: ScalaFile): Boolean = {
+    includeVerbs(dir)
+  }
 
   /** Rewrite a single file by replacing all occurrences of
   * the variable name `@workDir` with the string value for the
@@ -152,7 +162,7 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
-//$squashverburn$
+
 
 } else { "" }
 }
@@ -188,7 +198,25 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 }
 
 
+/** String defining final noun acceptor transducer.*/
+def infinitiveAcceptor(dir : ScalaFile): String = {
+  if (includeVerbs(dir) ) {  """
+% Infinitive acceptor
+$=verbclass$ = [#verbclass#]
+$squashinfurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  <div> $=verbclass$  <infin>  [#stemchars#]* $tense$ $voice$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+  } else { "" }
+}
 
+
+def participleAcceptor(dir : ScalaFile): String = {
+
+if (includeVerbs(dir) ) {  """
+% Participle acceptor
+$=verbclass$ = [#verbclass#]
+$squashptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  <div> $=verbclass$  <ptcpl>  [#stemchars#]* $gender$ $case$ $number$ $tense$ $voice$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
 
 /** String defining final noun acceptor transducer.*/
 def adverbAcceptor(dir : ScalaFile): String = {
@@ -242,10 +270,15 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
+      (includeInfinitives(_),"$squashinfurn$" ),
+      (includeParticiples(_),"$squashptcplurn$" ),
+
       (includeNouns(_),"$squashnounurn$" ),
       (includeAdjectives(_),"$squashadjurn$" ),
       (includeAdverbs(_),"$squashadvurn$" ),
+
       (includeIndecls(_),"$squashindeclurn$" ),
+
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),
       (includeIrregAdjectives(_), "$squashirregadjurn$"),
