@@ -38,7 +38,7 @@ object AdjectiveDataInstaller {
       val lexEntity = cols(1).replaceAll("_","\\_").replaceAll("\\.","\\\\.")
       val  stem = cols(2)
       val  declClass = cols(3)
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexEntity}</u>${stem}<adjective><${declClass}>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexEntity}</u>${stem}<adj><${declClass}>")
       fstBuilder.toString
     }
   }
