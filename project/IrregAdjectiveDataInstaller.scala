@@ -51,7 +51,7 @@ object IrregAdjectiveDataInstaller {
       val num = cols(5)
       val deg = cols(6)
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${cse}><${num}><${deg}><irregadjective>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${cse}><${num}><${deg}><irregadj>")
       fstBuilder.toString
     }
   }

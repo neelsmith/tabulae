@@ -45,7 +45,7 @@ object AcceptorComposer {
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
     fst.append(irregPronounAcceptor(projectDir) + "\n")
-
+    fst.append(irregAdjectiveAcceptor(projectDir) + "\n")
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
     val acceptorFile = projectDir/"acceptor.fst"
@@ -94,6 +94,20 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:
 """
     } else {""}
   }
+
+
+
+    def includeIrregAdjectives(dir: ScalaFile): Boolean = {
+      val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+      indeclSource.exists && indeclSource.lines.nonEmpty
+    }
+    def irregAdjectiveAcceptor(dir : ScalaFile): String = {
+      if (includeIrregNouns(dir) ) {
+        """
+$squashirregadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $degree$ <irregadj> <div> <irregadj> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+      } else {""}
+    }
 
 
   def includeIrregPronouns(dir: ScalaFile): Boolean = {
@@ -225,7 +239,6 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   def unionOfSquashers(dir: ScalaFile) : String = {
     val fst = StringBuilder.newBuilder
     fst.append("% Union of all URN squashers.\n\n$acceptor$ = ")
-    //fst.append("% Union of all URN squashers:\n%%$acceptor$ = $verb_pipeline$ | $squashnounurn$ | $squashirregnounurn$ | $squashindeclurn$ \n\n$acceptor$ = $verb_pipeline$ ")
 
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
@@ -235,6 +248,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeIndecls(_),"$squashindeclurn$" ),
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),
+      (includeIrregAdjectives(_), "$squashirregadjurn$"),
       (includeIrregAdverbs(_), "$squashirregadvurn$"),
       (includeIrregPronouns(_), "$squashirregpronurn$")
     )
@@ -246,7 +260,6 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       throw new Exception("AcceptorComposer:  no acceptors recognized.")
     } else {
       fst.append(xducerList.filter(_.nonEmpty).mkString(" | "))
-      // |  $squashnounurn$ | $squashindeclurn$  %%| $squashadjurn$
       fst.append("\n")
       fst.toString
     }

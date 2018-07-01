@@ -485,13 +485,13 @@ def testBadIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration
 def testIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
   val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
   val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadj>"
   goodFst.trim ==  expected
 }
 def testIrregAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
   val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadj>"
 
   val adjSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/adjectives")
   val testData = adjSource/"madeuptestdata.cex"
@@ -506,7 +506,7 @@ def testIrregAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, re
 def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
     val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
-    val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+    val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadj>"
 
 
     val ds = mkdir(repo/"datasets")
@@ -528,7 +528,7 @@ def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, r
 
     // clean up:
     (repo/"datasets").delete()
-  
+
     val rslt = output(0) == expected
     rslt
 }
