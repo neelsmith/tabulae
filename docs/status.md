@@ -9,7 +9,7 @@ layout: page
 The current version of `tabulae` can install data from any stem type.
 
 
-##  Regular rules
+## Regular rules
 
 The current version of `tabulae` can install inflectional rules for:
 
@@ -44,3 +44,5 @@ The current version of `tabulae` can install irregular forms of:
 -   verbs
 -   adverbs
 -   adjectives
+
+In development:  installation of irregular infinitivies
