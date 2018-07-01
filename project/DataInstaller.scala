@@ -16,8 +16,6 @@ object DataInstaller {
   def apply(dataSource: File, repo: File, corpusName: String): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
     val lexica = mkdirs(repo/"parsers"/corpusName/"lexica")
-    //if (! lexica.exists){mkdirs(lexica)}
-    //NounDataInstaller(dataSource, repo, corpus)
 
     val indeclTarget = lexica/"lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSource/corpusName/"stems-tables/indeclinables",indeclTarget)

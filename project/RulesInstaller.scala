@@ -21,11 +21,9 @@ object RulesInstaller {
     if (! inflDir.exists) {mkdirs(inflDir)}
     val srcCorpus = sourceDir/corpus
 
-
     val nounsSrc = srcCorpus/"rules-tables/nouns"
     val nounsFst = inflDir/"nouninfl.fst"
     NounRulesInstaller( nounsSrc,nounsFst )
-
 
     val adjsSrc = srcCorpus/"rules-tables/adjectives"
     val adjectivesFst = inflDir/"adjinfl.fst"
@@ -39,7 +37,6 @@ object RulesInstaller {
     val verbsFst = inflDir/"verbinfl.fst"
     VerbRulesInstaller(verbsSrc, verbsFst )
 
-    //IrregVerbRulesInstaller(srcCorpus / "rules-tables/verbs", inflDir / "verbinfl.fst")
 
     val inflFst = repo/"fst/inflection"
     installInvariants(inflFst, inflDir)

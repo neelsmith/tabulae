@@ -13,8 +13,6 @@ object MakefileComposer {
   */
   def apply(projectDir: ScalaFile, fstcompiler: String) : Unit = {
     composeInflectionMake(projectDir, fstcompiler)
-    //composeVerbStemMake(projectDir, fstcompiler)
-
     composeMainMake(projectDir, fstcompiler)
   }
 
@@ -59,27 +57,6 @@ object MakefileComposer {
       makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
     }
 
-    //makeFileText.append(s"${projectDir.toString}/acceptor.a: ")
-    // collect dotAs?
-    //${projectDir.toString}/verb.a\n\n")
-
-
-/*
-    for (d <- subDirs(projectDir / "acceptors")) {
-      val subDotAs = dotAsForFst(d)
-      makeFileText.append(d.toString() + ".a: " + subDotAs + "\n\n")
-    }
-*/
-
-
-    //("DOT AS WERE " + dotAs.mkString("\n"))
-    //val acceptorsFst = (projectDir / "acceptors") ** "*fst"
-    //val acceptorsFstFiles = acceptorsFst.get
-    //val dotAs = acceptorsFst.map(_.toString().replaceFirst(".fst$", ".a"))
-//    makeFileText.append(dotAs.mkString(" ") + "\n")
-
-
-
     makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
      //later:  ${projectDir.toString}/generator.a ")
     //Utils.dir(projectDir)
@@ -88,28 +65,6 @@ object MakefileComposer {
     makeFile.overwrite(makeFileText.toString)
   }
 
-
-  /** Compose makefile for verb subdirectory.
-  * This will generate invalid make unless there is at
-  * least one file with verb rules in acceptors/verb.
-  */
-  /*
-  def composeVerbStemMake(projectDir: ScalaFile, fstcompiler: String) : String = {
-    val makeFileText = StringBuilder.newBuilder
-    makeFileText.append(s"${projectDir.toString}/acceptors/verbstems.a: ")
-    val inflDir = projectDir/"acceptors/verb"
-
-    if (inflDir.exists) {
-      val inflFstFiles = inflDir.glob("*.fst")
-      val dotAs = inflFstFiles.map(_.toString().replaceFirst(".fst$", ".a"))
-      makeFileText.append(dotAs.mkString(" ") + "\n")
-      makeFileText.toString
-    } else {
-      ""
-    }
-
-  }
-  */
 
   /** Compose makefile for inflection subdirectory.  This requires
   * that data already be installed in projectDir/inflection.
@@ -127,7 +82,6 @@ object MakefileComposer {
       makeFileText.append(s"${projectDir.toString}/inflection.a: ")
       val inflFstFiles = inflDir.glob("*.fst").toVector
 
-      //this works correctly:
       val dotAs = inflFstFiles.filter(_.nonEmpty).map(_.toString().replaceFirst(".fst$", ".a"))
 
       makeFileText.append(dotAs.mkString(" ") + "\n")

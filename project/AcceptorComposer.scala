@@ -157,7 +157,9 @@ $squashnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 """ } else { "" }
 }
 
-
+def includeAdverbs(dir: ScalaFile): Boolean = {
+  includeAdjectives(dir)
+}
 def includeAdjectives(dir: ScalaFile): Boolean = {
   val indeclSource = dir/"lexica/lexicon-adjectives.fst"
   indeclSource.exists && indeclSource.lines.nonEmpty
@@ -229,7 +231,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeVerbs(_),"$squashverburn$" ),
       (includeNouns(_),"$squashnounurn$" ),
       (includeAdjectives(_),"$squashadjurn$" ),
-      //(includeAdverbs(_),"$squashadvurn$" ),
+      (includeAdverbs(_),"$squashadvurn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),
