@@ -12,7 +12,7 @@ title: Tabulae
 
 
 
-## Prerequisites
+## Technical prerequisites
 
 
 - A POSIX-like environment with `sh`, `echo` and `make`
@@ -20,11 +20,27 @@ title: Tabulae
 - [Stuttgart FST toolbox](http://www.cis.uni-muenchen.de/~schmid/tools/SFST/)
 
 
-## Overview
+## Technical overview
 
 The build file for this repository includes tasks for compiling a FST parser using rules and vocabulary read from a specified set of tabular files.  The resulting parser can be used interactively or can batch process a list of words.
 
 The accompanying Scala code library, `edu.holycross.shot.tabulae`, can read the output of this parser, and construct structured morphological objects.
+
+
+## A brief tour of `tabulae`
+
+You build a parser from tabular data defining regular stems, rules for applying regular endings, and tables of irregular forms.
+
+
+
+-  The [lexicon of stems](lexicon)
+-  The [morphological rules tables](rules)
+-  [Irregular forms](irregulars)
+
+All the data in your tables must belong to a specified alphabet, and be identified by URNs.  In your data tables, the URNs appear in an abbreviated form:  the URN manager matches abbreviations with full URNs for each collection of data.
+
+-  An alphabet for your parser
+-  The URN manager
 
 ## Installing and using `tabulae`
 
