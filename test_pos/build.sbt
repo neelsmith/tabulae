@@ -35,6 +35,8 @@ def testList = List(
   ("Test converting stem files in directory to fst for irregular verbs", testIrregVerbStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for irregular verb stem data installer", testIrregVerbStemDataApplied(_, _, _), "" ),
 
+
+
   //irreg adverbs:
   ("Test converting bad stem data to fst for adverbs", testBadIrregAdvStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for irregular adverbs", testIrregAdvStemDataConvert(_, _, _), "" ),
@@ -94,7 +96,7 @@ def testList = List(
     ("Test converting  inflectional rules for adverbs from files in dir", testAdvInflRulesFromDir(_, _, _), "" ),
 
 
-  //("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
+    //("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
 
 
 
@@ -105,6 +107,40 @@ def testList = List(
   ("Test writing adjectives acceptor string", testAdjAcceptor(_, _, _), "" ),
   ("Test writing adverbs acceptor string", testAdvAcceptor(_, _, _), "" ),
 
+
+
+  /////////
+  // inflectional rules for infinitives
+  ("Test converting bad inflectional rules for infinitives", testBadInfinsInflRulesConvert(_, _, _), "" ),
+  ("Test converting  inflectional rules for infinitives", testConvertInfinsInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for infinitives from files in dir", testInfinsjInflRulesFromDir(_, _, _), "pending" ),
+
+
+  /////////
+  // inflectional rules for participles
+  ("Test converting bad inflectional rules for participles", testBadPtpclsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for participles", testConvertPtpclsInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for participles from files in dir", testPtpclsInflRulesFromDir(_, _, _), "pending" ),
+
+
+  /////////
+  // inflectional rules for gerundives
+  ("Test converting bad inflectional rules for gerundives", testBadGerundivesInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerundives", testConvertGerundivesInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerundives from files in dir", testGerundivesInflRulesFromDir(_, _, _), "pending" ),
+
+
+  /////////
+  // inflectional rules for gerunds
+  ("Test converting bad inflectional rules for gerunds", testBadGerundsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerunds", testConvertGerundsInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerunds from files in dir", testGerundsInflRulesFromDir(_, _, _), "pending" ),
+
+  /////////
+  // inflectional rules for supines
+  ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "pending" ),
 
 )
 
@@ -225,6 +261,43 @@ def testIndeclStemDataApplied(corpusName: String, conf: Configuration, repo :  S
   val expected = "<u>demo\\.n1</u><u>lexent\\.n11872</u>cum<indeclprep>"
   output(0) == expected
 }
+
+
+
+
+
+def testBadInfinsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = InfinitiveRulesInstaller.infinitiveRuleToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testConvertInfinsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  //lverbinfl.are_inf1#conj1#are#pres#act
+  false
+}
+def testInfinsjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadPtpclsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertPtpclsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadGerundivesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testGerundivesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertGerundsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+
+
+
 
 /////////  All irregulars
 
