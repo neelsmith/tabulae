@@ -76,8 +76,8 @@ def testList = List(
   // adjective stems
   ("Test converting bad stem data to fst for  adjectives", testBadAdjStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for adjectives", testAdjStemDataConvert(_, _, _), "" ),
-  ("Test converting stem files in directory to fst for adjectives", testAdjStemFstFromDir(_, _, _), "pending" ),
-  ("Test converting apply method for adjective stem data installer", testAdjStemDataApplied(_, _, _), "pending" ),
+  ("Test converting stem files in directory to fst for adjectives", testAdjStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for adjective stem data installer", testAdjStemDataApplied(_, _, _), "" ),
 
 
 
@@ -735,8 +735,44 @@ def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  Scal
   val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
   goodFst.trim ==  expected
 }
-def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    // Should create FST for all files in a directory
+    val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
+    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+
+    val adjSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/adjectives")
+    val testData = adjSource/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+
+    val fstFromDir = AdjectiveDataInstaller.fstForAdjectiveData(adjSource)
+    // Tidy up
+    (repo/"datasets").delete()
+    fstFromDir.trim == expected
+}
+def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
+    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+
+    val adjSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/adjectives")
+    val testData = adjSource/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+
+
+    val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+
+    // Write some test data in the source work space:
+    AdjectiveDataInstaller(adjSource, destDir/"lexicon-adjectives.fst")
+
+    // check the results:
+    val resultFile = repo/"parsers"/corpusName/"lexica/lexicon-adjectives.fst"
+    val output = resultFile.lines.toVector
+
+    // clean up:
+    (repo/"datasets").delete()
+    output(0) == expected
+}
 
 
 def testAdjAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
