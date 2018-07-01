@@ -29,8 +29,7 @@ The accompanying Scala code library, `edu.holycross.shot.tabulae`, can read the 
 
 ## A brief tour of `tabulae`
 
-You build a parser from tabular data defining regular stems, rules for applying regular endings, and tables of irregular forms.
-
+You build a parser from tabular data defining regular stems, rules for applying regular endings, and tables of irregular forms.  Each stem belongs to a specific stem class;  each rule applies to a specific stem class.  When the parser is built, rules and stems belonging to the same stem class are matched up to form valid possible forms.
 
 
 -  The [lexicon of stems](lexicon)
@@ -39,8 +38,8 @@ You build a parser from tabular data defining regular stems, rules for applying 
 
 All the data in your tables must belong to a specified alphabet, and be identified by URNs.  In your data tables, the URNs appear in an abbreviated form:  the URN manager matches abbreviations with full URNs for each collection of data.
 
--  An alphabet for your parser
--  The URN manager
+-  An [alphabet for your parser](alphabet)
+-  The [URN manager](urnmanager)
 
 ## Installing and using `tabulae`
 
