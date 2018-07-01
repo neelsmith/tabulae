@@ -125,7 +125,7 @@ def testList = List(
 
   /////////
   // inflectional rules for gerundives
-  ("Test converting bad inflectional rules for gerundives", testBadGerundivesInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for gerundives", testBadGerundivesInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for gerundives", testConvertGerundivesInflRules(_, _, _), "pending" ),
   ("Test converting  inflectional rules for gerundives from files in dir", testGerundivesInflRulesFromDir(_, _, _), "pending" ),
 
@@ -330,7 +330,14 @@ def testPtpclsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  
     lines(0) == expected
 }
 
-def testBadGerundivesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadGerundivesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    try {
+      val fst = GerundiveRulesInstaller.gerundiveRuleToFst("Not a real line")
+      false
+    } catch {
+      case t : Throwable => true
+    }
+}
 def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testGerundivesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
