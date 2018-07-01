@@ -46,7 +46,7 @@ object AdjectiveRulesInstaller {
   */
   def adjectiveRuleToFst(line: String) : String = {
     val cols = line.split("#")
-    if (cols.size < 6) {
+    if (cols.size < 7) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
@@ -59,8 +59,8 @@ object AdjectiveRulesInstaller {
       val grammGender = cols(3)
       val grammCase = cols(4)
       val grammNumber = cols(5)
-
-      fst.append(s" <${inflClass}><adj>${inflString}<${grammGender}><${grammCase}><${grammNumber}><u>${ruleUrn}</u>").toString
+      val degree = cols(6)
+      fst.append(s" <${inflClass}><adj>${inflString}<${grammGender}><${grammCase}><${grammNumber}><${degree}><u>${ruleUrn}</u>").toString
     }
   }
 

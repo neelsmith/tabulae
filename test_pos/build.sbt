@@ -697,7 +697,7 @@ def testConvertAdjInflRules(corpusName: String, conf: Configuration, repo :  Sca
   // Should correctly convert good data.
   val goodLine = "adjnfl.us_a_um1#us_a_um#a#fem#nom#sg#pos"
   val goodFst = AdjectiveRulesInstaller.adjectiveRuleToFst(goodLine)
-  val expected = "<us_a_um><adj>a<fem><nom><sg><u>adjnfl\\.us\\_a\\_um1</u>"
+  val expected = "<us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um1</u>"
   goodFst.trim ==  expected
 }
 def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
@@ -712,7 +712,7 @@ def testAdjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  Sca
   // tidy up
   (repo/"datasets").delete()
 
-  val expected = "$adjectiveinfl$ =  <us_a_um><adj>a<fem><nom><sg><u>adjnfl\\.us\\_a\\_um1</u>"
+  val expected = "$adjectiveinfl$ =  <us_a_um><adj>a<fem><nom><sg><pos><u>adjnfl\\.us\\_a\\_um1</u>"
 
   lines(0) == expected
 
@@ -732,13 +732,13 @@ def testAdjStemDataConvert(corpusName: String, conf: Configuration, repo :  Scal
   // Should correctly convert good data.
   val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
   val goodFst = AdjectiveDataInstaller.adjectiveLineToFst(goodLine)
-  val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+  val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adj><us_a_um>"
   goodFst.trim ==  expected
 }
 def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     // Should create FST for all files in a directory
     val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
-    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adj><us_a_um>"
 
     val adjSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/adjectives")
     val testData = adjSource/"madeuptestdata.cex"
@@ -752,7 +752,7 @@ def testAdjStemFstFromDir(corpusName: String, conf: Configuration, repo :  Scala
 }
 def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     val goodLine = "ag.adj1#lexent.n42553#san#us_a_um"
-    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adjective><us_a_um>"
+    val expected = "<u>ag\\.adj1</u><u>lexent\\.n42553</u>san<adj><us_a_um>"
 
     val adjSource = mkdirs(repo/"datasets"/corpusName/"stems-tables/adjectives")
     val testData = adjSource/"madeuptestdata.cex"
