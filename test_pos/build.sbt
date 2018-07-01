@@ -85,9 +85,9 @@ def testList = List(
     /////////
     // inflectional rules for adverbs.
     // No need for stems, since they are built on adj. stems.
-    ("Test converting bad inflectional rules for adverbs", testBadAdvInflRulesConvert(_, _, _), "pending" ),
-    ("Test converting  inflectional rules for adverbs", testConvertAdvInflRules(_, _, _), "pending" ),
-    ("Test converting  inflectional rules for adverbs from files in dir", testAdvInflRulesFromDir(_, _, _), "pending" ),
+    ("Test converting bad inflectional rules for adverbs", testBadAdvInflRulesConvert(_, _, _), "" ),
+    ("Test converting  inflectional rules for adverbs", testConvertAdvInflRules(_, _, _), "" ),
+    ("Test converting  inflectional rules for adverbs from files in dir", testAdvInflRulesFromDir(_, _, _), "" ),
 
 
   //("Test composing all inflectional rules via RulesInstaller", testRulesInstaller(_, _, _), "" ),
@@ -539,7 +539,7 @@ def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  Scal
   testData.overwrite(text)
   val fstFromDir = VerbDataInstaller.fstForVerbData(verbSource)
   // Tidy up
-  //   (repo/"datasets").delete()
+  (repo/"datasets").delete()
   val expected = "<u>ag\\.v1</u><u>lexent\\.n2280</u><#>am<verb><conj1>"
   fstFromDir.trim == expected
 
@@ -547,7 +547,7 @@ def testVerbStemFstFromDir(corpusName: String, conf: Configuration, repo :  Scal
 def testVerbStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   // Install one data file:
 
-  val verbsDir = repo/"datasets"/corpusName/"stems-tables/verbs-simplex"
+  val verbsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-simplex")
   installVerbStemTable(verbsDir)
 
   val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
@@ -778,9 +778,36 @@ def testAdjStemDataApplied(corpusName: String, conf: Configuration, repo :  Scal
 def testAdjAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 // adverbs
-def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testConvertAdvInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadAdvInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    try {
+      val fst = AdverbRulesInstaller.adverbRuleToFst("Not a real line")
+      false
+    } catch {
+      case t : Throwable => true
+    }
+}
+def testConvertAdvInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "advnfl.us_a_um1#us_a_um#e#pos"
+  val goodFst = AdverbRulesInstaller.adverbRuleToFst(goodLine)
+  val expected = "<us_a_um><adj>e<pos><u>advnfl\\.us\\_a\\_um1</u>"
+  goodFst.trim ==  expected
+}
+def testAdvInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    // Should create FST for all files in a directory
+    val goodLine = "advnfl.us_a_um1#us_a_um#e#pos"
+    val advSource = mkdirs(repo/"datasets"/corpusName/"rules-tables/adjectives")
+    val testData = advSource/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+    val fstFromDir = AdverbRulesInstaller.fstForAdverbRules(advSource)
+    val lines = fstFromDir.split("\n").toVector
+    // Tidy up
+    (repo/"datasets").delete()
+
+    val expected = "$adverbinfl$ =  <us_a_um><adj>e<pos><u>advnfl\\.us\\_a\\_um1</u>"
+    lines(0) == expected
+}
 
 
 def testAdvAcceptor(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
