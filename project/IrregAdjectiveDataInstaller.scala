@@ -36,7 +36,7 @@ object IrregAdjectiveDataInstaller {
   def adjectiveLineToFst(line: String) : String = {
     val cols = line.split("#")
 
-    if (cols.size < 4) {
+    if (cols.size < 7) {
       println(s"${cols.size} is the wrong number of columns for an adjective\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
@@ -49,9 +49,9 @@ object IrregAdjectiveDataInstaller {
       val gender = cols(3)
       val cse = cols(4)
       val num = cols(5)
+      val deg = cols(6)
 
-
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${cse}><${num}><irregadjective>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${cse}><${num}><${deg}><irregadjective>")
       fstBuilder.toString
     }
   }

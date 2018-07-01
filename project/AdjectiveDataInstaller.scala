@@ -15,11 +15,9 @@ object AdjectiveDataInstaller {
   */
   def apply(srcDir: File, targetFile: File) = {
     val adjectiveFst = fstForAdjectiveData(srcDir)
-    println("fst " + adjectiveFst)
 
     if (adjectiveFst.nonEmpty) {
       targetFile.overwrite(adjectiveFst)
-      println("Wrote results to " + targetFile)
     } else { }
   }
 

@@ -51,7 +51,7 @@ def testList = List(
   ("Test converting stem files in directory to fst for irregular pronouns", testIrregPronounStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for pronouns stem data installer", testIrregPronounStemDataApplied(_, _, _), "" ),
   // irreg adjs:
-  ("Test converting bad stem data to fst for adjectives", testBadIrregAdjectiveStemDataConvert(_, _, _), "" ),
+  ("Test converting bad stem data to fst for irregular adjectives", testBadIrregAdjectiveStemDataConvert(_, _, _), "" ),
   ("Test converting stem data to fst for irregular adjectives", testIrregAdjectiveStemDataConvert(_, _, _), "" ),
   ("Test converting stem files in directory to fst for irregular adjectives", testIrregAdjectiveStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for adjectives stem data installer", testIrregAdjectiveStemDataApplied(_, _, _), "" ),
@@ -482,9 +482,56 @@ def testBadIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration
     case t : Throwable => true
   }
 }
-def testIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  { false }
-def testIrregAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
-def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testIrregAdjectiveStemDataConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean =  {
+  val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
+  val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+  goodFst.trim ==  expected
+}
+def testIrregAdjectiveStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
+  val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+
+  val adjSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/adjectives")
+  val testData = adjSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+  val fstFromDir = IrregAdjectiveDataInstaller.fstForIrregAdjectiveData(adjSource)
+  // Tidy up
+  (repo/"datasets").delete()
+
+  fstFromDir.trim == expected
+}
+def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    val goodLine = "ag.irradj1#lexent.n48627#totus#masc#nom#sg#pos"
+    val goodFst = IrregAdjectiveDataInstaller.adjectiveLineToFst(goodLine)
+    val expected = "<u>ag\\.irradj1</u><u>lexent\\.n48627</u>totus<masc><nom><sg><pos><irregadjective>"
+
+
+    val ds = mkdir(repo/"datasets")
+    val cdir = mkdir(ds/corpusName)
+    val irregDir = mkdir(cdir/"irregular-stems")
+    val nounsDir = mkdir(irregDir/"adjectives")
+
+    val testData = nounsDir/"madeuptestdata.cex"
+    val text = s"header line, omitted in parsing\n${goodLine}"
+    testData.overwrite(text)
+
+    val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+    // Write some test data in the source work space:
+    val resultFile = destDir/"lexicon-irreg-adjectives.fst"
+    IrregAdjectiveDataInstaller(nounsDir, resultFile)
+
+    // check the results:
+    val output = resultFile.lines.toVector
+
+    // clean up:
+    (repo/"datasets").delete()
+  
+    val rslt = output(0) == expected
+    rslt
+}
 
 
 ////////// Regular morphology
