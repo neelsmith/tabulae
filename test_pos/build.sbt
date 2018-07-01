@@ -112,7 +112,7 @@ def testList = List(
   /////////
   // inflectional rules for infinitives
   ("Test converting bad inflectional rules for infinitives", testBadInfinsInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for infinitives", testConvertInfinsInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for infinitives", testConvertInfinsInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for infinitives from files in dir", testInfinsjInflRulesFromDir(_, _, _), "pending" ),
 
 
@@ -275,8 +275,12 @@ def testBadInfinsInflRulesConvert(corpusName: String, conf: Configuration, repo 
   }
 }
 def testConvertInfinsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  //lverbinfl.are_inf1#conj1#are#pres#act
-  false
+  // Should correctly convert good data.
+  val goodLine = "lverbinfl.are_inf1#conj1#are#pres#act"
+  val goodFst = InfinitiveRulesInstaller.infinitiveRuleToFst(goodLine)
+
+  val expected = "<conj1><infin>are<pres><act><u>lverbinfl\\.are\\_inf1</u>"
+  goodFst.trim ==  expected
 }
 def testInfinsjInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
