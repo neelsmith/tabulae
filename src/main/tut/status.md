@@ -43,7 +43,4 @@ The current version of `tabulae` can install irregular forms of:
 -   pronouns
 -   verbs
 -   adverbs
-
-In development:
-
--  installation of irregular adjectives
+-   adjectives
