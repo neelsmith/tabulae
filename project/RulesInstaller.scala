@@ -26,7 +26,14 @@ object RulesInstaller {
     val nounsFst = inflDir/"nouninfl.fst"
     NounRulesInstaller( nounsSrc,nounsFst )
 
-    //IndeclRulesInstaller(srcCorpus / "rules-tables/indeclinables", inflDir / "indeclinfl.fst")
+
+    val adjsSrc = srcCorpus/"rules-tables/adjectives"
+    val adjectivesFst = inflDir/"adjinfl.fst"
+    AdjectiveRulesInstaller( adjsSrc,adjectivesFst )
+
+    val advsSrc = srcCorpus/"rules-tables/adverbs"
+    val advsFst = inflDir/"advinfl.fst"
+    AdverbRulesInstaller( advsSrc,advsFst )
 
     val verbsSrc = srcCorpus/"rules-tables/verbs"
     val verbsFst = inflDir/"verbinfl.fst"

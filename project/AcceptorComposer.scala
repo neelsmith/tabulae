@@ -228,6 +228,8 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     def typesList = List(
       (includeVerbs(_),"$squashverburn$" ),
       (includeNouns(_),"$squashnounurn$" ),
+      (includeAdjectives(_),"$squashadjurn$" ),
+      //(includeAdverbs(_),"$squashadvurn$" ),
       (includeIndecls(_),"$squashindeclurn$" ),
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),

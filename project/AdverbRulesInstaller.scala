@@ -16,8 +16,9 @@ object AdverbRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val adverbFst = fstForAdverbRules(srcDir)
-    println(s"Write ${adverbFst.size} chars of adverb rules to " + targetFile)
-
+    if(adverbFst.nonEmpty) {
+      targetFile.overwrite(adverbFst)
+    } else {}
   }
 
 

@@ -16,8 +16,9 @@ object AdjectiveRulesInstaller {
   */
   def apply(srcDir: File, targetFile: File): Unit = {
     val adjectiveFst = fstForAdjectiveRules(srcDir)
-    println(s"Write ${adjectiveFst.size} chars of adjective rules to " + targetFile)
-
+    if(adjectiveFst.nonEmpty) {
+      targetFile.overwrite(adjectiveFst)
+    } else {}
   }
 
 

@@ -16,16 +16,11 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Adjective stem types
-#adj1and2# = <0_a_um><er_era_erum>
+#adj1and2# = <us_a_um>
 
 #adjectiveclass# = #adj1and2#
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Adverb stem types
-#indecladv# = <indeclpos><indeclcomp><indeclsup>
-
-#adverbclass# = #indecladv#
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Verb stem types
@@ -43,4 +38,4 @@
 #irregclass# = <irregadj><irregnoun><irregadv><irregcverb><irreginfin><irregptcpl><irregvadj>
 
 % Union of all stemtypes
-#stemtype# = #nounclass# #adjectiveclass# #adverbclass# #verbclass# #indeclclass# #irregclass#
+#stemtype# = #nounclass# #adjectiveclass# #verbclass# #indeclclass# #irregclass#

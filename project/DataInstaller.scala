@@ -28,6 +28,10 @@ object DataInstaller {
     val nounsTarget = lexica/"lexicon-nouns.fst"
     NounDataInstaller(dataSource/corpusName/"stems-tables/nouns", nounsTarget)
 
+    val adjsTarget = lexica/"lexicon-adjectives.fst"
+    AdjectiveDataInstaller(dataSource/corpusName/"stems-tables/adjectives", adjsTarget)
+
+
     val irregVerbsTarget = lexica/"lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSource/corpusName/"irregular-stems/verbs", irregVerbsTarget)
 

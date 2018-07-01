@@ -14,10 +14,15 @@ object AdjectiveDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(srcDir: File, targetFile: File) = {
-      val adjectiveFst = fstForAdjectiveData(srcDir)
-      if (adjectiveFst.nonEmpty) {
-        targetFile.overwrite(adjectiveFst)
-      } else {}
+    println("\n\nGet adject data from " + srcDir)
+    val adjectiveFst = fstForAdjectiveData(srcDir)
+    println("fst " + adjectiveFst)
+
+
+    if (adjectiveFst.nonEmpty) {
+      targetFile.overwrite(adjectiveFst)
+      println("Wrote results to " + targetFile)
+    } else { }
   }
 
   /** Translates one line of CEX data documenting a adjective stem
