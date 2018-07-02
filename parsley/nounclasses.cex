@@ -1,29 +1,30 @@
-0_i#noun##
-0_is#noun##
-a_ae#noun##
+parsley#pos#tabulae#paradigm word
+0_i#noun#0_i#puer. vir
+0_is#noun#0_is#caput
+a_ae#noun#a_ae#stella
 an_aLnis#noun##
 ans_antis#noun##
 as_adis#noun##
-as_ae#noun##
+as_ae#noun#as_ae#Aeneas
 as_antis#noun##
 eLr_eLris#noun##
 eLs_eris#noun##
-e_es#noun##
+e_es#noun#e_es#epitome
 e_is#noun##
-en_inis#noun##
+en_inis#noun#en_inis#nomen
 ens_entis#noun##
-eps_ipis#noun##
+eps_ipis#noun#eps_ipis#princeps
 eps_ipitis#noun##
 er_eris#noun##
-er_ri#noun##
-er_ris#noun##
-es_ae#noun##
+er_ri#noun#er_ri#ager
+er_ris#noun#er_ris#pater
+es_ae#noun#es_ae#Perses
 es_eLdis#noun##
-es_eLi#noun##
+es_eLi#noun#es_ei#res, dies, fides
 es_eLtis#noun##
 es_ei#noun##
 es_is#noun##
-es_itis#noun##
+es_itis#noun#es_itis#miles
 eus_ei#noun##
 ex_icis#noun##
 ex_igis#noun##
@@ -33,24 +34,24 @@ is_eos#noun##
 is_eris#noun##
 is_idis#noun##
 is_idos#noun##
-is_is#noun##
+is_is#noun#is_is#sitis, turris, ignis
 is_is_C#noun##
 ius_i#noun##
-ix_iLcis#noun##
-ix_icis#noun##
-ma_matis#noun##
+ix_iLcis#noun#-#
+ix_icis#noun#ix_icis#radix
+ma_matis#noun#ma_matis#poema
 men_minis#noun##
-oLn_oLnis#noun##
-oLn_onis#noun##
+oLn_oLnis#noun#-#
+oLn_onis#noun#-#
 o_eLnis#noun##
 o_inis#noun##
-o_oLnis#noun##
-o_onis#noun##
+o_oLnis#noun#-#
+o_onis#noun#o_onis#leo
 o_us#noun##
 on_ontis#noun##
 or_oLris#noun##
 or_oris#noun##
-os_i#noun##
+os_i#noun#os_i#mythos
 os_ois#noun##
 peLs_pedis#noun##
 s_dis#noun##
@@ -60,13 +61,13 @@ s_tis#noun##
 tas_tatis#noun##
 uLs_uLris#noun##
 uns_untis#noun##
-ur_oris#noun##
-us_eris#noun##
-us_i#noun##
+ur_oris#noun#us_oris#corpus, aequor
+us_eris#noun#us_eris#genus
+us_i#noun#us_i#servus, bellum
 us_oris#noun##
 us_untis#noun##
-us_us#noun##
-x_cis#noun##
-x_ctis#noun##
-x_gis#noun##
+us_us#noun#us_us#manus
+x_cis#noun#x_cis#dux
+x_ctis#noun#x_ctis#nox
+x_gis#noun#x_gis#rex
 ys_yos#noun##
