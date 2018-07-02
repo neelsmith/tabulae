@@ -7,7 +7,7 @@
 % noun nor verb.
 #pos# = <noun><adj><verb><vadj><infin><ptcpl><adv><pron><irregcverb><irregnoun><irregadj><irregadv><irreginfin><irregptcpl><irregvadj><irregpron>
 
-#verbparts# = <verb><vadj><infin><ptcpl>
+#verbparts# = <verb><infin><ptcpl><gerundive><gerund><supine>
 %
 % 1. Noun morphology:
 %
