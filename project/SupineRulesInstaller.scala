@@ -47,7 +47,7 @@ object SupineRulesInstaller {
   */
   def supineRuleToFst(line: String) : String = {
     val cols = line.split("#")
-    //"supine.conj1_1#conj1#andi#gen"
+    //"supine.conj1_1#conj1#atum#acc"
     if (cols.size < 4) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")

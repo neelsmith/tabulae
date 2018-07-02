@@ -139,7 +139,7 @@ def testList = List(
   /////////
   // inflectional rules for supines
   ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "pending" ),
 
 )
@@ -406,7 +406,13 @@ def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo
       case t : Throwable => true
     }
 }
-def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "supine.conj1_1#conj1#atum#acc"
+  val goodFst =  SupineRulesInstaller.supineRuleToFst(goodLine)
+  val expected = "<conj1><supine>atum<acc><u>supine\\.conj1\\_1</u>"
+  goodFst.trim ==  expected
+}
 def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 
