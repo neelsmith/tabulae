@@ -20,13 +20,9 @@ The current version of `tabulae` can install inflectional rules for:
 -   indeclinable prepositions, conjunctions and exclamations
 -   infinitive verb forms
 -   participles
-
-In development: installation of rules for:
-
 -   gerundives
 -   gerunds
 -   supines
-
 
 [yes]:  https://raw.githubusercontent.com/wiki/neelsmith/tabulae/images/yes.png
 
