@@ -140,7 +140,7 @@ def testList = List(
   // inflectional rules for supines
   ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "" ),
 
 )
 
@@ -413,7 +413,23 @@ def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo : 
   val expected = "<conj1><supine>atum<acc><u>supine\\.conj1\\_1</u>"
   goodFst.trim ==  expected
 }
-def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "supine.conj1_1#conj1#atum#acc"
+  val goodFst =  SupineRulesInstaller.supineRuleToFst(goodLine)
+  val expected = "<conj1><supine>atum<acc><u>supine\\.conj1\\_1</u>"
+
+  val supsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/supines")
+  val  supsFile = supsDir/"madeupdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine.trim}"
+  supsFile.overwrite(text + "\n")
+
+  val fstFromDir = SupineRulesInstaller.fstForSupineRules(supsDir)
+  val lines = fstFromDir.split("\n").toVector
+  // tidy up
+  (repo/"datasets").delete()
+  lines(0) == expected
+  goodFst.trim ==  expected
+}
 
 
 
