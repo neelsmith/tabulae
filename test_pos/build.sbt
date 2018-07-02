@@ -365,7 +365,14 @@ def testGerundivesInflRulesFromDir(corpusName: String, conf: Configuration, repo
 
 }
 
-def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    try {
+      val fst = GerundRulesInstaller.gerundRuleToFst("Not a real line")
+      false
+    } catch {
+      case t : Throwable => true
+    }
+}
 def testConvertGerundsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
