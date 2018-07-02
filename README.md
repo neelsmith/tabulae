@@ -9,13 +9,6 @@ A system for building Latin morphological parsers.
 See the project web site: <https://neelsmith.github.io/tabulae>.
 
 
-## Notes on directory organization
-
-The directory `fst` contains the core logic of the parser written in the notation of the Stuttgart FST toolset.  These files are independent of particular data sets, and are compiled into every parser that `tabulae` builds.  Copies of this directory are included in the subprojects `test_build`,  `test_pos` and `test_wordlists` to simplify automated testing.  These copies can be rebuilt with rsync, e.g. from the root of the repository, `rsync -avz fst/ test_pos/fst`
-
-
-
-
 ## Acknowledgments
 
 This project is especially indebted to Harry Schmidt's [parsley](https://github.com/goldibex/parsley-core), and to the openly licensed data sets of the [Perseus project](http://www.perseus.tufts.edu).
