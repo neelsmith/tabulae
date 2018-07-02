@@ -39,6 +39,9 @@ object AcceptorComposer {
     fst.append(verbAcceptor(projectDir) + "\n")
     fst.append(infinitiveAcceptor(projectDir) + "\n")
     fst.append(participleAcceptor(projectDir) + "\n")
+    fst.append(gerundiveAcceptor(projectDir) + "\n")
+    fst.append(gerundAcceptor(projectDir) + "\n")
+    fst.append(supineAcceptor(projectDir) + "\n")
 
     fst.append(nounAcceptor(projectDir) + "\n")
     fst.append(adjectiveAcceptor(projectDir) + "\n")
@@ -64,6 +67,15 @@ object AcceptorComposer {
   def includeParticiples(dir: ScalaFile): Boolean = {
     includeVerbs(dir)
   }
+  def includeGerundives(dir: ScalaFile): Boolean = {
+    includeVerbs(dir)
+  }
+  def includeGerunds(dir: ScalaFile): Boolean = {
+    includeVerbs(dir)
+  }
+  def includeSupines(dir: ScalaFile): Boolean = {
+    includeVerbs(dir)
+  }
 
   /** Rewrite a single file by replacing all occurrences of
   * the variable name `@workDir` with the string value for the
@@ -86,6 +98,7 @@ object AcceptorComposer {
   def irregVerbAcceptor(dir : ScalaFile): String = {
     if (includeIrregVerbs(dir) ) {
       """
+% Irregular verb acceptor      
 $squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+[#person#] [#number#] [#tense#] [#mood#] [#voice#]<irregcverb><div><irregcverb><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
@@ -100,24 +113,24 @@ $squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]
   def irregNounAcceptor(dir : ScalaFile): String = {
     if (includeIrregNouns(dir) ) {
       """
+% Irregular noun acceptor
 $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregnoun> <div> <irregnoun> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
   }
 
-
-
-    def includeIrregAdjectives(dir: ScalaFile): Boolean = {
-      val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
-      indeclSource.exists && indeclSource.lines.nonEmpty
-    }
-    def irregAdjectiveAcceptor(dir : ScalaFile): String = {
-      if (includeIrregNouns(dir) ) {
-        """
+  def includeIrregAdjectives(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregAdjectiveAcceptor(dir : ScalaFile): String = {
+    if (includeIrregNouns(dir) ) {
+      """
+% Irregular adjective acceptor
 $squashirregadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $degree$ <irregadj> <div> <irregadj> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
-      } else {""}
-    }
+    } else {""}
+  }
 
 
   def includeIrregPronouns(dir: ScalaFile): Boolean = {
@@ -127,6 +140,7 @@ $squashirregadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
   def irregPronounAcceptor(dir : ScalaFile): String = {
     if (includeIrregPronouns(dir) ) {
       """
+% Irregular pronoun acceptor
 $squashirregpronurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregpron> <div> <irregpron> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
@@ -139,6 +153,7 @@ $squashirregpronurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:
   def irregAdverbAcceptor(dir : ScalaFile): String = {
     if (includeIrregAdverbs(dir) ) {
       """
+% Irregular adverb acceptor
 $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $degree$ <irregadv> <div> <irregadv> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
@@ -159,6 +174,7 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
   def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {
     """
+% Conjugated verb form acceptor
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
@@ -218,6 +234,33 @@ $squashptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+
 """ } else { "" }
 }
 
+def gerundiveAcceptor(dir : ScalaFile): String = {
+
+if (includeVerbs(dir) ) {  """
+% Gerundive acceptor
+$=verbclass$ = [#verbclass#]
+$squashgerundiveurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <gerundive>[#stemchars#]* [#gender#] [#case#][#number#] <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
+
+def gerundAcceptor(dir : ScalaFile): String = {
+
+if (includeVerbs(dir) ) {  """
+% Gerund acceptor
+$=verbclass$ = [#verbclass#]
+$squashgerundurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <gerund>[#stemchars#]* [#case#] <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
+
+def supineAcceptor(dir : ScalaFile): String = {
+
+if (includeVerbs(dir) ) {  """
+% Supine acceptor
+$=verbclass$ = [#verbclass#]
+$squashsupineurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <supine>[#stemchars#]* [#case#] <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+""" } else { "" }
+}
+
 /** String defining final noun acceptor transducer.*/
 def adverbAcceptor(dir : ScalaFile): String = {
   // use adjective stems for regular formation of advs:
@@ -272,6 +315,10 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeVerbs(_),"$squashverburn$" ),
       (includeInfinitives(_),"$squashinfurn$" ),
       (includeParticiples(_),"$squashptcplurn$" ),
+
+      (includeGerundives(_),"$squashgerundiveurn$" ),
+      (includeGerunds(_),"$squashgerundurn$" ),
+      (includeSupines(_),"$squashsupineurn$" ),
 
       (includeNouns(_),"$squashnounurn$" ),
       (includeAdjectives(_),"$squashadjurn$" ),

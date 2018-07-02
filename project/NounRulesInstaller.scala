@@ -30,8 +30,6 @@ object NounRulesInstaller {
   def fstForNounRules(srcDir: File) : String = {
 
     val nounsFiles = srcDir.glob("*.cex").toVector
-    println("\n\tbuilding inflection rules for nouns from " + srcDir)
-
     val rules = nounsFiles.flatMap(f =>
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = nounRulesToFst(rules.toVector)

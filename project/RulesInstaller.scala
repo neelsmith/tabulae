@@ -46,6 +46,19 @@ object RulesInstaller {
     ParticipleRulesInstaller( ptcplSrc,ptcplFst  )
 
 
+    val gndvSrc = srcCorpus/"rules-tables/gerundives"
+    val gndvFst = inflDir/"gerundiveinfl.fst"
+    GerundiveRulesInstaller( gndvSrc,gndvFst  )
+
+    val gndSrc = srcCorpus/"rules-tables/gerunds"
+    val gndFst = inflDir/"gerundinfl.fst"
+    GerundRulesInstaller( gndSrc,gndFst  )
+
+    val supineSrc = srcCorpus/"rules-tables/supines"
+    val supineFst = inflDir/"supineinfl.fst"
+    SupineRulesInstaller( supineSrc,supineFst  )
+
+
     val inflFst = repo/"fst/inflection"
     installInvariants(inflFst, inflDir)
   }
