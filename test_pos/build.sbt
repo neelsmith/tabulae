@@ -138,7 +138,7 @@ def testList = List(
 
   /////////
   // inflectional rules for supines
-  ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "pending" ),
   ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "pending" ),
 
@@ -398,7 +398,14 @@ def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo : 
   goodFst.trim ==  expected
 }
 
-def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+    try {
+      val fst = SupineRulesInstaller.supineRuleToFst("Not a real line")
+      false
+    } catch {
+      case t : Throwable => true
+    }
+}
 def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
