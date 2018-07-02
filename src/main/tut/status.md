@@ -6,7 +6,12 @@ layout: page
 
 ## Regular stems
 
-The current version of `tabulae` can install data from any stem type.
+The current version of `tabulae` can install data from the following  types of regular stems:
+
+-   adjectives
+-   indeclinable forms
+-   nouns
+-   verbs (in simplex form)
 
 
 ## Regular rules
@@ -38,5 +43,4 @@ The current version of `tabulae` can install irregular forms of:
 -   verbs
 -   adverbs
 -   adjectives
-
-In development:  installation of irregular infinitivies
+-   infinitivies
