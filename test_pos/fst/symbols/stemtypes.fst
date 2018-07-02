@@ -5,12 +5,13 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Noun stem types
-#noun1# = <a_ae>
-#noun2# = <us_i><ius_i>
-#noun3# = <e_is><x_gis><tas_tatis>
+#noun1# = <a_ae><as_ae><e_es><er_ri><es_ae>
+#noun2# = <0_i><os_i><us_eris><us_i>
+#noun3# = <0_is><en_inis><eps_ipis><er_ris><es_itis><ix_icis><ma_matis><o_onis><us_oris><x_cis><x_ctis><x_gis>
+#noun4# = <us_us>
+#noun5# = <es_ei>
 
-
-#nounclass# = #noun1# #noun2# #noun3#
+#nounclass# = #noun1# #noun2# #noun3# #noun4# #noun5#
 
 
 
