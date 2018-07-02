@@ -54,7 +54,9 @@ All the data in your tables must belong to a specified alphabet, and be identifi
 
 ## Testing
 
-Summary of [sbt tasks for testing](testing).
+-  Summary of [sbt tasks for testing](testing).
+
+A note on directory organization: the directory `fst` contains the core logic of the parser written in the notation of the Stuttgart FST toolset. These files are independent of particular data sets, and are compiled into every parser that tabulae builds. Copies of this directory are included in the subprojects `test_build`, `test_pos` and `test_wordlists` to simplify automated testing. These copies can be rebuilt with rsync, e.g. from the root of the repository, `rsync -avz fst/ test_pos/fst`
 
 ## Under the hood
 
