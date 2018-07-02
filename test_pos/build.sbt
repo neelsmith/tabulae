@@ -759,13 +759,13 @@ def testBadIrregInfinStemDataConvert (corpusName: String, conf: Configuration, r
 def testIrregInfinStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
   val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
   goodFst.trim ==  expected
 }
 def testIrregInfinStemFstFromDir (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
   val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
 
   val infSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/infinitives")
   val testData = infSource/"madeuptestdata.cex"
@@ -782,7 +782,7 @@ def testIrregInfinStemFstFromDir (corpusName: String, conf: Configuration, repo 
 def testIrregInfinStemDataApplied (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
   val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
 
 
   val ds = mkdir(repo/"datasets")

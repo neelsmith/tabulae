@@ -49,10 +49,13 @@ object AcceptorComposer {
 
 
     fst.append(irregVerbAcceptor(projectDir) + "\n")
+    fst.append(irregInfinitiveAcceptor(projectDir) + "\n")
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
     fst.append(irregPronounAcceptor(projectDir) + "\n")
     fst.append(irregAdjectiveAcceptor(projectDir) + "\n")
+
+
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
     val acceptorFile = projectDir/"acceptor.fst"
@@ -98,7 +101,7 @@ object AcceptorComposer {
   def irregVerbAcceptor(dir : ScalaFile): String = {
     if (includeIrregVerbs(dir) ) {
       """
-% Irregular verb acceptor      
+% Irregular verb acceptor
 $squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+[#person#] [#number#] [#tense#] [#mood#] [#voice#]<irregcverb><div><irregcverb><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
@@ -155,6 +158,21 @@ $squashirregpronurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:
       """
 % Irregular adverb acceptor
 $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $degree$ <irregadv> <div> <irregadv> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+"""
+    } else {""}
+  }
+
+
+
+  def includeIrregInfinitives(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregadverbs.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregInfinitiveAcceptor(dir : ScalaFile): String = {
+    if (includeIrregAdverbs(dir) ) {
+"""
+% Irregular infinitive acceptor
+$squashirreginfinnurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $tense$ $voice$ <irreginfin> <div> <irreginfin> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
     } else {""}
   }
@@ -327,6 +345,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeIndecls(_),"$squashindeclurn$" ),
 
       (includeIrregVerbs(_), "$squashirregverburn$"),
+      (includeIrregInfinitives(_), "$squashirreginfinnurn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),
       (includeIrregAdjectives(_), "$squashirregadjurn$"),
       (includeIrregAdverbs(_), "$squashirregadvurn$"),

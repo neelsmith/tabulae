@@ -51,7 +51,7 @@ object IrregInfinitiveDataInstaller {
 
 
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${tense}><${voice}><irreginfinitive>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${tense}><${voice}><irreginfin>")
       fstBuilder.toString
     }
   }

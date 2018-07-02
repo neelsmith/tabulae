@@ -44,6 +44,10 @@ object DataInstaller {
 
     val irregPronounsTarget = lexica/"lexicon-irregpronouns.fst"
     IrregPronounDataInstaller(dataSource/corpusName/"irregular-stems/pronouns", irregPronounsTarget)
+
+
+    val irregInfinsTarget = lexica/"lexicon-irreginfinitives.fst"
+    IrregInfinitiveDataInstaller(dataSource/corpusName/"irregular-stems/infinitives", irregInfinsTarget)
   }
 
 }
