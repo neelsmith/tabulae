@@ -133,8 +133,8 @@ def testList = List(
   /////////
   // inflectional rules for gerunds
   ("Test converting bad inflectional rules for gerunds", testBadGerundsInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for gerunds", testConvertGerundsInflRules(_, _, _), "pending" ),
-  ("Test converting  inflectional rules for gerunds from files in dir", testGerundsInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerunds", testConvertGerundsInflRules(_, _, _), "" ),
+  ("Test converting  inflectional rules for gerunds from files in dir", testGerundsInflRulesFromDir(_, _, _), "" ),
 
   /////////
   // inflectional rules for supines
@@ -374,9 +374,29 @@ def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo
     }
 }
 def testConvertGerundsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+    // Should correctly convert good data.
+    val goodLine = "gerund.conj1_1#conj1#andi#gen"
+    val goodFst =  GerundRulesInstaller.gerundRuleToFst(goodLine)
+    val expected = "<conj1><gerund>andi<gen><u>gerund\\.conj1\\_1</u>"
+    goodFst.trim ==  expected
 }
-def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "gerund.conj1_1#conj1#andi#gen"
+  val goodFst =  GerundRulesInstaller.gerundRuleToFst(goodLine)
+  val expected = "<conj1><gerund>andi<gen><u>gerund\\.conj1\\_1</u>"
+
+
+  val grndsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/gerunds")
+  val grndFile = grndsDir/"madeupdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine.trim}"
+  grndFile.overwrite(text + "\n")
+  val fstFromDir = GerundRulesInstaller.fstForGerundRules(grndsDir)
+  val lines = fstFromDir.split("\n").toVector
+  // tidy up
+  (repo/"datasets").delete()
+  lines(0) == expected
+  goodFst.trim ==  expected
+}
 
 def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 def testConvertSupinesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
