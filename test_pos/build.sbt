@@ -127,12 +127,12 @@ def testList = List(
   // inflectional rules for gerundives
   ("Test converting bad inflectional rules for gerundives", testBadGerundivesInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for gerundives", testConvertGerundivesInflRules(_, _, _), "" ),
-  ("Test converting  inflectional rules for gerundives from files in dir", testGerundivesInflRulesFromDir(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerundives from files in dir", testGerundivesInflRulesFromDir(_, _, _), "" ),
 
 
   /////////
   // inflectional rules for gerunds
-  ("Test converting bad inflectional rules for gerunds", testBadGerundsInflRulesConvert(_, _, _), "pending" ),
+  ("Test converting bad inflectional rules for gerunds", testBadGerundsInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for gerunds", testConvertGerundsInflRules(_, _, _), "pending" ),
   ("Test converting  inflectional rules for gerunds from files in dir", testGerundsInflRulesFromDir(_, _, _), "pending" ),
 
@@ -344,26 +344,26 @@ def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo
   val expected = "<conj1><gerundive>andus<masc><nom><sg><u>gdv\\.conj1\\_1</u>"
   goodFst.trim ==  expected
 }
+
+
 def testGerundivesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
 
   val goodLine = "gdv.conj1_1#conj1#andus#masc#nom#sg"
   val goodFst =  GerundiveRulesInstaller.gerundiveRuleToFst(goodLine)
   val expected = "<conj1><gerundive>andus<masc><nom><sg><u>gdv\\.conj1\\_1</u>"
 
-
-
-      val gdvsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/gerundives")
-      val gdvFile = gdvsDir/"madeupdata.cex"
-      val text = s"header line, omitted in parsing\n${goodLine.trim}"
-      gdvFile.overwrite(text + "\n")
-      val fstFromDir = GerundiveRulesInstaller.fstForGerundiveRules(gdvsDir)
-      val lines = fstFromDir.split("\n").toVector
-      // tidy up
-      (repo/"datasets").delete()
-      println("LINES:\n\n"  + lines)
-      lines(0) == expected
-
+  val gdvsDir = mkdirs(repo/"datasets"/corpusName/"rules-tables/gerundives")
+  val gdvFile = gdvsDir/"madeupdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine.trim}"
+  gdvFile.overwrite(text + "\n")
+  val fstFromDir = GerundiveRulesInstaller.fstForGerundiveRules(gdvsDir)
+  val lines = fstFromDir.split("\n").toVector
+  // tidy up
+  (repo/"datasets").delete()
+  lines(0) == expected
+  goodFst.trim ==  expected
 }
+
 
 def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
     try {
@@ -373,7 +373,9 @@ def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo
       case t : Throwable => true
     }
 }
-def testConvertGerundsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertGerundsInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
 def testGerundsInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 def testBadSupinesInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }

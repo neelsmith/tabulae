@@ -48,22 +48,21 @@ object GerundRulesInstaller {
   def gerundRuleToFst(line: String) : String = {
     val cols = line.split("#")
     //"gdv.conj1_1#conj1#andus#masc#nom#sg"
-    if (cols.size < 6) {
+    if (cols.size < 5) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
-
+      //"gerund.conj1_1#conj1#andi#gen
       val fst = StringBuilder.newBuilder
       val ruleUrn = cols(0).replaceAll("_","\\\\_").
         replaceAll("\\.","\\\\.")
       val inflClass = cols(1).replaceAll("_","\\_")
       val inflString = cols(2) // DataInstaller.toFstAlphabet(cols(2))
-      val grammGender = cols(3)
       val grammCase = cols(4)
-      val grammNumber = cols(5)
 
 
-      fst.append(s" <${inflClass}><gerund>${inflString}<${grammGender}><${grammCase}><${grammNumber}><u>${ruleUrn}</u>").toString
+
+      fst.append(s" <${inflClass}><gerund>${inflString}<${grammCase}><u>${ruleUrn}</u>").toString
     }
   }
 
