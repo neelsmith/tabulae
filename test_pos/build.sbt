@@ -126,7 +126,7 @@ def testList = List(
   /////////
   // inflectional rules for gerundives
   ("Test converting bad inflectional rules for gerundives", testBadGerundivesInflRulesConvert(_, _, _), "" ),
-  ("Test converting  inflectional rules for gerundives", testConvertGerundivesInflRules(_, _, _), "pending" ),
+  ("Test converting  inflectional rules for gerundives", testConvertGerundivesInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for gerundives from files in dir", testGerundivesInflRulesFromDir(_, _, _), "pending" ),
 
 
@@ -338,7 +338,14 @@ def testBadGerundivesInflRulesConvert(corpusName: String, conf: Configuration, r
       case t : Throwable => true
     }
 }
-def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
+def testConvertGerundivesInflRules(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  // Should correctly convert good data.
+  val goodLine = "gdv.conj1_1#conj1#andus#masc#nom#sg"
+  val goodFst =  GerundiveRulesInstaller.gerundiveRuleToFst(goodLine)
+  val expected = "<conj1><gerundive>andus<masc><nom><sg><u>gdv\\.conj1\\_1</u>"
+  
+  goodFst.trim ==  expected
+}
 def testGerundivesInflRulesFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }
 
 def testBadGerundsInflRulesConvert(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = { false }

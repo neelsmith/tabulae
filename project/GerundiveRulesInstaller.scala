@@ -47,8 +47,8 @@ object GerundiveRulesInstaller {
   */
   def gerundiveRuleToFst(line: String) : String = {
     val cols = line.split("#")
-    //"lverbinfl.are_ptcpl1#conj1#ans#masc#nom#sg#pres#act"
-    if (cols.size < 8) {
+    //"gdv.conj1_1#conj1#andus#masc#nom#sg"
+    if (cols.size < 6) {
       println(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n s${line}")
     } else {
@@ -61,10 +61,9 @@ object GerundiveRulesInstaller {
       val grammGender = cols(3)
       val grammCase = cols(4)
       val grammNumber = cols(5)
-      val tense = cols(6)
-      val voice = cols(7)
 
-      fst.append(s" <${inflClass}><ptcpl>${inflString}<${grammGender}><${grammCase}><${grammNumber}><${tense}><${voice}><u>${ruleUrn}</u>").toString
+
+      fst.append(s" <${inflClass}><gerundive>${inflString}<${grammGender}><${grammCase}><${grammNumber}><u>${ruleUrn}</u>").toString
     }
   }
 
