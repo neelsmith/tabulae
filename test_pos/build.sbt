@@ -142,6 +142,13 @@ def testList = List(
   ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "" ),
 
+
+  // irreg infinitives
+  ("Test converting bad stem data to fst for infinitives", testBadIrregInfinStemDataConvert(_, _, _), "" ),
+  ("Test converting stem data to fst for irregular infinitives", testIrregInfinStemDataConvert(_, _, _), "" ),
+  ("Test converting stem files in directory to fst for irregular infinitives", testIrregInfinStemFstFromDir(_, _, _), "" ),
+  ("Test converting apply method for irregular infinitives stem data installer", testIrregInfinStemDataApplied(_, _, _), "" ),
+
 )
 
 /** "s" or no "s"? */
@@ -741,6 +748,67 @@ def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, r
     rslt
 }
 
+def testBadIrregInfinStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  try {
+    val fst = IrregInfinitiveDataInstaller.infinitiveLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testIrregInfinStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
+  val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+  goodFst.trim ==  expected
+}
+def testIrregInfinStemFstFromDir (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
+  val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+
+  val infSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/infinitives")
+  val testData = infSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val fstFromDir = IrregInfinitiveDataInstaller.fstForIrregInfinitiveData(infSource)
+  // Tidy up
+  (repo/"datasets").delete()
+
+  fstFromDir.trim == expected
+
+}
+def testIrregInfinStemDataApplied (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
+  val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfinitive>"
+
+
+  val ds = mkdir(repo/"datasets")
+  val cdir = mkdir(ds/corpusName)
+  val irregDir = mkdir(cdir/"irregular-stems")
+  val infinsDir = mkdir(irregDir/"inifinitives")
+
+  val testData = infinsDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreg-infinitives.fst"
+  IrregInfinitiveDataInstaller(infinsDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  val rslt = output(0) == expected
+  rslt
+}
+
 
 ////////// Regular morphology
 
@@ -1147,7 +1215,7 @@ def testVerbAcceptor(corpusName: String, conf: Configuration, repo : ScalaFile):
   val acceptorFst = AcceptorComposer.verbAcceptor(projectDir)
   val lines = acceptorFst.split("\n").toVector.filter(_.nonEmpty)
   val expected = "$=verbclass$ = [#verbclass#]"
-  (emptiedOk && lines(0) == expected)
+  (emptiedOk && lines(1) == expected)
 }
 
 
@@ -1166,9 +1234,6 @@ def testRulesInstaller(corpusName: String, conf: Configuration, repo :  ScalaFil
 
   expectedSet  ==  actualSet
 }
-
-
-
 
 lazy val posTests = inputKey[Unit]("Unit tests")
 posTests in Test := {
