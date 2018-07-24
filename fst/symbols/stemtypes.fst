@@ -7,7 +7,7 @@
 % Noun stem types
 #noun1# = <a_ae><as_ae><e_es><er_ri><es_ae>
 #noun2# = <0_i><os_i><us_eris><us_i>
-#noun3# = <0_is><en_inis><eps_ipis><er_ris><es_itis><ix_icis><ma_matis><o_onis><us_oris><x_cis><x_ctis><x_gis>
+#noun3# = <0_is><en_inis><eps_ipis><er_ris><es_itis><ix_icis><ma_matis><o_onis><us_oris><x_cis><x_ctis><x_gis><is_idis><tas_tatis><ut_itis><o_inis><or_oris><is_is><s_is><s_tis>
 #noun4# = <us_us>
 #noun5# = <es_ei>
 
