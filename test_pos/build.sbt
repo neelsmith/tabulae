@@ -487,8 +487,8 @@ def testInstallCompoundVerbs(corpusName: String, conf: Configuration, repo :  Sc
   CompoundVerbDataInstaller(repo/"datasets"/corpusName/"stems-tables", target)
   val output = resultFile.lines.toVector
 
-  val expected = "<u>ag\\.comp1</u><u>demolexent\\.1</u><#>peram<verb><conj1>"
 
+  val expected = "<u>ag\\.comp1\\_v1</u><u>demolexent\\.1</u><#>peram<verb><conj1>"
   (expected == output(0).trim)
 }
 

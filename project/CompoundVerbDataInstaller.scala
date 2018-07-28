@@ -19,15 +19,24 @@ object CompoundVerbDataInstaller {
     val compoundInfo = cexRules(compoundDir)
     val compoundDataLines = for (c <- compoundInfo) yield {
       val cols = c.split("#")
+      //println("\n\nCOLS: " + cols.toVector)
       if (cols.size < 4) {
         throw new Exception("Installing compound verb data: too few columns in " + c)
       } else {
         val ruleId = cols(0)
+
+
         val lexent = cols(1)
         val prefix = cols(2)
         val simplexId = cols(3)
+        //val simplexParts = simplexId.split("\\.")
+        //println("\n\nSIMPLEX PARTS: " + simplexParts.toVector)
+
         if (simplexMap.keySet.contains(simplexId)) {
-          s"${ruleId}#${lexent}#${prefix}${simplexMap(simplexId)}"
+          val parts = simplexMap(simplexId).split("#")
+          val ruleParts = parts(0).split("\\.")
+
+          s"${ruleId}_${ruleParts(1)}#${lexent}#${prefix}${parts(1)}#${parts(2)}"
         } else {
           throw new Exception("Lexical map did not contain key for " + simplexId)
         }
@@ -49,7 +58,7 @@ object CompoundVerbDataInstaller {
       if (cols.size < 4) {
         throw new Exception("CompoundVerbDataInstaller: too few columns in line " + s)
       } else {
-        val data = cols(2) + "#" + cols(3)
+        val data = cols(0) + "#" + cols(2) + "#" + cols(3)
         (cols(1) -> data)
       }
     }).toMap
