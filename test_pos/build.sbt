@@ -149,6 +149,13 @@ def testList = List(
   ("Test converting stem files in directory to fst for irregular infinitives", testIrregInfinStemFstFromDir(_, _, _), "" ),
   ("Test converting apply method for irregular infinitives stem data installer", testIrregInfinStemDataApplied(_, _, _), "" ),
 
+  // compound verb stems
+  ("Test installing stem data for compound verbs", testInstallCompoundVerbs(_, _, _), "" ),
+
+
+  ("Test installing stem data for irregular compound verbs", testInstallIrregCompoundVerbs(_, _, _), "pending" ),
+
+
 )
 
 /** "s" or no "s"? */
@@ -185,10 +192,19 @@ def installVerbRuleTable(verbsDir:  ScalaFile) : Unit = {
 }
 def installVerbStemTable(verbsDir:  ScalaFile) : Unit = {
   val verbFile = verbsDir/"madeupdata.cex"
+  //ag.comp1#demolexent.1#peram#conj1
   val goodLine = "ag.v1#lexent.n2280#am#conj1"
   val text = s"header line, omitted in parsing\n${goodLine}"
   verbFile.overwrite(text)
 }
+def installCompoundStemTable(compoundsDir:  ScalaFile) : Unit = {
+  val verbFile = compoundsDir/"madeupdata.cex"
+  val goodLine = "ag.comp1#demolexent.1#per#lexent.n2280#"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  verbFile.overwrite(text)
+}
+
+
 
 ////////////////// Tests //////////////////////////////
 //
@@ -437,6 +453,45 @@ def testSupinesInflRulesFromDir(corpusName: String, conf: Configuration, repo : 
   lines(0) == expected
   goodFst.trim ==  expected
 }
+
+def testInstallIrregCompoundVerbs(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  /*
+  val verbsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-simplex")
+  installVerbStemTable(verbsDir)
+  val compoundsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-compound")
+  installCompoundStemTable(compoundsDir)
+
+  val target = mkdirs("parsers"/corpusName/"lexica")
+  val resultFile = target/"lexicon-compoundverbs.fst"
+  CompoundVerbDataInstaller(verbsDir, compoundsDir, resultFile)
+  val output = resultFile.lines.toVector
+  println("READ FROM FILE:\n\n" + output(0) + "\n\n" )
+
+  val expected = "<u>ag\\.comp1</u><u>demolexent\\.1</u><#>peram<verb><conj1>"
+
+  (expected == output(0).trim)
+  */
+  false
+}
+
+
+def testInstallCompoundVerbs(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+
+  val verbsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-simplex")
+  installVerbStemTable(verbsDir)
+  val compoundsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-compound")
+  installCompoundStemTable(compoundsDir)
+
+  val target = mkdirs("parsers"/corpusName/"lexica")
+  val resultFile = target/"lexicon-compoundverbs.fst"
+  CompoundVerbDataInstaller(repo/"datasets"/corpusName/"stems-tables", target)
+  val output = resultFile.lines.toVector
+
+  val expected = "<u>ag\\.comp1</u><u>demolexent\\.1</u><#>peram<verb><conj1>"
+
+  (expected == output(0).trim)
+}
+
 
 
 
@@ -762,6 +817,7 @@ def testIrregInfinStemDataConvert (corpusName: String, conf: Configuration, repo
   val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
   goodFst.trim ==  expected
 }
+
 def testIrregInfinStemFstFromDir (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
   val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)

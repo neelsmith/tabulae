@@ -38,9 +38,7 @@ object VerbDataInstaller {
 // <u>smyth.n62274_0</u><u>lexent.n62274</u><#>leip<verb><w_pp1>
 
   def verbLineToFst(line: String) : String = {
-
     val cols = line.split("#")
-
     if (cols.size < 4) {
       println(s"${cols.size} is the wrong number of columns for a verb\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
@@ -64,6 +62,7 @@ object VerbDataInstaller {
   * represents one noun stem in CEX form.
   */
   def verbLinesToFst(data: Vector[String]) : String = {
+
     data.map(verbLineToFst(_)).mkString("\n") + "\n"
   }
 

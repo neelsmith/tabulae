@@ -27,7 +27,9 @@ val commonSettings = Seq(
       parse := parseWords.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value
+      cleanAll := cleanAllImpl.value,
+      debug := debugMe.value
+
     )
 
 lazy val root = (project in file(".")).
@@ -37,6 +39,7 @@ lazy val testBuild = (project in file("test_build"))
 lazy val testWordLists = (project in file("test_wordlists"))
 
 lazy val testPoS = (project in file("test_pos"))
+lazy val testPoS2 = (project in file("test_pos2"))
 
 
 lazy val fst = inputKey[Unit]("Compile complete FST system for a named corpus")
@@ -44,6 +47,17 @@ lazy val parse = inputKey[Unit]("Run a binary parse against a word list")
 lazy val corpus = inputKey[Unit]("Generate data directory hierarchy for a new named corpus")
 lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
+lazy val debug = taskKey[Vector[String]]("Run some debugging script")
+
+lazy val debugMe: Def.Initialize[Task[Vector[String]]] = Def.task {
+  val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
+  val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
+  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
+  val worked = (goodFst.trim ==  expected)
+  println("GOT " + goodFst)
+  Vector(goodFst,goodLine)
+}
+
 
 // Delete all compiled parsers
 lazy val cleanAllImpl: Def.Initialize[Task[Vector[String]]] = Def.task {
