@@ -15,7 +15,3 @@ care
 totius
 bene
 hic
-demonstro
-init
-initus
-inire
