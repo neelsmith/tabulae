@@ -50,6 +50,7 @@ object AcceptorComposer {
 
     fst.append(irregVerbAcceptor(projectDir) + "\n")
     fst.append(irregInfinitiveAcceptor(projectDir) + "\n")
+    fst.append(irregParticipleAcceptor(projectDir) + "\n")
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
     fst.append(irregPronounAcceptor(projectDir) + "\n")
@@ -162,6 +163,19 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
     } else {""}
   }
 
+  def includeIrregParticiples(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregparticiples.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregParticipleAcceptor(dir : ScalaFile): String = {
+    if (includeIrregParticiples(dir) ) {
+      println("YES PTCPLS FROM " + dir);
+  """
+% Irregular participle acceptor
+$squashirregptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $tense$ $voice$ <irregptcpl> <div> <irregptcpl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+  """
+} else {println("NOPTPCPLS FROM " + dir); ""}
+  }
 
 
   def includeIrregInfinitives(dir: ScalaFile): Boolean = {
@@ -346,6 +360,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregInfinitives(_), "$squashirreginfinnurn$"),
+      (includeIrregParticiples(_), "$squashirregptcplurn$"),
       (includeIrregNouns(_), "$squashirregnounurn$"),
       (includeIrregAdjectives(_), "$squashirregadjurn$"),
       (includeIrregAdverbs(_), "$squashirregadvurn$"),

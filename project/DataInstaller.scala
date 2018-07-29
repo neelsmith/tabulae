@@ -29,6 +29,10 @@ object DataInstaller {
     val adjsTarget = lexica/"lexicon-adjectives.fst"
     AdjectiveDataInstaller(dataSource/corpusName/"stems-tables/adjectives", adjsTarget)
 
+    val compoundVerbsTarget = lexica/"lexicon-compoundverbs.fst"
+    CompoundVerbDataInstaller(dataSource/corpusName, lexica)
+    ///apply(stemsDir: File, targetDir: File
+
 
     val irregVerbsTarget = lexica/"lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSource/corpusName/"irregular-stems/verbs", irregVerbsTarget)
@@ -48,6 +52,9 @@ object DataInstaller {
 
     val irregInfinsTarget = lexica/"lexicon-irreginfinitives.fst"
     IrregInfinitiveDataInstaller(dataSource/corpusName/"irregular-stems/infinitives", irregInfinsTarget)
+
+    val irregPtcplsTarget = lexica/"lexicon-irregparticiples.fst"
+    IrregParticipleDataInstaller(dataSource/corpusName/"irregular-stems/participles", irregPtcplsTarget)
   }
 
 }

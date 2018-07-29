@@ -11,12 +11,36 @@ object CompoundVerbDataInstaller {
   * @param srcDir Directory with inflectional rules.
   * @param targetFile File to write FST statements to.
   */
-  def apply(stemsDir: File, targetDir: File) = {
-    val simplexDir = stemsDir/"verbs-simplex"
+  def apply(corpus: File, targetDir: File) = {
+    val simplexDir = corpus/"stems-tables/verbs-simplex"
     val simplexMap = rulesMap(simplexDir)
+    val compoundDir= corpus/"stems-tables/verbs-compound"
 
-    val compoundDir= stemsDir/"verbs-compound"
+    installRegularCompounds(
+      compoundDir,
+      targetDir/"lexicon-compoundverbs.fst",
+      simplexMap
+    )
+
+    val irregDir= corpus/"irregular-stems/verbs"
+    val irregFormMap = irregMap(irregDir)
+
+
+
+    installIrregularCompounds(
+        compoundDir,
+        targetDir/"lexicon-irregcompoundverbs.fst",
+        irregFormMap
+        )
+
+  }
+
+
+
+
+  def installRegularCompounds(compoundDir: File, targetFile: File, simplexMap: Map[String, String]) = {
     val compoundInfo = cexRules(compoundDir)
+
     val compoundDataLines = for (c <- compoundInfo) yield {
       val cols = c.split("#")
       //println("\n\nCOLS: " + cols.toVector)
@@ -24,26 +48,52 @@ object CompoundVerbDataInstaller {
         throw new Exception("Installing compound verb data: too few columns in " + c)
       } else {
         val ruleId = cols(0)
-
-
         val lexent = cols(1)
         val prefix = cols(2)
         val simplexId = cols(3)
-        //val simplexParts = simplexId.split("\\.")
-        //println("\n\nSIMPLEX PARTS: " + simplexParts.toVector)
-
         if (simplexMap.keySet.contains(simplexId)) {
           val parts = simplexMap(simplexId).split("#")
           val ruleParts = parts(0).split("\\.")
 
           s"${ruleId}_${ruleParts(1)}#${lexent}#${prefix}${parts(1)}#${parts(2)}"
         } else {
-          throw new Exception("Lexical map did not contain key for " + simplexId)
+          throw new Exception("Installing regular compound verbs: lexical map did not contain key for " + simplexId + " in " + simplexMap.keySet)
         }
       }
     }
+
     val verbFst = VerbDataInstaller.verbLinesToFst(compoundDataLines)
-    (targetDir/"lexicon-compoundverbs.fst").overwrite(verbFst)
+    (targetFile).overwrite(verbFst)
+  }
+
+  def installIrregularCompounds(compoundDir: File, targetFile: File, simplexMap: Map[String, String]) = {
+
+    val compoundInfo = cexRules(compoundDir)
+    println("COMPOUND INFO:\n" + compoundInfo)
+
+    val compoundDataLines = for (c <- compoundInfo) yield {
+      val cols = c.split("#")
+      println("\n\nIRREGULAR:\n" + cols.toVector)
+
+      if (cols.size < 4) {
+        throw new Exception("Installing compound verb data: too few columns in " + c)
+      } else {
+        val ruleId = cols(0)
+        val lexent = cols(1)
+        val prefix = cols(2)
+        val simplexId = cols(3)
+        if (simplexMap.keySet.contains(simplexId)) {
+          println("MATCH ON " + simplexMap(simplexId))
+        } else {
+
+          throw new Exception("Installing irregular compounds: lexical map did not contain key for " + simplexId + " in " + simplexMap.keySet)
+        }
+      }
+    }
+      /*
+    val verbFst = VerbDataInstaller.verbLinesToFst(compoundDataLines)
+    (targetFile).overwrite(verbFst)
+    */
   }
 
   /** Map lexical URNs to data for the simplex verb.
@@ -53,13 +103,42 @@ object CompoundVerbDataInstaller {
   */
   def rulesMap(simplexDir: File): Map[String, String] = {
     val raw = cexRules(simplexDir)
+    //ag.v1#lexent.n2280#am#conj1
     raw.map( s => {
       val cols = s.split("#")
       if (cols.size < 4) {
         throw new Exception("CompoundVerbDataInstaller: too few columns in line " + s)
       } else {
-        val data = cols(0) + "#" + cols(2) + "#" + cols(3)
-        (cols(1) -> data)
+        val ruleId = cols(0)
+        val lexent = cols(1)
+        val stem = cols(2)
+        val stemClass = cols(3)
+        val data = ruleId + "#" + stem + "#" + stemClass
+        (lexent-> data)
+      }
+    }).toMap
+  }
+
+
+  def irregMap(irregDir: File) = {
+    val raw = cexRules(irregDir)
+    raw.map( s => {
+      val cols = s.split("#")
+      if (cols.size < 4) {
+        throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular form " + s)
+      } else {
+        //ag.irrv1#lexent.n46529#sum#1st#sg#pres#indic#act
+        val ruleId = cols(0)
+        val lexent = cols(1)
+        val stem = cols(2)
+        val person = cols(3)
+        val num = cols(4)
+        val tense = cols(5)
+        val mood = cols(6)
+        val voice = cols(7)
+        val stemClass = "irregcverb"
+        val data = List(ruleId, lexent, stem, person, num, tense,mood,voice,stemClass).mkString("#")
+        (lexent-> data)
       }
     }).toMap
   }
