@@ -1,1 +1,1 @@
-README goes here
+This directory defines the set of inflectional rules applicable to yours corpus. Each of the ten subdirectories represents a distinct analytical category, and has a README file explaining the tabular format for its specific category.
