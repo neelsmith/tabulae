@@ -39,6 +39,9 @@ lazy val testBuild = (project in file("test_build"))
 lazy val testWordLists = (project in file("test_wordlists"))
 
 lazy val testPoS = (project in file("test_pos"))
+lazy val testIrreg = (project in file("test_irreg"))
+
+
 lazy val testPoS2 = (project in file("test_pos2"))
 
 
