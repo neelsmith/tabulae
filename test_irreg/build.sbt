@@ -56,13 +56,12 @@ def testList = List(
 
 */
   // irreg gerunds
-/*
-("Test converting bad stem data to fst for infinitives", testBadIrregInfinStemDataConvert(_, _, _), "" ),
-("Test converting stem data to fst for irregular infinitives", testIrregInfinStemDataConvert(_, _, _), "" ),
-("Test converting stem files in directory to fst for irregular infinitives", testIrregInfinStemFstFromDir(_, _, _), "" ),
-("Test converting apply method for irregular infinitives stem data installer", testIrregInfinStemDataApplied(_, _, _), "" ),
 
-*/
+("Test converting bad stem data to fst for gerunds", testBadIrregGerundStemDataConvert(_, _, _), "" ),
+("Test converting stem data to fst for irregular gerunds", testIrregGerundStemDataConvert(_, _, _), "" ),
+("Test converting stem files in directory to fst for irregular gerunds", testIrregGerundStemFstFromDir(_, _, _), "pending" ),
+("Test converting apply method for irregular infinitives stem data gerunds", testIrregGerundStemDataApplied(_, _, _), "pending" ),
+
   // irreg gerundives
 /*
 ("Test converting bad stem data to fst for infinitives", testBadIrregInfinStemDataConvert(_, _, _), "" ),
@@ -445,6 +444,9 @@ def testIrregAdjectiveStemDataApplied(corpusName: String, conf: Configuration, r
     rslt
 }
 
+
+
+// inifintive verb forms
 def testBadIrregInfinStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
   try {
     val fst = IrregInfinitiveDataInstaller.infinitiveLineToFst("Not a real line")
@@ -508,7 +510,31 @@ def testIrregInfinStemDataApplied (corpusName: String, conf: Configuration, repo
 }
 
 
+// gerunds
 
+def testBadIrregGerundStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+
+  try {
+    val fst = IrregGerundDataInstaller.gerundLineToFst("Not a real line")
+    false
+  } catch {
+    case t : Throwable => true
+  }
+}
+def testIrregGerundStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  val goodLine = "proof.irrigrd1#lexent.n14599#dandi#gen"
+  val goodFst = IrregGerundDataInstaller.gerundLineToFst(goodLine)
+  val expected = "<u>proof\\.irrigrd1</u><u>lexent\\.n14599</u>dandi<gen><irreggrnd>"
+  //val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
+  println("EXP/ACTUAL\n" + expected + "\n" + goodFst.trim)
+  goodFst.trim ==  expected
+}
+def  testIrregGerundStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
+def testIrregGerundStemDataApplied (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
+  false
+}
 
 lazy val irregTests = inputKey[Unit]("Unit tests")
 irregTests in Test := {
