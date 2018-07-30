@@ -3,16 +3,17 @@ import better.files.File._
 import better.files.Dsl._
 
 
+
 case class CompoundEntry(
   ruleId: String, compoundLexEnt: String, prefix: String, simplexLexEnt: String
 )
 
 object CompoundVerbDataInstaller {
 
-  /** Write FST rules for all verb stem data in a directory
-  * of tabular files.
+  /** Write FST rules for all compound verb stem data
+  * in a corpus.
   *
-  * @param srcDir Directory with inflectional rules.
+  * @param corpus Dataset for a corpus.
   * @param targetFile File to write FST statements to.
   */
   def apply(corpus: File, targetDir: File) = {
@@ -27,23 +28,24 @@ object CompoundVerbDataInstaller {
     val compoundEntries= compoundInfo(compoundDir)
     require(reffOK(compoundEntries, verbKeys))
 
-    installRegularCompounds(compoundEntries, targetDir/"lexicon-compoundverbs.fst",
-    regularVerbMap)
+    installRegularCompounds(compoundEntries,                targetDir/"lexicon-compoundverbs.fst",
+      regularVerbMap)
+
+    installIrregularCompounds(compoundEntries,
+          targetDir/"lexicon-irregcompoundverbs.fst",
+          irregVerbMap)
   }
 
-/*
-    val irregDir= corpus/"irregular-stems/verbs"
-    val irregFormMap = irregMap(irregDir)
-    installIrregularCompounds(
-        compoundDir,
-        targetDir/"lexicon-irregcompoundverbs.fst",
-        irregFormMap
-        )
-*/
 
 
-
-
+  /** True if all lexical IDs for simplex verbs in
+  * a list of [[CompoundEntry]]s are present in the
+  * keys of the simplex or irregular data set.
+  *
+  * @param compounds List of [[CompoundEntry]]s to check.
+  * @param keys Strings with lexical entity IDs for all
+  * regular and irregular stems in a data set.
+  */
   def reffOK (compounds: Vector[CompoundEntry], keys: Set[String]) : Boolean = {
     for (c <- compounds) {
       if (keys.contains(c.simplexLexEnt)) {
@@ -55,6 +57,12 @@ object CompoundVerbDataInstaller {
     true
   }
 
+  /** Create a Vector of [[CompoundEntry]]s from the CEX
+  * files in a speified directory.
+  *
+  * @param compoundDir Directory containing CEX files with
+  * information about compound verb stems.
+  */
   def compoundInfo(compoundDir: File):Vector[CompoundEntry] = {
     val cexData = cexRules(compoundDir)
     val compoundEntries = for (cexRow <- cexData.filter(_.nonEmpty))  yield {
@@ -68,7 +76,17 @@ object CompoundVerbDataInstaller {
     compoundEntries
   }
 
-  def installRegularCompounds(compounds: Vector[CompoundEntry], targetFile: File, simplexMap: Map[String, String]) = {
+
+  /** For a given list of [[CompoundEntry]]s, expand
+  * any entries corresponding to simplex stems, and
+  * write the results to a file.
+  *
+  * @param compounds List of [[CompoundEntry]]s to check.
+  * @param targetFile File where results should be written.
+  * @param simplexMap Map of lexical entity IDs to simplex
+  * stem data in CEX format.
+  */
+  def installRegularCompounds(compounds: Vector[CompoundEntry], targetFile: File, simplexMap: Map[String, String]) : Unit = {
 
     val compoundDataLines = for (c <- compounds) yield {
       if (simplexMap.keySet.contains(c.simplexLexEnt)) {
@@ -93,35 +111,37 @@ object CompoundVerbDataInstaller {
     (targetFile).overwrite(verbFst)
   }
 
-  def installIrregularCompounds(compoundDir: File, targetFile: File, simplexMap: Map[String, String]) = { }
-/*
-    val compoundInfo = cexRules(compoundDir)
-    println("COMPOUND INFO:\n" + compoundInfo)
+  def installIrregularCompounds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, String]) : Unit = {
 
-    val compoundDataLines = for (c <- compoundInfo) yield {
-      val cols = c.split("#")
-      println("\n\nIRREGULAR:\n" + cols.toVector)
+    val compoundDataLines = for (c <- compounds) yield {
+      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+        val compoundLine =  compoundMap(c.simplexLexEnt)
+        val cols = compoundLine.split("#").toVector
 
-      if (cols.size < 4) {
-        throw new Exception("Installing compound verb data: too few columns in " + c)
-      } else {
-        val ruleId = cols(0)
-        val lexent = cols(1)
-        val prefix = cols(2)
-        val simplexId = cols(3)
-        if (simplexMap.keySet.contains(simplexId)) {
-          println("MATCH ON " + simplexMap(simplexId))
+        if (cols.size < 9)  {
+          throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
         } else {
-
-          throw new Exception("Installing irregular compounds: lexical map did not contain key for " + simplexId + " in " + simplexMap.keySet)
+          val ruleId = cols(0)
+          val lexent = cols(1)
+          val stem = cols(2)
+          val  person =cols(3)
+          val num = cols(4)
+          val  tense = cols(5)
+          val mood = cols(6)
+          val voice = cols(7)
+          val stemClass = cols(8)
+          val ruleParts = ruleId.split("\\.")
+          s"${c.ruleId}_${ruleParts(1)}#${c.compoundLexEnt}#${c.prefix}${stem}#${person}#${num}#${tense}#${mood}#${voice}"
         }
+      } else {
+        ""
       }
-    val verbFst = VerbDataInstaller.verbLinesToFst(compoundDataLines)
+    }
+    val verbFst = IrregVerbDataInstaller.verbLinesToFst(compoundDataLines.filter(_.nonEmpty))
     (targetFile).overwrite(verbFst)
+  }
 
-  }*/
-
-  /** Map lexical URNs to data for the simplex verb.
+  /** Map lexical URNs to data for simplex verb stems.
   *
   * @param simplexDir Directory containing .cex files
   * with verb stem data.
@@ -144,7 +164,11 @@ object CompoundVerbDataInstaller {
     }).toMap
   }
 
-
+  /** Map lexical URNs to data for irregular verb forms.
+  *
+  * @param irregDir Directory containing .cex files
+  * with verb stem data.
+  */
   def irregMap(irregDir: File) = {
     val raw = cexRules(irregDir)
     raw.map( s => {

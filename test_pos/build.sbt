@@ -430,12 +430,22 @@ def testInstallCompoundVerbs(corpusName: String, conf: Configuration, repo :  Sc
   installCompoundStemTable(compoundsDir)
 
   val target = mkdirs("parsers"/corpusName/"lexica")
-  val resultFile = target/"lexicon-compoundverbs.fst"
+
   CompoundVerbDataInstaller(repo/"datasets"/corpusName, target)
-  val output = resultFile.lines.toVector
+  val regResultFile = target/"lexicon-compoundverbs.fst"
+  val regOutput = regResultFile.lines.toVector
+
+  val irregResultFile =  target/"lexicon-irregcompoundverbs.fst"
+  val irregOutput = irregResultFile.lines.toVector
+
 
   val expectedRegular = "<u>ag\\.comp1\\_v1</u><u>demolexent\\.1</u><#>peram<verb><conj1>"
-  (expectedRegular == output(0).trim)
+  val expectedIrregular = "<u>ag\\.comp2\\_irrv1</u><u>demo\\.lexent2</u><#>adsum<1st><sg><pres><indic><act><irregcverb>"
+
+  val regularOK = (expectedRegular == regOutput(0).trim)
+  val irregOK = (expectedIrregular == irregOutput(0).trim)
+
+  regularOK && irregOK
 }
 
 
