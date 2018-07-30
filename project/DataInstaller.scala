@@ -62,6 +62,9 @@ object DataInstaller {
     val irregGerundivesTarget = lexica/"lexicon-irreggerundives.fst"
     IrregGerundiveDataInstaller(dataSource/corpusName/"irregular-stems/gerundives", irregGerundivesTarget)
 
+    val irregSupinesTarget = lexica/"lexicon-irregsupines.fst"
+    IrregSupineDataInstaller(dataSource/corpusName/"irregular-stems/supines", irregSupinesTarget)
+
   }
 
 }

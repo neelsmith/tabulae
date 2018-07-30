@@ -53,6 +53,8 @@ object AcceptorComposer {
     fst.append(irregParticipleAcceptor(projectDir) + "\n")
     fst.append(irregGerundAcceptor(projectDir) + "\n")
     fst.append(irregGerundiveAcceptor(projectDir) + "\n")
+    fst.append(irregSupineAcceptor(projectDir) + "\n")
+
 
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
@@ -166,6 +168,20 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
     } else {""}
   }
 
+  def includeIrregSupines(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irregsupines.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregSupineAcceptor(dir : ScalaFile): String = {
+  if (includeIrregSupines(dir) ) {
+    println("YES SUPLINES in " + dir)
+"""
+% Irregular supine acceptor
+$squashirregsupineurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $case$ <irregsupn> <div> <irregsupn> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+
+"""
+} else { println("NO SUPINES IN DIR " + dir); ""}
+}
 
   def includeIrregGerunds(dir: ScalaFile): Boolean = {
     val indeclSource = dir/"lexica/lexicon-irreggerunds.fst"
@@ -173,13 +189,12 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
   }
   def irregGerundAcceptor(dir : ScalaFile): String = {
     if (includeIrregGerunds(dir) ) {
-      println("YES GERUNDs FROM " + dir);
   """
 % Irregular gerund acceptor
 $squashirreggerundurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $case$ <irreggrnd> <div> <irreggrnd> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 
   """
-} else {println("NO GERUNDs FROM " + dir); ""}
+} else { ""}
   }
 
   def includeIrregGerundives(dir: ScalaFile): Boolean = {
@@ -395,6 +410,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeIrregParticiples(_), "$squashirregptcplurn$"),
       (includeIrregGerunds(_), "$squashirreggerundurn$"),
       (includeIrregGerundives(_), "$squashirreggerundiveurn$"),
+      (includeIrregSupines(_), "$squashirregsupineurn$"),
 
       (includeIrregNouns(_), "$squashirregnounurn$"),
       (includeIrregAdjectives(_), "$squashirregadjurn$"),

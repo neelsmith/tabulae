@@ -3,7 +3,7 @@ import better.files.File._
 import better.files.Dsl._
 
 
-object IrregGerundDataInstaller {
+object IrregSupineDataInstaller {
 
   /** Creates FST file for each CEX file of
   * irregular verb stems.
@@ -12,9 +12,11 @@ object IrregGerundDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(dataSource: File, targetFile: File) = {
-    val irregGerundFst = fstForIrregGerundData(dataSource)
-    if (irregGerundFst.nonEmpty) {
-      targetFile.overwrite(irregGerundFst)
+    println("INSTALL SUINES FROM " + dataSource)
+    val irregSupineFst = fstForIrregSupineData(dataSource)
+    if (irregSupineFst.nonEmpty) {
+      println("WRITING FST "+ irregSupineFst)
+      targetFile.overwrite(irregSupineFst)
     } else {}
   }
 
@@ -22,22 +24,22 @@ object IrregGerundDataInstaller {
   *
   * @param dir Directory with tables of verb data.
   */
-  def fstForIrregGerundData(dir: File) : String = {
-    val gerundFiles = dir.glob("*.cex").toVector
+  def fstForIrregSupineData(dir: File) : String = {
+    val supineFiles = dir.glob("*.cex").toVector
 
-    val fstLines = for (f <- gerundFiles.filter(_.nonEmpty)) yield {
+    val fstLines = for (f <- supineFiles.filter(_.nonEmpty)) yield {
       // omit empty lines and header
       val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1)
-      gerundLinesToFst(dataLines)
+      supineLinesToFst(dataLines)
     }
     fstLines.mkString("\n")
   }
 
-  def gerundLineToFst(line: String) : String = {
+  def supineLineToFst(line: String) : String = {
     val cols = line.split("#")
 
     if (cols.size < 4) {
-      println(s"${cols.size} is the wrong number of columns for a gerund\nCould not parse data line:\n${line}")
+      println(s"${cols.size} is the wrong number of columns for a supine\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
 
@@ -49,7 +51,7 @@ object IrregGerundDataInstaller {
       val grammCase = cols(3)
 
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${grammCase}><irreggrnd>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${grammCase}><irregsupn>")
       fstBuilder.toString
     }
   }
@@ -60,8 +62,8 @@ object IrregGerundDataInstaller {
   * @param data Vector of strings in which each string
   * represents one infinitive stem in CEX form.
   */
-  def gerundLinesToFst(data: Vector[String]) : String = {
-    data.map(gerundLineToFst(_)).mkString("\n") + "\n"
+  def supineLinesToFst(data: Vector[String]) : String = {
+    data.map(supineLineToFst(_)).mkString("\n") + "\n"
   }
 
 
