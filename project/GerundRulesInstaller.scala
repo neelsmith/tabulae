@@ -34,7 +34,7 @@ object GerundRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = gerundRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$Gerundinfl$ = " + fst + "\n\n$Gerundinfl$\n"
+      "$gerundinfl$ = " + fst + "\n\n$gerundinfl$\n"
     } else {
       ""
     }

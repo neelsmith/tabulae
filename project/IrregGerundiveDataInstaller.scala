@@ -3,7 +3,7 @@ import better.files.File._
 import better.files.Dsl._
 
 
-object IrregParticipleDataInstaller {
+object IrregGerundiveDataInstaller {
 
   /** Creates FST file for each CEX file of
   * irregular verb stems.
@@ -12,10 +12,9 @@ object IrregParticipleDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(dataSource: File, targetFile: File) = {
-    val irregPtcplFst = fstForIrregPtcplData(dataSource)
-
-    if (irregPtcplFst.nonEmpty) {
-      targetFile.overwrite(irregPtcplFst)
+    val irregGerundiveFst = fstForIrregGerundiveData(dataSource)
+    if (irregGerundiveFst.nonEmpty) {
+      targetFile.overwrite(irregGerundiveFst)
     } else {}
   }
 
@@ -23,49 +22,47 @@ object IrregParticipleDataInstaller {
   *
   * @param dir Directory with tables of verb data.
   */
-  def fstForIrregPtcplData(dir: File) : String = {
-    val participleFiles = dir.glob("*.cex").toVector
+  def fstForIrregGerundiveData(dir: File) : String = {
+    val gerundiveFiles = dir.glob("*.cex").toVector
 
-    val fstLines = for (f <- participleFiles.filter(_.nonEmpty)) yield {
+    val fstLines = for (f <- gerundiveFiles.filter(_.nonEmpty)) yield {
       // omit empty lines and header
       val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1)
-      participleLinesToFst(dataLines)
+      gerundiveLinesToFst(dataLines)
     }
     fstLines.mkString("\n")
   }
 
-  def participleLineToFst(line: String) : String = {
+  def gerundiveLineToFst(line: String) : String = {
     val cols = line.split("#")
 
-    if (cols.size < 8) {
-      println(s"${cols.size} is the wrong number of columns for a participle\nCould not parse data line:\n${line}")
+    if (cols.size < 6) {
+      println(s"${cols.size} is the wrong number of columns for a gerundive\nCould not parse data line:\n${line}")
       throw new Exception(s"Wrong number of columns ${cols.size}.\nCould not parse data line:\n${line}")
     } else {
 
-      //proof.irrinf1#lexent.n15868#iens#masc#nom#sg#pres#act
+      //proof.irrigrdv3#lexent.n15868#eundum#neut#acc#sg
       val fstBuilder = StringBuilder.newBuilder
       val ruleUrn = cols(0).replaceAll("_","\\\\_").replaceAll("\\.","\\\\.")
       val lexent = cols(1).replaceAll("_","\\_").replaceAll("\\.","\\\\.")
       val inflString =  cols(2)
-      val gender = cols(3)
+      val gender =  cols(3)
       val grammCase = cols(4)
       val num = cols(5)
-      val tense = cols(6)
-      val voice = cols(7)
 
-      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${grammCase}><${num}><${tense}><${voice}><irregptcpl>")
+      fstBuilder.append(s"<u>${ruleUrn}</u><u>${lexent}</u>${inflString}<${gender}><${grammCase}><${num}><irreggrndv>")
       fstBuilder.toString
     }
   }
 
-  /** Convert a Vector of participle stem data in CES form to
+  /** Convert a Vector of gerundive stem data in CES form to
   * a single valid FST string.
   *
   * @param data Vector of strings in which each string
-  * represents one participle stem in CEX form.
+  * represents one infinitive stem in CEX form.
   */
-  def participleLinesToFst(data: Vector[String]) : String = {
-    data.map(participleLineToFst(_)).mkString("\n") + "\n"
+  def gerundiveLinesToFst(data: Vector[String]) : String = {
+    data.map(gerundiveLineToFst(_)).mkString("\n") + "\n"
   }
 
 

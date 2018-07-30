@@ -51,6 +51,9 @@ object AcceptorComposer {
     fst.append(irregVerbAcceptor(projectDir) + "\n")
     fst.append(irregInfinitiveAcceptor(projectDir) + "\n")
     fst.append(irregParticipleAcceptor(projectDir) + "\n")
+    fst.append(irregGerundAcceptor(projectDir) + "\n")
+    fst.append(irregGerundiveAcceptor(projectDir) + "\n")
+
     fst.append(irregNounAcceptor(projectDir) + "\n")
     fst.append(irregAdverbAcceptor(projectDir) + "\n")
     fst.append(irregPronounAcceptor(projectDir) + "\n")
@@ -163,23 +166,52 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
     } else {""}
   }
 
+
+  def includeIrregGerunds(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irreggerunds.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregGerundAcceptor(dir : ScalaFile): String = {
+    if (includeIrregGerunds(dir) ) {
+      println("YES GERUNDs FROM " + dir);
+  """
+% Irregular gerund acceptor
+$squashirreggerundurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $case$ <irreggrnd> <div> <irreggrnd> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+
+  """
+} else {println("NO GERUNDs FROM " + dir); ""}
+  }
+
+  def includeIrregGerundives(dir: ScalaFile): Boolean = {
+    val indeclSource = dir/"lexica/lexicon-irreggerundives.fst"
+    indeclSource.exists && indeclSource.lines.nonEmpty
+  }
+  def irregGerundiveAcceptor(dir : ScalaFile): String = {
+    if (includeIrregGerundives(dir) ) {
+  """
+% Irregular gerundive acceptor
+$squashirreggerundiveurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$  <irreggrndv> <div> <irreggrndv> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+  """
+} else { "" }
+  }
+
+
   def includeIrregParticiples(dir: ScalaFile): Boolean = {
     val indeclSource = dir/"lexica/lexicon-irregparticiples.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregParticipleAcceptor(dir : ScalaFile): String = {
     if (includeIrregParticiples(dir) ) {
-      println("YES PTCPLS FROM " + dir);
   """
 % Irregular participle acceptor
 $squashirregptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $tense$ $voice$ <irregptcpl> <div> <irregptcpl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
   """
-} else {println("NOPTPCPLS FROM " + dir); ""}
+} else {""}
   }
 
 
   def includeIrregInfinitives(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregadverbs.fst"
+    val indeclSource = dir/"lexica/lexicon-irreginfinitives.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregInfinitiveAcceptor(dir : ScalaFile): String = {
@@ -361,6 +393,9 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeIrregVerbs(_), "$squashirregverburn$"),
       (includeIrregInfinitives(_), "$squashirreginfinnurn$"),
       (includeIrregParticiples(_), "$squashirregptcplurn$"),
+      (includeIrregGerunds(_), "$squashirreggerundurn$"),
+      (includeIrregGerundives(_), "$squashirreggerundiveurn$"),
+
       (includeIrregNouns(_), "$squashirregnounurn$"),
       (includeIrregAdjectives(_), "$squashirregadjurn$"),
       (includeIrregAdverbs(_), "$squashirregadvurn$"),
