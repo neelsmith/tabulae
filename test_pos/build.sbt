@@ -9,7 +9,7 @@ name := "postest"
 
 /** Triples of description, function and status. */
 def testList = List(
-
+/*
   // Test all inflectional rules installers
   ("Test copying FST inflection rules for invariants", testInvariantCopy(_,_,_), ""),
   // Stem rules for indeclinables
@@ -111,7 +111,7 @@ def testList = List(
   ("Test converting bad inflectional rules for supines", testBadSupinesInflRulesConvert(_, _, _), "" ),
   ("Test converting  inflectional rules for supines", testConvertSupinesInflRules(_, _, _), "" ),
   ("Test converting  inflectional rules for supines from files in dir", testSupinesInflRulesFromDir(_, _, _), "" ),
-
+*/
   // compound verb stems
   ("Test installing stem data for compound verbs", testInstallCompoundVerbs(_, _, _), "" ),
 )
@@ -422,7 +422,7 @@ def testInstallCompoundVerbs(corpusName: String, conf: Configuration, repo :  Sc
   val testData = verbSource/"madeuptestdata.cex"
   val text = s"header line, omitted in parsing\n${irregVerbLine}"
   testData.overwrite(text)
-
+  println("Wrote test data to " + testData + " :\n" + text)
 
   val verbsDir = mkdirs(repo/"datasets"/corpusName/"stems-tables/verbs-simplex")
   installVerbStemTable(verbsDir)
