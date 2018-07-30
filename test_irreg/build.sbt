@@ -59,7 +59,7 @@ def testList = List(
 
 ("Test converting bad stem data to fst for gerunds", testBadIrregGerundStemDataConvert(_, _, _), "" ),
 ("Test converting stem data to fst for irregular gerunds", testIrregGerundStemDataConvert(_, _, _), "" ),
-("Test converting stem files in directory to fst for irregular gerunds", testIrregGerundStemFstFromDir(_, _, _), "pending" ),
+("Test converting stem files in directory to fst for irregular gerunds", testIrregGerundStemFstFromDir(_, _, _), "" ),
 ("Test converting apply method for irregular infinitives stem data gerunds", testIrregGerundStemDataApplied(_, _, _), "pending" ),
 
   // irreg gerundives
@@ -513,7 +513,6 @@ def testIrregInfinStemDataApplied (corpusName: String, conf: Configuration, repo
 // gerunds
 
 def testBadIrregGerundStemDataConvert (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-
   try {
     val fst = IrregGerundDataInstaller.gerundLineToFst("Not a real line")
     false
@@ -530,10 +529,48 @@ def testIrregGerundStemDataConvert (corpusName: String, conf: Configuration, rep
   goodFst.trim ==  expected
 }
 def  testIrregGerundStemFstFromDir(corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val goodLine = "proof.irrigrd1#lexent.n14599#dandi#gen"
+  val goodFst = IrregGerundDataInstaller.gerundLineToFst(goodLine)
+  val expected = "<u>proof\\.irrigrd1</u><u>lexent\\.n14599</u>dandi<gen><irreggrnd>"
+
+  val gerundSource = mkdirs(repo/"datasets"/corpusName/"irregular-stems/gerunds")
+  val testData = gerundSource/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val fstFromDir = IrregGerundDataInstaller.fstForIrregGerundData(gerundSource)
+  // Tidy up
+  (repo/"datasets").delete()
+
+  fstFromDir.trim == expected
+
 }
 def testIrregGerundStemDataApplied (corpusName: String, conf: Configuration, repo :  ScalaFile):  Boolean = {
-  false
+  val goodLine = "proof.irrigrd1#lexent.n14599#dandi#gen"
+  val goodFst = IrregGerundDataInstaller.gerundLineToFst(goodLine)
+  val expected = "<u>proof\\.irrigrd1</u><u>lexent\\.n14599</u>dandi<gen><irreggrnd>"
+
+
+  val cdir = mkdirs(repo/"datasets"/corpusName)
+  val gerundDir = mkdirs(cdir/"irregular-stems/gerundSource")
+
+  val testData = gerundDir/"madeuptestdata.cex"
+  val text = s"header line, omitted in parsing\n${goodLine}"
+  testData.overwrite(text)
+
+  val destDir = mkdirs(repo/"parsers"/corpusName/"lexica")
+  // Write some test data in the source work space:
+  val resultFile = destDir/"lexicon-irreggerunds.fst"
+  IrregGerundDataInstaller(gerundDir, resultFile)
+
+  // check the results:
+  val output = resultFile.lines.toVector
+
+  // clean up:
+  (repo/"datasets").delete()
+
+  val rslt = output(0) == expected
+  rslt
 }
 
 lazy val irregTests = inputKey[Unit]("Unit tests")
