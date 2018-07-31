@@ -38,7 +38,8 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Irregular type
-#irregclass# = <irregadj><irregnoun><irregadv><irregcverb><irreginfin><irregptcpl><irregvadj>
+#irregclass# = <irregcverb><irregnoun><irregadj><irregadv><irreginfin><irregptcpl><irreggrnd><irreggrndv><irregsupn><irregpron>
+
 
 % Union of all stemtypes
 #stemtype# = #nounclass# #adjectiveclass# #verbclass# #indeclclass# #irregclass#
