@@ -48,8 +48,88 @@ object CompoundVerbDataInstaller {
     installIrregularInfinitives(compoundEntries,      targetDir/"lexicon-irregcompoundinfinitives.fst",      infinitiveMap)
 
     installIrregularGerundives(compoundEntries,      targetDir/"lexicon-irregcompoundgerundives.fst",      gerundiveMap)
+
+    installIrregularGerunds(compoundEntries,      targetDir/"lexicon-irregcompoundgerunds.fst",  gerundMap)
+
+    installIrregularSupines(compoundEntries,      targetDir/"lexicon-irregcompoundsupines.fst",  supineMap)
   }
 
+
+  def installIrregularSupines(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, String]) : Unit = {
+    //println("INSTALL PTCPLS IN " + targetFile)
+    //println("PTCP MAP: " + compoundMap)
+    //println("COMPOUND DATA: \n" + compounds.mkString("\n"))
+    val compoundDataLines = for (c <- compounds) yield {
+
+      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+        val compoundLine =  compoundMap(c.simplexLexEnt)
+        val cols = compoundLine.split("#").toVector
+
+        if (cols.size < 4)  {
+          throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+        } else {
+          val ruleId = cols(0)
+          val lexent = cols(1)
+          val stem = cols(2)
+          val grammCase = cols(3)
+
+          val ruleParts = ruleId.split("\\.")
+          s"${c.ruleId}_${ruleParts(1)}#${c.compoundLexEnt}#${c.prefix}${stem}#${grammCase}"
+        }
+      } else {
+        ""
+      }
+    }
+    val  supineFst = IrregSupineDataInstaller.supineLinesToFst(compoundDataLines.filter(_.nonEmpty))
+    (targetFile).overwrite(supineFst)
+  }
+
+  def installIrregularGerunds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, String]) : Unit = {
+    //println("INSTALL PTCPLS IN " + targetFile)
+    //println("PTCP MAP: " + compoundMap)
+    //println("COMPOUND DATA: \n" + compounds.mkString("\n"))
+    val compoundDataLines = for (c <- compounds) yield {
+
+      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+        val compoundLine =  compoundMap(c.simplexLexEnt)
+        val cols = compoundLine.split("#").toVector
+
+        if (cols.size < 4)  {
+          throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+        } else {
+          val ruleId = cols(0)
+          val lexent = cols(1)
+          val stem = cols(2)
+          val grammCase = cols(3)
+
+          val ruleParts = ruleId.split("\\.")
+          s"${c.ruleId}_${ruleParts(1)}#${c.compoundLexEnt}#${c.prefix}${stem}#${grammCase}"
+        }
+      } else {
+        ""
+      }
+    }
+    val  gerundFst = IrregGerundDataInstaller.gerundLinesToFst(compoundDataLines.filter(_.nonEmpty))
+    (targetFile).overwrite(gerundFst)
+  }
+  def irregGerundMap(irregDir: File) = {
+    val raw = cexRules(irregDir)
+    raw.map( s => {
+      val cols = s.split("#")
+      if (cols.size < 4) {
+        throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular gerund form " + s)
+      } else {
+        //proof.irrigrd1#lexent.n14599#dandi#gen
+        val ruleId = cols(0)
+        val lexent = cols(1)
+        val stem = cols(2)
+        val grammCase = cols(3)
+        val stemClass = "irreggrnd"
+        val data = List(ruleId, lexent, stem, grammCase,stemClass).mkString("#")
+        (lexent-> data)
+      }
+    }).toMap
+  }
 
   def installIrregularGerundives(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, String]) : Unit = {
     //println("INSTALL PTCPLS IN " + targetFile)
@@ -225,24 +305,7 @@ object CompoundVerbDataInstaller {
 
 
 
-  def irregGerundMap(irregDir: File) = {
-    val raw = cexRules(irregDir)
-    raw.map( s => {
-      val cols = s.split("#")
-      if (cols.size < 4) {
-        throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular gerund form " + s)
-      } else {
-        //proof.irrigrd1#lexent.n14599#dandi#gen
-        val ruleId = cols(0)
-        val lexent = cols(1)
-        val stem = cols(2)
-        val grammCase = cols(3)
-        val stemClass = "irreggrnd"
-        val data = List(ruleId, lexent, stem, grammCase,stemClass).mkString("#")
-        (lexent-> data)
-      }
-    }).toMap
-  }
+
 
 
 
