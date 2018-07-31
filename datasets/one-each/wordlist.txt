@@ -1,12 +1,12 @@
+cum
+puer
+carus
+care
 monstro
 monstrans
 monstravisse
 monstrandum
 monstratu
-puer
-carus
-cum
-care
 vis
 totius
 bene
@@ -17,3 +17,8 @@ isse
 eundarum
 itu
 dandi
+demonstro
+demonstrans
+demonstravisse
+demonstrandum
+demonstratu
