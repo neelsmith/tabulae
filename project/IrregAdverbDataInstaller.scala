@@ -15,7 +15,7 @@ object IrregAdverbDataInstaller {
     val irregAdverbFst = fstForIrregAdverbData(dataSource)
     if (irregAdverbFst.nonEmpty) {
       targetFile.overwrite(irregAdverbFst)
-    } else {}
+    } else { }
   }
 
   /** Create FST string for a verb tables in a given directory.

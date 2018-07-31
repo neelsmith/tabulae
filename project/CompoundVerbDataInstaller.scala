@@ -386,9 +386,9 @@ object CompoundVerbDataInstaller {
   }
 
   def installIrregularCompounds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, String]) : Unit = {
-    println("INSTALL IRREGS IN " + targetFile)
-    println("IRREG MAP: " + compoundMap)
-    println("COMPOUND DATA: \n" + compounds.mkString("\n"))
+    //println("INSTALL IRREGS IN " + targetFile)
+    //println("IRREG MAP: " + compoundMap)
+    //println("COMPOUND DATA: \n" + compounds.mkString("\n"))
     val compoundDataLines = for (c <- compounds) yield {
       if (compoundMap.keySet.contains(c.simplexLexEnt)) {
         val compoundLine =  compoundMap(c.simplexLexEnt)

@@ -174,13 +174,12 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
   }
   def irregSupineAcceptor(dir : ScalaFile): String = {
   if (includeIrregSupines(dir) ) {
-    println("YES SUPLINES in " + dir)
 """
 % Irregular supine acceptor
 $squashirregsupineurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $case$ <irregsupn> <div> <irregsupn> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 
 """
-} else { println("NO SUPINES IN DIR " + dir); ""}
+} else {""}
 }
 
   def includeIrregGerunds(dir: ScalaFile): Boolean = {
@@ -230,7 +229,7 @@ $squashirregptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregInfinitiveAcceptor(dir : ScalaFile): String = {
-    if (includeIrregAdverbs(dir) ) {
+    if (includeIrregInfinitives(dir) ) {
 """
 % Irregular infinitive acceptor
 $squashirreginfinnurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $tense$ $voice$ <irreginfin> <div> <irreginfin> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
@@ -402,7 +401,6 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
       (includeNouns(_),"$squashnounurn$" ),
       (includeAdjectives(_),"$squashadjurn$" ),
       (includeAdverbs(_),"$squashadvurn$" ),
-
       (includeIndecls(_),"$squashindeclurn$" ),
 
       (includeIrregVerbs(_), "$squashirregverburn$"),

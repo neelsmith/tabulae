@@ -12,10 +12,8 @@ object IrregSupineDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(dataSource: File, targetFile: File) = {
-    println("INSTALL SUINES FROM " + dataSource)
     val irregSupineFst = fstForIrregSupineData(dataSource)
     if (irregSupineFst.nonEmpty) {
-      println("WRITING FST "+ irregSupineFst)
       targetFile.overwrite(irregSupineFst)
     } else {}
   }
