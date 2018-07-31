@@ -1,5 +1,6 @@
-README goes here
+Directory for inflectional rules for adverbs.
 
+Example:
 
-RuleUrn#InflectionClasses#Ending#Degree
-advinfl.os_h_on1#os_h_on#ws#pos
+    Rule#Class#Ending#Degree
+    proof.us_a_um1#us_a_um#e#pos

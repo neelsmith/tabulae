@@ -1,7 +1,6 @@
-README goes here
+Directory for inflectional rules for nouns.
 
 Example:
 
-RuleUrn#InflectionClasses#Ending#Gender#Case#Number
-nouninfl.as_ou1#as_ou#a_s#masc#nom#sg
-nouninfl.as_ou2#as_ou#ou#masc#gen#sg
+    Rule#Class#Stem#Gender#Case#Number
+    proof.0_i1#0_i##masc#nom#sg

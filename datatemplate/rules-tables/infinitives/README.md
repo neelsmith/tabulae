@@ -1,7 +1,6 @@
-README goes here
-
+Directory for inflectional rules for infinitives.
 
 Example:
 
-verbinfl.aw_infin1#aw_contract#a=n#pres#act
-verbinfl.aw_infin2#aw_contract#ei=sqai#pres#mid
+    Rule#Class#Ending#Tense#Voice
+    proof.are_inf1#conj1#avisse#pft#act
