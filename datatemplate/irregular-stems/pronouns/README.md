@@ -1,8 +1,6 @@
-README goes here
-
+Directory for irregular pronoun forms.
 
 Example:
 
-
-StemUrn#LexicalEntity#String#Gender#Case#Number
-smyth.n71882_0#lexent.n71882#o(#masc#nom#sg
+    Rule#LexicalEntity#Form#Gender#Case#Number
+    proof.irrpron1#lexent.n20640#hic#masc#nom#sg

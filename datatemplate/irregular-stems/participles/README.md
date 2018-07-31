@@ -1,6 +1,6 @@
-README goes here
+Directory for irregular participle forms.
 
-example:
+Example:
 
-StemUrn#LexicalEntity#String#Tense#Voice#Gender#Case#Number#Notes
-smyth.n72202_m0s#lexent.n72202#ei)dw/s#pft#act#masc#nom#sg#Smyth 306
+    Rule#LexicalEntity#Form#Gender#Case#Number#Tense#Voice
+    proof.irrinf1#lexent.n15868#iens#masc#nom#sg#pres#act
