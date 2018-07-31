@@ -1,7 +1,7 @@
-README goes here
+Directory for morphological lexicon  for adjectives.
+
+Example:
 
 
-Example
-
-StemUrn#LexicalEntity#Stem#InflClass#Accent
-smyth.n260_0#lexent.n260#a)gaq#os_h_on#inflacc
+    Rule#LexicalEntity#stem#class
+    proof.adj1#lexent.n6903#car#us_a_um

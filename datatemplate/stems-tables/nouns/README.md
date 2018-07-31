@@ -1,5 +1,6 @@
+Directory for morphological lexicon  for nouns.
 
 Example:
 
-    StemUrn#LexicalEntity#Stem#Gender#InflClass#Accent#Notes
-    smyth.n47039_0#lexent.n47039#ni_k#fem#h_hs#stemultacc#Smyth 216
+    Rule#LexicalEntity#Stem#Gender#Class
+    proof.nom1#lexent.n39429#puer#masc#0_i
