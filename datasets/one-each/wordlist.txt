@@ -22,3 +22,4 @@ demonstrans
 demonstravisse
 demonstrandum
 demonstratu
+init
