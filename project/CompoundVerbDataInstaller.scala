@@ -49,58 +49,12 @@ object CompoundVerbDataInstaller {
     installIrregularInfinitives(compoundEntries,      targetDir/"lexicon-irregcompoundinfinitives.fst",      infinitiveMap)
 
     installIrregularGerundives(compoundEntries,      targetDir/"lexicon-irregcompoundgerundives.fst",      gerundiveMap)
-  /*
+
     installIrregularGerunds(compoundEntries,      targetDir/"lexicon-irregcompoundgerunds.fst",  gerundMap)
-  */
+
     installIrregularSupines(compoundEntries,      targetDir/"lexicon-irregcompoundsupines.fst",  supineMap)
 
   }
-
-
-
-
-/*
-    def installIrregularGerunds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
-    //println("INSTALL PTCPLS IN " + targetFile)
-    //println("PTCP MAP: " + compoundMap)
-    //println("COMPOUND DATA: \n" + compounds.mkString("\n"))
-    val compoundDataLines = for (c <- compounds) yield {
-
-      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
-        val compoundLine =  compoundMap(c.simplexLexEnt)
-        val cols = compoundLine.split("#").toVector
-
-        if (cols.size < 4)  {
-          throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
-        } else {
-          val ruleId = cols(0)
-          val lexent = cols(1)
-          val stem = cols(2)
-          val grammCase = cols(3)
-
-          s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${grammCase}"
-        }
-      } else {
-        ""
-      }
-    }
-    val  gerundFst = IrregGerundDataInstaller.gerundLinesToFst(compoundDataLines.filter(_.nonEmpty))
-    (targetFile).overwrite(gerundFst)
-  }
-
-  */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -328,6 +282,36 @@ object CompoundVerbDataInstaller {
     (targetFile).overwrite(supineFst)
   }
 
+
+
+  def installIrregularGerunds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
+    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
+
+      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+        val irregLines =  compoundMap(c.simplexLexEnt)
+        val compoundLines = for (ln <- irregLines) yield {
+          val cols = ln.split("#").toVector
+
+          if (cols.size < 4)  {
+            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+          } else {
+            val ruleId = cols(0)
+            val lexent = cols(1)
+            val stem = cols(2)
+            val grammCase = cols(3)
+
+            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${grammCase}"
+          }
+        }
+        compoundLines
+      } else {
+        Vector.empty[String]
+      }
+    }
+    val  gerundFst = IrregGerundDataInstaller.gerundLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
+    (targetFile).overwrite(gerundFst)
+  }
+
   /** Map lexical URNs to data for simplex verb stems.
   *
   * @param simplexDir Directory containing .cex files
@@ -474,11 +458,9 @@ object CompoundVerbDataInstaller {
     val grouped = pairs.groupBy(_.k)
     grouped.map{ case (k, v) => (k, v.map(_.v))}
   }
-
-
   def irregGerundMap(irregDir: File) = {
     val raw = cexRules(irregDir)
-    raw.map( s => {
+    val pairs = raw.map( s => {
       val cols = s.split("#")
       if (cols.size < 4) {
         throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular gerund form " + s)
@@ -490,15 +472,12 @@ object CompoundVerbDataInstaller {
         val grammCase = cols(3)
         val stemClass = "irreggrnd"
         val data = List(ruleId, lexent, stem, grammCase,stemClass).mkString("#")
-        (lexent-> data)
+        KVPair(lexent, data)
       }
-    }).toMap
+    })
+    val grouped = pairs.groupBy(_.k)
+    grouped.map{ case (k, v) => (k, v.map(_.v))}
   }
-
-
-
-
-
 
 
   /** Create FST string for a verb tables in a given directory.
