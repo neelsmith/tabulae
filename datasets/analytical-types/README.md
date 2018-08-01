@@ -8,7 +8,11 @@ The file `wordlist.txt` includes a minimal set of words to test each rule+stem c
 
 ## Testing
 
-:
+**Build the parser**. From an `sbt` console in the root `tabulae` directory:
 
-1.  **Build the parser**. From an `sbt` console in the root `tabulae` directory:  `fst analytical-types`
-2.  **Analyze the word list**. From a bash shell in the root `tabulae` directory:  `fst-infl parsers/analytical-types/latin.a datasets/analytical-types/wordlist.txt`
+    fst analytical-types
+
+**Analyze the word list**. From a bash shell in the root `tabulae` directory:
+
+
+    fst-infl parsers/analytical-types/latin.a datasets/analytical-types/wordlist.txt
