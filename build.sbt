@@ -7,7 +7,7 @@ import better.files.Dsl._
 val commonSettings = Seq(
       name := "tabulae",
       organization := "edu.holycross.shot",
-      version := "0.0.1",
+      version := "1.0.0",
       scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
@@ -27,8 +27,7 @@ val commonSettings = Seq(
       parse := parseWords.evaluated,
       corpus := corpusTemplateImpl.evaluated,
       utils := utilsImpl.evaluated,
-      cleanAll := cleanAllImpl.value,
-      debug := debugMe.value
+      cleanAll := cleanAllImpl.value
 
     )
 
@@ -52,14 +51,7 @@ lazy val cleanAll = taskKey[Vector[String]]("Delete all compiled parsers")
 lazy val utils = inputKey[Unit]("Build utility transducers for a named corpus")
 lazy val debug = taskKey[Vector[String]]("Run some debugging script")
 
-lazy val debugMe: Def.Initialize[Task[Vector[String]]] = Def.task {
-  val goodLine = "ag.irrinf1#lexent.n46529#esse#pres#act"
-  val goodFst = IrregInfinitiveDataInstaller.infinitiveLineToFst(goodLine)
-  val expected = "<u>ag\\.irrinf1</u><u>lexent\\.n46529</u>esse<pres><act><irreginfin>"
-  val worked = (goodFst.trim ==  expected)
-  println("GOT " + goodFst)
-  Vector(goodFst,goodLine)
-}
+
 
 
 // Delete all compiled parsers
