@@ -4,6 +4,13 @@ import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
 
 
+/** Required configuration information to compile a binary parser.
+*
+* @param fstcompile Path to fst-compiler-utf8
+* @param fstinfl Path to fst-infl
+* @param make Path to make
+* @param datadir Name, as a String, of root directory for data sets.
+*/
 case class Configuration(fstcompile: String, fstinfl: String, make: String, datadir: String = "datasets") {
 
   require(ScalaFile(fstcompile).exists(), "No fst compiler named " + fstcompile + " found.")
