@@ -4,10 +4,10 @@ layout: page
 ---
 
 
-Package: `edu.holycross.shot.tabulae`
+Working examples: TBA
 
+Info about binary library:
 
-Binary from bintray: <https://bintray.com/neelsmith/maven/tabulae>
-
-
-[API docs](../api/edu/holycross/shot/tabulae/index.html)
+-   Package: `edu.holycross.shot.tabulae`
+-   Available from bintray: <https://bintray.com/neelsmith/maven/tabulae>
+-   [API docs](../api/edu/holycross/shot/tabulae/index.html)

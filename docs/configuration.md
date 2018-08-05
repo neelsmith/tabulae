@@ -22,8 +22,4 @@ You create a subdirectory named `configs`, and clone `conf.properties` to a file
     MAKE = /usr/bin/make
 
 
-With your `/data/morphology` directory, you have created a subdirectory namedk `livy` where you have morphological data for a corpus of Livy.
-
-From an sbt console, you can compile a parser for this corpus as follows:
-
-    fst livy configs/morphology.properties
+With your `/data/morphology` directory, you have created a subdirectory named `livy` where you have morphological data for a corpus of Livy.
