@@ -26,7 +26,7 @@ object Configuration {
 
   /** Create a [[Configuration]] instance from a  configuration file.
   *
-  * @config Configuration file.
+  * @param config Configuration file.
   */
   def apply(config: ScalaFile): Configuration = {
     val lines = config.lines.toVector.filter(_.nonEmpty).filter(_(0) != '#')

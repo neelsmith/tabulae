@@ -13,8 +13,8 @@ object Form {
   * @param s String value of a single FST analysis.
   */
   def apply(s: String): Form = {
-    val halves = s.split("::")
-    require(halves.size == 2, "Could not find :: delimited parts of FST string " + s)
+    val halves = s.split("<div>")
+    require(halves.size == 2, "Could not find <div>-delimited parts of FST string " + s)
 
     val inflection = FstRule(halves(1))
 
@@ -92,3 +92,10 @@ object NounForm {
 * @param grammaticalNumber Property for number.
 */
 case class AdjectiveForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, degree: Degree) extends Form {}
+
+case class AdverbForm(degree: Degree) extends Form {}
+
+
+case class ParticipleForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, tense: Tense, voice:  Voice) extends Form {}
+
+case class InfinitiveForm(tense: Tense, voice:  Voice) extends Form {}
