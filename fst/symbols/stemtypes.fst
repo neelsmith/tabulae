@@ -26,7 +26,7 @@
 % Adjective stem types
 #adj1and2# = <us_a_um><0_a_um><er_ra_rum><ius_ia_ium><us_a_um_pos><us_a_um_superl>
 
-#adj3# = <is_e><ns_ntis><or_oris_comp>
+#adj3# = <is_e><ns_ntis><or_oris_comp><x_cis>
 
 #adjectiveclass# = #adj1and2# #adj3#
 
