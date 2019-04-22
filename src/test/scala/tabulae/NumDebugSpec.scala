@@ -1,19 +1,19 @@
 
 package edu.holycross.shot.tabulae
 
-import scala.io.Source
 import org.scalatest.FlatSpec
 
 class NumDebugSpec extends FlatSpec {
 
 
 
-  "The FstFileReader object" should "create a Vector of AnalyzedTokens for all forms in numismatic test set" in  pending /*{
-    val f = "src/test/resources/coins-no-indecl.txt"
-    val lines = Source.fromFile(f).getLines.toVector
+  "The FstFileReader object" should "create a Vector of AnalyzedTokens for all forms in numismatic test set" in   {
+    val f = "src/test/resources/coins-no-indecl-no-irreg.txt"
 
     val analyzedTokens = FstFileReader.formsFromFile(f)
-  }*/
+    val expectedTokens = 214
+    assert(analyzedTokens.size == expectedTokens)
+  }
 
   it should "deal with single analyses" in pending/*{
 
