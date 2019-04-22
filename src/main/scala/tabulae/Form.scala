@@ -22,6 +22,10 @@ object Form {
       case nr: NounRule => {
         NounForm(nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
       }
+      case adjr: AdjectiveRule => {
+        AdjectiveForm(adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
+      }
+
       case ir: IndeclRule => {
         IndeclinableForm(ir.pos)
       }
@@ -92,6 +96,15 @@ object NounForm {
 * @param grammaticalNumber Property for number.
 */
 case class AdjectiveForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, degree: Degree) extends Form {}
+
+
+object AdjectiveForm {
+  /** Create an [[AdjectiveForm]] from four FST symbols.
+  */
+  def apply(g: String, c: String, n: String, d: String): AdjectiveForm = {
+    AdjectiveForm(genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), degreeForFstSymbol(d))
+  }
+}
 
 case class AdverbForm(degree: Degree) extends Form {}
 

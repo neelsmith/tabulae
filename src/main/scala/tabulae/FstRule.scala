@@ -148,7 +148,7 @@ object FstRule {
       case "noun" => NounRule(inflClass,  remainder)
       case "indecl" => IndeclRule.fromStrings(inflClass, remainder)
       case "verb" =>  VerbRule(inflClass, remainder)
-
+      case "adj" =>  AdjectiveRule(inflClass, remainder)
       case s: String => throw new Exception(s"Type ${s} not implemented")
     }
   }

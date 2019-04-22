@@ -51,8 +51,8 @@ class FstFormSpec extends FlatSpec {
     }
   }
 
-  it should "construct a parsed adjectival form from FST string input" in pending /*{
-    val fst = "<u>plinymorph.adj1</u><u>lexent.n37417</u>praecipu<adj><us_a_um><div><us_a_um><adj>us<masc><nom><sg><pos><u>adjinfl.us_a_um1</u>"
+  it should "construct a parsed adjectival form from FST string input" in  {
+    val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
     val f = Form(fst)
     f match {
       case adjForm: AdjectiveForm => {
@@ -61,7 +61,8 @@ class FstFormSpec extends FlatSpec {
       case _ => fail("Should have created an adjectival form")
     }
 
-  }*/
+  }
+
   it should "construct a parsed participal form from FST string input" in pending /*{
     val fst = "<u>plinymorph.verb2</u><u>lexent.n29544</u><#>mon<verb><conj2><div><conj2><ptcpl>ens<masc><nom><sg><pres><act><u>lverbinfl.ere_conj2presapl1</u>"
     val f = Form(fst)

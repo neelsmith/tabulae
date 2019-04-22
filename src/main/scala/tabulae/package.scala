@@ -51,6 +51,20 @@ package object tabulae {
     "pl" -> Plural
   )
 
+  /** Map FST symbol name to [[Degree]].  */
+  val degreeForFstSymbol: Map[String, Degree] = Map(
+    "pos" -> Positive,
+    "comp" -> Comparative,
+    "superl" -> Superlative
+  )
+
+  /** Map string used in test data tables to [[Degree]].  */
+  val degreeFForTestLabel: Map[String,Degree] = Map(
+    "positive" -> Positive,
+    "comparative" -> Comparative,
+    "superlative" -> Superlative
+  )
+
   /** Map string used in test data tables to [[Gender]].  */
   val genderForTestLabel: Map[String,Gender] = Map(
     "feminine" -> Feminine,

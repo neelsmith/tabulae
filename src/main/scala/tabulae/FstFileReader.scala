@@ -25,10 +25,14 @@ object FstFileReader {
   * @param analysisVector Previously seen analyses.
   */
   def popAnalyses(fstLines: Vector[String], analysisVector: Vector[Form] =  Vector.empty): Vector[Form] = {
-    if (isToken(fstLines.head)) {
+    if (fstLines.isEmpty) {
       analysisVector
     } else {
-      popAnalyses(fstLines.tail, analysisVector :+ Form(fstLines.head) )
+      if (isToken(fstLines.head)) {
+        analysisVector
+      } else {
+        popAnalyses(fstLines.tail, analysisVector :+ Form(fstLines.head) )
+      }
     }
   }
 
