@@ -36,6 +36,49 @@ object FstFileReader {
     }
   }
 
+  /** Pop one token + analyses from the stack of FST lines.
+  *
+  * @param fstLines Vector of FST output strings.  It should begin with
+  * a token string, and be followed by one or more anlaysis strings.
+  */
+  def popAnalyzedToken(fstLines: Vector[String]) : AnalyzedToken  = {
+    isToken(fstLines.head) match {
+      case false => throw new Exception("FST does not begin with a token value.")
+      case true => {
+        val surfaceForm = fstLines.head.replaceFirst("^> ","")
+        val analyses =  popAnalyses(fstLines.tail)
+        AnalyzedToken(surfaceForm, analyses)
+      }
+    }
+  }
+
+
+  /** Pop of lines from top of stack until a token is encountered.
+  *
+  * @param fstLines Lines of FST output.
+  */
+  def dropAnalyses(fstLines: Vector[String]):  Vector[String] = {
+    if (fstLines.isEmpty) {
+      fstLines
+    } else {
+      isToken(fstLines.head) match {
+        case true => fstLines
+        case false => dropAnalyses(fstLines.tail)
+      }
+    }
+  }
+
+
+  def parseFstLines(fstLines: Vector[String], analyzed : Vector[AnalyzedToken] = Vector.empty[AnalyzedToken]): Vector[AnalyzedToken] = {
+    if (fstLines.isEmpty) {
+      analyzed
+    } else {
+      val analyzedToken = popAnalyzedToken(fstLines)
+      val remainingFst = dropAnalyses(fstLines.tail)
+      parseFstLines(remainingFst, analyzed :+ analyzedToken)
+    }
+  }
+
   def formsFromFile(f: String) = {
 
   }
