@@ -18,6 +18,20 @@ object FstFileReader {
   }
 
 
+  /** Recursively pop off analyses for first lines in a Vector of FST strings until a new token
+  * is encountered.
+  *
+  * @param fstLines Vector of FST output strings.
+  * @param analysisVector Previously seen analyses.
+  */
+  def popAnalyses(fstLines: Vector[String], analysisVector: Vector[Form] =  Vector.empty): Vector[Form] = {
+    if (isToken(fstLines.head)) {
+      analysisVector
+    } else {
+      popAnalyses(fstLines.tail, analysisVector :+ Form(fstLines.head) )
+    }
+  }
+
   def formsFromFile(f: String) = {
 
   }
