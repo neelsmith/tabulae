@@ -12,6 +12,14 @@ def singleLemma(t: AnalyzedToken): Boolean = {
   (lemmata.size == 1)
 }
 
+
+
+def singlePos(t: AnalyzedToken): Boolean = {
+  val posLabels = t.analyses.map(_.posLabel).distinct
+  (posLabels.size == 1)
+}
+
+
 def profileAnalyses(v: Vector[AnalyzedToken]) = {
   println("Number of tokens: " + v.size)
   val analyzed = v.filter(_.analyses.nonEmpty)
@@ -19,5 +27,22 @@ def profileAnalyses(v: Vector[AnalyzedToken]) = {
 
   println("Tokens with unique/multiple analyses: " + analyzed.filter(_.analyses.size == 1).size + "/" + analyzed.filter(_.analyses.size > 1).size)
     println("Tokens with unique/multiple lemmata: " + analyzed.filter(singleLemma(_)).size + "/" + analyzed.filterNot(singleLemma(_)).size)
+}
 
+
+def mapValueForCoin(tkn: AnalyzedToken) = {
+  println(tkn.token)
+
+  val remapped = for (analysis <- tkn.analyses) yield {
+    analysis match {
+      case nf:  NounForm => nf.posLabel + nf.gender + "-" + nf.grammaticalCase + "-" + nf.grammaticalNumber
+      case af:  AdjectiveForm => af.posLabel + af.gender + "-" + af.grammaticalCase + "-" + af.grammaticalNumber
+      case lf: LemmatizedForm => {"Not a noun or adj.: " + f}
+    }
+  }
+  remapped
+}
+
+def mapValuesForCoins(tkns: Vector[AnalyzedToken]) = {
+  tkns.map(mapValueForCoin(_))
 }

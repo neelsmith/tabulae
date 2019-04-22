@@ -4,6 +4,20 @@ package edu.holycross.shot.tabulae
 /** A valid grammatical form identification.*/
 sealed trait LemmatizedForm {
   def lemma: String
+  def posLabel: String = {
+    this match {
+      case v: VerbForm => "verb"
+      case n: NounForm => "noun"
+      case adj: AdjectiveForm => "adjective"
+      case adv: AdverbForm => "adverb"
+      case gnd: GerundForm => "gerund"
+      case indecl: IndeclinableForm => "indeclinable"
+      case inf: InfinitiveForm => "infinitive"
+      case ptcpl: ParticipleForm => "participle"
+
+      // AdverbForm(_, _), GerundForm(_, _), IndeclinableForm(_, _), InfinitiveForm(_, _, _), NounForm(_, _, _, _), ParticipleForm(_, _, _, _, _, _)
+    }
+  }
 }
 
 /** Factory object to create full [[LemmatizedForm]] from a string of FST.
