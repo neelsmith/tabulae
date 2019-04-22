@@ -26,14 +26,14 @@ object FstFileReader {
   * @param fstLines Vector of FST output strings.
   * @param analysisVector Previously seen analyses.
   */
-  def popAnalyses(fstLines: Vector[String], analysisVector: Vector[Form] =  Vector.empty): Vector[Form] = {
+  def popAnalyses(fstLines: Vector[String], analysisVector: Vector[LemmatizedForm] =  Vector.empty): Vector[LemmatizedForm] = {
     if (fstLines.isEmpty) {
       analysisVector
     } else {
       if (isToken(fstLines.head)) {
         analysisVector
       } else {
-        popAnalyses(fstLines.tail, analysisVector :+ Form(fstLines.head) )
+        popAnalyses(fstLines.tail, analysisVector :+ LemmatizedForm(fstLines.head) )
       }
     }
   }

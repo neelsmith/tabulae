@@ -13,7 +13,7 @@ class FstStemParsingSpec extends FlatSpec {
     stemObj match {
       case nounObj: NounStem => {
         assert(nounObj.stemId == "dev1.n1")
-        assert(nounObj.lexentId == "lexent.n1")
+        assert(nounObj.lexEntity == "lexent.n1")
         assert(nounObj.stem == "femin")
         assert(nounObj.inflClass == "a_ae")
         assert(nounObj.gender == "fem")
@@ -28,7 +28,7 @@ class FstStemParsingSpec extends FlatSpec {
     stemObj match {
       case verbObj: VerbStem => {
         assert(verbObj.stemId == "dev1.v1")
-        assert(verbObj.lexentId == "lexent.v1")
+        assert(verbObj.lexEntity == "lexent.v1")
         assert(verbObj.inflClass == "conj1")
         assert(verbObj.stem == "<#>am")
       }
@@ -42,7 +42,7 @@ class FstStemParsingSpec extends FlatSpec {
       stemObj match {
         case indeclObj: IndeclStem => {
           assert(indeclObj.stemId == "pliny.indecl1")
-          assert(indeclObj.lexentId == "lexent.tbd")
+          assert(indeclObj.lexEntity == "lexent.tbd")
           assert(indeclObj.pos == "conjunct")
           assert(indeclObj.stem == "cum")
         }
@@ -55,7 +55,7 @@ class FstStemParsingSpec extends FlatSpec {
     stemObj match {
       case adjObj: AdjectiveStem => {
         assert(adjObj.stemId == "ocremorph.geoadj1")
-        assert(adjObj.lexentId == "ls.n617")
+        assert(adjObj.lexEntity == "ls.n617")
         assert(adjObj.stem == "acti")
         assert(adjObj.inflClass == "us_a_um")
       }

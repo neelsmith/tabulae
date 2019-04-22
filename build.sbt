@@ -7,7 +7,7 @@ import better.files.Dsl._
 val commonSettings = Seq(
       name := "tabulae",
       organization := "edu.holycross.shot",
-      version := "1.2.0",
+      version := "2.0.0",
       scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,

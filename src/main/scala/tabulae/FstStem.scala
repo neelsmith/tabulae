@@ -7,7 +7,10 @@ package edu.holycross.shot.tabulae
 * Implementations of this trait parse FST strings into appropriate
 * substrings for each analytical type ("part of speech").
 */
-trait FstStem
+trait FstStem {
+  def stem: String
+  def lexEntity: String
+}
 
 
 /** Lexicon entry for a verb.
@@ -17,7 +20,7 @@ trait FstStem
 * @param stem Stem string, in FST symbol alphabet.
 * @param inflClass String value for inflectional class.
 */
-case class VerbStem(stemId: String, lexentId: String, stem: String, inflClass: String) extends FstStem
+case class VerbStem(stemId: String, lexEntity: String, stem: String, inflClass: String) extends FstStem
 object VerbStem {
 
   /** Create full [[VerbStem]] object from verb-specific FST.
@@ -40,11 +43,11 @@ object VerbStem {
 * @param stem Stem string, in FST symbol alphabet.
 * @param pos String value for part of speech.
 */
-case class IndeclStem(stemId: String, lexentId: String, stem: String, pos: String ) extends FstStem
+case class IndeclStem(stemId: String, lexEntity: String, stem: String, pos: String ) extends FstStem
 
 object IndeclStem {
 
-  /** Create full [[NounStem]] object from noun-specific FST.
+  /** Create full [[IndeclStem]] object from noun-specific FST.
   *
   * @param stemId Abbreviated URN for stem.
   * @param lexId Abbreviated URN for lexical entity.
@@ -63,7 +66,7 @@ object IndeclStem {
 * @param stem Stem string, in FST symbol alphabet.
 * @param inflClass String value for inflectional class.
 */
-case class AdjectiveStem(stemId: String, lexentId: String, stem: String, inflClass: String ) extends FstStem
+case class AdjectiveStem(stemId: String, lexEntity: String, stem: String, inflClass: String ) extends FstStem
 
 /** Factory object to build [[AdjectiveStem]] from a noun-specific
 * string with undifferentiated analytical parts.
@@ -88,11 +91,13 @@ object AdjectiveStem {
 *
 * @param stemId Abbreviated URN string for stem.
 * @param lexId Abbreviated URN string for lexical entity.
-* @param stem Stem string, in FST symbol alphabet.
+* @param fstStem Stem string, in FST symbol alphabet.
 * @param inflClass String value for inflectional class.
 * @param gender String value for gender.
 */
-case class NounStem(stemId: String, lexentId: String, stem: String, gender: String, inflClass: String ) extends FstStem
+case class NounStem(stemId: String, lexEntity: String, stem: String, gender: String, inflClass: String ) extends FstStem  {
+  //def stem : String = fstStem
+}
 
 /** Factory object to build [[NounStem]] from a noun-specific
 * string with undifferentiated analytical parts.

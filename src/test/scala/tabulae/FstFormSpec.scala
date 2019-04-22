@@ -8,7 +8,7 @@ class FstFormSpec extends FlatSpec {
 
   "The Form object" should "construct a parsed noun form from FST string input" in {
     val fst = "<u>dev1.n1</u><u>lexent.n1</u>femin<noun><fem><a_ae><div><a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case nf: NounForm => {
         assert (nf.gender == Feminine)
@@ -23,7 +23,7 @@ class FstFormSpec extends FlatSpec {
     val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><conj1>"
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val fst = stemFst + "<div>" + ruleFst
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case vf: VerbForm => {
         assert (vf.person == First)
@@ -42,7 +42,7 @@ class FstFormSpec extends FlatSpec {
     val stemFst = "<u>pliny.indecl1</u><u>lexent.tbd</u>cum<indecl><conjunct>"
 
     val fst = stemFst + "<div>" +  ruleFst
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case indeclForm: IndeclinableForm => {
         assert(indeclForm.pos == Conjunction)
@@ -53,7 +53,7 @@ class FstFormSpec extends FlatSpec {
 
   it should "construct a parsed adjectival form from FST string input" in  {
     val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case adjForm: AdjectiveForm => {
         assert(adjForm.gender == Masculine)
@@ -65,7 +65,7 @@ class FstFormSpec extends FlatSpec {
 
   it should "construct a parsed participal form from FST string input" in pending /*{
     val fst = "<u>plinymorph.verb2</u><u>lexent.n29544</u><#>mon<verb><conj2><div><conj2><ptcpl>ens<masc><nom><sg><pres><act><u>lverbinfl.ere_conj2presapl1</u>"
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case ptcplForm: ParticipleForm => {
         assert(ptcplForm.gender == Masculine)
@@ -75,7 +75,7 @@ class FstFormSpec extends FlatSpec {
   }*/
   it should "construct a parsed infinitive form from FST string input" in pending /*{
     val fst = "<u>plinymorph.verb2</u><u>lexent.n29544</u><#>mon<verb><conj2><div><conj2><infin>uisse<pft><act><u>lverbinfl.ere_inf3</u>"
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case infinitiveForm: InfinitiveForm => {
         assert(infinitiveForm.voice == Active)
@@ -85,7 +85,7 @@ class FstFormSpec extends FlatSpec {
   }*/
   it should "contsruct a parsed adverbial form from FST string input" in pending /* {
     val fst = "<u>plinymorph.adj90</u><u>lexent.n18204</u>finitim<adj><us_a_um><div><us_a_um><adv>e<pos><u>advnfl.us_a_um1</u>"
-    val f = Form(fst)
+    val f = LemmatizedForm(fst)
     f match {
       case adverbForm: AdverbForm => {
         assert(adverbForm.degree == Positive)
