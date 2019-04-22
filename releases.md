@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**2.0.1**:  Fixes a typo in converting string representation of ablative case object.
+
 **2.0.0**: API-breaking change replaces `Form` trait with `LemmatizedForm` trait.
 
 **1.2.0**:  Adds support for parsing participle and gerund forms from `FstFileReader`.

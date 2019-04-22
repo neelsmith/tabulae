@@ -41,7 +41,7 @@ package object tabulae {
     "gen" -> Genitive,
     "dat" -> Dative,
     "acc" -> Accusative,
-    "abl" -> Accusative,
+    "abl" -> Ablative,
     "voc" -> Vocative
   )
 
