@@ -56,7 +56,32 @@ object IndeclStem {
   }
 }
 
+/** Lexicon entry for an adjective.
+*
+* @param stemId Abbreviated URN string for stem.
+* @param lexId Abbreviated URN string for lexical entity.
+* @param stem Stem string, in FST symbol alphabet.
+* @param inflClass String value for inflectional class.
+*/
+case class AdjectiveStem(stemId: String, lexentId: String, stem: String, inflClass: String ) extends FstStem
 
+/** Factory object to build [[AdjectiveStem]] from a noun-specific
+* string with undifferentiated analytical parts.
+*/
+object AdjectiveStem {
+
+  /** Create full [[AdjectiveStem]] object from noun-specific FST.
+  *
+  * @param stemId Abbreviated URN for stem.
+  * @param lexId Abbreviated URN for lexical entity.
+  * @param remainder Noun-specific FST to parse.
+  */
+  def apply(stemId: String, lexId: String, remainder: String): AdjectiveStem = {
+    val parts = remainder.split("<adj>")
+    val inflectionClass =  parts(1).replaceAll("[<>]", "")
+    AdjectiveStem(stemId, lexId, parts(0), inflectionClass)
+  }
+}
 
 
 /** Lexicon entry for a noun.
@@ -97,7 +122,7 @@ object FstStem {
   /** FST symbols identifying inflectional type ("part of speech").
   */
   val typeTags: Vector[String] =  Vector(
-    "<noun>", "<verb>","<indecl>"
+    "<noun>", "<verb>","<indecl>", "<adj>"
   )
 
   /** Create an [[FstStem]] object from the FST representation of a stem.
@@ -125,6 +150,11 @@ object FstStem {
         val parts = remainder.split("<indecl>")
         IndeclStem(stemId, lexEntity, remainder)
       }
+
+      case Adjective => {
+        val parts = remainder.split("<adj>")
+        AdjectiveStem(stemId, lexEntity, remainder)
+      }
       case _ => throw new Exception("Type not yet implemented: " + stemClass)
     }
 
@@ -150,6 +180,7 @@ object FstStem {
       case "<noun>" => Noun
       case "<verb>" => Verb
       case "<indecl>" => Indeclinable
+      case "<adj>" => Adjective
     }
   }
 }

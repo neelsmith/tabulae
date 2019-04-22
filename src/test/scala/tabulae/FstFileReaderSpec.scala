@@ -59,4 +59,12 @@ class FstFileReaderSpec extends FlatSpec {
     assert(analyzedTokens.size == expectedTokens)
   }
 
+  it should "create a Vector of AnalyzedTokens from a file" in {
+    val f = "src/test/resources/tiny.txt"
+    val analyzedTokens = FstFileReader.formsFromFile(f)
+
+    val expectedSize = 2
+    assert(analyzedTokens.size == expectedSize)
+  }
+
 }

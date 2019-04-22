@@ -3,7 +3,9 @@ package edu.holycross.shot.tabulae
 import scala.io.Source
 
 
-/** Factory object to create full [[Form]] from a string of FST.
+/**
+*
+*
 */
 object FstFileReader {
 
@@ -18,8 +20,8 @@ object FstFileReader {
   }
 
 
-  /** Recursively pop off analyses for first lines in a Vector of FST strings until a new token
-  * is encountered.
+  /** Recursively pop off analyses for first lines in a Vector of FST strings
+  * until a new token  is encountered.
   *
   * @param fstLines Vector of FST output strings.
   * @param analysisVector Previously seen analyses.
@@ -36,7 +38,11 @@ object FstFileReader {
     }
   }
 
-  /** Pop one token + analyses from the stack of FST lines.
+  /** Pop one token + analyses as an [[AnalyzedToken]] from the stack of FST lines.
+  * Since this is a pure function that does not affect the initial Vector of
+  * Strings, you can use the complementary [[dropAnalyses]] function to
+  * find the Vector of FST Strings remaining when the analyses captured here
+  * are popped off.
   *
   * @param fstLines Vector of FST output strings.  It should begin with
   * a token string, and be followed by one or more anlaysis strings.
@@ -53,7 +59,7 @@ object FstFileReader {
   }
 
 
-  /** Pop of lines from top of stack until a token is encountered.
+  /** Recursively pop off lines from top of stack until a token is encountered.
   *
   * @param fstLines Lines of FST output.
   */
@@ -69,6 +75,11 @@ object FstFileReader {
   }
 
 
+  /** Analyze a Vector of FST Strings as [[AnalyzedToken]]s.
+  *
+  * @param fstLines FST Strings to analyze.
+  * @param analyzed Previously seen [[AnalyzedToken]] objects.
+  */
   def parseFstLines(fstLines: Vector[String], analyzed : Vector[AnalyzedToken] = Vector.empty[AnalyzedToken]): Vector[AnalyzedToken] = {
     if (fstLines.isEmpty) {
       analyzed
@@ -79,8 +90,10 @@ object FstFileReader {
     }
   }
 
-  def formsFromFile(f: String) = {
 
+  def formsFromFile(fileName: String) : Vector[AnalyzedToken]= {
+    val lines = Source.fromFile(fileName).getLines.toVector
+    parseFstLines(lines)
   }
 
 }

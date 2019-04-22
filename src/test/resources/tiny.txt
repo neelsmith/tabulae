@@ -1,0 +1,11 @@
+> actio
+<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>
+<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><abl><sg><pos><u>ocremorph.us_a_um5</u>
+<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<neut><dat><sg><pos><u>ocremorph.us_a_um77</u>
+<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<neut><abl><sg><pos><u>ocremorph.us_a_um79</u>
+> adventvs
+<u>ocremorph.n36</u><u>ls.n1072</u>advent<noun><masc><us_us><div><us_us><noun>vs<masc><nom><sg><u>ocremorph.us_us1</u>
+<u>ocremorph.n36</u><u>ls.n1072</u>advent<noun><masc><us_us><div><us_us><noun>vs<masc><acc><pl><u>ocremorph.us_us9</u>
+<u>ocremorph.n36</u><u>ls.n1072</u>advent<noun><masc><us_us><div><us_us><noun>vs<masc><gen><sg><u>ocremorph.us_us2</u>
+<u>ocremorph.n36</u><u>ls.n1072</u>advent<noun><masc><us_us><div><us_us><noun>vs<masc><voc><sg><u>ocremorph.us_us11</u>
+<u>ocremorph.n36</u><u>ls.n1072</u>advent<noun><masc><us_us><div><us_us><noun>vs<masc><voc><pl><u>ocremorph.us_us12</u>

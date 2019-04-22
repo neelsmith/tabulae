@@ -49,7 +49,19 @@ class FstStemParsingSpec extends FlatSpec {
         case _ => fail("Should have created IndeclStem")
       }
   }
-  it should "parse adjective stems" in pending
+  it should "parse adjective stems" in {
+    val stemFst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um>"
+    val stemObj = FstStem(stemFst)
+    stemObj match {
+      case adjObj: AdjectiveStem => {
+        assert(adjObj.stemId == "ocremorph.geoadj1")
+        assert(adjObj.lexentId == "ls.n617")
+        assert(adjObj.stem == "acti")
+        assert(adjObj.inflClass == "us_a_um")
+      }
+      case _ => fail("Should have created AdjectiveStem")
+    }
+  }
   it should "parse participial stems" in pending
   it should "parse infinitive stems" in pending
   it should "parse adverbial stems" in pending
