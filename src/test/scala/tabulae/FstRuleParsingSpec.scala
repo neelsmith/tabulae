@@ -41,6 +41,8 @@ class FstRuleParsingSpec extends FlatSpec {
 
   it should "recognize indeclinable forms" in {
     val ruleFst = "<conjunct><indecl><u>lindeclinfl.1</u>"
+
+
     val rule = FstRule(ruleFst)
     rule match {
       case ir: IndeclRule => {
@@ -65,8 +67,33 @@ class FstRuleParsingSpec extends FlatSpec {
   }
 
 
-  it should "recognize participial forms" in pending
-  it should "recognize forms of the gerund" in pending
+  it should "recognize forms of the gerund" in {
+    val ruleFst = "<conj1><gerund>ando<dat><u>ocremorph.grd_conj1_2</u>"
+    val rule = FstRule(ruleFst)
+    rule match {
+      case gr: GerundRule => {
+      }
+      case _ => fail("Should have formed a GerundRule")
+    }
+  }
+
+  it should "recognize participial forms" in {
+    val ruleFst = "<pftpass><ptcpl>i<masc><nom><pl><pft><pass><u>ocremorph.pft_perfppl7</u>"
+    val rule = FstRule(ruleFst)
+    rule match {
+      case pr: ParticipleRule => {
+        assert(pr.ruleId == "ocremorph.pft_perfppl7")
+        assert(pr.gender == "masc")
+        assert(pr.grammaticalCase == "nom")
+        assert(pr.grammaticalNumber == "pl")
+        assert(pr.tense == "pft")
+        assert(pr.voice == "pass")
+      }
+      case _ => fail("Should have formed a ParticipleRule")
+    }
+  }
+
+
   it should "recognize gerundive forms" in pending
   it should "recognize adverbial forms" in pending
 

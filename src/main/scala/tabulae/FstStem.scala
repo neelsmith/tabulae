@@ -134,9 +134,9 @@ object FstStem {
     val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
     val idsRE(stemId, lexEntity, remainder) = fst
 
-    println(s"GOT from idsRE: ${stemId}, ${lexEntity}, ${remainder}")
+    //println(s"GOT from idsRE: ${stemId}, ${lexEntity}, ${remainder}")
     val stemClass =  stemType(remainder)
-    println("So stem class is " + stemClass)
+    //println("So stem class is " + stemClass)
     stemClass match {
       case Noun => {
         val parts = remainder.split("<noun>")
@@ -166,7 +166,7 @@ object FstStem {
   * @param stemFst The "stem" half of an FST reply.
   */
   def stemType(stemFst: String) : AnalysisType = {
-    println("STEM TYPE FOR " + stemFst)
+    //println("STEM TYPE FOR " + stemFst)
     val typeMatches = typeTags.map( t => {
       val parts = stemFst.split(t).toVector
       parts.size == 2

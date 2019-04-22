@@ -32,6 +32,14 @@ object Form {
       case vr: VerbRule => {
         VerbForm(vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
       }
+
+      case gr: GerundRule => {
+        GerundForm(gr.grammaticalCase)
+      }
+
+      case pr: ParticipleRule => {
+        ParticipleForm(pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice)
+      }
       case _ => throw new Exception(s"Form ${inflection} not yet implemented.")
     }
   }
@@ -89,6 +97,22 @@ object NounForm {
 }
 
 
+/** Noun form, identified by gender, case and number.
+*
+* @param grammaticalCase Property for case.
+*/
+case class GerundForm(grammaticalCase: GrammaticalCase) extends Form {}
+/** Factory object to build a [[NounForm]] from string vaues.
+*/
+object GerundForm {
+  /** Create a [[GerundForm]] from one FST symbols.
+  */
+  def apply( c: String): GerundForm = {
+    GerundForm(caseForFstSymbol(c))
+  }
+}
+
+
 /** Adjective form, identified by gender, case, number and degree.
 *
 * @param gender Property for number.
@@ -110,5 +134,14 @@ case class AdverbForm(degree: Degree) extends Form {}
 
 
 case class ParticipleForm(gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, tense: Tense, voice:  Voice) extends Form {}
+
+object ParticipleForm {
+  /** Create a [[ParticipleForm]] from four FST symbols.
+  */
+  def apply(g: String, c: String, n: String, t: String, v: String): ParticipleForm = {
+    ParticipleForm(genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), tenseForFstSymbol(t),voiceForFstSymbol(v))
+  }
+}
+
 
 case class InfinitiveForm(tense: Tense, voice:  Voice) extends Form {}

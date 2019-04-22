@@ -84,7 +84,9 @@ object FstFileReader {
     if (fstLines.isEmpty) {
       analyzed
     } else {
+      //println("\npopping token for " + fstLines.head)
       val analyzedToken = popAnalyzedToken(fstLines)
+      //println("Got " + analyzedToken + "\n")
       val remainingFst = dropAnalyses(fstLines.tail)
       parseFstLines(remainingFst, analyzed :+ analyzedToken)
     }

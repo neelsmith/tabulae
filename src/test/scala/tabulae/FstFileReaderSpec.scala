@@ -59,12 +59,19 @@ class FstFileReaderSpec extends FlatSpec {
     assert(analyzedTokens.size == expectedTokens)
   }
 
-  it should "create a Vector of AnalyzedTokens from a file" in {
+  it should "create a Vector of AnalyzedTokens from a small sample file" in {
     val f = "src/test/resources/tiny.txt"
     val analyzedTokens = FstFileReader.formsFromFile(f)
 
     val expectedSize = 2
     assert(analyzedTokens.size == expectedSize)
   }
+
+  it should "create a Vector of AnalyzedTokens for all forms in numismatic test set" in pending/* {
+    val f = "src/test/resources/coins-no-indecl.txt"
+    val analyzedTokens = FstFileReader.formsFromFile(f)
+
+    println("TOKENS: " + analyzedTokens.size)
+  }*/
 
 }
