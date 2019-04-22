@@ -6,7 +6,7 @@ import org.scalatest.FlatSpec
 class FstRuleParsingSpec extends FlatSpec {
 
 
-  "The FstRule object" should "parse the stem part of an FST reply into an FstRule object" in  {
+  "The FstRule object" should "recognize nouns forms" in  {
     val ruleFst = "<a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
     val rule = FstRule(ruleFst)
     rule match {
@@ -22,7 +22,7 @@ class FstRuleParsingSpec extends FlatSpec {
     }
   }
 
-  it should "recognize verb forms" in {
+  it should "recognize conjugated verb forms" in {
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val rule = FstRule(ruleFst)
     rule match {
@@ -53,19 +53,21 @@ class FstRuleParsingSpec extends FlatSpec {
 
 
 
-  it should "recognize adjective forms" in pending /*{
-    val ruleFst = "<conjunct><indecl><u>lindeclinfl.1</u>"
+  it should "recognize adjective forms" in {
+
+    val ruleFst = "<us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
     val rule = FstRule(ruleFst)
     rule match {
       case ar: AdjectiveRule => {
       }
       case _ => fail("Should have formed an AdjectiveRule")
     }
-  } */
+  }
 
 
   it should "recognize participial forms" in pending
-  it should "recognize infinitive forms" in pending
+  it should "recognize forms of the gerund" in pending
+  it should "recognize gerundive forms" in pending
   it should "recognize adverbial forms" in pending
 
 }
