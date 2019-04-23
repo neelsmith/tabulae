@@ -39,22 +39,6 @@ class FstRuleParsingSpec extends FlatSpec {
     }
   }
 
-  it should "recognize indeclinable forms" in {
-    val ruleFst = "<conjunct><indecl><u>lindeclinfl.1</u>"
-
-
-    val rule = FstRule(ruleFst)
-    rule match {
-      case ir: IndeclRule => {
-        assert(ir.ruleId == "lindeclinfl.1")
-        assert(ir.pos == "conjunct")
-      }
-      case _ => fail("Should have formed an IndeclRule")
-    }
-  }
-
-
-
   it should "recognize adjective forms" in {
 
     val ruleFst = "<us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"

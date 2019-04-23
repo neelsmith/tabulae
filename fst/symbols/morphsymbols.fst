@@ -5,7 +5,7 @@
 % "Parts of speech": not traditional definition, but distinguished by
 % analytical pattern.  E.g., <infin> has distinct pattern that is neither
 % noun nor verb.
-#pos# = <noun><adj><verb><vadj><infin><gerundive><gerund><supine><ptcpl><adv><pron><irregcverb><irregnoun><irregadj><irregadv><irreginfin><irregptcpl><irreggrnd><irreggrndv><irregsupn><irregpron>
+#pos# = <noun><adj><verb><vadj><infin><gerundive><gerund><supine><ptcpl><adv><pron><irregcverb><irregnoun><irregadj><irregadv><irreginfin><irregptcpl><irreggrnd><irreggrndv><irregsupn><irregpron><indecl>
 
 #verbparts# = <verb><infin><ptcpl><gerundive><gerund><supine>
 %

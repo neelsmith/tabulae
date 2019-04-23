@@ -1,5 +1,12 @@
 # Release notes for `tabulae`
 
+
+**2.1.2**: Fruther fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
+
+
+**2.1.1**: Fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
+
+
 **2.1.0**: Adds utility function in `LemmatizedForm` trait for labelling "parts of speech".
 
 

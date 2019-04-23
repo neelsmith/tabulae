@@ -37,19 +37,6 @@ class FstFormSpec extends FlatSpec {
   }
 
 
-  it should "construct a parsed indeclinable form from FST string input" in  {
-    val ruleFst = "<conjunct><indecl><u>lindeclinfl.1</u>"
-    val stemFst = "<u>pliny.indecl1</u><u>lexent.tbd</u>cum<indecl><conjunct>"
-
-    val fst = stemFst + "<div>" +  ruleFst
-    val f = LemmatizedForm(fst)
-    f match {
-      case indeclForm: IndeclinableForm => {
-        assert(indeclForm.pos == Conjunction)
-      }
-      case _ => fail("Should have created an indeclinable form")
-    }
-  }
 
   it should "construct a parsed adjectival form from FST string input" in  {
     val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"

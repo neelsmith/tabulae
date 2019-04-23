@@ -9,12 +9,10 @@ class CompleteBuildSpec extends FlatSpec {
 
 
   "The FstCompiler object" should "compile a binary FST parser" in {
-    //ataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration)
-
-    val repo = File(".")
+    val repo = File("src/test/resources")
     val datasource = repo/"datasets"
-    val c = "analytical-types"
-
+    val c = "analytical_types"
+    //val c = "indecls"
     val conf = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
 
 

@@ -19,6 +19,8 @@ case class IndeclRule(ruleId: String, pos: String ) extends FstRule
 */
 object IndeclRule {
 
+//<u>ocremorph.indecl2</u><u>ls.n16278</u>et<indeclconj><div><indeclconj><u>indeclinfl.2</u>
+
   /** Create [[IndeclRule]] from part of speech and tagged
   * identifier by stripping off tag markers used in FST string.
   *
@@ -26,6 +28,7 @@ object IndeclRule {
   * @param urn FST string marking rule identifier within <u> tag.
   */
   def fromStrings(pos: String, urn: String): IndeclRule = {
+    //println("INDECL pos " + pos + " STR " +  urn)
     val dataRE  = "<u>(.+)<\\/u>".r
     val dataRE(ruleId) = urn
     IndeclRule(ruleId,pos)
@@ -190,12 +193,14 @@ object FstRule {
   * @param fst The "rule" half of an FST reply.
   */
   def apply(fst: String): FstRule = {
+
     val idsRE = "<([^<]+)><([^<]+)>(.+)".r
     val idsRE(inflClass, stemType, remainder) = fst
     /*println("FST RULE:\n")
     println(s"\tclass ${inflClass}")
-    println(s"\tremainder ${remainder}") */
+    println(s"\tremainder ${remainder}")*/
     stemType match {
+
       case "noun" => NounRule(inflClass,  remainder)
       case "indecl" => IndeclRule.fromStrings(inflClass, remainder)
       case "verb" =>  VerbRule(inflClass, remainder)

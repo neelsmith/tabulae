@@ -1,5 +1,5 @@
-$indeclinfl$ =  <indeclprep><u>indeclinfl\.1</u> |\
-<indeclconj><u>indeclinfl\.2</u> |\
-<indeclinterj><u>indeclinfl\.3</u>
+$indeclinfl$ =  <indeclprep><indecl><u>indeclinfl\.1</u> |\
+<indeclconj><indecl><u>indeclinfl\.2</u> |\
+<indeclinterj><indecl><u>indeclinfl\.3</u>
 
 $indeclinfl$

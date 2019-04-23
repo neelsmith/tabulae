@@ -351,13 +351,16 @@ $squashadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
 """ } else { "" }
 }
 
+//<u>ocremorph.indecl2</u>
+//<u>ls.n16278</u>et
+//<indeclconj><div><indeclconj><u>indeclinfl.2</u>
 
 /** String defining final acceptor transducer for indeclinable forms.*/
 def indeclAcceptor (dir : ScalaFile): String = {
   if (includeIndecls(dir) ) {  """
 % Indeclinable form acceptor:
 $=indeclclass$ = [#indecl#]
-$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+  $=indeclclass$ <div>   $=indeclclass$ <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
+$squashindeclurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$ <div>   $=indeclclass$ <indecl><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """ } else { "" }
 }
 

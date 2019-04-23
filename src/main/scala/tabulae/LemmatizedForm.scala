@@ -15,7 +15,7 @@ sealed trait LemmatizedForm {
       case inf: InfinitiveForm => "infinitive"
       case ptcpl: ParticipleForm => "participle"
 
-      // AdverbForm(_, _), GerundForm(_, _), IndeclinableForm(_, _), InfinitiveForm(_, _, _), NounForm(_, _, _, _), ParticipleForm(_, _, _, _, _, _)
+
     }
   }
 }
@@ -92,6 +92,7 @@ case class IndeclinableForm(lemma: String, pos: IndeclinablePoS) extends Lemmati
 object IndeclinableForm {
 
   def apply(lemma: String, s: String): IndeclinableForm ={
+    //println("INDCL FORM lemma/s "  + lemma + ", " + s)
     IndeclinableForm(lemma, indeclinablePoSForFst(s))
   }
 }

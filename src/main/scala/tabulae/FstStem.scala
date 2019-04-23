@@ -54,6 +54,7 @@ object IndeclStem {
   * @param remainder Noun-specific FST to parse.
   */
   def apply(stemId: String, lexId: String, remainder: String): IndeclStem = {
+    //println("INDECL: stem/lexId/remainder = " + Vector(stemId, lexId, remainder).mkString(", "))
     val parts = remainder.split("<indecl>")
     IndeclStem(stemId, lexId, parts(0),parts(1).replaceFirst("<","").replaceFirst(">",""))
   }
@@ -124,11 +125,7 @@ object NounStem {
 */
 object FstStem {
 
-  /** FST symbols identifying inflectional type ("part of speech").
-  */
-  val typeTags: Vector[String] =  Vector(
-    "<noun>", "<verb>","<indecl>", "<adj>"
-  )
+
 
   /** Create an [[FstStem]] object from the FST representation of a stem.
   *
@@ -171,14 +168,17 @@ object FstStem {
   * @param stemFst The "stem" half of an FST reply.
   */
   def stemType(stemFst: String) : AnalysisType = {
-    //println("STEM TYPE FOR " + stemFst)
-    val typeMatches = typeTags.map( t => {
-      val parts = stemFst.split(t).toVector
-      parts.size == 2
+
+    // FST symbols identifying inflectional type ("part of speech").
+    val posTags: Vector[String] =  Vector(
+      "<noun>", "<verb>","<indecl>", "<adj>"
+    )
+    // Define true/false for match with each allowed pos tag:
+    val typeMatches = posTags.map( t => {
+      stemFst.contains(t)
     })
-
-    val pairs = typeTags.zip(typeMatches).filter(_._2)
-
+    // zip T/F and tags together, filter on true:
+    val pairs = posTags.zip(typeMatches).filter(_._2)
     require(pairs.size == 1, "Did not match a unique type : " + pairs)
     val pair = pairs(0)
     pair._1 match {

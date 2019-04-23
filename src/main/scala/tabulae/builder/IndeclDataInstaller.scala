@@ -61,7 +61,7 @@ object IndeclDataInstaller {
       val pos = cols(3)
 
 
-      fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<${pos}>")
+      fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<indecl><${pos}>")
       fstBuilder.toString
     }
   }
