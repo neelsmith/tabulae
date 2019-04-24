@@ -95,7 +95,7 @@ object FstFileReader {
 
   def formsFromFile(fileName: String) : Vector[AnalyzedToken]= {
     val lines = Source.fromFile(fileName).getLines.toVector
-    parseFstLines(lines)
+    parseFstLines(lines.filter(_.nonEmpty))
   }
 
 }

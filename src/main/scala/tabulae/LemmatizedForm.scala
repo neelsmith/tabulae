@@ -30,7 +30,7 @@ object LemmatizedForm {
   */
   def apply(s: String): LemmatizedForm = {
     val halves = s.split("<div>")
-    require(halves.size == 2, "Could not find <div>-delimited parts of FST string " + s)
+    require(halves.size == 2, "LemmatizedFrom: could not find <div>-delimited parts of FST string in " + s)
 
     val stemEntry = FstStem(halves(0))
     val inflection = FstRule(halves(1))

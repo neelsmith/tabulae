@@ -179,7 +179,7 @@ object FstStem {
     })
     // zip T/F and tags together, filter on true:
     val pairs = posTags.zip(typeMatches).filter(_._2)
-    require(pairs.size == 1, "Did not match a unique type : " + pairs)
+    require(pairs.size == 1, s"For stem fst ${stemFst}, did not match a unique type : " + pairs)
     val pair = pairs(0)
     pair._1 match {
       case "<noun>" => Noun

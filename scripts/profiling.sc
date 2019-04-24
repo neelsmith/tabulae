@@ -1,6 +1,9 @@
 import edu.holycross.shot.tabulae._
 
-val f = "src/test/resources/coins-no-indecl-no-irreg.txt"
+//val f = "src/test/resources/coins-no-indecl-no-irreg.txt"
+//val f = "src/test/resources/coins-morph.txt"
+val f = "coins-all.txt"
+
 
 val analyzedTokens = FstFileReader.formsFromFile(f)
 

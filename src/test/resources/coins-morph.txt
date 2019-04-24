@@ -216,7 +216,7 @@
 > dvrmivs
 <u>ocremorph.ocre7</u><u>ocre.pn7</u>dvrmi<noun><masc><us_i><div><us_i><noun>vs<masc><nom><sg><u>ocremorph.us_i1</u>
 > et
-<u>ocremorph.indecl2</u><u>ls.n16278</u>et<indeclconj><div><indeclconj><u>indeclinfl.2</u>
+<u>ocremorph.indecl2</u><u>ls.n16278</u>et<indecl><indeclconj><div><indeclconj><indecl><u>indeclinfl.2</u>
 > exercitvs
 <u>ocremorph.51</u><u>ls.n16824</u>exercit<noun><masc><us_us><div><us_us><noun>vs<masc><nom><sg><u>ocremorph.us_us1</u>
 <u>ocremorph.51</u><u>ls.n16824</u>exercit<noun><masc><us_us><div><us_us><noun>vs<masc><acc><pl><u>ocremorph.us_us9</u>
@@ -376,12 +376,12 @@
 > maximinianvs
 <u>ocremorph.ocre16</u><u>ocre.pn16</u>maximinian<noun><masc><us_i><div><us_i><noun>vs<masc><nom><sg><u>ocremorph.us_i1</u>
 > maximo
-<u>ocremorph.irrmagnus99</u><u>lexent.n27649</u>maximo<neut><dat><sg><superl><irregadj><div><irregadj><u>irreginfl.1</u>
-<u>ocremorph.irrmagnus77</u><u>lexent.n27649</u>maximo<masc><abl><sg><superl><irregadj><div><irregadj><u>irreginfl.1</u>
-<u>ocremorph.irrmagnus75</u><u>lexent.n27649</u>maximo<masc><dat><sg><superl><irregadj><div><irregadj><u>irreginfl.1</u>
-<u>ocremorph.irrmagnus101</u><u>lexent.n27649</u>maximo<neut><abl><sg><superl><irregadj><div><irregadj><u>irreginfl.1</u>
+<u>ocremorph.adj15</u><u>ls.n27649</u>maxim<adj><us_a_um_superl><div><us_a_um_superl><adj>o<masc><dat><sg><superl><u>ocremorph.us_a_um3</u>
+<u>ocremorph.adj15</u><u>ls.n27649</u>maxim<adj><us_a_um_superl><div><us_a_um_superl><adj>o<masc><abl><sg><superl><u>ocremorph.us_a_um5</u>
+<u>ocremorph.adj15</u><u>ls.n27649</u>maxim<adj><us_a_um_superl><div><us_a_um_superl><adj>o<neut><dat><sg><superl><u>ocremorph.us_a_um77</u>
+<u>ocremorph.adj15</u><u>ls.n27649</u>maxim<adj><us_a_um_superl><div><us_a_um_superl><adj>o<neut><abl><sg><superl><u>ocremorph.us_a_um79</u>
 > maximvs
-<u>ocremorph.irrmagnus73</u><u>lexent.n27649</u>maximvs<masc><nom><sg><superl><irregadj><div><irregadj><u>irreginfl.1</u>
+<u>ocremorph.adj15</u><u>ls.n27649</u>maxim<adj><us_a_um_superl><div><us_a_um_superl><adj>vs<masc><nom><sg><superl><u>ocremorph.us_a_um1</u>
 > messalla
 <u>ocremorph.persn44</u><u>ls.n28869</u>messall<noun><masc><a_ae><div><a_ae><noun>a<masc><nom><sg><u>ocremorph.a_ae1</u>
 <u>ocremorph.persn44</u><u>ls.n28869</u>messall<noun><masc><a_ae><div><a_ae><noun>a<masc><abl><sg><u>ocremorph.a_ae5</u>
@@ -414,7 +414,7 @@
 <u>ocremorph.adj8</u><u>ls.n31216</u>nost<adj><er_ra_rum><div><er_ra_rum><adj>rorvm<masc><gen><pl><pos><u>ocremorph.er_ra_rum7</u>
 <u>ocremorph.adj8</u><u>ls.n31216</u>nost<adj><er_ra_rum><div><er_ra_rum><adj>rorvm<neut><gen><pl><pos><u>ocremorph.er_ra_rum81</u>
 > ob
-<u>ocremorph.indecl1</u><u>ls.n31564</u>ob<indeclprep><div><indeclprep><u>indeclinfl.1</u>
+<u>ocremorph.indecl1</u><u>ls.n31564</u>ob<indecl><indeclprep><div><indeclprep><indecl><u>indeclinfl.1</u>
 > opellivs
 <u>ocremorph.ocre19</u><u>ocre.pn19</u>opelli<noun><masc><us_i><div><us_i><noun>vs<masc><nom><sg><u>ocremorph.us_i1</u>
 > oriens
