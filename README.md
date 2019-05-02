@@ -12,6 +12,7 @@ Status:  **active development**. [Release notes](releases.md)
 
 ## Information
 
+-  I'll be talking about `tabulae` at [DH2019](https://dh2019.adho.org) in a short paper, "A Corpus-linguistic Approach to the Analysis of Latin Morphology"
 -   see the project web site: <https://neelsmith.github.io/tabulae>.
 -   read more about its rationale and approach to parsing a historical language in "Morphological Analysis of Historical Languages" (*Bulletin of the Institute for Classical Studies* 59-2, 2016, 89-102)
 
