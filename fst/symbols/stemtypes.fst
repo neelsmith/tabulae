@@ -40,7 +40,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Indeclinable type
-#indeclclass# = <indeclconj><indeclinterj><indeclprep>
+#indeclclass# = <indeclconj><indeclinterj><indeclprep><indeclnum>
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
