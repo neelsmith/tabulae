@@ -1,7 +1,8 @@
 # Release notes for `tabulae`
 
+**2.2.0**: Adds stem class for indeclinable numbers.
 
-**2.1.2**: Fruther fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
+**2.1.2**: Further fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
 
 
 **2.1.1**: Fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
