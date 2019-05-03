@@ -32,6 +32,9 @@ object FstFileReader {
     } else {
       if (isToken(fstLines.head)) {
         analysisVector
+      } else if (fstLines.head.startsWith("no result for")) {
+        Vector.empty[LemmatizedForm]
+      
       } else {
         popAnalyses(fstLines.tail, analysisVector :+ LemmatizedForm(fstLines.head) )
       }

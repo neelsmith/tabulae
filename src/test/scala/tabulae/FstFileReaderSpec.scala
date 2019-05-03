@@ -74,4 +74,10 @@ class FstFileReaderSpec extends FlatSpec {
     println("TOKENS: " + analyzedTokens.size)
   }*/
 
+  it should "recognize failed analyses" in {
+    val failed = Vector("no result for abdi")
+    val analyses = FstFileReader.popAnalyses(failed)
+    assert (analyses.isEmpty)
+  }
+
 }

@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**2.3.0**:  Support parsing SFST output on incomplete/failed analyses.
+
 **2.2.0**: Adds stem class for indeclinable numbers.
 
 **2.1.2**: Further fixes a bug in `AcceptorComposer` in constructing FST strings for indeclinable forms.
