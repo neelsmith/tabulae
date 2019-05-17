@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**2.4.0**:  Expand `AnalyzedToken` class with functions for manipulating tokens morphologically.
+
 **2.3.0**:  Support parsing SFST output on incomplete/failed analyses.
 
 **2.2.0**: Adds stem class for indeclinable numbers.
