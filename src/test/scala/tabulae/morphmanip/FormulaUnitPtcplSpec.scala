@@ -18,47 +18,41 @@ class FormulaUnitPtcplSpec extends FlatSpec {
   "An AnalyzedToken" should "recognized the category of participle tokens" in  {
     assert(tkn.ptcplToken)
   }
-/*
+
 
   it should "recognize the gender of participle forms" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val genderVector = fu.substGender
+    val genderVector = tkn.substGender
     assert(genderVector.size == 1)
     assert(genderVector(0) == Masculine)
   }
 
   it should "recognize the grammatical case of participle forms" in  {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val caseVector = fu.substCase
+    val caseVector = tkn.substCase
     assert(caseVector.size == 1)
     assert(caseVector(0) == Nominative)
   }
 
   it should "recognize the number of participle forms" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val numberVector = fu.grammNumber
+    val numberVector = tkn.grammNumber
     assert(numberVector.size == 1)
     assert(numberVector(0) == Singular)
   }
 
   it should "construct a GCNTriple for a participle form" in  {
-    val fu : FormulaUnit = FormulaUnit(analyzedTokens(0))
-    val gcnVector = fu.gcn
+    val gcnVector = tkn.gcn
 
     val expected = GCNTriple(Masculine, Nominative, Singular)
     assert(gcnVector(0) == expected)
   }
 
-  it should "recognize the tense of participle forms" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val tenseVector = fu.tense
+  it should "recognize the tense of participle forms" in  pending/*{
+    val tenseVector = tkn.tense
     assert(tenseVector.size == 1)
     assert(tenseVector(0) == Perfect)
-  }
+  }*/
 
-  it should "recognize the voice of participle forms" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val voiceVector = fu.voice
+  it should "recognize the voice of participle forms" in pending/* {
+    val voiceVector = tkn.voice
     assert(voiceVector.size == 1)
     assert(voiceVector(0) == Passive)
   }
