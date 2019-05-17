@@ -19,39 +19,34 @@ class FormulaUnitVerbSpec extends FlatSpec {
   }
 
 
-  it should "recognized the person of a verb token" in pending/* {
-
+  it should "recognize the person of a verb token" in  {
     val personVector = tkn.person
     assert(personVector.size == 1)
     assert(personVector(0) == Third)
-  }*/
-/*
+  }
+
   it should "recognized the number of a verb token" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val numberVector = fu.grammNumber
+    val numberVector = tkn.grammNumber
     assert(numberVector.size == 1)
     assert(numberVector(0) == Singular)
   }
 
   it should "recognized the tense of a verb token" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val tenseVector = fu.tense
+    val tenseVector = tkn.tense
     assert(tenseVector.size == 1)
     assert(tenseVector(0) == Perfect)
   }
 
   it should "recognized the mood of a verb token" in {
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    val moodVector = fu.mood
+    val moodVector = tkn.mood
     assert(moodVector.size == 1)
     assert(moodVector(0) == Indicative)
   }
 
   it should "recognized the voice of a verb token" in {
-      val fu : FormulaUnit = FormulaUnit(tkn)
-      val voiceVector = fu.voice
+      val voiceVector = tkn.voice
       assert(voiceVector.size == 1)
       assert(voiceVector(0) == Active)
-  }*/
+  }
 
 }

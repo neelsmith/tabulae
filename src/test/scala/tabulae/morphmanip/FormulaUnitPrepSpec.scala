@@ -14,17 +14,15 @@ class FormulaUnitPrepSpec extends FlatSpec {
   val analyzedTokens = FstFileReader.parseFstLines(fst)
   val tkn = analyzedTokens(0)
 
-   "An AnalyzedToken" should "recognize the a preposition as an indeclinable form" in pending/* {
-
+   "An AnalyzedToken" should "recognize the a preposition as an indeclinable form" in  {
     val indeclVector = tkn.indeclPos
     assert(indeclVector.size == 1)
     assert(indeclVector(0) == Preposition)
-  }*/
-
-  it should "recognize the part of speech as a preposition" in  pending/*{
-    val fu : FormulaUnit = FormulaUnit(tkn)
-    assert(fu.prepToken)
   }
-*/
+
+  it should "recognize the part of speech as a preposition" in  {
+    assert(tkn.prepToken)
+  }
+
 
 }

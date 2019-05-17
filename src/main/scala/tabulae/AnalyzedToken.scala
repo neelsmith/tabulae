@@ -11,6 +11,18 @@ package edu.holycross.shot.tabulae
 case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
 
 
+
+
+  def prepToken : Boolean = {
+    analyses(0) match {
+      case indecl: IndeclinableForm => {
+
+        ((indeclPos.nonEmpty) && (indeclPos.contains(Preposition)))
+      }
+      case _ => false
+    }
+  }
+
   /** True if tkn is a conjugated verb form.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
@@ -163,6 +175,114 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
     }
   }
 
+
+
+  //
+  // Common to all VERBAL forms (conjugated, inf, ptcpl):  tense, voice
+  //
+
+  /** List of possible values for tense.  For a
+  * verbal form (conjugated form, infinitive, ptcpl), this should be a non-empty
+  * Vector of Tense values.
+  * For other "parts of speech," this will be an empty Vector.
+  */
+  def tense: Vector[Tense] = {
+    if (analyses.isEmpty) {
+      Vector.empty[Tense]
+    } else {
+      val tenseList = for (lysis <- analyses) yield {
+        lysis match {
+            case v : VerbForm => Some(v.tense)
+            // infinitive
+            case ptcpl : ParticipleForm => Some(ptcpl.tense)
+            case _ => None
+        }
+      }
+      tenseList.flatten.toVector.distinct
+    }
+  }
+
+  /** List of possible values for voice.  For a
+  * verbal form (conjugated form, infinitive, ptcpl), this should be a non-empty
+  * Vector of Voice values.
+  * For other "parts of speech," this will be an empty Vector.
+  */
+  def voice: Vector[Voice] = {
+    if (analyses.isEmpty) {
+      Vector.empty[Voice]
+    } else {
+      val voiceList = for (lysis <- analyses) yield {
+        lysis match {
+            case v : VerbForm => Some(v.voice)
+            // infinitive
+            case ptcpl : ParticipleForm => Some(ptcpl.voice)
+            case _ => None
+        }
+      }
+      voiceList.flatten.toVector.distinct
+    }
+  }
+
+  // Specific to conjugated forms:  Person, Mood.
+
+  /** List of possible values for person.  For a
+  * conjugated verb form, this should be a non-empty
+  * Vector of Person values.
+  * For other "parts of speech," this will be an empty Vector.
+  */
+  def person: Vector[Person] = {
+    if (analyses.isEmpty) {
+      Vector.empty[Person]
+    } else {
+      val personList = for (lysis <- analyses) yield {
+        lysis match {
+            case v : VerbForm => Some(v.person)
+            case _ => None
+        }
+      }
+      personList.flatten.toVector.distinct
+    }
+  }
+
+
+  /** List of possible values for mood.  For a
+  * conjugated verb form, this should be a non-empty
+  * Vector of Mood values.
+  * For other "parts of speech," this will be an empty Vector.
+  */
+  def mood: Vector[Mood] = {
+    if (analyses.isEmpty) {
+      Vector.empty[Mood]
+    } else {
+      val moodList = for (lysis <- analyses) yield {
+        lysis match {
+            case v : VerbForm => Some(v.mood)
+            case _ => None
+        }
+      }
+      moodList.flatten.toVector.distinct
+    }
+  }
+
+
+
+  //
+  // Specific to indeclinable forms:  part of speech label
+  //
+  def indeclPos: Vector[IndeclinablePoS] = {
+    if (analyses.isEmpty) {
+      Vector.empty[IndeclinablePoS]
+
+    } else {
+      val posList = for (lysis <- analyses) yield {
+        lysis match {
+            case indecl : IndeclinableForm => Some(indecl.pos)
+            case _ => None
+        }
+      }
+      posList.flatten.toVector.distinct
+    }
+  }
 
 
 }
