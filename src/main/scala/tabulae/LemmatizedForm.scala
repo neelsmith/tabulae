@@ -132,6 +132,21 @@ object GerundForm {
 }
 
 
+case class AdverbForm(lemma: String, degree: Degree) extends LemmatizedForm {}
+
+
+object AdverbForm {
+  /** Create an [[AdjectiveForm]] from two FST symbols.
+  */
+  def apply(lemma: String, deg: String): AdverbForm = {
+    AdverbForm(lemma, degreeForFstSymbol(deg))
+  }
+}
+
+
+
+
+
 /** Adjective form, identified by gender, case, number and degree.
 *
 * @param gender Property for number.
@@ -148,8 +163,6 @@ object AdjectiveForm {
     AdjectiveForm(lemma, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), degreeForFstSymbol(d))
   }
 }
-
-case class AdverbForm(lemma: String, degree: Degree) extends LemmatizedForm {}
 
 
 case class ParticipleForm(lemma: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, tense: Tense, voice:  Voice) extends LemmatizedForm {}

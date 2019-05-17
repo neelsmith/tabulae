@@ -6,7 +6,7 @@ import org.scalatest.FlatSpec
 class FstStemParsingSpec extends FlatSpec {
 
 
-  "The FstStem object" should "parse the stem part of an FST reply into an FstStem object" in  {
+  "The FstStem object" should "parse the stem part of an FST reply for a noun into an FstStem object" in  {
     val stemFst = "<u>dev1.n1</u><u>lexent.n1</u>femin<noun><fem><a_ae>"
 
     val stemObj = FstStem(stemFst)
@@ -62,8 +62,30 @@ class FstStemParsingSpec extends FlatSpec {
       case _ => fail("Should have created AdjectiveStem")
     }
   }
-  it should "parse participial stems" in pending
-  it should "parse infinitive stems" in pending
-  it should "parse adverbial stems" in pending
+  it should "parse pronoun stems" in pending
+
+
+  it should "parse irregular conjugated verb stems" in pending
+  it should "parse irregular noun stems" in pending
+  it should "parse irregular adjective stems" in pending
+  it should "parse irregular adverb stems" in {
+    val stemFst = "<u>lat24morph.advn790</u><u>ls.n790</u>adhuc<pos><irregadv>"
+    val stemObj = FstStem(stemFst)
+    stemObj match {
+      case irreg: IrregularAdverbStem => {
+        assert(irreg.stemId == "lat24morph.advn790")
+        assert(irreg.lexEntity == "ls.n790")
+        assert(irreg.degree == "pos")
+      }
+      case _ => fail("Should have created AdjectiveStem")
+    }
+  }
+  it should "parse irregular infinitive stems" in pending
+  it should "parse irregular participle stems" in pending
+  it should "parse irregular gerund stems" in pending
+  it should "parse irregular gerundive stems" in pending
+  it should "parse irregular supine stems" in pending
+  it should "parse irregular pronoun stems" in pending
+
 
 }

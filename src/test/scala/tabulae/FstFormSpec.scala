@@ -36,8 +36,6 @@ class FstFormSpec extends FlatSpec {
     }
   }
 
-
-
   it should "construct a parsed adjectival form from FST string input" in  {
     val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
     val f = LemmatizedForm(fst)
@@ -70,7 +68,10 @@ class FstFormSpec extends FlatSpec {
       case _ => fail("Should have created an infinitive form")
     }
   }*/
-  it should "contsruct a parsed adverbial form from FST string input" in pending /* {
+  it should "contsruct a parsed adverbial form from FST string input" in pending
+// <u>livymorph.adj85</u><u>ls.n26977</u>long<adj><us_a_um><div><us_a_um><adv>e<pos><u>livymorph.advinfl_us_a_um1</u>
+
+  /* {
     val fst = "<u>plinymorph.adj90</u><u>lexent.n18204</u>finitim<adj><us_a_um><div><us_a_um><adv>e<pos><u>advnfl.us_a_um1</u>"
     val f = LemmatizedForm(fst)
     f match {
@@ -89,7 +90,7 @@ class FstFormSpec extends FlatSpec {
 
   it should "construct a parsed noun form from FST string input for irregular nouns" in pending
   it should "construct a parsed adjective form from FST string input for irregular adjectives" in pending
-  it should "construct a parsed adverb form from FST string input for irregular adverbs" in pending
+  it should "construct a parsed adverb form from FST string input for irregular adverbs" in pending // <u>lat25morph.advn790</u><u>ls.n790</u>adhuc<pos><irregadv><div><irregadv><u>irreginfl.2</u>
   it should "construct a parsed infinitive form from FST string input for irregular infinitive" in pending
   it should "construct a parsed participle form from FST string input for irregular participle" in pending
   it should "construct a parsed verb form from FST string input for irregular verb" in pending

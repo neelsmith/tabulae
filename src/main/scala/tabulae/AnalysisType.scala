@@ -20,5 +20,9 @@ object Infinitive extends AnalysisType
 /** Analysis type for participial verb form.*/
 object Participle extends AnalysisType
 
-
 // supine, gerund...
+
+
+// irregulars...
+/** Adverb analysis type.*/
+object IrregularAdverb extends AnalysisType

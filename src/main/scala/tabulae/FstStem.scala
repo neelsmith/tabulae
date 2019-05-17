@@ -60,6 +60,19 @@ object IndeclStem {
   }
 }
 
+
+case class IrregularAdverbStem(stemId: String, lexEntity: String, stem: String, degree: String ) extends FstStem
+
+object IrregularAdverbStem {
+    def apply(stemId: String, lexId: String, remainder: String): IrregularAdverbStem = {
+      // example: adhuc<pos><irregadv>
+      val dataParts = remainder.replaceFirst("<irregadv>","").split("<")
+      val stem = dataParts(0)
+      val degree = dataParts(1).replaceFirst(">","")
+      IrregularAdverbStem(stemId, lexId, stem, degree)
+    }
+}
+
 /** Lexicon entry for an adjective.
 *
 * @param stemId Abbreviated URN string for stem.
@@ -140,23 +153,14 @@ object FstStem {
     val stemClass =  stemType(remainder)
     //println("So stem class is " + stemClass)
     stemClass match {
-      case Noun => {
-        val parts = remainder.split("<noun>")
-        NounStem(stemId, lexEntity, remainder)
-      }
-      case Verb => {
-        val parts = remainder.split("<verb>")
-        VerbStem(stemId, lexEntity, remainder)
-      }
-      case Indeclinable => {
-        val parts = remainder.split("<indecl>")
-        IndeclStem(stemId, lexEntity, remainder)
-      }
+      case Noun => NounStem(stemId, lexEntity, remainder)
+      case Verb => VerbStem(stemId, lexEntity, remainder)
+      case Indeclinable =>  IndeclStem(stemId, lexEntity, remainder)
+      case Adjective =>  AdjectiveStem(stemId, lexEntity, remainder)
 
-      case Adjective => {
-        val parts = remainder.split("<adj>")
-        AdjectiveStem(stemId, lexEntity, remainder)
-      }
+      // Irregular forms:
+      case IrregularAdverb =>  IrregularAdverbStem(stemId, lexEntity, remainder)
+
       case _ => throw new Exception("Type not yet implemented: " + stemClass)
     }
 
@@ -171,7 +175,9 @@ object FstStem {
 
     // FST symbols identifying inflectional type ("part of speech").
     val posTags: Vector[String] =  Vector(
-      "<noun>", "<verb>","<indecl>", "<adj>"
+      "<noun>", "<verb>","<indecl>", "<adj>", "<pron>",
+      "<irregcverb>", "<irregnoun>", "<irregadj>", "<irregadv>", "<irreginfin>","<irregptcpl>","<irreggrnd>","<irreggrndv>",
+      "<irregsupn>", "<irregpron>"
     )
     // Define true/false for match with each allowed pos tag:
     val typeMatches = posTags.map( t => {
@@ -186,6 +192,9 @@ object FstStem {
       case "<verb>" => Verb
       case "<indecl>" => Indeclinable
       case "<adj>" => Adjective
+      case "<irregadv>" => IrregularAdverb
+      case _ => { println("Could not figure out stem type " + pair._1); throw new Exception("FstStem: did not recognize type " + pair._1)}
+
     }
   }
 }
