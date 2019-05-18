@@ -14,12 +14,16 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
 
 
   def prepToken : Boolean = {
-    analyses(0) match {
-      case indecl: IndeclinableForm => {
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case indecl: IndeclinableForm => {
 
-        ((indeclPos.nonEmpty) && (indeclPos.contains(Preposition)))
+          ((indeclPos.nonEmpty) && (indeclPos.contains(Preposition)))
+        }
+        case _ => false
       }
-      case _ => false
     }
   }
 
@@ -29,9 +33,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * all belong to the same analytical category ("part of speech").
   */
   def verbToken : Boolean = {
-    analyses(0) match {
-      case v: VerbForm => true
-      case _ => false
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case v: VerbForm => true
+        case _ => false
+      }
     }
   }
 
@@ -41,9 +49,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * all belong to the same analytical category ("part of speech").
   */
   def nounToken : Boolean = {
-    analyses(0) match {
-      case n: NounForm => true
-      case _ => false
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case n: NounForm => true
+        case _ => false
+      }
     }
   }
 
@@ -53,9 +65,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * all belong to the same analytical category ("part of speech").
   */
   def adjToken : Boolean = {
-    analyses(0) match {
-      case n: AdjectiveForm => true
-      case _ => false
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case n: AdjectiveForm => true
+        case _ => false
+      }
     }
   }
 
@@ -65,9 +81,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * all belong to the same analytical category ("part of speech").
   */
   def ptcplToken : Boolean = {
-    analyses(0) match {
-      case n: ParticipleForm => true
-      case _ => false
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case n: ParticipleForm => true
+        case _ => false
+      }
     }
   }
 
@@ -78,9 +98,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * all belong to the same analytical category ("part of speech").
   */
   def indeclToken : Boolean = {
-    analyses(0) match {
-      case indecl: IndeclinableForm => true
-      case _ => false
+    if (analyses.isEmpty) {
+      false
+    } else {
+      analyses(0) match {
+        case indecl: IndeclinableForm => true
+        case _ => false
+      }
     }
   }
 
