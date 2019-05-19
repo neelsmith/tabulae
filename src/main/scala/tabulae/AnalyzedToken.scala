@@ -12,7 +12,11 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
 
 
 
-
+  /** True if tkn is a preposition.
+  * This shortcut assumes that while there may
+  * be multiple anlayses for a token, they will
+  * all belong to the same analytical category ("part of speech").
+  */
   def prepToken : Boolean = {
     if (analyses.isEmpty) {
       false
