@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**2.4.2**:  Updates library dependencies.
+
 **2.4.1**:  Fixes a bug in PoS functions of `AnalyzedToken` when no analyses exist.
 
 **2.4.0**:  Expand `AnalyzedToken` class with functions for manipulating tokens morphologically.

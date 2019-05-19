@@ -7,7 +7,7 @@ import better.files.Dsl._
 val commonSettings = Seq(
       name := "tabulae",
       organization := "edu.holycross.shot",
-      version := "2.4.1",
+      version := "2.4.2",
       scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
@@ -16,8 +16,8 @@ val commonSettings = Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
         "com.github.pathikrit" %% "better-files" % "3.5.0",
 
-        "edu.holycross.shot.cite" %% "xcite" % "3.3.0",
-        "edu.holycross.shot" %% "latphone" % "1.5.0"
+        "edu.holycross.shot.cite" %% "xcite" % "4.0.1",
+        "edu.holycross.shot" %% "latphone" % "2.5.0"
       ),
 
       tutTargetDirectory := file("docs"),
