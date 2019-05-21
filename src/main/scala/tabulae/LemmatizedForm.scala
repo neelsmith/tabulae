@@ -9,10 +9,10 @@ sealed trait LemmatizedForm {
   def posLabel: String = {
     this match {
       case v: VerbForm => "verb"
-
       case n: NounForm => "noun"
-      /*  case adj: AdjectiveForm => "adjective"
-      case adv: AdverbForm => "adverb"
+      case adj: AdjectiveForm => "adjective"
+      
+      /*   case adv: AdverbForm => "adverb"
       case gnd: GerundForm => "gerund"
       case indecl: IndeclinableForm => "indeclinable"
       case inf: InfinitiveForm => "infinitive"
@@ -112,5 +112,26 @@ object NounForm {
   */
   def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String): NounForm = {
     NounForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n))
+  }
+}
+
+
+/** Adjective form, identified by gender, case, number and degree.
+*
+* @param gender Property for number.
+* @param grammaticalCase Property for case.
+* @param grammaticalNumber Property for number.
+*/
+case class AdjectiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, degree: Degree) extends LemmatizedForm {
+  def lemmaId = lemmaUrn
+  def stemId = stemUrn
+  def ruleId = ruleUrn
+}
+
+
+object AdjectiveForm {
+
+  def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String, d: String): AdjectiveForm = {
+    AdjectiveForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), degreeForFstSymbol(d))
   }
 }
