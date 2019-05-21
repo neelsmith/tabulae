@@ -9,9 +9,9 @@ sealed trait LemmatizedForm {
   def posLabel: String = {
     this match {
       case v: VerbForm => "verb"
-      /*
+
       case n: NounForm => "noun"
-      case adj: AdjectiveForm => "adjective"
+      /*  case adj: AdjectiveForm => "adjective"
       case adv: AdverbForm => "adverb"
       case gnd: GerundForm => "gerund"
       case indecl: IndeclinableForm => "indeclinable"
@@ -41,11 +41,11 @@ object LemmatizedForm {
       case vr: VerbRule => {
         VerbForm(stemEntry.lexEntity, stemEntry.stemId, inflection.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
       }
-      /*
-      case nr: NounRule => {
-        NounForm(stemEntry.lexEntity,stemEntry.lexId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
-      }
 
+      case nr: NounRule => {
+        NounForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
+      }
+      /*
       case adjr: AdjectiveRule => {
         AdjectiveForm(stemEntry.lexEntity, stemEntry.lexadjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
       }
@@ -89,5 +89,28 @@ object VerbForm {
   */
   def apply(lemmaId:  String, stemId:  String, ruleId:  String, p: String, n: String, t: String, m: String, v: String): VerbForm = {
     VerbForm(lemmaId, stemId, ruleId, personForFstSymbol(p), numberForFstSymbol(n), tenseForFstSymbol(t), moodForFstSymbol(m), voiceForFstSymbol(v))
+  }
+}
+
+
+/** Noun form, identified by gender, case and number.
+*
+* @param gender Property for number.
+* @param grammaticalCase Property for case.
+* @param grammaticalNumber Property for number.
+*/
+case class NounForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends LemmatizedForm {
+  def lemmaId = lemmaUrn
+  def stemId = stemUrn
+  def ruleId = ruleUrn
+}
+
+/** Factory object to build a [[NounForm]] from string vaues.
+*/
+object NounForm {
+  /** Create a [[NounForm]] from three FST symbols.
+  */
+  def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String): NounForm = {
+    NounForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n))
   }
 }
