@@ -26,7 +26,4 @@ class AdjectiveFormSpec extends FlatSpec {
     assert(form.posLabel == "adjective")
   }
 
-
-
-
 }
