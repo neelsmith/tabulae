@@ -9,6 +9,7 @@ package edu.holycross.shot.tabulae
 */
 trait FstStem {
   def stem: String
+  def stemId: String
   def lexEntity: String
 }
 
@@ -16,7 +17,7 @@ trait FstStem {
 /** Lexicon entry for a verb.
 *
 * @param stemId Abbreviated URN string for stem.
-* @param lexId Abbreviated URN string for lexical entity.
+* @param lexEntity Abbreviated URN string for lexical entity.
 * @param stem Stem string, in FST symbol alphabet.
 * @param inflClass String value for inflectional class.
 */

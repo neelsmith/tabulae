@@ -5,7 +5,9 @@ package edu.holycross.shot.tabulae
 * Implementations of this trait parse FST strings into appropriate
 * substrings for each analytical type ("part of speech").
 */
-trait FstRule
+trait FstRule {
+  def ruleId: String
+}
 
 /** Rule entry for an indeclinable form.
 *

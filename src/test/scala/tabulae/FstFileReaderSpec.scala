@@ -14,6 +14,9 @@ class FstFileReaderSpec extends FlatSpec {
     "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<neut><abl><sg><pos><u>ocremorph.us_a_um79</u>"
   )
 
+  val verbFst = "> fecit\n<u>ocremorph.n17516b</u><u>ls.n17516</u><#>fec<verb><pftact><div><pftact><verb>it<3rd><sg><pft><indic><act><u>livymorph.pftact_pft3</u>\n"
+
+
   "The FstFileReader object" should "recognize strings for a new token analysis" in {
     val fst = "> actio"
     assert(FstFileReader.isToken(fst))
@@ -24,6 +27,11 @@ class FstFileReaderSpec extends FlatSpec {
     assert(FstFileReader.isToken(fst) == false)
   }
 
+  it should "" in {
+
+  }
+
+  
   it should "pop off analyses from the top (front) of a Vector of FST strings" in pending  /*{
 
     val forms = FstFileReader.popAnalyses(fstLines.tail)

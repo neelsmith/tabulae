@@ -3,7 +3,6 @@ package edu.holycross.shot.tabulae
 
 /** A valid grammatical form identification.*/
 sealed trait LemmatizedForm {
-  def lemma: String
   def lemmaId: String
   def stemId: String
   def ruleId: String
@@ -37,9 +36,10 @@ object LemmatizedForm {
     val stemEntry = FstStem(halves(0))
     val inflection = FstRule(halves(1))
 
+
     inflection match {
       case vr: VerbRule => {
-        VerbForm(stemEntry.lexEntity, "LEMMAID", "STEMID", "RULEID", vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
+        VerbForm(stemEntry.lexEntity, stemEntry.stemId, inflection.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
       }
       /*
       case nr: NounRule => {
@@ -76,7 +76,7 @@ object LemmatizedForm {
 * @param mood Property for mood.
 * @param voice Property for voice.
 */
-case class VerbForm(lemma: String, lemmaUrn: String, stemUrn: String, ruleUrn: String, person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends LemmatizedForm {
+case class VerbForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends LemmatizedForm {
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
@@ -87,7 +87,7 @@ case class VerbForm(lemma: String, lemmaUrn: String, stemUrn: String, ruleUrn: S
 object VerbForm {
   /** Create a [[VerbForm]] from five FST symbols.
   */
-  def apply(lemma: String, lemmaId:  String, stemId:  String, ruleId:  String, p: String, n: String, t: String, m: String, v: String): VerbForm = {
-    VerbForm(lemma, lemmaId, stemId, ruleId, personForFstSymbol(p), numberForFstSymbol(n), tenseForFstSymbol(t), moodForFstSymbol(m), voiceForFstSymbol(v))
+  def apply(lemmaId:  String, stemId:  String, ruleId:  String, p: String, n: String, t: String, m: String, v: String): VerbForm = {
+    VerbForm(lemmaId, stemId, ruleId, personForFstSymbol(p), numberForFstSymbol(n), tenseForFstSymbol(t), moodForFstSymbol(m), voiceForFstSymbol(v))
   }
 }
