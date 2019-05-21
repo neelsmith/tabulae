@@ -4,7 +4,8 @@ import scala.io.Source
 
 
 /**
-*
+* A utility object for converting analyses of lexical tokens
+* written in SFST output form into objects.
 *
 */
 object FstFileReader {
@@ -34,7 +35,7 @@ object FstFileReader {
         analysisVector
       } else if (fstLines.head.startsWith("no result for")) {
         Vector.empty[LemmatizedForm]
-      
+
       } else {
         popAnalyses(fstLines.tail, analysisVector :+ LemmatizedForm(fstLines.head) )
       }

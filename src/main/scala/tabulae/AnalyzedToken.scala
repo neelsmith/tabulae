@@ -8,15 +8,15 @@ package edu.holycross.shot.tabulae
 * @param token A morphologically analyzed surface form.
 * @param analyses [[LemmatizedForm]]s associated with this token.
 */
-case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
+case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm]) {
 
-
+  def token: String = literalToken
 
   /** True if tkn is a preposition.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-  */
+
   def prepToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -30,7 +30,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       }
     }
   }
-
+  */
   /** True if tkn is a conjugated verb form.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
@@ -51,7 +51,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-  */
+
   def nounToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -62,12 +62,12 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       }
     }
   }
-
+  */
   /** True if tkn is an adjective.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-  */
+
   def adjToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -78,12 +78,12 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       }
     }
   }
-
+*/
   /** True if tkn is a particple.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-  */
+
   def ptcplToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -94,13 +94,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       }
     }
   }
-
+  */
 
   /** True if tkn is an indeclinable form.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-  */
+
   def indeclToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -111,7 +111,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       }
     }
   }
-
+  */
   //
   // Common to all substantive forms (noun, adj, ptcpl):  GCN
   //
@@ -119,7 +119,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   * substantive (noun, adj, ptcpl), this should be a non-empty
   * Vector of Gender values.
   * For other "parts of speech," this will be an empty Vector.
-  */
+
   def substGender: Vector[Gender] = {
     if (analyses.isEmpty) {
       Vector.empty[Gender]
@@ -135,12 +135,12 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       genderList.flatten.toVector.distinct
     }
   }
-
+  */
   /** List of possible values for grammatical case.  For a
   * substantive (noun, adj, ptcpl), this should be a non-empty
   * Vector of GrammaticalCase values.
   * For other "parts of speech," this will be an empty Vector.
-  */
+
   def substCase : Vector[GrammaticalCase] = {
     if (analyses.isEmpty) {
       Vector.empty[GrammaticalCase]
@@ -156,13 +156,13 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       caseList.flatten.toVector.distinct.filterNot(_ == Vocative)
     }
   }
-
+  */
   /** List of possible values for gender.  For a
   * substantive (noun, adj, ptcpl) or a conjugaged verb form,
   * this should be a non-empty
   * Vector of Gender values.
   * For other "parts of speech," this will be an empty Vector.
-  */
+
   def grammNumber: Vector[GrammaticalNumber] = {
     if (analyses.isEmpty) {
       Vector.empty[GrammaticalNumber]
@@ -179,12 +179,12 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       numberList.flatten.toVector.distinct
     }
   }
-
+  */
   /** List of Gender/Case/Number triples.  For a
   * substantive (noun, adj, ptcpl), this should be a non-empty
   * Vector of GCNTriples.
   * For other "parts of speech," this will be an empty Vector.
-  */
+
   def gcn: Vector[GCNTriple] = {
     if (analyses.isEmpty) {
       Vector.empty[GCNTriple]
@@ -203,7 +203,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
     }
   }
 
-
+  */
 
   //
   // Common to all VERBAL forms (conjugated, inf, ptcpl):  tense, voice
@@ -222,7 +222,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
         lysis match {
             case v : VerbForm => Some(v.tense)
             // infinitive
-            case ptcpl : ParticipleForm => Some(ptcpl.tense)
+            //case ptcpl : ParticipleForm => Some(ptcpl.tense)
             case _ => None
         }
       }
@@ -243,7 +243,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
         lysis match {
             case v : VerbForm => Some(v.voice)
             // infinitive
-            case ptcpl : ParticipleForm => Some(ptcpl.voice)
+            //case ptcpl : ParticipleForm => Some(ptcpl.voice)
             case _ => None
         }
       }
@@ -293,7 +293,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
   }
 
 
-
+/*
   //
   // Specific to indeclinable forms:  part of speech label
   //
@@ -311,6 +311,7 @@ case class AnalyzedToken(token: String, analyses: Vector[LemmatizedForm]) {
       posList.flatten.toVector.distinct
     }
   }
+*/
 
 
 }

@@ -4,18 +4,20 @@ package edu.holycross.shot.tabulae
 /** A valid grammatical form identification.*/
 sealed trait LemmatizedForm {
   def lemma: String
+  def lemmaId: String
+  def stemId: String
+  def ruleId: String
   def posLabel: String = {
     this match {
       case v: VerbForm => "verb"
+      /*
       case n: NounForm => "noun"
       case adj: AdjectiveForm => "adjective"
       case adv: AdverbForm => "adverb"
       case gnd: GerundForm => "gerund"
       case indecl: IndeclinableForm => "indeclinable"
       case inf: InfinitiveForm => "infinitive"
-      case ptcpl: ParticipleForm => "participle"
-
-
+      case ptcpl: ParticipleForm => "participle"*/
     }
   }
 }
@@ -36,20 +38,22 @@ object LemmatizedForm {
     val inflection = FstRule(halves(1))
 
     inflection match {
+      case vr: VerbRule => {
+        VerbForm(stemEntry.lexEntity, "LEMMAID", "STEMID", "RULEID", vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
+      }
+      /*
       case nr: NounRule => {
-        NounForm(stemEntry.lexEntity, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
+        NounForm(stemEntry.lexEntity,stemEntry.lexId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
       }
 
       case adjr: AdjectiveRule => {
-        AdjectiveForm(stemEntry.lexEntity, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
+        AdjectiveForm(stemEntry.lexEntity, stemEntry.lexadjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
       }
 
       case ir: IndeclRule => {
         IndeclinableForm(stemEntry.lexEntity, ir.pos)
       }
-      case vr: VerbRule => {
-        VerbForm(stemEntry.lexEntity, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
-      }
+
 
       case gr: GerundRule => {
         GerundForm(stemEntry.lexEntity, gr.grammaticalCase)
@@ -57,7 +61,7 @@ object LemmatizedForm {
 
       case pr: ParticipleRule => {
         ParticipleForm(stemEntry.lexEntity, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice)
-      }
+      }*/
       case _ => throw new Exception(s"Form.scala: form ${inflection} not yet implemented.")
     }
   }
@@ -72,108 +76,18 @@ object LemmatizedForm {
 * @param mood Property for mood.
 * @param voice Property for voice.
 */
-case class VerbForm(lemma: String, person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends LemmatizedForm {}
+case class VerbForm(lemma: String, lemmaUrn: String, stemUrn: String, ruleUrn: String, person: Person, grammaticalNumber: GrammaticalNumber, tense: Tense, mood: Mood, voice: Voice) extends LemmatizedForm {
+  def lemmaId = lemmaUrn
+  def stemId = stemUrn
+  def ruleId = ruleUrn
+}
 
 /** Factory object to build a [[VerbForm]] from string vaues.
 */
 object VerbForm {
   /** Create a [[VerbForm]] from five FST symbols.
   */
-  def apply(lemma: String, p: String, n: String, t: String, m: String, v: String): VerbForm = {
-    VerbForm(lemma, personForFstSymbol(p), numberForFstSymbol(n), tenseForFstSymbol(t), moodForFstSymbol(m), voiceForFstSymbol(v))
+  def apply(lemma: String, lemmaId:  String, stemId:  String, ruleId:  String, p: String, n: String, t: String, m: String, v: String): VerbForm = {
+    VerbForm(lemma, lemmaId, stemId, ruleId, personForFstSymbol(p), numberForFstSymbol(n), tenseForFstSymbol(t), moodForFstSymbol(m), voiceForFstSymbol(v))
   }
 }
-
-/** Indeclinable form, identified only by their part of speech.
-*
-* @param pos Part of speech.
-*/
-case class IndeclinableForm(lemma: String, pos: IndeclinablePoS) extends LemmatizedForm {}
-object IndeclinableForm {
-
-  def apply(lemma: String, s: String): IndeclinableForm ={
-    //println("INDCL FORM lemma/s "  + lemma + ", " + s)
-    IndeclinableForm(lemma, indeclinablePoSForFst(s))
-  }
-}
-
-/** Noun form, identified by gender, case and number.
-*
-* @param gender Property for number.
-* @param grammaticalCase Property for case.
-* @param grammaticalNumber Property for number.
-*/
-case class NounForm(lemma: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends LemmatizedForm {}
-
-/** Factory object to build a [[NounForm]] from string vaues.
-*/
-object NounForm {
-  /** Create a [[NounForm]] from three FST symbols.
-  */
-  def apply(lemma: String, g: String, c: String, n: String): NounForm = {
-    NounForm(lemma, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n))
-  }
-}
-
-
-/** Noun form, identified by gender, case and number.
-*
-* @param grammaticalCase Property for case.
-*/
-case class GerundForm(lemma: String, grammaticalCase: GrammaticalCase) extends LemmatizedForm {}
-/** Factory object to build a [[NounForm]] from string vaues.
-*/
-object GerundForm {
-  /** Create a [[GerundForm]] from one FST symbols.
-  */
-  def apply( lemma: String, c: String): GerundForm = {
-    GerundForm(lemma, caseForFstSymbol(c))
-  }
-}
-
-
-case class AdverbForm(lemma: String, degree: Degree) extends LemmatizedForm {}
-
-
-object AdverbForm {
-  /** Create an [[AdjectiveForm]] from two FST symbols.
-  */
-  def apply(lemma: String, deg: String): AdverbForm = {
-    AdverbForm(lemma, degreeForFstSymbol(deg))
-  }
-}
-
-
-
-
-
-/** Adjective form, identified by gender, case, number and degree.
-*
-* @param gender Property for number.
-* @param grammaticalCase Property for case.
-* @param grammaticalNumber Property for number.
-*/
-case class AdjectiveForm(lemma: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, degree: Degree) extends LemmatizedForm {}
-
-
-object AdjectiveForm {
-  /** Create an [[AdjectiveForm]] from four FST symbols.
-  */
-  def apply(lemma: String, g: String, c: String, n: String, d: String): AdjectiveForm = {
-    AdjectiveForm(lemma, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), degreeForFstSymbol(d))
-  }
-}
-
-
-case class ParticipleForm(lemma: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber, tense: Tense, voice:  Voice) extends LemmatizedForm {}
-
-object ParticipleForm {
-  /** Create a [[ParticipleForm]] from four FST symbols.
-  */
-  def apply(lemma: String, g: String, c: String, n: String, t: String, v: String): ParticipleForm = {
-    ParticipleForm(lemma, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n), tenseForFstSymbol(t),voiceForFstSymbol(v))
-  }
-}
-
-
-case class InfinitiveForm(lemma: String, tense: Tense, voice:  Voice) extends LemmatizedForm {}
