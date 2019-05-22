@@ -44,6 +44,6 @@ class FormulaUnitAdjSpec extends FlatSpec {
     val expected = GCNTriple(Feminine, Nominative, Plural)
     assert(gcnVector(0) == expected)
   }
-  
+
 
 }

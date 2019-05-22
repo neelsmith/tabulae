@@ -21,7 +21,7 @@ class FormulaUnitNounSpec extends FlatSpec {
   }
 
 
-  it should "recognize the gender of nouns" in  {
+  it should "recognize the gender of nouns" in   {
 
     val genderVector = tkn.substGender
     assert(genderVector.size == 1)
