@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**3.0.0**:  API-breaking addition of all analytical URNs to `AnalyzedToken` class.
+
 **2.4.3**:  Updates library dependencies.
 
 **2.4.2**:  Updates library dependencies.
