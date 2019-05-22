@@ -15,7 +15,7 @@ class FormulaUnitPtcplSpec extends FlatSpec {
   val analyzedTokens = FstFileReader.parseFstLines(fst)
   val tkn = analyzedTokens(0)
 
-  "An AnalyzedToken" should "recognized the category of participle tokens" in  {
+  "An AnalyzedToken" should "recognize the category of participle tokens" in  {
     assert(tkn.ptcplToken)
   }
 
@@ -56,6 +56,6 @@ class FormulaUnitPtcplSpec extends FlatSpec {
     assert(voiceVector.size == 1)
     assert(voiceVector(0) == Passive)
   }
-  
+
 
 }
