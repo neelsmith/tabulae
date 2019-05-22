@@ -70,6 +70,27 @@ object ParticipleRule {
 
 
 
+
+////////////
+case class GerundiveRule(ruleId: String,gender: String, grammaticalCase: String,
+grammaticalNumber:String, tense: String, voice:  String,  declClass: String, ending: String ) extends FstRule
+
+/** Factory to create full [[AdjectiveRule]] object from FST.
+*
+*/
+object GerundiveRule {
+  /** Create full [[GerundiveRule]] object from adjective-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param ptcplData Noun-specific FST to parse.
+  */
+  def apply(declClass: String, ptcplData: String): GerundiveRule = {
+    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    val dataRE(ending, gender, grammCase, grammNumber, tense, voice, ruleId) = ptcplData
+    GerundiveRule(ruleId, gender, grammCase, grammNumber,tense, voice, declClass, ending)
+  }
+}
+
 /** Rule entry for an adjective form.
 *
 * @param ruleId Abbreviated URN string for rule.
@@ -208,6 +229,7 @@ object FstRule {
       case "verb" =>  VerbRule(inflClass, remainder)
       case "adj" =>  AdjectiveRule(inflClass, remainder)
       case "gerund" => GerundRule(inflClass, remainder)
+      case "gerundive" => GerundiveRule(inflClass, remainder)
       case "ptcpl" => ParticipleRule(inflClass, remainder)
       case s: String => throw new Exception(s"Type ${s} not implemented")
     }
