@@ -1,6 +1,7 @@
 package edu.holycross.shot.tabulae
 
 
+import edu.holycross.shot.mid.validator._
 
 
 /** Association of [[LemmatizedForm]]s with a surface string (token).
@@ -16,7 +17,7 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-
+  */
   def prepToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -30,7 +31,7 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
       }
     }
   }
-  */
+
   /** True if tkn is a conjugated verb form.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
@@ -95,12 +96,11 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
     }
   }
 
-
   /** True if tkn is an indeclinable form.
   * This shortcut assumes that while there may
   * be multiple anlayses for a token, they will
   * all belong to the same analytical category ("part of speech").
-
+  */
   def indeclToken : Boolean = {
     if (analyses.isEmpty) {
       false
@@ -111,7 +111,7 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
       }
     }
   }
-  */
+
   //
   // Common to all substantive forms (noun, adj, ptcpl):  GCN
   //
@@ -173,6 +173,22 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
             case adj : AdjectiveForm => Some(adj.grammaticalNumber)
             case ptcpl : ParticipleForm => Some(ptcpl.grammaticalNumber)
             case v : VerbForm => Some(v.grammaticalNumber)
+            case _ => None
+        }
+      }
+      numberList.flatten.toVector.distinct
+    }
+  }
+
+
+  def degree: Vector[Degree] = {
+    if (analyses.isEmpty) {
+      Vector.empty[Degree]
+    } else {
+      val numberList = for (lysis <- analyses) yield {
+        lysis match {
+            case adj : AdjectiveForm => Some(adj.degree)
+            case adv : AdverbForm => Some(adv.degree)
             case _ => None
         }
       }
@@ -291,8 +307,6 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
     }
   }
 
-
-/*
   //
   // Specific to indeclinable forms:  part of speech label
   //
@@ -310,7 +324,31 @@ case class AnalyzedToken(literalToken: String, analyses: Vector[LemmatizedForm])
       posList.flatten.toVector.distinct
     }
   }
-*/
 
+  def lemmaId: Vector[String] = {
+    analyses.map(_.lemmaId).distinct
+  }
 
+  def stemId: Vector[String] = {
+    analyses.map(_.stemId).distinct
+  }
+  def ruleId : Vector[String] = {
+    analyses.map(_.ruleId).distinct
+  }
+
+  def cex: String = {
+      val base = s"${literalToken}#lexical#" + lemmaId.mkString(", ") + "#" + stemId.mkString(", ") +"#" + ruleId.mkString(", ") + "#"
+
+      val details = substGender.mkString(", ") + "#" + substCase.mkString(", ") + "#" + grammNumber.mkString(", ") + "#" + degree.mkString(", ") + "#" + person.mkString(", ") + "#" + tense.mkString(", ") + "#" + mood.mkString(", ") + "#" + voice.mkString(", ")
+      base + details
+  }
+
+}
+
+object AnalyzedToken {
+  def vectorCex(tkns: Vector[AnalyzedToken]) : String = {
+    val hdr = "Token#Category#Lemma#Stem#Rule#Gender#Case#Number#Degree#Person#Tense#Mood#Voice\n"
+    val lines = for (t <- tkns) yield { t.cex }
+    hdr + lines.mkString("\n") +"\n"
+  }
 }
