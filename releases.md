@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**3.1.0**:  Support CEX output from `AnalyzedToken` instances, and for Vectors of `AnalyzedToken` from the `AnalyzedToken` object.
+
 **3.0.0**:  API-breaking addition of all analytical URNs to `AnalyzedToken` class.
 
 **2.4.3**:  Updates library dependencies.

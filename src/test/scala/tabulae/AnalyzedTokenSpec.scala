@@ -12,7 +12,9 @@ class AnalyzedTokenSpec extends FlatSpec {
 
 
   "An AnalyzedToken" should "write a CEX representation of itself" in {
-    println("CEX:\n" + tkn.cex)
+    //assert(tkn.cex == expected)
+    val expected = "designatvs#lexical#ls.n13382#ocremorph.n13382c#ocremorph.pft_perfppl1#Masculine#Nominative#Singular###Perfect##Passive"
+    assert(tkn.cex == expected)
   }
 
 }

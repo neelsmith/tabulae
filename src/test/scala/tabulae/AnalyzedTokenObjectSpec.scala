@@ -19,7 +19,12 @@ class AnalyzedTokenObjectSpec extends FlatSpec {
 
 
   "The AnalyzedToken object" should "write a CEX representation of a vector of AnalyzedTokens" in {
-    println("CEX:\n" + AnalyzedToken.vectorCex(analyzedTokens))
+        val expected = """Token#Category#Lemma#Stem#Rule#Gender#Case#Number#Degree#Person#Tense#Mood#Voice
+designatvs#lexical#ls.n13382#ocremorph.n13382c#ocremorph.pft_perfppl1#Masculine#Nominative#Singular###Perfect##Passive
+agrippina#lexical#ls.n1640#ocremorph.n1640#ocremorph.a_ae1, ocremorph.a_ae5#Feminine#Nominative, Ablative#Singular#####
+"""
+
+    assert(AnalyzedToken.vectorCex(analyzedTokens) == expected)
   }
 
 }
