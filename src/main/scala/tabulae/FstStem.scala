@@ -74,6 +74,38 @@ object IrregularAdverbStem {
     }
 }
 
+
+
+//case class IrregularNounStem(stemId: String, lexEntity: String, stem: String, gender: String, grammCase: String, grammNumber: String ) extends FstStem
+
+object IrregularNounStem {
+    def apply(stemId: String, lexId: String, remainder: String) : NounStem = {
+      val dataParts = remainder.replaceFirst("<irregnoun>","")
+      println("D PARTS " + dataParts + s" (from ${remainder})")
+      //ivppiter<masc><nom><sg>
+      /// (from ivppiter<masc><nom><sg><irregnoun>)
+      //val stem = "S1" //dataParts(0)
+      val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
+      val dataRE(stem, gender, grammCase, grammNumber) =  remainder
+
+      println(s"${stem}-${gender}-${grammCase}-${grammNumber}")
+/*
+  val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
+  //<masc><nom><sg><u>ocremorph.0_is1</u>
+  val dataRE(ending, gender, grammCase, grammNumber,ruleId) = nounData
+  NounRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
+  */
+      // "<u>ocremorph.n25359mns</u><u>lexent.n25359</u>ivppiter<masc><nom><sg><irregnoun>"
+      //val irregStem = "R2"//dataParts(1)//.replaceFirst(">","")
+      //println("WORK ON IRREG STEM AND RULE " + irregStem + " //  " +  stem)
+
+//stemId: String, lexEntity: String, stem: String, gender: String, inflClass: String
+      val ns = NounStem(stemId, lexId, stem, gender, "irregnoun")
+      println("CREATED REGULAR NounStem from irreg data: " + ns)
+      ns
+    }
+}
+
 /** Lexicon entry for an adjective.
 *
 * @param stemId Abbreviated URN string for stem.
@@ -139,8 +171,6 @@ object NounStem {
 */
 object FstStem {
 
-
-
   /** Create an [[FstStem]] object from the FST representation of a stem.
   *
   * @param fst The "stem" half of an FST reply.
@@ -161,8 +191,9 @@ object FstStem {
 
       // Irregular forms:
       case IrregularAdverb =>  IrregularAdverbStem(stemId, lexEntity, remainder)
+      case IrregularNoun =>  IrregularNounStem(stemId, lexEntity, remainder)
 
-      case _ => throw new Exception("Type not yet implemented: " + stemClass)
+      case _ => throw new Exception("FstStem: type not yet implemented: " + stemClass)
     }
 
   }
@@ -194,6 +225,8 @@ object FstStem {
       case "<indecl>" => Indeclinable
       case "<adj>" => Adjective
       case "<irregadv>" => IrregularAdverb
+      case "<irregnoun>" => IrregularNoun
+
       case _ => { println("Could not figure out stem type " + pair._1); throw new Exception("FstStem: did not recognize type " + pair._1)}
 
     }

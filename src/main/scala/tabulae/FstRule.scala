@@ -145,12 +145,33 @@ object NounRule {
   * @param nounData Noun-specific FST to parse.
   */
   def apply(declClass: String, nounData: String): NounRule = {
+    println("Try Noun Rule on " + nounData)
     val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
     //<masc><nom><sg><u>ocremorph.0_is1</u>
     val dataRE(ending, gender, grammCase, grammNumber,ruleId) = nounData
     NounRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
   }
 }
+
+
+
+
+object IrregNounRule {
+  /** Create full [[NounRule]] object from noun-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param nounData Noun-specific FST to parse.
+  */
+  def apply(fst: String) = { //: NounRule = {
+    println("Try Noun Rule on " + fst)
+    val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    //<masc><nom><sg><u>ocremorph.0_is1</u>
+    //val dataRE(ending, gender, grammCase, grammNumber,ruleId) = fst
+    //NounRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
+    NounRule("ruleId", "masc", "nom", "sg", "declClass", "ending")
+  }
+}
+
 case class GerundRule(ruleId: String, grammaticalCase: String,
 declClass: String, ending: String ) extends FstRule
 
@@ -219,19 +240,25 @@ object FstRule {
 
     val idsRE = "<([^<]+)><([^<]+)>(.+)".r
     val idsRE(inflClass, stemType, remainder) = fst
-    /*println("FST RULE:\n")
+    println(s"FST RULE applied to ${fst}:\n")
     println(s"\tclass ${inflClass}")
-    println(s"\tremainder ${remainder}")*/
-    stemType match {
-
-      case "noun" => NounRule(inflClass,  remainder)
-      case "indecl" => IndeclRule.fromStrings(inflClass, remainder)
-      case "verb" =>  VerbRule(inflClass, remainder)
-      case "adj" =>  AdjectiveRule(inflClass, remainder)
-      case "gerund" => GerundRule(inflClass, remainder)
-      case "gerundive" => GerundiveRule(inflClass, remainder)
-      case "ptcpl" => ParticipleRule(inflClass, remainder)
-      case s: String => throw new Exception(s"Type ${s} not implemented")
+    println(s"\tremainder ${remainder}")
+    println(s"\tstemType ${stemType}")
+    inflClass match {
+      case "irregnoun" => //throw new Exception(s"IRREGNOUN")
+        IrregNounRule(fst)
+      case _ => {
+        stemType match {
+          case "noun" => NounRule(inflClass,  remainder)
+          case "indecl" => IndeclRule.fromStrings(inflClass, remainder)
+          case "verb" =>  VerbRule(inflClass, remainder)
+          case "adj" =>  AdjectiveRule(inflClass, remainder)
+          case "gerund" => GerundRule(inflClass, remainder)
+          case "gerundive" => GerundiveRule(inflClass, remainder)
+          case "ptcpl" => ParticipleRule(inflClass, remainder)
+          case s: String => throw new Exception(s"Type ${s} not implemented (fst string ${fst})")
+        }
+      }
     }
   }
 

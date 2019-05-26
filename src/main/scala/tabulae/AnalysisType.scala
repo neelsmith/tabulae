@@ -26,3 +26,5 @@ object Participle extends AnalysisType
 // irregulars...
 /** Adverb analysis type.*/
 object IrregularAdverb extends AnalysisType
+
+object IrregularNoun extends AnalysisType

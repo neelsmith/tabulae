@@ -34,6 +34,46 @@ sealed trait LemmatizedForm {
 */
 object LemmatizedForm {
 
+
+  def irregularForm(fst: String) : LemmatizedForm = {
+    println("Received irreg. form " + fst)
+    val parts = fst.split("<div>")
+    // require 2 parts...
+
+    val rule = parts(1)
+    println("Rule part is "+ rule)
+    val ruleRE = "<([^>]+)><u>([^<]+)</u>".r
+    val ruleRE(irregClass, ruleId) = rule
+    println("\tClass " + irregClass)
+    println("\tRule " + ruleId)
+    val resultForm = irregClass match {
+      case "irregnoun" => {
+        println("FOUND IRREG NOUN, so parse noun stem " + parts(0))
+//<u>ocremorph.n25359mns</u><u>lexent.n25359</u>ivppiter<masc><nom><sg><irregnoun>
+        val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+        val idsRE(stemId, lexEntity, remainder) = parts(0)
+        println("with results ")
+        println("\tstemId " + stemId)
+        println("\tlexent"  + lexEntity)
+        println("\tremainder " + remainder)
+
+        val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
+        val dataRE(stem, gender, grammCase, grammNumber) =  remainder
+        println("\tGCN  " + Vector(gender, grammCase, grammNumber).mkString(", "))
+        val nf = NounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber)
+        println("Voila!  NounForm "  + nf)
+        nf
+      }
+      case _ => {
+        val err = "Irreg class "+ irregClass + " not recognized."
+        throw new Exception(err)
+      }
+    }
+
+    resultForm
+
+  }
+
   /** From a raw FST string, identify a morphological form.
   *
   * @param s String value of a single FST analysis.
@@ -42,39 +82,47 @@ object LemmatizedForm {
     val halves = s.split("<div>")
     require(halves.size == 2, "LemmatizedFrom: could not find <div>-delimited parts of FST string in " + s)
 
-    val stemEntry = FstStem(halves(0))
-    val inflection = FstRule(halves(1))
+
+    // CHECK FOR IRREG HERE
+    if (s.contains("<irreg")) {
+      println("NEED TO HANDLE IRREGULAR FORM: " + s)
+      irregularForm(s)
+
+    } else {
+      // This is for handling regular forms:
+      val stemEntry = FstStem(halves(0))
+      val inflection = FstRule(halves(1))
 
 
-    inflection match {
-      case vr: VerbRule => {
-        VerbForm(stemEntry.lexEntity, stemEntry.stemId, inflection.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
+      inflection match {
+        case vr: VerbRule => {
+          VerbForm(stemEntry.lexEntity, stemEntry.stemId, inflection.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice)
+        }
+
+        case nr: NounRule => {
+          NounForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
+        }
+        case adjr: AdjectiveRule => {
+          AdjectiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
+        }
+
+        case pr: ParticipleRule => {
+          ParticipleForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice)
+        }
+        case gr: GerundiveRule => {
+          GerundiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.gender, gr.grammaticalCase, gr.grammaticalNumber)
+        }
+
+        case gr: GerundRule => {
+          GerundForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.grammaticalCase)
+        }
+
+        case ir: IndeclRule => {
+          IndeclinableForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, ir.pos)
+        }
+
+        case _ => throw new Exception(s"Form.scala: form ${inflection} not yet implemented.")
       }
-
-      case nr: NounRule => {
-        NounForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber)
-      }
-      case adjr: AdjectiveRule => {
-        AdjectiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree)
-      }
-
-      case pr: ParticipleRule => {
-        ParticipleForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice)
-      }
-      case gr: GerundiveRule => {
-        GerundiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.gender, gr.grammaticalCase, gr.grammaticalNumber)
-      }
-
-      case gr: GerundRule => {
-        GerundForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.grammaticalCase)
-      }
-
-      case ir: IndeclRule => {
-        IndeclinableForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, ir.pos)
-      }
-
-
-      case _ => throw new Exception(s"Form.scala: form ${inflection} not yet implemented.")
     }
   }
 }
@@ -197,7 +245,7 @@ case class GerundForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gramma
   def ruleId = ruleUrn
 }
 
-/** Factory object to build a [[NounForm]] from string vaues.
+/** Factory object to build a [[GerundForm]] from string vaues.
 */
 object GerundForm {
   /** Create a [[GerundForm]] from one FST symbols.
