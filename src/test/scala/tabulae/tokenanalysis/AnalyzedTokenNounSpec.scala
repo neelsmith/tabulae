@@ -10,7 +10,7 @@ import org.scalatest.FlatSpec
 
 
 
-class FormulaUnitNounSpec extends FlatSpec {
+class AnalyzedTokenNounSpec extends FlatSpec {
 
   val fst = "> adsertori\n<u>ocremorph.n4035</u><u>ls.n4035</u>adsertor<noun><masc><0_is><div><0_is><noun>i<masc><dat><sg><u>ocremorph.0_is3</u>\n".split("\n").toVector
   val analyzedTokens = FstFileReader.parseFstLines(fst)

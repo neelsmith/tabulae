@@ -9,7 +9,7 @@ import org.scalatest.FlatSpec
 
 
 
-class FormulaUnitAdjSpec extends FlatSpec {
+class AnalyzedTokenAdjSpec extends FlatSpec {
 
   val fst = "> aeternae\n<u>ocremorph.n1413</u><u>ls.n1413</u>aetern<adj><us_a_um><div><us_a_um><adj>ae<fem><nom><pl><pos><u>ocremorph.us_a_um42</u>\n<u>ocremorph.n1413</u><u>ls.n1413</u>aetern<adj><us_a_um><div><us_a_um><adj>ae<fem><gen><sg><pos><u>ocremorph.us_a_um38</u>\n<u>ocremorph.n1413</u><u>ls.n1413</u>aetern<adj><us_a_um><div><us_a_um><adj>ae<fem><dat><sg><pos><u>ocremorph.us_a_um39</u>\n<u>ocremorph.n1413</u><u>ls.n1413</u>aetern<adj><us_a_um><div><us_a_um><adj>ae<fem><voc><pl><pos><u>ocremorph.us_a_um48</u>\n".split("\n").toVector
   val analyzedTokens = FstFileReader.parseFstLines(fst)

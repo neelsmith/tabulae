@@ -9,7 +9,7 @@ import org.scalatest.FlatSpec
 
 
 
-class FormulaUnitIndeclSpec extends FlatSpec {
+class AnalyzedTokenIndeclSpec extends FlatSpec {
 
   val fst = "> de\n<u>ocremorph.n12361</u><u>ls.n12361</u>de<indecl><indeclprep><div><indeclprep><indecl><u>indeclinfl.1</u>\n".split("\n").toVector
   val analyzedTokens = FstFileReader.parseFstLines(fst)

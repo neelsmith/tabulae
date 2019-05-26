@@ -9,7 +9,7 @@ import org.scalatest.FlatSpec
 
 
 
-class FormulaUnitPtcplSpec extends FlatSpec {
+class AnalyzedTokenPtcplSpec extends FlatSpec {
 
   val fst = "> designatvs\n<u>ocremorph.n13382c</u><u>ls.n13382</u><#>designat<verb><pftpass><div><pftpass><ptcpl>vs<masc><nom><sg><pft><pass><u>ocremorph.pft_perfppl1</u>\n".split("\n").toVector
   val analyzedTokens = FstFileReader.parseFstLines(fst)
