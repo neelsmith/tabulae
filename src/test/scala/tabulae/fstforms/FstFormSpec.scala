@@ -80,6 +80,19 @@ class FstFormSpec extends FlatSpec {
       case _ => fail("Should have created an adverbial form")
     }
   } */
+  it should "construct a parsed indeclinable form from FST string input" in  {
+    val ruleFst = "<indeclconj><indecl><u>lindeclinfl.1</u>"
+    val stemFst = "<u>pliny.indecl1</u><u>lexent.tbd</u>cum<indecl><indeclconj>"
+
+    val fst = stemFst + "<div>" +  ruleFst
+    val f = LemmatizedForm(fst)
+    f match {
+      case indeclForm: IndeclinableForm => {
+        assert(indeclForm.pos == Conjunction)
+      }
+      case _ => fail("Should have created an indeclinable form")
+    }
+  }
 
   it should "construct a parsed gerundive form from FST string input" in pending
   it should "construct a parsed gerund form from FST string input" in pending

@@ -145,7 +145,6 @@ object NounRule {
   * @param nounData Noun-specific FST to parse.
   */
   def apply(declClass: String, nounData: String): NounRule = {
-    println("Try Noun Rule on " + nounData)
     val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
     //<masc><nom><sg><u>ocremorph.0_is1</u>
     val dataRE(ending, gender, grammCase, grammNumber,ruleId) = nounData
@@ -153,24 +152,6 @@ object NounRule {
   }
 }
 
-
-
-/*
-object IrregNounRule {
-  * Create full [[NounRule]] object from noun-specific FST.
-  *
-  * @param declClass String value for declension class.
-  * @param nounData Noun-specific FST to parse.
-  *
-  def apply(fst: String) = { //: NounRule = {
-    println("Try Noun Rule on " + fst)
-    val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
-    //<masc><nom><sg><u>ocremorph.0_is1</u>
-    //val dataRE(ending, gender, grammCase, grammNumber,ruleId) = fst
-    //NounRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
-    NounRule("ruleId", "masc", "nom", "sg", "declClass", "ending")
-  }
-}*/
 
 case class GerundRule(ruleId: String, grammaticalCase: String,
 declClass: String, ending: String ) extends FstRule
