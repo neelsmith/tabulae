@@ -21,6 +21,21 @@ class FstRuleParsingSpec extends FlatSpec {
       }
     }
   }
+  it should "recognize nouns forms with null string for ending" in  {
+    val ruleFst = "<0_is><noun><masc><nom><sg><u>ocremorph.0_is1</u>"
+    val rule = FstRule(ruleFst)
+    rule match {
+      case nr: NounRule => {
+        assert(nr.ruleId == "ocremorph.0_is1")
+        assert(nr.gender == "masc")
+        assert(nr.grammaticalCase == "nom")
+        assert(nr.grammaticalNumber == "sg")
+        assert(nr.declClass == "0_is")
+        assert(nr.ending == "")
+
+      }
+    }
+  }
 
   it should "recognize conjugated verb forms" in {
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
@@ -80,5 +95,22 @@ class FstRuleParsingSpec extends FlatSpec {
 
   it should "recognize gerundive forms" in pending
   it should "recognize adverbial forms" in pending
+  it should "recognize indeclinable forms" in  {
+    val ruleFst = "<indeclconj><indecl><u>indeclinfl.2</u>"
+
+    // fstBuilder.append(s"<u>${stemUrn}</u><u>${lexEntity}</u>${stem}<${pos}>")
+
+    //<u>ocremorph.indecl2</u><u>ls.n16278</u>et<indeclconj><div><indeclconj><indecl><u>indeclinfl.2</u>
+
+
+    val rule = FstRule(ruleFst)
+    rule match {
+      case ir: IndeclRule => {
+        assert(ir.ruleId == "indeclinfl.2")
+        assert(ir.pos == "indeclconj")
+      }
+      case _ => fail("Should have formed an IndeclRule")
+    }
+  }
 
 }
