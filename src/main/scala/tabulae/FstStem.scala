@@ -61,7 +61,7 @@ object IndeclStem {
   }
 }
 
-
+/*
 case class IrregularAdverbStem(stemId: String, lexEntity: String, stem: String, degree: String ) extends FstStem
 
 object IrregularAdverbStem {
@@ -90,6 +90,8 @@ object IrregularNounStem {
       ns
     }
 }
+*/
+
 
 /** Lexicon entry for an adjective.
 *
@@ -175,8 +177,8 @@ object FstStem {
       case Adjective =>  AdjectiveStem(stemId, lexEntity, remainder)
 
       // Irregular forms:
-      case IrregularAdverb =>  IrregularAdverbStem(stemId, lexEntity, remainder)
-      case IrregularNoun =>  IrregularNounStem(stemId, lexEntity, remainder)
+      //case IrregularAdverb =>  IrregularAdverbStem(stemId, lexEntity, remainder)
+      //case IrregularNoun =>  IrregularNounStem(stemId, lexEntity, remainder)
 
       case _ => throw new Exception("FstStem: type not yet implemented: " + stemClass)
     }
@@ -209,8 +211,8 @@ object FstStem {
       case "<verb>" => Verb
       case "<indecl>" => Indeclinable
       case "<adj>" => Adjective
-      case "<irregadv>" => IrregularAdverb
-      case "<irregnoun>" => IrregularNoun
+      //case "<irregadv>" => IrregularAdverb
+      //case "<irregnoun>" => IrregularNoun
 
       case _ => { println("Could not figure out stem type " + pair._1); throw new Exception("FstStem: did not recognize type " + pair._1)}
 

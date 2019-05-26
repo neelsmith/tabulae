@@ -65,27 +65,6 @@ class FstStemParsingSpec extends FlatSpec {
   it should "parse pronoun stems" in pending
 
 
-  it should "parse irregular conjugated verb stems" in pending
-  it should "parse irregular noun stems" in pending
-  it should "parse irregular adjective stems" in pending
-  it should "parse irregular adverb stems" in {
-    val stemFst = "<u>lat24morph.advn790</u><u>ls.n790</u>adhuc<pos><irregadv>"
-    val stemObj = FstStem(stemFst)
-    stemObj match {
-      case irreg: IrregularAdverbStem => {
-        assert(irreg.stemId == "lat24morph.advn790")
-        assert(irreg.lexEntity == "ls.n790")
-        assert(irreg.degree == "pos")
-      }
-      case _ => fail("Should have created AdjectiveStem")
-    }
-  }
-  it should "parse irregular infinitive stems" in pending
-  it should "parse irregular participle stems" in pending
-  it should "parse irregular gerund stems" in pending
-  it should "parse irregular gerundive stems" in pending
-  it should "parse irregular supine stems" in pending
-  it should "parse irregular pronoun stems" in pending
 
 
 }
