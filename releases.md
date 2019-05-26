@@ -1,5 +1,9 @@
 # Release notes for `tabulae`
 
+**3.4.0**: Added support for parsing FST output for irregular adverbs.
+
+**3.3.0**: Added support for parsing FST output for irregular nouns.
+
 **3.2.0**: Set up framework for instantiating SFST strings for irregular analyses as `LemmatizedForm`s.
 
 

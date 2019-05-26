@@ -48,21 +48,28 @@ object LemmatizedForm {
     //println("\tRule " + ruleId)
     val resultForm = irregClass match {
       case "irregnoun" => {
-        //println("FOUND IRREG NOUN, so parse noun stem " + parts(0))
-//<u>ocremorph.n25359mns</u><u>lexent.n25359</u>ivppiter<masc><nom><sg><irregnoun>
         val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
         val idsRE(stemId, lexEntity, remainder) = parts(0)
-        //println("with results ")
-        //println("\tstemId " + stemId)
-        //println("\tlexent"  + lexEntity)
-        //println("\tremainder " + remainder)
 
         val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
         val dataRE(stem, gender, grammCase, grammNumber) =  remainder
-        //println("\tGCN  " + Vector(gender, grammCase, grammNumber).mkString(", "))
-        val nf = NounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber)
-        //println("Voila!  NounForm "  + nf)
-        nf
+
+        NounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber)
+      }
+
+      case "irregadv" => {
+      //<u>ocremorph.n25115</u><u>ls.n25115</u>
+      //itervm<pos><irregadv>
+      //<div>
+      //<irregadv><u>irreginfl.2</u>
+        val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+        val idsRE(stemId, lexEntity, remainder) = parts(0)
+        //itervm<pos><irregadv>
+        val dataRE  = "([^<]*)<([^<]+)><irregadv>".r
+        val dataRE(stem, degr) =  remainder
+
+        AdverbForm(lexEntity, stemId, ruleId, degr)
+
       }
       case _ => {
         val err = "Irreg class "+ irregClass + " not recognized."
