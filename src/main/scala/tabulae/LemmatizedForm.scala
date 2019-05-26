@@ -36,32 +36,32 @@ object LemmatizedForm {
 
 
   def irregularForm(fst: String) : LemmatizedForm = {
-    println("Received irreg. form " + fst)
+    //println("Received irreg. form " + fst)
     val parts = fst.split("<div>")
     // require 2 parts...
 
     val rule = parts(1)
-    println("Rule part is "+ rule)
+    //println("Rule part is "+ rule)
     val ruleRE = "<([^>]+)><u>([^<]+)</u>".r
     val ruleRE(irregClass, ruleId) = rule
-    println("\tClass " + irregClass)
-    println("\tRule " + ruleId)
+    //println("\tClass " + irregClass)
+    //println("\tRule " + ruleId)
     val resultForm = irregClass match {
       case "irregnoun" => {
-        println("FOUND IRREG NOUN, so parse noun stem " + parts(0))
+        //println("FOUND IRREG NOUN, so parse noun stem " + parts(0))
 //<u>ocremorph.n25359mns</u><u>lexent.n25359</u>ivppiter<masc><nom><sg><irregnoun>
         val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
         val idsRE(stemId, lexEntity, remainder) = parts(0)
-        println("with results ")
-        println("\tstemId " + stemId)
-        println("\tlexent"  + lexEntity)
-        println("\tremainder " + remainder)
+        //println("with results ")
+        //println("\tstemId " + stemId)
+        //println("\tlexent"  + lexEntity)
+        //println("\tremainder " + remainder)
 
         val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
         val dataRE(stem, gender, grammCase, grammNumber) =  remainder
-        println("\tGCN  " + Vector(gender, grammCase, grammNumber).mkString(", "))
+        //println("\tGCN  " + Vector(gender, grammCase, grammNumber).mkString(", "))
         val nf = NounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber)
-        println("Voila!  NounForm "  + nf)
+        //println("Voila!  NounForm "  + nf)
         nf
       }
       case _ => {
@@ -83,9 +83,12 @@ object LemmatizedForm {
     require(halves.size == 2, "LemmatizedFrom: could not find <div>-delimited parts of FST string in " + s)
 
 
-    // CHECK FOR IRREG HERE
+    // CHECK FOR IRREG HERE.
+    // This is an enormous kludge, but for now, we're using it.
+    // A better option might be parsing out the inflclass and checking against
+    // a list of irregular classes.  But it comes down to a similar convention:
+    // some class names (here,mere strings) are irregular, some are regular.
     if (s.contains("<irreg")) {
-      println("NEED TO HANDLE IRREGULAR FORM: " + s)
       irregularForm(s)
 
     } else {

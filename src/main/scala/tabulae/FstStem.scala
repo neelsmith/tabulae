@@ -81,27 +81,12 @@ object IrregularAdverbStem {
 object IrregularNounStem {
     def apply(stemId: String, lexId: String, remainder: String) : NounStem = {
       val dataParts = remainder.replaceFirst("<irregnoun>","")
-      println("D PARTS " + dataParts + s" (from ${remainder})")
       //ivppiter<masc><nom><sg>
       /// (from ivppiter<masc><nom><sg><irregnoun>)
       //val stem = "S1" //dataParts(0)
       val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
       val dataRE(stem, gender, grammCase, grammNumber) =  remainder
-
-      println(s"${stem}-${gender}-${grammCase}-${grammNumber}")
-/*
-  val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregnoun>".r
-  //<masc><nom><sg><u>ocremorph.0_is1</u>
-  val dataRE(ending, gender, grammCase, grammNumber,ruleId) = nounData
-  NounRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
-  */
-      // "<u>ocremorph.n25359mns</u><u>lexent.n25359</u>ivppiter<masc><nom><sg><irregnoun>"
-      //val irregStem = "R2"//dataParts(1)//.replaceFirst(">","")
-      //println("WORK ON IRREG STEM AND RULE " + irregStem + " //  " +  stem)
-
-//stemId: String, lexEntity: String, stem: String, gender: String, inflClass: String
       val ns = NounStem(stemId, lexId, stem, gender, "irregnoun")
-      println("CREATED REGULAR NounStem from irreg data: " + ns)
       ns
     }
 }

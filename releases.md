@@ -1,5 +1,8 @@
 # Release notes for `tabulae`
 
+**3.2.0**: Set up framework for instantiating SFST strings for irregular analyses as `LemmatizedForm`s.
+
+
 **3.1.0**:  Support CEX output from `AnalyzedToken` instances, and for Vectors of `AnalyzedToken` from the `AnalyzedToken` object.
 
 **3.0.0**:  API-breaking addition of all analytical URNs to `AnalyzedToken` class.
