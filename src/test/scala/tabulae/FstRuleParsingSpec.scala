@@ -37,6 +37,18 @@ class FstRuleParsingSpec extends FlatSpec {
     }
   }
 
+  it should "recognize adjective forms" in {
+
+    val ruleFst = "<us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
+    val rule = FstRule(ruleFst)
+    rule match {
+      case ar: AdjectiveRule => {
+      }
+      case _ => fail("Should have formed an AdjectiveRule")
+    }
+  }
+  it should "recognize adverbial forms" in pending
+
   it should "recognize conjugated verb forms" in {
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val rule = FstRule(ruleFst)
@@ -54,16 +66,8 @@ class FstRuleParsingSpec extends FlatSpec {
     }
   }
 
-  it should "recognize adjective forms" in {
+  it should "recognize infinitive forms of the verb" in pending
 
-    val ruleFst = "<us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
-    val rule = FstRule(ruleFst)
-    rule match {
-      case ar: AdjectiveRule => {
-      }
-      case _ => fail("Should have formed an AdjectiveRule")
-    }
-  }
 
 
   it should "recognize forms of the gerund" in {
@@ -94,7 +98,7 @@ class FstRuleParsingSpec extends FlatSpec {
 
 
   it should "recognize gerundive forms" in pending
-  it should "recognize adverbial forms" in pending
+
   it should "recognize indeclinable forms" in  {
     val ruleFst = "<indeclconj><indecl><u>indeclinfl.2</u>"
 

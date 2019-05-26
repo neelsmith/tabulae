@@ -21,6 +21,20 @@ class FstStemParsingSpec extends FlatSpec {
       case _ => fail("Should have created NounStem")
     }
   }
+  
+  it should "parse adjective stems" in {
+    val stemFst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um>"
+    val stemObj = FstStem(stemFst)
+    stemObj match {
+      case adjObj: AdjectiveStem => {
+        assert(adjObj.stemId == "ocremorph.geoadj1")
+        assert(adjObj.lexEntity == "ls.n617")
+        assert(adjObj.stem == "acti")
+        assert(adjObj.inflClass == "us_a_um")
+      }
+      case _ => fail("Should have created AdjectiveStem")
+    }
+  }
 
   it should "parse verb stems"in {
     val stemFst = "<u>dev1.v1</u><u>lexent.v1</u><#>am<verb><conj1>"
@@ -49,19 +63,7 @@ class FstStemParsingSpec extends FlatSpec {
         case _ => fail("Should have created IndeclStem")
       }
   }
-  it should "parse adjective stems" in {
-    val stemFst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um>"
-    val stemObj = FstStem(stemFst)
-    stemObj match {
-      case adjObj: AdjectiveStem => {
-        assert(adjObj.stemId == "ocremorph.geoadj1")
-        assert(adjObj.lexEntity == "ls.n617")
-        assert(adjObj.stem == "acti")
-        assert(adjObj.inflClass == "us_a_um")
-      }
-      case _ => fail("Should have created AdjectiveStem")
-    }
-  }
+
   it should "parse pronoun stems" in pending
 
 
