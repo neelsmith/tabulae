@@ -16,6 +16,39 @@ Additionally, the `tabulae` repository includes a code library to work with the 
 
 ## Step by step
 
+
+# Here is some real world stuff about building a parser
+
+
+
+You'll need to import the `builder` classes:
+
+```tut
+import edu.holycross.shot.tabulae.builder._
+```
+
+
+Let's assume you've installed SFST binaries in `/usr/local/bin`.
+
+```tut:silent
+val binaries = "/usr/local/bin"
+```
+
+To create a `Configuration`, you specify where to find SFST binaries to comppile a run a parser, where to find `make`, and where to find the datasets directory (ADD XREF TO WHAT THAT MEANS):
+
+```tut:silent
+val conf = Configuration(s"${binaries}/fst-compiler-utf8", s"${binaries}/fst-infl",  "/usr/bin/make", "datasets")
+```
+
+You can then use the `FstCompiler` object to compile a parser:
+
+
+```tut:silent
+  FstCompiler.compile(datasource, repo, c, conf, true)
+```
+
+# This part is fiction in version 3.4.0
+
 The main buildfile includes a task (`fstCompile`) that sequentially:
 
 1.  Finds a `Configuration` object.  This identifies the location of binary executables for compiling the parser in the local file system, and gives the root directory of the data set to use.
@@ -32,4 +65,4 @@ The main buildfile includes a task (`fstCompile`) that sequentially:
     -  Creates the chain of acceptors that filter the cross product of rules and stems so that only valid forms are permitted.  Since a given corpus may or may not include instances of any given type of vocuablary item, the sequence of chained transducers can be complex.  The final step is a single "acceptor" transducer.
     -  Composes the final parser: a handful of lines that cross stems and endings and feeds them to the final acceptor transducer.
 5.  Composes `makefile`s for building the binary parser from FST source. SFST uses traditional `make` to compile its parsers.  Like the chain of acceptors, the make files have to be dynamically composed so that they function correctly whether or not particular kinds of vocabulary are present.
-6.  Compiles the binary.  The result is a binary parser that can be used with any of the standard SFST tools from the SFST project or third parties. 
+6.  Compiles the binary.  The result is a binary parser that can be used with any of the standard SFST tools from the SFST project or third parties.

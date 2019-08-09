@@ -21,7 +21,7 @@ val commonSettings = Seq(
       ),
 
       tutTargetDirectory := file("docs"),
-      tutSourceDirectory := file("src/main/tut"),
+      tutSourceDirectory := file("tut"),
 
 
       cleanAll := cleanAllImpl.value
