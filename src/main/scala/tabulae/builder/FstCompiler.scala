@@ -23,8 +23,8 @@ object FstCompiler {
     BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
 
     // Build it!
-    val buildDirectory = baseDir/"parsers"/corpus
-    val inflMakefile = buildDirectory/"inflection/makefile"
+    val buildDirectory = baseDir / "parsers"/corpus
+    val inflMakefile = buildDirectory / "inflection/makefile"
     val makeInfl = s"${conf.make} -f ${inflMakefile}"
     makeInfl !
 
@@ -36,14 +36,18 @@ object FstCompiler {
 
   /**  Compose a parser in FST from tabular source data, and compile it to binary form.
   *
-  * @param dataDirectory
-  * @param baseDir
-  * @param corpus
-  * @param conf
+  * @param dataDirectory Base directory for finding source data from which
+  * the parser will be built.
+  * @param baseDir A writable working directory where the binary parser
+  * will be written.  Specifically, the parser will be written within a subdirectory named `corpus` of a subdirectory named "`parsers`" of
+  * `baseDir`.
+  * @param corpus  Name of "corpus", used as name of subdirectory where
+  * binary parser will be written.
+  * @param conf Configuration object for compiling a parser.
   */
   def compile(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration, replaceExisting: Boolean = true) : Unit = {
 
-    val projectDir = baseDir/"parsers"/corpus
+    val projectDir = baseDir / "parsers" / corpus
     if (projectDir.exists) {
       replaceExisting match {
         case true => {

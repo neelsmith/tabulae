@@ -17,18 +17,20 @@ Additionally, the `tabulae` repository includes a code library to work with the 
 ## Step by step
 
 
-# Here is some real world stuff about building a parser
 
 
 
-You'll need to import the `builder` classes:
+You'll need to import `tabulae`'s `builder` classes, as well as the `betterfiles` package.  (For convenience we'll rename `java.io.File` so that references to `File` refer to the better files class of that name.)
 
-```tut
+```tut:silent
 import edu.holycross.shot.tabulae.builder._
+import better.files._
+import java.io.{File => JFile}
 ```
 
 
-Let's assume you've installed SFST binaries in `/usr/local/bin`.
+
+Let's abstract where you've installed SFST binaries.  Here, we'll assume they're in `/usr/local/bin`. (In a standard Linux install, they might be in `/usr/bin`.)
 
 ```tut:silent
 val binaries = "/usr/local/bin"
@@ -40,12 +42,24 @@ To create a `Configuration`, you specify where to find SFST binaries to comppile
 val conf = Configuration(s"${binaries}/fst-compiler-utf8", s"${binaries}/fst-infl",  "/usr/bin/make", "datasets")
 ```
 
-You can then use the `FstCompiler` object to compile a parser:
+You can then use the `FstCompiler` object to compile a parser. The compiler needs to know the following parameters:
+
+1. `dataDirectory`: a `File` reference to ... something
+2. `baseDir`: a `File` reference to your dataset.
+3.  `corpus`: name of a "corpus" subdirectory within `baseDir`
+4. `conf`: the `Configuration`
+5.  `replaceExisting`:  Boolean flag indicating whether to replace an existing binary parser.  This may be omitted:  the default value is `true`.]
+
 
 
 ```tut:silent
-  FstCompiler.compile(datasource, repo, c, conf, true)
+val repo = File("src/test/resources")
+val datasource = repo / "datasets"
+val c = "analytical_types"
+FstCompiler.compile(datasource, repo, c, conf, true)
 ```
+
+
 
 # This part is fiction in version 3.4.0
 
