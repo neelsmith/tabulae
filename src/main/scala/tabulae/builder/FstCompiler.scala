@@ -10,6 +10,16 @@ import better.files.Dsl._
 object FstCompiler {
 
 
+  /** Compile lexica, morphological rule sets and core parser logic
+  *
+  * @param dataDirectory Base directory for finding source data from which
+  * the parser will be built.
+  * @param baseDir A writable working directory where the binary parser
+  * will be written.  Specifically, the parser will be written within a subdirectory named `corpus` of a subdirectory named "`parsers`" of
+  * `baseDir`.
+  * @param corpus  Name of "corpus", used as name of subdirectory where
+  * binary parser will be written.
+  */
   def compileAll(dataDirectory: ScalaFile, baseDir: ScalaFile, corpus: String, conf: Configuration) : Unit = {
     // Install data and rules, converting tabular data to FST
     //println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
@@ -23,7 +33,7 @@ object FstCompiler {
     BuildComposer(dataDirectory, baseDir, corpus, conf.fstcompile)
 
     // Build it!
-    val buildDirectory = baseDir / "parsers"/corpus
+    val buildDirectory = baseDir / "parsers" / corpus
     val inflMakefile = buildDirectory / "inflection/makefile"
     val makeInfl = s"${conf.make} -f ${inflMakefile}"
     makeInfl !

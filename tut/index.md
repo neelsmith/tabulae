@@ -6,8 +6,8 @@ title: Tabulae
 ## Summary
 
 -   [Overview](overview)
--   Current version: **1.0.0**. See [release notes](https://github.com/neelsmith/tabulae/blob/master/releases.md)
--   [API docs](api/edu/holycross/shot/tabulae/index.html) for version 1.0.0
+-   Current version: **3.4.0**. See [release notes](https://github.com/neelsmith/tabulae/blob/master/releases.md)
+-   API docs (Obscenely out of date.  On-line API for version 1.0.0 [here](api/edu/holycross/shot/tabulae/index.html).)
 
 
 
