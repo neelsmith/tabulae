@@ -47,7 +47,7 @@ class DataInstallerSpec extends FlatSpec {
       assert(f.exists)
     }
   }
-  it should "instll data correctly from multiple sources" in pending
+  it should "install data correctly from multiple sources" in pending
   it should "create subdirectories as necessary for installation" in {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
