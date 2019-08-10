@@ -12,7 +12,7 @@ class CompleteBuildSpec extends FlatSpec {
   "The FstCompiler object" should "compile a binary FST parser" in {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
-    val c = "analytical_types"
+    val c = Vector("analytical_types")
     //val c = "indecls"
     val conf = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
 
