@@ -17,7 +17,7 @@ object DataInstaller {
 
   def apply(dataSource: File, repo: File, corpusList: Vector[String]): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
-    val lexica = mkdirs(repo/"parsers"/corpusList(0)/"lexica")
+    val lexica = mkdirs(repo/"parsers" / corpusList.mkString("-") / "lexica")
 
     val indeclTarget = lexica / "lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)

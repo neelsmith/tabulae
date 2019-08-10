@@ -16,51 +16,51 @@ object RulesInstaller {
   * a subdirectory of the repository's parsers directory named
   * for the corpus.
   */
-  def apply(sourceDir: File, repo: File, corpus: String): Unit = {
+  def apply(sourceDir: File, repo: File, corpusList: Vector[String]): Unit = {
 
-    val inflDir = repo/"parsers"/corpus/"inflection"
+    val inflDir = repo / "parsers" / corpusList.mkString("-") / "inflection"
     if (! inflDir.exists) {mkdirs(inflDir)}
-    val srcCorpus = sourceDir/corpus
+    val srcCorpus = sourceDir/corpusList(0)
 
-    val nounsSrc = srcCorpus/"rules-tables/nouns"
-    val nounsFst = inflDir/"nouninfl.fst"
+    val nounsSrc = srcCorpus / "rules-tables/nouns"
+    val nounsFst = inflDir / "nouninfl.fst"
     NounRulesInstaller( nounsSrc,nounsFst )
 
-    val adjsSrc = srcCorpus/"rules-tables/adjectives"
-    val adjectivesFst = inflDir/"adjinfl.fst"
+    val adjsSrc = srcCorpus / "rules-tables/adjectives"
+    val adjectivesFst = inflDir / "adjinfl.fst"
     AdjectiveRulesInstaller( adjsSrc,adjectivesFst )
 
-    val advsSrc = srcCorpus/"rules-tables/adverbs"
-    val advsFst = inflDir/"advinfl.fst"
+    val advsSrc = srcCorpus / "rules-tables/adverbs"
+    val advsFst = inflDir / "advinfl.fst"
     AdverbRulesInstaller( advsSrc,advsFst )
 
-    val verbsSrc = srcCorpus/"rules-tables/verbs"
-    val verbsFst = inflDir/"verbinfl.fst"
+    val verbsSrc = srcCorpus / "rules-tables/verbs"
+    val verbsFst = inflDir / "verbinfl.fst"
     VerbRulesInstaller(verbsSrc, verbsFst )
 
-    val infinSrc = srcCorpus/"rules-tables/infinitives"
-    val infinFst = inflDir/"infininfl.fst"
+    val infinSrc = srcCorpus / "rules-tables/infinitives"
+    val infinFst = inflDir / "infininfl.fst"
     InfinitiveRulesInstaller( infinSrc,infinFst )
 
-    val ptcplSrc = srcCorpus/"rules-tables/participles"
-    val ptcplFst = inflDir/"ptcplinfl.fst"
+    val ptcplSrc = srcCorpus / "rules-tables/participles"
+    val ptcplFst = inflDir / "ptcplinfl.fst"
     ParticipleRulesInstaller( ptcplSrc,ptcplFst  )
 
 
-    val gndvSrc = srcCorpus/"rules-tables/gerundives"
-    val gndvFst = inflDir/"gerundiveinfl.fst"
+    val gndvSrc = srcCorpus / "rules-tables/gerundives"
+    val gndvFst = inflDir / "gerundiveinfl.fst"
     GerundiveRulesInstaller( gndvSrc,gndvFst  )
 
-    val gndSrc = srcCorpus/"rules-tables/gerunds"
-    val gndFst = inflDir/"gerundinfl.fst"
+    val gndSrc = srcCorpus / "rules-tables/gerunds"
+    val gndFst = inflDir / "gerundinfl.fst"
     GerundRulesInstaller( gndSrc,gndFst  )
 
-    val supineSrc = srcCorpus/"rules-tables/supines"
-    val supineFst = inflDir/"supineinfl.fst"
+    val supineSrc = srcCorpus / "rules-tables/supines"
+    val supineFst = inflDir / "supineinfl.fst"
     SupineRulesInstaller( supineSrc,supineFst  )
 
 
-    val inflFst = repo/"fst/inflection"
+    val inflFst = repo / "fst/inflection"
     installInvariants(inflFst, inflDir)
   }
 
@@ -78,7 +78,9 @@ object RulesInstaller {
     }
     val fsts = fstSrc.glob("*.fst").toVector
     for (fst <- fsts) {
-      cp(fst, fstTarget)
+      val targetFile = fstTarget / fst.name
+      //println("CHECK " + targetFile)
+      targetFile.overwrite(fst.lines.mkString("\n"))
     }
   }
 

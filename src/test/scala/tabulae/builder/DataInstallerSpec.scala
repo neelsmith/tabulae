@@ -14,13 +14,10 @@ class DataInstallerSpec extends FlatSpec {
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
     // Ensure target directory is empty before testing:
-    val targetDir = repo /"parsers" /  c(0) / "lexica"
+    val targetDir = repo /"parsers" /  c.mkString("-") / "lexica"
     if (targetDir.exists) {
-      println(targetDir + " exists.")
       targetDir.delete()
-      println("Removed " + targetDir)
       mkdirs(targetDir)
-      println("Made empty dir " + targetDir)
     }
 
     val  di = DataInstaller(datasource, repo, c)
@@ -46,6 +43,7 @@ class DataInstallerSpec extends FlatSpec {
     targetDir / "lexicon-nouns.fst",
     targetDir / "lexicon-verbs.fst")
     for (f <- expectedFiles) {
+      println(f.toString)
       assert(f.exists)
     }
   }

@@ -18,13 +18,13 @@ object BuildComposer {
   *
   * @param dataSrc Source for corpus-specific data subdirectories.
   * @param repo Root of tabulae repository.
-  * @param corpus Name of corpus.  Alphabet file will be copied from
+  * @param corpusList Name of corpus.  Alphabet file will be copied from
   * data source area to repo/parsers/CORPUS space.
   */
-  def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpus: String): Unit = {
-    val symbolsDir = repo/"parsers"/corpus/"symbols"
+  def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpusList: Vector[String]): Unit = {
+    val symbolsDir = repo / "parsers" / corpusList.mkString("_") / "symbols"
     mkdirs(symbolsDir)
-    (dataSrc/corpus/"orthography/alphabet.fst").copyTo(symbolsDir/"alphabet.fst")
+    (dataSrc / corpusList.mkString("_") / "orthography/alphabet.fst").copyTo(symbolsDir / "alphabet.fst")
   }
 
 
@@ -38,20 +38,20 @@ object BuildComposer {
   * where the build is assembled.
   * @param fstcompiler:  Explicit path to SFST compiler binary.
   */
-  def apply(dataSource: ScalaFile, repo: ScalaFile, corpus: String, fstcompiler: String) : Unit = {
+  def apply(dataSource: ScalaFile, repo: ScalaFile, corpusList: Vector[String], fstcompiler: String) : Unit = {
     println("Composing a lot of build things")
     println("from data source " + dataSource)
     println("and tabulae repo " + repo)
 
-    SymbolsComposer(repo, corpus)
-    installAlphabet(dataSource, repo, corpus)
+    installAlphabet(dataSource, repo, corpusList)
 
-    InflectionComposer(repo/"parsers"/corpus)
-    AcceptorComposer(repo, corpus)
+    SymbolsComposer(repo, corpusList(0))
+    InflectionComposer(repo / "parsers" / corpusList(0))
+    AcceptorComposer(repo, corpusList(0))
+    ParserComposer(repo / "parsers" / corpusList(0))
+    MakefileComposer(repo / "parsers" / corpusList(0), fstcompiler)
 
-    ParserComposer(repo/"parsers"/corpus)
-    MakefileComposer(repo/"parsers"/corpus, fstcompiler)
-
+    // TBD:
     //GeneratorComposer(repo, corpus)
   }
 

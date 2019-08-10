@@ -26,11 +26,11 @@ object FstCompiler {
     DataInstaller(dataDirectory, baseDir, corpusList)
 
     //println(s"Install rules for ${corpus} in ${dataDirectory}...")
-    RulesInstaller(dataDirectory, baseDir, corpusList(0))
+    RulesInstaller(dataDirectory, baseDir, corpusList)
 
     //println("Compose build")
     // Compose makefiles and higher-order FST for build system
-    BuildComposer(dataDirectory, baseDir, corpusList(0), conf.fstcompile)
+    BuildComposer(dataDirectory, baseDir, corpusList, conf.fstcompile)
 
     // Build it!
     val buildDirectory = baseDir / "parsers" / corpusList(0)
