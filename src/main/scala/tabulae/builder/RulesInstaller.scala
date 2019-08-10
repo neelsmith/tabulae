@@ -79,7 +79,6 @@ object RulesInstaller {
     val fsts = fstSrc.glob("*.fst").toVector
     for (fst <- fsts) {
       val targetFile = fstTarget / fst.name
-      //println("CHECK " + targetFile)
       targetFile.overwrite(fst.lines.mkString("\n"))
     }
   }

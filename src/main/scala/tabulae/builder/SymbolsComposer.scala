@@ -18,20 +18,20 @@ object SymbolsComposer {
   * @param corpus Name of corpus.  Output will be written
   * in the pasers/CORPUS build space.
   */
-  def apply(repo: ScalaFile, corpus: String) : Unit = {
-    val fstDir = repo/"parsers"/corpus/"fst"
+  def apply(repo: ScalaFile, corpusList: Vector[String]) : Unit = {
+    val fstDir = repo / "parsers" / corpusList.mkString("-") / "fst"
     if (! fstDir.exists) { mkdirs(fstDir)}
-    val corpusDir = repo/"parsers"/corpus
+    val corpusDir = repo / "parsers" / corpusList.mkString("-")
     println("Corpus dir is " + corpusDir)
     println("Exits? " + corpusDir.exists())
     composeMainFile(corpusDir)
-    val symbolDir = repo/"parsers"/corpus/"symbols"
+    val symbolDir = repo / "parsers" / corpusList.mkString("-") / "symbols"
     if (! symbolDir.exists) {mkdirs(symbolDir)}
-    val symbolSrc = repo/"fst/symbols"
+    val symbolSrc = repo / "fst/symbols"
 
-    copyFst(repo/"fst/symbols", symbolDir )
+    copyFst(repo / "fst/symbols", symbolDir )
 
-    rewritePhonologyFile(repo/"parsers"/corpus/"symbols/phonology.fst", repo/"parsers"/corpus)
+    rewritePhonologyFile(repo / "parsers" / corpusList.mkString("-") / "symbols/phonology.fst", repo / "parsers" / corpusList.mkString("-"))
   }
 
   // This only works if you've already installed the source

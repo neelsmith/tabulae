@@ -14,7 +14,7 @@ class DataInstallerSpec extends FlatSpec {
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
     // Ensure target directory is empty before testing:
-    val targetDir = repo /"parsers" /  c.mkString("-") / "lexica"
+    val targetDir = repo / "parsers" /  c.mkString("-") / "lexica"
     if (targetDir.exists) {
       targetDir.delete()
       mkdirs(targetDir)
@@ -46,5 +46,18 @@ class DataInstallerSpec extends FlatSpec {
       println(f.toString)
       assert(f.exists)
     }
+  }
+  it should "instll data correctly from multiple sources" in pending
+  it should "create subdirectories as necessary for installation" in {
+    val repo = File("src/test/resources")
+    val datasource = repo / "datasets"
+    val c = Vector("analytical_types")
+    // Ensure target directory does not exist:
+    val targetDir = repo / "parsers" /  c.mkString("-") / "lexica"
+    if (targetDir.exists) {
+      targetDir.delete()
+    }
+    val  ri = DataInstaller(datasource, repo, c)
+    assert(targetDir.exists)
   }
 }

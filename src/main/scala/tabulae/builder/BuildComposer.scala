@@ -45,7 +45,7 @@ object BuildComposer {
 
     installAlphabet(dataSource, repo, corpusList)
 
-    SymbolsComposer(repo, corpusList(0))
+    SymbolsComposer(repo, corpusList)
     InflectionComposer(repo / "parsers" / corpusList(0))
     AcceptorComposer(repo, corpusList(0))
     ParserComposer(repo / "parsers" / corpusList(0))
