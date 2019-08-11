@@ -11,7 +11,7 @@ class VerbDataInstallerSpec extends FlatSpec {
   "The VerbDataInstaller object" should "install verb data from a single source" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types")
-    //analytical_types/rules-tables/verbs
+
     val targetDir = File("src/test/resources/parsers/dummyparser/lexica")
     if (targetDir.exists) {
       File("src/test/resources/parsers").delete()
@@ -28,21 +28,49 @@ class VerbDataInstallerSpec extends FlatSpec {
     File("src/test/resources/parsers").delete()
   }
 
-  it should "composite data from multiple sources" in pending
 
 
   it should "do nothing if no verb data are present in a given corpus" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("no-lexica")
-    val targetFile = File("src/test/resources/parsers/dummyparser/lexica/lexicon-verbs.fst")
+    val targetDir = File("src/test/resources/parsers/dummyparser/lexica")
+    val targetFile = targetDir / "lexicon-verbs.fst"
+    if (targetDir.exists) {
+      File("src/test/resources/parsers").delete()
+    }
+    mkdirs(targetDir)
+
     VerbDataInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false)
   }
 
-  it should "return an empty string if no data are found in source directory" in {
+  it should "return an empty string if no data are found in the source directory" in {
     val emptyDir = File("src/test/resources/no-fst")
     val output = VerbDataInstaller.fstForVerbData(emptyDir)
     assert(output.isEmpty)
   }
+
+  it should "return an empty string if asked to create FST strings from a non-existent directory" in pending
+
+
+    it should "composite data from multiple sources" in {
+      val datasets = File("src/test/resources/datasets/")
+      val corpora = Vector("analytical_types", "shared")
+      val targetDir = File("src/test/resources/parsers/dummyparser/lexica")
+      if (targetDir.exists) {
+        File("src/test/resources/parsers").delete()
+      }
+      mkdirs(targetDir)
+      val targetFile = targetDir / "lexicon-verbs.fst"
+      //dataSource: File, corpusList: Vector[String], targetFile: File
+      VerbDataInstaller(datasets, corpora, targetFile)
+      assert(targetFile.exists)
+
+      val expectedLines = Vector("<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>", "<u>proof\\.v2</u><u>lexent\\.n2280</u><#>am<verb><conj1>")
+
+      assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
+
+      File("src/test/resources/parsers").delete()
+    }
 
 }
