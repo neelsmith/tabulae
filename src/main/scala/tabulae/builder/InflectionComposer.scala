@@ -44,7 +44,7 @@ $ending$ = """
   * e.g., REPO/parsers/CORPUS.
   */
   def apply(projectDir: File) : Unit = {
-    val inflFiles = inflectionFsts(projectDir/"inflection")
+    val inflFiles = inflectionFsts(projectDir / "inflection")
 
     val fstText = StringBuilder.newBuilder
     fstText.append(header)
@@ -52,7 +52,7 @@ $ending$ = """
     fstText.append ("\n\n$ending$\n")
     val finalText = fstText.toString
 
-    val fstFile = projectDir/"inflection.fst"
+    val fstFile = projectDir / "inflection.fst"
     fstFile.overwrite(finalText)
   }
 

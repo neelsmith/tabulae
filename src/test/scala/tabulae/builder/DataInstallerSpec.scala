@@ -21,33 +21,41 @@ class DataInstallerSpec extends FlatSpec {
     }
 
     val  di = DataInstaller(datasource, repo, c)
-    val expectedFiles =  Vector(targetDir / "lexicon-adjectives.fst",
-    targetDir / "lexicon-compoundverbs.fst",
-    targetDir / "lexicon-indeclinables.fst",
-    targetDir / "lexicon-irregadjectives.fst",
-    targetDir / "lexicon-irregadverbs.fst",
-    targetDir / "lexicon-irregcompoundgerundives.fst",
-    targetDir / "lexicon-irregcompoundgerunds.fst",
-    targetDir / "lexicon-irregcompoundinfinitives.fst",
-    targetDir / "lexicon-irregcompoundparticiples.fst",
-    targetDir / "lexicon-irregcompoundsupines.fst",
-    targetDir / "lexicon-irregcompoundverbs.fst",
-    targetDir / "lexicon-irreggerundives.fst",
-    targetDir / "lexicon-irreggerunds.fst",
-    targetDir / "lexicon-irreginfinitives.fst",
-    targetDir / "lexicon-irregnouns.fst",
-    targetDir / "lexicon-irregparticiples.fst",
-    targetDir / "lexicon-irregpronouns.fst",
-    targetDir / "lexicon-irregsupines.fst",
-    targetDir / "lexicon-irregverbs.fst",
-    targetDir / "lexicon-nouns.fst",
-    targetDir / "lexicon-verbs.fst")
+    val expectedFiles =  Vector(
+      targetDir / "lexicon-adjectives.fst",
+      targetDir / "lexicon-compoundverbs.fst",
+      targetDir / "lexicon-indeclinables.fst", /*,
+
+      targetDir / "lexicon-irregadjectives.fst",
+      targetDir / "lexicon-irregadverbs.fst",
+      targetDir / "lexicon-irregcompoundgerundives.fst",
+      targetDir / "lexicon-irregcompoundgerunds.fst",
+      targetDir / "lexicon-irregcompoundinfinitives.fst",
+      targetDir / "lexicon-irregcompoundparticiples.fst",
+      targetDir / "lexicon-irregcompoundsupines.fst",
+      targetDir / "lexicon-irregcompoundverbs.fst",
+      targetDir / "lexicon-irreggerundives.fst",
+      targetDir / "lexicon-irreggerunds.fst",
+      targetDir / "lexicon-irreginfinitives.fst",
+      targetDir / "lexicon-irregnouns.fst",
+      targetDir / "lexicon-irregparticiples.fst",
+      targetDir / "lexicon-irregpronouns.fst",
+      targetDir / "lexicon-irregsupines.fst",
+      targetDir / "lexicon-irregverbs.fst",
+      targetDir / "lexicon-nouns.fst",*/
+      targetDir / "lexicon-verbs.fst"
+    )
     for (f <- expectedFiles) {
-      println(f.toString)
+      println("Check for file " + f.toString)
       assert(f.exists)
     }
+
+
+
+    val projectDir = repo / "parsers" / c.mkString("-")
+    projectDir.delete()
   }
-  it should "install data correctly from multiple sources" in pending
+
   it should "create subdirectories as necessary for installation" in {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
@@ -57,7 +65,12 @@ class DataInstallerSpec extends FlatSpec {
     if (targetDir.exists) {
       targetDir.delete()
     }
-    val  ri = DataInstaller(datasource, repo, c)
+    val  di = DataInstaller(datasource, repo, c)
     assert(targetDir.exists)
+
+    val projectDir = repo / "parsers" / c.mkString("-")
+    projectDir.delete()
   }
+  it should "install data correctly from multiple sources" in pending
+
 }

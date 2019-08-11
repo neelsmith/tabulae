@@ -19,42 +19,65 @@ object CompoundVerbDataInstaller {
   * @param targetFile File to write FST statements to.
   */
   def apply(corpus: File, targetDir: File) = {
-    val simplexDir = corpus/"stems-tables/verbs-simplex"
+    val simplexDir = corpus / "stems-tables/verbs-simplex"
     val regularVerbMap = rulesMap(simplexDir)
 
-    val irregDir = corpus/"irregular-stems/verbs"
+    val irregDir = corpus / "irregular-stems/verbs"
     val irregVerbMap = irregMap(irregDir)
 
-    val participleMap = irregParticipleMap(corpus/"irregular-stems/participles")
-    val infinitiveMap = irregInfinitiveMap(corpus/"irregular-stems/infinitives")
-    val gerundMap = irregGerundMap(corpus/"irregular-stems/gerunds")
-    val gerundiveMap = irregGerundiveMap(corpus/"irregular-stems/gerundives")
-    val supineMap = irregSupineMap(corpus/"irregular-stems/supines")
+    val participleMap = irregParticipleMap(corpus / "irregular-stems/participles")
+    val infinitiveMap = irregInfinitiveMap(corpus / "irregular-stems/infinitives")
+    val gerundMap = irregGerundMap(corpus / "irregular-stems/gerunds")
+    val gerundiveMap = irregGerundiveMap(corpus / "irregular-stems/gerundives")
+    val supineMap = irregSupineMap(corpus / "irregular-stems/supines")
 
 
     val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ participleMap.keySet ++ infinitiveMap.keySet ++ gerundMap.keySet ++ gerundiveMap.keySet ++ supineMap.keySet
 
-    val compoundDir= corpus/"stems-tables/verbs-compound"
+    val compoundDir= corpus / "stems-tables/verbs-compound"
     val compoundEntries= compoundInfo(compoundDir)
     require(reffOK(compoundEntries, allVerbKeys))
 
-    installRegularCompounds(compoundEntries,                targetDir/"lexicon-compoundverbs.fst",
-      regularVerbMap)
+    installRegularCompounds(
+      compoundEntries,
+      targetDir / "lexicon-compoundverbs.fst",
+      regularVerbMap
+    )
 
     installIrregularCompounds(compoundEntries,
-          targetDir/"lexicon-irregcompoundverbs.fst",
+          targetDir / "lexicon-irregcompoundverbs.fst",
           irregVerbMap)
 
 
-    installIrregularParticiples(compoundEntries,      targetDir/"lexicon-irregcompoundparticiples.fst",      participleMap)
+    installIrregularParticiples(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundparticiples.fst",
+      participleMap
+    )
 
-    installIrregularInfinitives(compoundEntries,      targetDir/"lexicon-irregcompoundinfinitives.fst",      infinitiveMap)
+    installIrregularInfinitives(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundinfinitives.fst",
+      infinitiveMap
+    )
 
-    installIrregularGerundives(compoundEntries,      targetDir/"lexicon-irregcompoundgerundives.fst",      gerundiveMap)
+    installIrregularGerundives(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundgerundives.fst",
+      gerundiveMap
+    )
 
-    installIrregularGerunds(compoundEntries,      targetDir/"lexicon-irregcompoundgerunds.fst",  gerundMap)
+    installIrregularGerunds(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundgerunds.fst",
+      gerundMap
+    )
 
-    installIrregularSupines(compoundEntries,      targetDir/"lexicon-irregcompoundsupines.fst",  supineMap)
+    installIrregularSupines(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundsupines.fst",
+      supineMap
+    )
 
   }
 
@@ -490,7 +513,7 @@ object CompoundVerbDataInstaller {
     val verbFiles = dir.glob("*.cex").toVector
     val fstLines = for (f <- verbFiles) yield {
       // omit empty lines and header
-      f.lines.toVector.filter(_.nonEmpty).drop(1)
+      f.lines.toVector.tail.filter(_.nonEmpty)
     }
     fstLines.flatten
   }

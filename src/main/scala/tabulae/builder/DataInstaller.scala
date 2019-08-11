@@ -17,22 +17,26 @@ object DataInstaller {
 
   def apply(dataSource: File, repo: File, corpusList: Vector[String]): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
-    val lexica = mkdirs(repo/"parsers" / corpusList.mkString("-") / "lexica")
+    val lexica = mkdirs(repo / "parsers" / corpusList.mkString("-") / "lexica")
 
     val indeclTarget = lexica / "lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)
 
+    val adjsTarget = lexica / "lexicon-adjectives.fst"
+    AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
+
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSource / corpusList(0) / "stems-tables/verbs-simplex", verbsTarget)
+
+    val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
+    CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)
+
 
     val nounsTarget = lexica / "lexicon-nouns.fst"
     NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
 
-    val adjsTarget = lexica / "lexicon-adjectives.fst"
-    AdjectiveDataInstaller(dataSource / corpusList(0) /"stems-tables/adjectives", adjsTarget)
 
-    val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
-    CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)
+
 
     val irregVerbsTarget = lexica / "lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSource / corpusList(0) / "irregular-stems/verbs", irregVerbsTarget)
@@ -43,27 +47,27 @@ object DataInstaller {
     val irregAdjectivesTarget = lexica / "lexicon-irregadjectives.fst"
     IrregAdjectiveDataInstaller(dataSource / corpusList(0) / "irregular-stems/adjectives", irregAdjectivesTarget)
 
-    val irregAdverbsTarget = lexica/"lexicon-irregadverbs.fst"
-    IrregAdverbDataInstaller(dataSource/corpusList(0)/"irregular-stems/adverbs", irregAdverbsTarget)
+    val irregAdverbsTarget = lexica / "lexicon-irregadverbs.fst"
+    IrregAdverbDataInstaller(dataSource/corpusList(0) / "irregular-stems/adverbs", irregAdverbsTarget)
 
-    val irregPronounsTarget = lexica/"lexicon-irregpronouns.fst"
-    IrregPronounDataInstaller(dataSource/corpusList(0)/"irregular-stems/pronouns", irregPronounsTarget)
+    val irregPronounsTarget = lexica / "lexicon-irregpronouns.fst"
+    IrregPronounDataInstaller(dataSource/corpusList(0) / "irregular-stems/pronouns", irregPronounsTarget)
 
 
-    val irregInfinsTarget = lexica/"lexicon-irreginfinitives.fst"
-    IrregInfinitiveDataInstaller(dataSource/corpusList(0)/"irregular-stems/infinitives", irregInfinsTarget)
+    val irregInfinsTarget = lexica / "lexicon-irreginfinitives.fst"
+    IrregInfinitiveDataInstaller(dataSource/corpusList(0) / "irregular-stems/infinitives", irregInfinsTarget)
 
-    val irregPtcplsTarget = lexica/"lexicon-irregparticiples.fst"
-    IrregParticipleDataInstaller(dataSource/corpusList(0)/"irregular-stems/participles", irregPtcplsTarget)
+    val irregPtcplsTarget = lexica / "lexicon-irregparticiples.fst"
+    IrregParticipleDataInstaller(dataSource/corpusList(0) / "irregular-stems/participles", irregPtcplsTarget)
 
-    val irregGerundsTarget = lexica/"lexicon-irreggerunds.fst"
-    IrregGerundDataInstaller(dataSource/corpusList(0)/"irregular-stems/gerunds", irregGerundsTarget)
+    val irregGerundsTarget = lexica / "lexicon-irreggerunds.fst"
+    IrregGerundDataInstaller(dataSource/corpusList(0) / "irregular-stems/gerunds", irregGerundsTarget)
 
-    val irregGerundivesTarget = lexica/"lexicon-irreggerundives.fst"
-    IrregGerundiveDataInstaller(dataSource/corpusList(0)/"irregular-stems/gerundives", irregGerundivesTarget)
+    val irregGerundivesTarget = lexica / "lexicon-irreggerundives.fst"
+    IrregGerundiveDataInstaller(dataSource/corpusList(0) / "irregular-stems/gerundives", irregGerundivesTarget)
 
-    val irregSupinesTarget = lexica/"lexicon-irregsupines.fst"
-    IrregSupineDataInstaller(dataSource/corpusList(0)/"irregular-stems/supines", irregSupinesTarget)
+    val irregSupinesTarget = lexica / "lexicon-irregsupines.fst"
+    IrregSupineDataInstaller(dataSource/corpusList(0) / "irregular-stems/supines", irregSupinesTarget)
 
   }
 

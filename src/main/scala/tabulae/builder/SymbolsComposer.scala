@@ -15,7 +15,7 @@ object SymbolsComposer {
   *
   * @param repo Root of tabulae repository.  Source data
   * will be drawn from repo/fst/symbols.
-  * @param corpus Name of corpus.  Output will be written
+  * @param corpusList Name of corpus.  Output will be written
   * in the pasers/CORPUS build space.
   */
   def apply(repo: ScalaFile, corpusList: Vector[String]) : Unit = {

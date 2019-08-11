@@ -36,6 +36,9 @@ class RulesInstallerSpec extends FlatSpec {
     for (f <- expectedFiles) {
       assert(f.exists)
     }
+
+    val projectDir = repo / "parsers" / c.mkString("-")
+    projectDir.delete()
   }
 
   it should "install correctly from more than one source" in pending
@@ -51,5 +54,9 @@ class RulesInstallerSpec extends FlatSpec {
     }
     val  ri = RulesInstaller(datasource, repo, c)
     assert(targetDir.exists)
+
+
+    val projectDir = repo / "parsers" / c.mkString("-")
+    projectDir.delete()
   }
 }

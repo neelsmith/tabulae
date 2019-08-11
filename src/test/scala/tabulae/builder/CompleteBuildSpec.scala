@@ -17,7 +17,9 @@ class CompleteBuildSpec extends FlatSpec {
     val conf = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
 
 
-    val target = File("src/test/resources/parsers/analytical_types/latin.a")
+
+    val projectDir = repo / "parsers/analytical_types"
+    val target = projectDir / "latin.a"
     if (target.exists()) {
       println("Removing previous binary...")
       rm(target)
@@ -25,5 +27,7 @@ class CompleteBuildSpec extends FlatSpec {
     }
     FstCompiler.compile(datasource, repo, c, conf, true)
     assert(target.exists)
+
+    projectDir.delete()
   }
 }

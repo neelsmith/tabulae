@@ -32,7 +32,7 @@ object BuildComposer {
   *
   * @param dataSource Root directory for corpus-specific datasets.
   * @param repo Root directory of tabulae repository.  Build space will
-  * be created in repo/parsers/CORPUS.
+  * be created in repo/parsers/CORPUSLIST.
   * @param corpus Name of corpus. This is the name of an extant subdirectory
   * of dataSource, and will the name of the subdirectory in repo/parsers
   * where the build is assembled.
