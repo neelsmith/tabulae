@@ -16,22 +16,37 @@ object SymbolsComposer {
   * @param repo Root of tabulae repository.  Source data
   * will be drawn from repo/fst/symbols.
   * @param corpusList Name of corpus.  Output will be written
-  * in the pasers/CORPUS build space.
+  * in the parsers/CORPUS build space.
   */
-  def apply(repo: ScalaFile, corpusList: Vector[String]) : Unit = {
-    val fstDir = repo / "parsers" / corpusList.mkString("-") / "fst"
-    if (! fstDir.exists) { mkdirs(fstDir)}
-    val corpusDir = repo / "parsers" / corpusList.mkString("-")
+  // apply(repo: ScalaFile, corpusList: Vector[String]) : Unit = {
+  def apply(corpusDir: ScalaFile, fstSource:  ScalaFile) : Unit = {
+    // we need:
+    // corpus directory
+    // symbols source directory
+    // that's all?
+
+    //val fstDir = repo / "parsers" / corpusList.mkString("-") / "fst"
+    if (! fstSource.exists) { mkdirs(fstSource)}
+    assert(fstSource.exists,"SymbolsComposer: failed to make directory " + fstSource)
+
     println("Corpus dir is " + corpusDir)
-    println("Exits? " + corpusDir.exists())
-    composeMainFile(corpusDir)
-    val symbolDir = repo / "parsers" / corpusList.mkString("-") / "symbols"
+    if (! corpusDir.exists) { mkdirs(corpusDir)}
+    assert(corpusDir.exists,"SymbolsComposer: failed to make directory " + corpusDir)
+
+    val symbolDir = corpusDir / "symbols"
     if (! symbolDir.exists) {mkdirs(symbolDir)}
-    val symbolSrc = repo / "fst/symbols"
+    assert(symbolDir.exists,"SymbolsComposer: failed to make directory " + symbolDir)
+    println("Symbol dir: " + symbolDir)
 
-    copyFst(repo / "fst/symbols", symbolDir )
 
-    rewritePhonologyFile(repo / "parsers" / corpusList.mkString("-") / "symbols/phonology.fst", repo / "parsers" / corpusList.mkString("-"))
+
+    composeMainFile(corpusDir)
+    println("WROTE MAIN SYMBOLS FILE: " + (corpusDir / "symbols.fst").exists)
+
+
+    copyFst(fstSource, symbolDir )
+
+    //rewritePhonologyFile(repo / "parsers" / corpusList.mkString("-") / "symbols/phonology.fst", repo / "parsers" / corpusList.mkString("-"))
   }
 
   // This only works if you've already installed the source
@@ -51,10 +66,15 @@ object SymbolsComposer {
   * will be parsers/CORPUS/symbols.
   */
   def copyFst(src: ScalaFile, dest: ScalaFile) : Unit = {
+    println("COPY FROM " + src + " to " + dest)
     if (! dest.exists()) {mkdirs(dest)}
+    assert(dest.exists, "SymbolsComposer: failed to make directory " + dest)
      val fstFiles = src.glob("*.fst").toVector
      for (f <- fstFiles) {
-       f.copyToDirectory(dest)
+      val targetFile = dest / f.name
+      println("TARGET: " + targetFile)
+
+      targetFile.overwrite(f.lines.mkString("\n"))
      }
   }
 
@@ -65,6 +85,7 @@ object SymbolsComposer {
   */
   def composeMainFile(projectDir: ScalaFile): Unit = {
     if (! projectDir.exists()) { mkdirs(projectDir)}
+    println("WRITE symbols.fst IN " + projectDir)
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 
@@ -78,8 +99,8 @@ object SymbolsComposer {
     fst.append("% 3. Editorial symbols\n")
     fst.append("#include \"" + projectDir.toString + "/symbols/markup.fst\"\n\n")
 
-    val symbolsFile = (projectDir/"symbols.fst").createIfNotExists()
-
+    val symbolsFile = (projectDir / "symbols.fst").createIfNotExists()
+    assert(symbolsFile.exists,"SymbolsComposer: unable to create " + symbolsFile)
     symbolsFile.overwrite(fst.toString)
   }
 
