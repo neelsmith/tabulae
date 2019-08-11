@@ -30,10 +30,12 @@ class SymbolsComposerSpec extends FlatSpec {
       assert(f.exists, "SymbolsComposer did not create expected file " + f)
     }
     // tidy up
-    //parsersDir.delete()
-    //assert(parsersDir.exists == false)
+    parsers.delete()
+    assert(parsers.exists == false)
   }
 
+
+  it should "rewrite @workdir@ variable with full path to working directory" in pending
 
 
 }
