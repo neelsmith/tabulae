@@ -20,8 +20,6 @@ class CompoundVerbsDataInstallerSpec extends FlatSpec {
       mkdirs(targetDir)
     }
 
-
-
     val projectDir = repo / "parsers" / c.mkString("-")
     projectDir.delete()
   }

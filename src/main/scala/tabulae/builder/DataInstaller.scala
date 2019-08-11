@@ -22,7 +22,7 @@ object DataInstaller {
     if (! lexica.exists) {
       mkdirs(lexica)
     }
-        
+      
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSource, corpusList, verbsTarget)
 
