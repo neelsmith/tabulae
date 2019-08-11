@@ -30,7 +30,16 @@ class VerbDataInstallerSpec extends FlatSpec {
 
   it should "do nothing if no verb data are present in a given corpus" in {
     val datasets = File("src/test/resources/datasets/")
-      val corpora = Vector("no-lexica")
+    val corpora = Vector("no-lexica")
+    val targetFile = File("src/test/resources/parsers/dummyparser/lexica/lexicon-verbs.fst")
+    VerbDataInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists == false)
+  }
+
+  it should "return an empty string if no data are found in source directory" in {
+    val emptyDir = File("src/test/resources/no-fst")
+    val output = VerbDataInstaller.fstForVerbData(emptyDir)
+    assert(output.isEmpty)
 
   }
 
