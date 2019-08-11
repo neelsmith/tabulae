@@ -36,13 +36,17 @@ object VerbDataInstaller {
   * @param dir Directory with tables of verb data.
   */
   def fstForVerbData(dir: File) : String = {
-    val verbFiles = dir.glob("*.cex").toVector
-    val fstLines = for (f <- verbFiles) yield {
-      // omit empty lines and header
-      val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1) //Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
-      VerbDataInstaller.verbLinesToFst(dataLines)
+    if (! dir.exists) {
+      ""
+    } else {
+      val verbFiles = dir.glob("*.cex").toVector
+      val fstLines = for (f <- verbFiles) yield {
+        // omit empty lines and header
+        val dataLines = f.lines.toVector.filter(_.nonEmpty).drop(1) //Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1)
+        VerbDataInstaller.verbLinesToFst(dataLines)
+      }
+      fstLines.mkString("\n")
     }
-    fstLines.mkString("\n")
   }
 // model of src cex
 // smyth.n23658_2#lexent.n23658#deic#w_pp3#

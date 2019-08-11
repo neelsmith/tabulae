@@ -22,27 +22,21 @@ object DataInstaller {
     if (! lexica.exists) {
       mkdirs(lexica)
     }
-    
+
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSource, corpusList, verbsTarget)
 
-
-
-
-    val indeclTarget = lexica / "lexicon-indeclinables.fst"
-    IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)
+    val nounsTarget = lexica / "lexicon-nouns.fst"
+    NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
 
     val adjsTarget = lexica / "lexicon-adjectives.fst"
     AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
 
-
+    val indeclTarget = lexica / "lexicon-indeclinables.fst"
+    IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)
 
     val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
     CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)
-
-
-    val nounsTarget = lexica / "lexicon-nouns.fst"
-    NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
 
 
 
