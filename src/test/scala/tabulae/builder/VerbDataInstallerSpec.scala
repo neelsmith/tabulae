@@ -8,7 +8,7 @@ import better.files.Dsl._
 
 class VerbDataInstallerSpec extends FlatSpec {
 
-  "The VerbDataInstaller object" should "install verb data" in {
+  "The VerbDataInstaller object" should "install verb data from a single source" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types")
     //analytical_types/rules-tables/verbs
@@ -28,6 +28,9 @@ class VerbDataInstallerSpec extends FlatSpec {
     File("src/test/resources/parsers").delete()
   }
 
+  it should "composite data from multiple sources" in pending
+
+
   it should "do nothing if no verb data are present in a given corpus" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("no-lexica")
@@ -40,7 +43,6 @@ class VerbDataInstallerSpec extends FlatSpec {
     val emptyDir = File("src/test/resources/no-fst")
     val output = VerbDataInstaller.fstForVerbData(emptyDir)
     assert(output.isEmpty)
-
   }
 
 }
