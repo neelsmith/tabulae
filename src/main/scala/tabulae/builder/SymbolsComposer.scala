@@ -40,7 +40,7 @@ object SymbolsComposer {
 
     copyFst(fstSource, symbolDir )
 
-    //rewritePhonologyFile(repo / "parsers" / corpusList.mkString("-") / "symbols/phonology.fst", repo / "parsers" / corpusList.mkString("-"))
+    rewritePhonologyFile(symbolDir / "phonology.fst", corpusDir)
   }
 
   // This only works if you've already installed the source
