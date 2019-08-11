@@ -430,8 +430,9 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     val online = xducerList.filter(_.nonEmpty)
     if (online.isEmpty) {
       throw new Exception("AcceptorComposer:  no acceptors recognized.")
+      
     } else {
-      fst.append(xducerList.filter(_.nonEmpty).mkString(" | "))
+      fst.append(online.mkString(" | "))
       fst.append("\n")
       fst.toString
     }
