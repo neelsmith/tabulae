@@ -15,9 +15,19 @@ import better.files.Dsl._
 */
 object DataInstaller {
 
+
   def apply(dataSource: File, repo: File, corpusList: Vector[String]): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
     val lexica = mkdirs(repo / "parsers" / corpusList.mkString("-") / "lexica")
+    if (! lexica.exists) {
+      mkdirs(lexica)
+    }
+    
+    val verbsTarget = lexica / "lexicon-verbs.fst"
+    VerbDataInstaller(dataSource, corpusList, verbsTarget)
+
+
+
 
     val indeclTarget = lexica / "lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)
@@ -25,8 +35,7 @@ object DataInstaller {
     val adjsTarget = lexica / "lexicon-adjectives.fst"
     AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
 
-    val verbsTarget = lexica / "lexicon-verbs.fst"
-    VerbDataInstaller(dataSource / corpusList(0) / "stems-tables/verbs-simplex", verbsTarget)
+
 
     val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
     CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)

@@ -6,6 +6,8 @@ import better.files.Dsl._
 
 /** Factory object for composing and writing to a file the top-level
 * acceptor transducer, acceptor.fst, in the root of the project FST build.
+* It checks for every possible lexicon file, and includes acceptors for
+* those kinds that are present in this given build.
 *
 * The acceptor transducer is the final stage in the morphological pipeline.
 * See documentation on the tabulae github repository for details.
@@ -36,35 +38,33 @@ object AcceptorComposer {
     // automatically included
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
 
-    // MANAGE THESE IN A FOR COMPREHENSION
-    fst.append(indeclAcceptor(projectDir) + "\n")
+    // All the individual acceptor transducers:
+    val acceptors : Vector[String] = Vector(
+      verbAcceptor(projectDir),
+      indeclAcceptor(projectDir),
+      infinitiveAcceptor(projectDir),
+      participleAcceptor(projectDir),
+      gerundiveAcceptor(projectDir),
+      gerundAcceptor(projectDir),
+      supineAcceptor(projectDir),
 
-    fst.append(verbAcceptor(projectDir) + "\n")
-    fst.append(infinitiveAcceptor(projectDir) + "\n")
-    fst.append(participleAcceptor(projectDir) + "\n")
-    fst.append(gerundiveAcceptor(projectDir) + "\n")
-    fst.append(gerundAcceptor(projectDir) + "\n")
-    fst.append(supineAcceptor(projectDir) + "\n")
+      nounAcceptor(projectDir),
+      adjectiveAcceptor(projectDir),
+      adverbAcceptor(projectDir),
 
-    fst.append(nounAcceptor(projectDir) + "\n")
-    fst.append(adjectiveAcceptor(projectDir) + "\n")
-    fst.append(adverbAcceptor(projectDir) + "\n")
+      irregVerbAcceptor(projectDir),
+      irregInfinitiveAcceptor(projectDir),
+      irregParticipleAcceptor(projectDir),
+      irregGerundAcceptor(projectDir),
+      irregGerundiveAcceptor(projectDir),
+      irregSupineAcceptor(projectDir),
 
-
-    fst.append(irregVerbAcceptor(projectDir) + "\n")
-    fst.append(irregInfinitiveAcceptor(projectDir) + "\n")
-    fst.append(irregParticipleAcceptor(projectDir) + "\n")
-    fst.append(irregGerundAcceptor(projectDir) + "\n")
-    fst.append(irregGerundiveAcceptor(projectDir) + "\n")
-    fst.append(irregSupineAcceptor(projectDir) + "\n")
-
-
-    fst.append(irregNounAcceptor(projectDir) + "\n")
-    fst.append(irregAdverbAcceptor(projectDir) + "\n")
-    fst.append(irregPronounAcceptor(projectDir) + "\n")
-    fst.append(irregAdjectiveAcceptor(projectDir) + "\n")
-
-
+      irregNounAcceptor(projectDir),
+      irregAdverbAcceptor(projectDir),
+      irregPronounAcceptor(projectDir),
+      irregAdjectiveAcceptor(projectDir)
+    )
+    for (acceptor <- acceptors) { fst.append(acceptor + "\n") }
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
     val acceptorFile = projectDir / "acceptor.fst"
@@ -253,7 +253,7 @@ $squashirreginfinnurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#
     val verbsSource = lexica / "lexicon-verbs.fst"
     verbsSource.exists && verbsSource.lines.nonEmpty
   }
-  
+
   /** String defining verb acceptor. */
   def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {

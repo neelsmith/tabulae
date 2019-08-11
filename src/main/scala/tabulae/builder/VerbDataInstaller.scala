@@ -13,10 +13,20 @@ object VerbDataInstaller {
   * @param srcDir Directory with inflectional rules.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File) = {
-    val verbFst = fstForVerbData(srcDir)
-    if (verbFst.nonEmpty) {
-      targetFile.overwrite(verbFst)
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
+    //val verbFst = fstForVerbData(srcDir)
+
+    val srcData = for (corpus <- corpusList) yield {
+      val verbsDir = dataSource / corpus / "stems-tables/verbs-simplex"
+      if (! verbsDir.exists) {
+        mkdirs(verbsDir)
+      }
+      fstForVerbData(verbsDir)
+    }
+    val fst = srcData.mkString("\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite(fst)
     } else {}
 
   }

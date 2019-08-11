@@ -32,7 +32,7 @@ class SymbolsComposerSpec extends FlatSpec {
       assert(f.exists)
     }
     // tidy up
-    //(repo / "parsers").delete()
+    (repo / "parsers").delete()
   }
 
 
