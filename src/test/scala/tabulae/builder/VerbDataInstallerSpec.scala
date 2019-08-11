@@ -6,7 +6,11 @@ import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
 
+
+// java.nio.file.DirectoryNotEmptyException: /Users/nsmith/Desktop/tabulae/src/test/resources/parsers
+
 class VerbDataInstallerSpec extends FlatSpec {
+
 
   "The VerbDataInstaller object" should "install verb data from a single source" in {
     val datasets = File("src/test/resources/datasets/")
@@ -17,15 +21,27 @@ class VerbDataInstallerSpec extends FlatSpec {
       File("src/test/resources/parsers").delete()
     }
     mkdirs(targetDir)
+    assert(targetDir.exists,"VerbDataInstaller:  could not create " + targetDir)
+
     val targetFile = targetDir / "lexicon-verbs.fst"
+
+
+
     //dataSource: File, corpusList: Vector[String], targetFile: File
     VerbDataInstaller(datasets, corpora, targetFile)
-    assert(targetFile.exists)
+    assert(targetFile.exists,"VerbDataInstaller:  did not create " + targetFile)
 
     val expected = "<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>"
     assert(targetFile.lines.toVector(0) == expected)
 
-    File("src/test/resources/parsers").delete()
+    try {
+      File("src/test/resources/parsers").delete()
+    } catch {
+      case t: Throwable => {
+        println("Failed to delete parsers dir. " + t)
+      }
+    }
+
   }
 
 
@@ -73,8 +89,15 @@ class VerbDataInstallerSpec extends FlatSpec {
     val expectedLines = Vector("<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>", "<u>proof\\.v2</u><u>lexent\\.n2280</u><#>am<verb><conj1>")
 
     assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
+    /*
+    try {
+      File("src/test/resources/parsers").delete()
+    } catch {
+      case t: Throwable => {
+        println("Failed to delete parsers dir. " + t)
+      }
+    }*/
 
-    File("src/test/resources/parsers").delete()
   }
 
 }

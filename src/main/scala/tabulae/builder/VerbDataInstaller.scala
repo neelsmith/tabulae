@@ -10,7 +10,8 @@ object VerbDataInstaller {
   /** Write FST rules for all verb stem data in a directory
   * of tabular files.
   *
-  * @param srcDir Directory with inflectional rules.
+  * @param dataSource Root directory for corpus-specific data sources.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
   def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
@@ -21,10 +22,10 @@ object VerbDataInstaller {
       if (! verbsDir.exists) {
         mkdirs(verbsDir)
       }
-      fstForVerbData(verbsDir)
+      val data = fstForVerbData(verbsDir)
+      data
     }
     val fst = srcData.mkString("\n")
-
     if (fst.nonEmpty) {
       targetFile.overwrite(fst)
     } else {}

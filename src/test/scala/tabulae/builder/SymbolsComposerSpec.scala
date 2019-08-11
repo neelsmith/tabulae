@@ -27,7 +27,6 @@ class SymbolsComposerSpec extends FlatSpec {
       symbolsDir / "stemtypes.fst"
     )
     for (f <- expectedFiles) {
-      println("SymbolsComposerSpec: check file " + f)
       assert(f.exists, "SymbolsComposer did not create expected file " + f)
     }
     // tidy up

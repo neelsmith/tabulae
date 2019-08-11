@@ -29,20 +29,14 @@ object SymbolsComposer {
     if (! fstSource.exists) { mkdirs(fstSource)}
     assert(fstSource.exists,"SymbolsComposer: failed to make directory " + fstSource)
 
-    println("Corpus dir is " + corpusDir)
     if (! corpusDir.exists) { mkdirs(corpusDir)}
     assert(corpusDir.exists,"SymbolsComposer: failed to make directory " + corpusDir)
 
     val symbolDir = corpusDir / "symbols"
     if (! symbolDir.exists) {mkdirs(symbolDir)}
     assert(symbolDir.exists,"SymbolsComposer: failed to make directory " + symbolDir)
-    println("Symbol dir: " + symbolDir)
-
-
 
     composeMainFile(corpusDir)
-    println("WROTE MAIN SYMBOLS FILE: " + (corpusDir / "symbols.fst").exists)
-
 
     copyFst(fstSource, symbolDir )
 
@@ -66,14 +60,11 @@ object SymbolsComposer {
   * will be parsers/CORPUS/symbols.
   */
   def copyFst(src: ScalaFile, dest: ScalaFile) : Unit = {
-    println("COPY FROM " + src + " to " + dest)
     if (! dest.exists()) {mkdirs(dest)}
     assert(dest.exists, "SymbolsComposer: failed to make directory " + dest)
      val fstFiles = src.glob("*.fst").toVector
      for (f <- fstFiles) {
       val targetFile = dest / f.name
-      println("TARGET: " + targetFile)
-
       targetFile.overwrite(f.lines.mkString("\n"))
      }
   }
@@ -85,7 +76,6 @@ object SymbolsComposer {
   */
   def composeMainFile(projectDir: ScalaFile): Unit = {
     if (! projectDir.exists()) { mkdirs(projectDir)}
-    println("WRITE symbols.fst IN " + projectDir)
     val fst = StringBuilder.newBuilder
     fst.append("% symbols.fst\n% A single include file for all symbols used in this FST.\n\n")
 

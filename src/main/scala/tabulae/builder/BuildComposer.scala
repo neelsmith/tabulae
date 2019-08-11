@@ -66,16 +66,14 @@ object BuildComposer {
 
     AcceptorComposer(repo, corpusList)
 
-
-    // This is all messed up.
     val corpusDir = repo / "parsers" / corpusList.mkString("-")
     val fstSrc = repo / "fst"
     SymbolsComposer(corpusDir, fstSrc)
 
     //corpusDir: ScalaFile, fstSource:  ScalaFile
-    InflectionComposer(repo / "parsers" / corpusList(0))
-    ParserComposer(repo / "parsers" / corpusList(0))
-    MakefileComposer(repo / "parsers" / corpusList(0), fstcompiler)
+    InflectionComposer(corpusDir)
+    ParserComposer(corpusDir)
+    MakefileComposer(corpusDir, fstcompiler)
 
     // TBD:
     //GeneratorComposer(repo, corpus)
