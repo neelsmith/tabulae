@@ -22,10 +22,12 @@ object DataInstaller {
     if (! lexica.exists) {
       mkdirs(lexica)
     }
-
+        
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSource, corpusList, verbsTarget)
 
+
+/*
     val nounsTarget = lexica / "lexicon-nouns.fst"
     NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
 
@@ -71,6 +73,7 @@ object DataInstaller {
 
     val irregSupinesTarget = lexica / "lexicon-irregsupines.fst"
     IrregSupineDataInstaller(dataSource/corpusList(0) / "irregular-stems/supines", irregSupinesTarget)
+*/
 
   }
 
