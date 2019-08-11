@@ -9,6 +9,9 @@
 
 Status:  **active development**. [Release notes](releases.md)
 
+Release **4.0.0** will introduce a major change:  it will permit integrating multiple data sources to compile a single parser.  This should greatly facilitate the development of parsers for related corpora with shared content (whether shared lexicon or shared inflectional rules).
+
+This will not necessitate any modifications to data sets already developed: from an end-user's point of view, nothing changes, and scripts working with parsed output will be unaffected.  Underlying code APIs concerned with building and compiling a parser, however, will undergo breaking change.  
 
 ## Information and documentation
 
