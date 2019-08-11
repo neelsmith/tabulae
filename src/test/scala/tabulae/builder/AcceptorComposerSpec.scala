@@ -9,6 +9,7 @@ import better.files.Dsl._
 class AcceptorComposerSpec extends FlatSpec {
 
   val parserRoot = File("src/test/resources/sample-parser")
+  val noFst = File("src/test/resources/no-fst")
 
   "The AcceptorComposer object" should "write the central acceptor.fst file" in pending
 
@@ -16,7 +17,9 @@ class AcceptorComposerSpec extends FlatSpec {
     assert(AcceptorComposer.includeVerbs(parserRoot))
   }
 
-  it should "recognize when verbs should not be include" in pending
+  it should "recognize when verbs should not be included" in {
+    assert(AcceptorComposer.includeVerbs(noFst) == false)
+  }
   it should "compose acceptor's FST statements for verbs" in {
     val verbAcceptorFst = AcceptorComposer.verbAcceptor(parserRoot)
 
