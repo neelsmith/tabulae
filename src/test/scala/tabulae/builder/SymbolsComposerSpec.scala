@@ -6,33 +6,33 @@ import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
 
+
 class SymbolsComposerSpec extends FlatSpec {
 
+  "The SymbolsComposer object" should "write fst files in the symbols subdirectory of the parser directory" in {
+    val repo = File(s"src/test/resources/datasets")
+    val fst = repo / "fst/symbols"
+    val parsers = repo / "parsers"
+    val corpusDir = parsers / "analytical_types"
 
-  "The SymbolsComposer object" should "write fst files in the symbols directory of the parser source" in {
-    val repo = File("src/test/resources")
-    val corpusList = Vector("analytical_types")
 
+    val  sc = SymbolsComposer(corpusDir, fst)
 
-    val projectDir = repo / "parsers" / corpusList.mkString("-")
-    val targetDir = projectDir / "symbols"
-    if (targetDir.exists) {
-      targetDir.delete()
-    }
-
-    val  sc = SymbolsComposer(repo, corpusList)
-
+    val symbolsDir = corpusDir / "symbols"
     val expectedFiles = Vector(
-      targetDir / "markup.fst",
-      targetDir / "morphsymbols.fst",
-      targetDir / "phonology.fst",
-      targetDir / "stemtypes.fst"
+      corpusDir / "symbols.fst",
+      symbolsDir / "markup.fst",
+      symbolsDir / "morphsymbols.fst",
+      symbolsDir / "phonology.fst",
+      symbolsDir / "stemtypes.fst"
     )
     for (f <- expectedFiles) {
-      assert(f.exists)
+      println("SymbolsComposerSpec: check file " + f)
+      assert(f.exists, "SymbolsComposer did not create expected file " + f)
     }
     // tidy up
-    (repo / "parsers").delete()
+    //parsersDir.delete()
+    //assert(parsersDir.exists == false)
   }
 
 
