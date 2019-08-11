@@ -13,7 +13,6 @@ class CompleteBuildSpec extends FlatSpec {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
-    //val c = "indecls"
     val conf = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
 
 

@@ -24,7 +24,24 @@ object BuildComposer {
   def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpusList: Vector[String]): Unit = {
     val symbolsDir = repo / "parsers" / corpusList.mkString("_") / "symbols"
     mkdirs(symbolsDir)
-    (dataSrc / corpusList.mkString("_") / "orthography/alphabet.fst").copyTo(symbolsDir / "alphabet.fst")
+    // Draw alphabet.fst from first example found:
+    val alphabetFiles = for (c <- corpusList) yield {
+      val candidate = dataSrc / c / "orthography/alphabet.fst"
+      if (candidate.exists) {
+        Some(candidate)
+      } else {
+        None
+      }
+    }
+    val extant = alphabetFiles.flatten
+    if (extant.isEmpty) {
+      throw new Exception("No alphabet.fst file found in orthography subdirectory of: " + corpusList.mkString(", "))
+    } else {
+      // Use first one.  Hey, if you want to use multiple alphabet files,
+      // it's on you:
+      val srcAlphabet = extant(0).lines.mkString("\n")
+      (symbolsDir / "alphabet.fst").overwrite(srcAlphabet)
+    }
   }
 
 
@@ -43,11 +60,12 @@ object BuildComposer {
     println("from data source " + dataSource)
     println("and tabulae repo " + repo)
 
+    //
     installAlphabet(dataSource, repo, corpusList)
 
     SymbolsComposer(repo, corpusList)
     InflectionComposer(repo / "parsers" / corpusList(0))
-    AcceptorComposer(repo, corpusList(0))
+    AcceptorComposer(repo, corpusList)
     ParserComposer(repo / "parsers" / corpusList(0))
     MakefileComposer(repo / "parsers" / corpusList(0), fstcompiler)
 

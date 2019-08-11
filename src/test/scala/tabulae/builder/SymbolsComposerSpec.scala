@@ -13,15 +13,28 @@ class SymbolsComposerSpec extends FlatSpec {
     val repo = File("src/test/resources")
     val corpusList = Vector("analytical_types")
 
-    val targetDir = repo / "parsers" /  corpusList.mkString("-") / "symbols"
+
+    val projectDir = repo / "parsers" / corpusList.mkString("-")
+    val targetDir = projectDir / "symbols"
     if (targetDir.exists) {
       targetDir.delete()
     }
-    val  sc = SymbolsComposer(repo, corpusList)
-    assert(targetDir.exists)
 
-    val projectDir = repo / "parsers" / corpusList.mkString("-")
-    projectDir.delete()
+    val  sc = SymbolsComposer(repo, corpusList)
+
+    val expectedFiles = Vector(
+      targetDir / "markup.fst",
+      targetDir / "morphsymbols.fst",
+      targetDir / "phonology.fst",
+      targetDir / "stemtypes.fst"
+    )
+    for (f <- expectedFiles) {
+      assert(f.exists)
+    }
+    // tidy up
+    //(repo / "parsers").delete()
   }
+
+
 
 }

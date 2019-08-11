@@ -15,11 +15,11 @@ object AcceptorComposer {
   /** Compose acceptor.fst and the intermediate fst files
   * it depends on for a named corpus.
   *
-  * @param repo Root of Kanónes repository.
-  * @param corpus Corpus to build acceptor for.
+  * @param repo Root of tabulae repository.
+  * @param corpusList  List of "corpora" names.
   */
-  def apply(repo: ScalaFile, corpus: String): Unit = {
-    val projectDir =  repo/"parsers"/corpus
+  def apply(repo: ScalaFile, corpusList: Vector[String]): Unit = {
+    val projectDir =  repo / "parsers" / corpusList.mkString("-")
     composeMainAcceptor(projectDir)
   }
 
@@ -67,12 +67,26 @@ object AcceptorComposer {
 
     fst.append("\n\n" + topLevelAcceptor(projectDir) + "\n")
 
-    val acceptorFile = projectDir/"acceptor.fst"
+    val acceptorFile = projectDir / "acceptor.fst"
     acceptorFile.overwrite(fst.toString)
   }
 
+  /** Rewrite a single file by replacing all occurrences of
+  * the variable name `@workdir@` with the string value for the
+  * work directory.
+  *
+  * @param f File to rewrite.
+  * @param workDir Actual directory where corpus-specific
+  * parser is to be built.
+  */
+  def rewriteFile(f: ScalaFile, workDir: ScalaFile): Unit = {
+    val lines = f.lines.toVector
+    val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
+    f.overwrite(rewritten)
+  }
 
-
+  // BOOLEAN FUNCTIONS DETERMINING IF PARTICULAR ANALYTICAL
+  // TYPES SHOULD BE INCLUDED IN THE ACCEPTOR:
   def includeInfinitives(dir: ScalaFile): Boolean = {
     includeVerbs(dir)
   }
@@ -89,22 +103,10 @@ object AcceptorComposer {
     includeVerbs(dir)
   }
 
-  /** Rewrite a single file by replacing all occurrences of
-  * the variable name `@workDir` with the string value for the
-  * work directory.
-  *
-  * @param f File to rewrite.
-  * @param workDir Actual directory where corpus-specific
-  * parser is to be built.
-  */
-  def rewriteFile(f: ScalaFile, workDir: ScalaFile): Unit = {
-    val lines = f.lines.toVector
-    val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
-    f.overwrite(rewritten)
-  }
+
 
   def includeIrregVerbs(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    val indeclSource = dir / "lexica/lexicon-irregverbs.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregVerbAcceptor(dir : ScalaFile): String = {
@@ -119,7 +121,7 @@ $squashirregverburn$ =  <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]
 
 
   def includeIrregNouns(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    val indeclSource = dir / "lexica/lexicon-irregverbs.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregNounAcceptor(dir : ScalaFile): String = {
@@ -132,7 +134,7 @@ $squashirregnounurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:
   }
 
   def includeIrregAdjectives(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregverbs.fst"
+    val indeclSource = dir / "lexica/lexicon-irregverbs.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregAdjectiveAcceptor(dir : ScalaFile): String = {
@@ -146,7 +148,7 @@ $squashirregadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
 
 
   def includeIrregPronouns(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregpronouns.fst"
+    val indeclSource = dir / "lexica/lexicon-irregpronouns.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregPronounAcceptor(dir : ScalaFile): String = {
@@ -159,7 +161,7 @@ $squashirregpronurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:
   }
 
   def includeIrregAdverbs(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregadverbs.fst"
+    val indeclSource = dir / "lexica/lexicon-irregadverbs.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregAdverbAcceptor(dir : ScalaFile): String = {
@@ -172,7 +174,7 @@ $squashirregadvurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<
   }
 
   def includeIrregSupines(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregsupines.fst"
+    val indeclSource = dir / "lexica/lexicon-irregsupines.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregSupineAcceptor(dir : ScalaFile): String = {
@@ -186,7 +188,7 @@ $squashirregsupineurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar
 }
 
   def includeIrregGerunds(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irreggerunds.fst"
+    val indeclSource = dir / "lexica/lexicon-irreggerunds.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregGerundAcceptor(dir : ScalaFile): String = {
@@ -200,7 +202,7 @@ $squashirreggerundurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar
   }
 
   def includeIrregGerundives(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irreggerundives.fst"
+    val indeclSource = dir / "lexica/lexicon-irreggerundives.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregGerundiveAcceptor(dir : ScalaFile): String = {
@@ -214,7 +216,7 @@ $squashirreggerundiveurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnch
 
 
   def includeIrregParticiples(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irregparticiples.fst"
+    val indeclSource = dir / "lexica/lexicon-irregparticiples.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregParticipleAcceptor(dir : ScalaFile): String = {
@@ -228,7 +230,7 @@ $squashirregptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]
 
 
   def includeIrregInfinitives(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-irreginfinitives.fst"
+    val indeclSource = dir / "lexica/lexicon-irreginfinitives.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   def irregInfinitiveAcceptor(dir : ScalaFile): String = {
@@ -247,10 +249,11 @@ $squashirreginfinnurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#
   *
   */
   def includeVerbs(dir: ScalaFile): Boolean = {
-    val lexica = dir/"lexica"
-    val verbsSource = lexica/"lexicon-verbs.fst"
+    val lexica = dir / "lexica"
+    val verbsSource = lexica / "lexicon-verbs.fst"
     verbsSource.exists && verbsSource.lines.nonEmpty
   }
+  
   /** String defining verb acceptor. */
   def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {
@@ -266,7 +269,7 @@ $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\
 
 
   def includeNouns(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-nouns.fst"
+    val indeclSource = dir / "lexica/lexicon-nouns.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
   /** String defining final noun acceptor transducer.*/
@@ -282,7 +285,7 @@ def includeAdverbs(dir: ScalaFile): Boolean = {
   includeAdjectives(dir)
 }
 def includeAdjectives(dir: ScalaFile): Boolean = {
-  val indeclSource = dir/"lexica/lexicon-adjectives.fst"
+  val indeclSource = dir / "lexica/lexicon-adjectives.fst"
   indeclSource.exists && indeclSource.lines.nonEmpty
 }
 /** String defining final noun acceptor transducer.*/
@@ -378,7 +381,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
   * @param dir Directory for corpus data set.
   */
   def includeIndecls(dir: ScalaFile): Boolean = {
-    val indeclSource = dir/"lexica/lexicon-indeclinables.fst"
+    val indeclSource = dir / "lexica/lexicon-indeclinables.fst"
     indeclSource.exists && indeclSource.lines.nonEmpty
   }
 
