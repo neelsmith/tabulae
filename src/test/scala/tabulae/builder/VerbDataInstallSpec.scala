@@ -23,7 +23,7 @@ class VerbDataInstallSpec extends FlatSpec {
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "lexica"
     if (targetDir.exists) {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
     }
     mkdirs(targetDir)
     assert(targetDir.exists,"VerbDataInstaller:  could not create " + targetDir)
@@ -39,7 +39,7 @@ class VerbDataInstallSpec extends FlatSpec {
     assert(targetFile.lines.toVector(0) == expected)
 
     try {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
       println("Deleted temp dir.")
     } catch {
       case t: Throwable => {
@@ -58,12 +58,13 @@ class VerbDataInstallSpec extends FlatSpec {
     val targetDir = parserDir / "lexica"
     val targetFile = targetDir / "lexicon-verbs.fst"
     if (targetDir.exists) {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
     }
     mkdirs(targetDir)
 
     VerbDataInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false)
+    parserDir.delete()
   }
 
   it should "return an empty string if no data are found in the source directory" in {
@@ -85,7 +86,6 @@ class VerbDataInstallSpec extends FlatSpec {
     val parserDir = File("src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "lexica"
     if (targetDir.exists) {
-      val parserDir = File("src/test/resources/parsers")
       parserDir.delete()
       println("Removed " + parserDir  + ": " + (parserDir.exists == false))
     }
@@ -101,7 +101,7 @@ class VerbDataInstallSpec extends FlatSpec {
     assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
 
     try {
-    parserDir.delete()
+      parserDir.delete()
     } catch {
       case t: Throwable => {
         println("Failed to delete parsers dir. " + t)
