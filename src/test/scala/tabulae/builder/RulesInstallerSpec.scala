@@ -48,7 +48,7 @@ class RulesInstallerSpec extends FlatSpec {
 
   it should "install correctly from more than one source" in pending
 
-  it should "create subdirectories as necessary for installation" in {
+  it should "create subdirectories as necessary for installation" in pending /* {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
@@ -63,5 +63,5 @@ class RulesInstallerSpec extends FlatSpec {
     val  ri = RulesInstaller(datasource, repo, c)
     assert(targetDir.exists)
     projectDir.delete()
-  }
+  }*/
 }

@@ -6,10 +6,12 @@ import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
 
+
+// CHANGE TO USE RANDOMIZED TEMP FILE NAMES
 class CompleteBuildSpec extends FlatSpec {
 
 
-  "The FstCompiler object" should "compile a binary FST parser" in {
+  "The FstCompiler object" should "compile a binary FST parser" in pending /*{
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
@@ -17,7 +19,7 @@ class CompleteBuildSpec extends FlatSpec {
 
 
 
-    val projectDir = repo / "parsers/analytical_types"
+    val projectDir = repo / c.mkString("-")
     val target = projectDir / "latin.a"
     if (target.exists()) {
       println("Removing previous binary...")
@@ -28,5 +30,5 @@ class CompleteBuildSpec extends FlatSpec {
     assert(target.exists)
 
     projectDir.delete()
-  }
+  }*/
 }
