@@ -8,7 +8,7 @@ object RulesInstaller {
 
   /** Format compilable FST rules for a named corpus.
   *
-  * @param sourceDir Base directory of data set.  Inflectional
+  * @param datasets Base directory of data set.  Inflectional
   * rules are drawn from tables here.
   * @param repo Base directory of the Tabulae repository.  Fst with
   * inflectional rules in FST for invariant forms are drawn from here.
@@ -16,12 +16,22 @@ object RulesInstaller {
   * a subdirectory of the repository's parsers directory named
   * for the corpus.
   */
-  def apply(sourceDir: File, repo: File, corpusList: Vector[String]): Unit = {
+  def apply(datasets: File, repo: File, corpusList: Vector[String]): Unit = {
 
     val inflDir = repo / "parsers" / corpusList.mkString("-") / "inflection"
     if (! inflDir.exists) {mkdirs(inflDir)}
-    val srcCorpus = sourceDir/corpusList(0)
+    assert(inflDir.exists, "RulesInstaller: Unable to create inflection directory " + inflDir)
 
+    println("INFLDIR IS " + inflDir)
+    println("SOURCE DIR IS " + datasets)
+    val srcCorpus = datasets / corpusList(0)
+    println("Corpus source DIR IS " + srcCorpus)
+
+    
+    val verbsFst = inflDir / "verbinfl.fst"
+    VerbRulesInstaller(datasets, corpusList, verbsFst )
+
+/*
     val nounsSrc = srcCorpus / "rules-tables/nouns"
     val nounsFst = inflDir / "nouninfl.fst"
     NounRulesInstaller( nounsSrc,nounsFst )
@@ -34,9 +44,7 @@ object RulesInstaller {
     val advsFst = inflDir / "advinfl.fst"
     AdverbRulesInstaller( advsSrc,advsFst )
 
-    val verbsSrc = srcCorpus / "rules-tables/verbs"
-    val verbsFst = inflDir / "verbinfl.fst"
-    VerbRulesInstaller(verbsSrc, verbsFst )
+
 
     val infinSrc = srcCorpus / "rules-tables/infinitives"
     val infinFst = inflDir / "infininfl.fst"
@@ -58,7 +66,7 @@ object RulesInstaller {
     val supineSrc = srcCorpus / "rules-tables/supines"
     val supineFst = inflDir / "supineinfl.fst"
     SupineRulesInstaller( supineSrc,supineFst  )
-
+*/
 
     val inflFst = repo / "fst/inflection"
     installInvariants(inflFst, inflDir)
