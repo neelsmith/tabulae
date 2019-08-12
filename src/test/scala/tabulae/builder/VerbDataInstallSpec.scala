@@ -54,7 +54,7 @@ class VerbDataInstallSpec extends FlatSpec {
   it should "do nothing if no verb data are present in a given corpus" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("no-lexica")
-    val parserDir = File("src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "lexica"
     val targetFile = targetDir / "lexicon-verbs.fst"
     if (targetDir.exists) {
@@ -83,7 +83,7 @@ class VerbDataInstallSpec extends FlatSpec {
   it should "composite data from multiple sources" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types", "shared")
-    val parserDir = File("src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "lexica"
     if (targetDir.exists) {
       parserDir.delete()

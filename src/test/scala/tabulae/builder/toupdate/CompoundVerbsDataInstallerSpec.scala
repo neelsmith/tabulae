@@ -9,7 +9,7 @@ import better.files.Dsl._
 class CompoundVerbsDataInstallerSpec extends FlatSpec {
 
 
-  "The DataInstaller object" should "install compound verb data" in {
+  "The DataInstaller object" should "install compound verb data" in pending /*{
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
@@ -22,6 +22,6 @@ class CompoundVerbsDataInstallerSpec extends FlatSpec {
 
     val projectDir = repo / "parsers" / c.mkString("-")
     projectDir.delete()
-  }
+  }*/
 
 }

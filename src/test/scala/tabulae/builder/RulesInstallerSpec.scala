@@ -7,6 +7,8 @@ import java.io.{File => JFile}
 import better.files.Dsl._
 import java.util.Calendar
 
+
+// CHANGE TO USE RANDOMIZED TEMP FILE NAMES
 class RulesInstallerSpec extends FlatSpec {
 
 

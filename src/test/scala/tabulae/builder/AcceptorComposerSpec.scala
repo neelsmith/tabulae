@@ -15,20 +15,20 @@ class AcceptorComposerSpec extends FlatSpec {
   it should "object if there are no FST sources" in pending
 
 
-  it should "recognize when verbs should be included" in {
+  it should "recognize when verbs should be included" in pending /*{
     assert(AcceptorComposer.includeVerbs(parserRoot))
-  }
+  }*/
 
-  it should "recognize when verbs should not be included" in {
+  it should "recognize when verbs should not be included" in pending /*{
     assert(AcceptorComposer.includeVerbs(noFst) == false)
-  }
-  it should "compose acceptor's FST statements for verbs" in {
+  }*/
+  it should "compose acceptor's FST statements for verbs" in pending /*{
     val verbAcceptorFst = AcceptorComposer.verbAcceptor(parserRoot)
 
     val expected = "% Conjugated verb form acceptor\n$=verbclass$ = [#verbclass#]\n$squashverburn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
 
     assert(verbAcceptorFst.trim == expected)
-  }
+  }*/
 
   it should "compose acceptor's FST statements for nouns" in pending
   it should "compose acceptor's FST statements for adjectives" in pending

@@ -23,7 +23,7 @@ class VerbRulesInstallSpec extends FlatSpec {
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "inflection"
     if (targetDir.exists) {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
     }
     mkdirs(targetDir)
     assert(targetDir.exists,"VerbRulesInstaller:  could not create " + targetDir)
@@ -39,7 +39,7 @@ class VerbRulesInstallSpec extends FlatSpec {
     assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
 
     try {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
 
     } catch {
       case t: Throwable => {
@@ -58,14 +58,14 @@ class VerbRulesInstallSpec extends FlatSpec {
     val targetDir = parserDir / "inflection"
     val targetFile = targetDir / "verbinfl.fst"
     if (targetDir.exists) {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
     }
     mkdirs(targetDir)
 
     VerbRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
     try {
-      File("src/test/resources/parsers").delete()
+      parserDir.delete()
 
     } catch {
       case t: Throwable => {
@@ -113,7 +113,7 @@ class VerbRulesInstallSpec extends FlatSpec {
     assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
 
     try {
-    parserDir.delete()
+      parserDir.delete()
     } catch {
       case t: Throwable => {
         println("Failed to delete parsers dir. " + t)

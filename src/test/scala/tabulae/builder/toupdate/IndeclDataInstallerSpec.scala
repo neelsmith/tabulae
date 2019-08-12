@@ -6,7 +6,7 @@ import java.io.{File => JFile}
 
 class IndeclDataInstallerSpec extends FlatSpec {
 
-  "The IndeclRulesInstaller object" should "respond to bad data with an exception" in {
+  "The IndeclRulesInstaller object" should "respond to bad data with an exception" in pending /*{
     try {
       val fst = IndeclDataInstaller.indeclLineToFst("Not a real line")
       fail("Should have failed")
@@ -16,12 +16,12 @@ class IndeclDataInstallerSpec extends FlatSpec {
         assert(t.toString.startsWith(start))
       }
     }
-  }
+  }*/
 
-  it should "format a valid data line correctly as FST" in {
+  it should "format a valid data line correctly as FST" in pending /*{
     val fst = IndeclDataInstaller.indeclLineToFst("ocremorph.indecl2#ls.n16278#et#indeclconj")
     println(fst)
 
-  }
+  } */
 
 }

@@ -9,11 +9,11 @@ import java.io.{File => JFile}
 
 class IndeclAcceptorBuilderSpec extends FlatSpec {
 
-  "The AcceptorComposer object" should "generate correct FST for indeclinables" in {
+  "The AcceptorComposer object" should "generate correct FST for indeclinables" in pending /*{
     val dir = File("src/test/resources/dummyparser")
     val fst = AcceptorComposer.indeclAcceptor(dir)
 
     println("FST: " + fst)
-  }
+  }*/
 
 }
