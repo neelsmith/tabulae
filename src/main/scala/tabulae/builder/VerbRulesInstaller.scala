@@ -13,14 +13,26 @@ object VerbRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
-    val verbFst = fstForVerbRules(srcDir)
-    if(verbFst.nonEmpty) {
-      targetFile.overwrite(verbFst)
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+
+    val srcData = for (corpus <- corpusList) yield {
+      val verbsDir = srcDir / corpus / "rules-tables/verbs"
+      if (! verbsDir.exists) {
+        mkdirs(verbsDir)
+      }
+      val data = fstForVerbRules(verbsDir)
+      data
+    }
+    val fst = srcData.mkString("\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite(fst + "\n\n$verbinfl$\n")
     } else {}
   }
+
 
 
   /** Compose FST statements for all tables of
@@ -33,12 +45,13 @@ object VerbRulesInstaller {
     if (fileList.isEmpty) {
       ""
     } else {
+
       val rules = fileList.flatMap(f => f.lines.toVector.filter(_.nonEmpty).drop(1) ) //Source.fromFile(f).getLines.toVector.filter(_.nonEmpty).drop(1))
 
       val fst = verbRulesToFst(rules)
 
       if (fst.nonEmpty) {
-        "$verbinfl$ = " + fst + "\n\n$verbinfl$\n"
+        "$verbinfl$ = " + fst  // + "\n\n$verbinfl$\n"
       } else {
         ""
       }
