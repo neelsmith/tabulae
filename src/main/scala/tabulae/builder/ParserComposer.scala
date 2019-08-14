@@ -23,8 +23,8 @@ object ParserComposer {
   def apply(projectDir: ScalaFile) : Unit = {
     if (! projectDir.exists){throw new Exception("ParserComposer:  cannot compose parser FST for empty or non-existent directory.")}
 
-    val lexica = projectDir/"lexica"
-    if (! lexica.exists){throw new Exception("ParserComposer:  cannot compose parser FST until lexica have been installed.")}
+    val lexica = projectDir / "lexica"
+    if (! lexica.exists) { throw new Exception("ParserComposer:  cannot compose parser FST until lexica have been installed.")}
 
     val latin = StringBuilder.newBuilder
     latin.append(header)
@@ -46,7 +46,7 @@ object ParserComposer {
     latin.append("% Final transducer:\n")
     latin.append("$morph$ || $acceptor$\n\n")
 
-    val latinFile = projectDir/"latin.fst"
+    val latinFile = projectDir / "latin.fst"
     latinFile.overwrite(latin.toString)
   }
 

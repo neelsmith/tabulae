@@ -49,7 +49,7 @@ object MakefileComposer {
       throw new Exception("Cannot compose main makefile for nonexistent directory " + projectDir)
     }
 
-    val acceptorDir = projectDir/"acceptors"
+    val acceptorDir = projectDir / "acceptors"
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
 
@@ -63,7 +63,7 @@ object MakefileComposer {
      //later:  ${projectDir.toString}/generator.a ")
     //Utils.dir(projectDir)
 
-    val makeFile = projectDir/"makefile"
+    val makeFile = projectDir / "makefile"
     makeFile.overwrite(makeFileText.toString)
   }
 
@@ -75,7 +75,7 @@ object MakefileComposer {
   * @param fstcompiler Path to binary FST compiler.
   */
   def composeInflectionMake(projectDir: ScalaFile, fstcompiler: String) : Unit = {
-      val inflDir = projectDir/"inflection"
+      val inflDir = projectDir / "inflection"
       if (! inflDir.exists) {
         throw new Exception("MakefileComposer: no inflection rules installed.")
       }
