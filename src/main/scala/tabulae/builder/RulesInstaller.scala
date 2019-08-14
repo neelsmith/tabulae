@@ -24,7 +24,7 @@ object RulesInstaller {
     assert(inflDir.exists, "RulesInstaller: Unable to create inflection directory " + inflDir)
 
     val verbsFst = inflDir / "verbinfl.fst"
-    VerbRulesInstaller(dataSets, corpusList, verbsFst )
+    VerbRulesInstaller(dataSets, corpusList, verbsFst)
 
 /*
     val nounsSrc = srcCorpus / "rules-tables/nouns"

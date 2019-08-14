@@ -56,7 +56,24 @@ class RulesInstallerSpec extends FlatSpec {
     tempParserDir.delete()
   }
 
-  it should "install correctly from more than one source" in pending
+  it should "install correctly from more than one source" in {
+    val datasets = File("src/test/resources/datasets")
+    val c = Vector("analytical_types", "shared")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val fst = File("src/test/resources/datasets/fst")
+
+    val projectDir = tempParserDir / c.mkString("-")
+    // Ensure target directory is empty before testing:
+    val targetDir =  projectDir / "inflection"
+    if (targetDir.exists) {
+      targetDir.delete()
+    }
+    mkdirs(targetDir)
+    assert(targetDir.exists, "Unable to create new inflection directory " + targetDir)
+
+    val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
+    // VerbRulesInstaller is not working proprerly
+  }
 
   it should "create subdirectories as necessary for installation" in  {
     val datasets = File("src/test/resources/datasets")
