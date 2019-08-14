@@ -81,15 +81,13 @@ class VerbRulesInstallSpec extends FlatSpec {
   }
 
 
-  it should "composite data from multiple sources" in pending /*{
+  it should "composite data from multiple sources" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types", "shared")
-    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
-    val targetDir = parserDir / "inflection"
+    val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val targetDir = tempParserDir / "inflection"
     if (targetDir.exists) {
-      val parserDir = File("src/test/resources/parsers")
-      parserDir.delete()
-      println("Removed " + parserDir  + ": " + (parserDir.exists == false))
+      tempParserDir.delete()
     }
     mkdirs(targetDir)
     assert(targetDir.exists, "VerbRulesInstallerSpec: could not create " + targetDir)
@@ -100,19 +98,18 @@ class VerbRulesInstallSpec extends FlatSpec {
 
 
 
-    val expectedLines =  Vector("<conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u>",
+    val expectedLines =  Vector("$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u> |\\",
     "<conj1><verb>as<2nd><sg><pres><indic><act><u>proof\\.are\\_presind2</u>",
     "$verbinfl$")
 
-    assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
+    val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
+    val actualString = targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
+    println("THIS WAS WRITTEN:\n" + actualString)
+    println("Expected: \n" + expectedString)
 
-    try {
-      parserDir.delete()
-    } catch {
-      case t: Throwable => {
-        println("Failed to delete parsers dir. " + t)
-      }
-    }
-  }*/
+    assert(actualString == expectedString)
+    tempParserDir.delete()
+
+  }
 
 }
