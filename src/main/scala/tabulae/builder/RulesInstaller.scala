@@ -8,28 +8,23 @@ object RulesInstaller {
 
   /** Format compilable FST rules for a named corpus.
   *
-  * @param datasets Base directory of data set.  Inflectional
-  * rules are drawn from tables here.
-  * @param repo Base directory of the Tabulae repository.  Fst with
-  * inflectional rules in FST for invariant forms are drawn from here.
-  * @param corpus Name of corpus.  All rules are installed in
-  * a subdirectory of the repository's parsers directory named
-  * for the corpus.
   */
-  def apply(datasets: File, repo: File, corpusList: Vector[String]): Unit = {
+  def apply(dataSets: File, corpusList: Vector[String], parsers: File, fst: File ): Unit = {
 
-    val inflDir = repo / "parsers" / corpusList.mkString("-") / "inflection"
+    val inflDir = parsers / corpusList.mkString("-") / "inflection"
     if (! inflDir.exists) {mkdirs(inflDir)}
     assert(inflDir.exists, "RulesInstaller: Unable to create inflection directory " + inflDir)
 
     println("INFLDIR IS " + inflDir)
-    println("SOURCE DIR IS " + datasets)
-    val srcCorpus = datasets / corpusList(0)
+
+    // CHANGE TO WORK ON ALL CORPORA!
+    println("SOURCE DIR IS " + dataSets)
+    val srcCorpus = dataSets / corpusList(0)
     println("Corpus source DIR IS " + srcCorpus)
 
-    
+
     val verbsFst = inflDir / "verbinfl.fst"
-    VerbRulesInstaller(datasets, corpusList, verbsFst )
+    VerbRulesInstaller(dataSets, corpusList, verbsFst )
 
 /*
     val nounsSrc = srcCorpus / "rules-tables/nouns"
@@ -68,7 +63,7 @@ object RulesInstaller {
     SupineRulesInstaller( supineSrc,supineFst  )
 */
 
-    val inflFst = repo / "fst/inflection"
+    val inflFst = fst / "inflection"
     installInvariants(inflFst, inflDir)
   }
 

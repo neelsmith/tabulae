@@ -20,20 +20,25 @@ object FstCompiler {
   * @param corpusList  List of "corpora", used as name of subdirectory where
   * binary parser will be written.
   */
-  def compileAll(dataDirectory: ScalaFile, baseDir: ScalaFile, corpusList: Vector[String], conf: Configuration) : Unit = {
+  def compileAll(
+    dataSets: ScalaFile,
+    corpusList: Vector[String],
+    parser: ScalaFile,
+    fstSource: ScalaFile,
+    conf: Configuration) : Unit = {
     // Install data and rules, converting tabular data to FST
     //println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
-    DataInstaller(dataDirectory, baseDir, corpusList)
+    DataInstaller(dataSets, corpusList, parser, fstSource)
 
     //println(s"Install rules for ${corpus} in ${dataDirectory}...")
-    RulesInstaller(dataDirectory, baseDir, corpusList)
+    RulesInstaller(dataSets, corpusList, parser, fstSource)
 
     //println("Compose build")
     // Compose makefiles and higher-order FST for build system
-    BuildComposer(dataDirectory, baseDir, corpusList, conf.fstcompile)
+    //BuildComposer(dataDirectory, baseDir, corpusList, conf.fstcompile)
 
     // Build it!
-    val buildDirectory = baseDir / "parsers" / corpusList.mkString("-")
+    val buildDirectory = parser / corpusList.mkString("-")
     val inflMakefile = buildDirectory / "inflection/makefile"
     val makeInfl = s"${conf.make} -f ${inflMakefile}"
     makeInfl !
@@ -55,14 +60,14 @@ object FstCompiler {
   * binary parser will be written.
   * @param conf Configuration object for compiling a parser.
   */
-  def compile(dataDirectory: ScalaFile, baseDir: ScalaFile, corpusList: Vector[String], conf: Configuration, replaceExisting: Boolean = true) : Unit = {
+  def compile(dataDirectory: ScalaFile,  corpusList: Vector[String], parsers: ScalaFile, fstSrc: ScalaFile, conf: Configuration, replaceExisting: Boolean = true) : Unit = {
 
-    val projectDir = baseDir / "parsers" / corpusList.mkString("-")
+    val projectDir = parsers / corpusList.mkString("-")
     if (projectDir.exists) {
       replaceExisting match {
         case true => {
           projectDir.delete()
-          compileAll(dataDirectory, baseDir, corpusList, conf)
+          compileAll(dataDirectory,  corpusList, parsers, fstSrc, conf)
         }
         case false => {
           println("Directory " + projectDir + " exists, and setting to delete exising parser is false.")
@@ -70,7 +75,7 @@ object FstCompiler {
         }
       }
     } else {
-      compileAll(dataDirectory, baseDir, corpusList, conf)
+      compileAll(dataDirectory, corpusList, parsers, fstSrc, conf)
     }
   }
 }

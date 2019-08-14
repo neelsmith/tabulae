@@ -6,8 +6,13 @@ import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
 
+import java.util.Calendar
+
 class DataInstallerSpec extends FlatSpec {
 
+  val r = scala.util.Random
+  val millis = Calendar.getInstance().getTimeInMillis()
+  r.setSeed(millis)
 
 // USE RANDOMIZED FILE NAMES FOR ALL THESE TESTS
   "The DataInstaller object" should "install data from a Vector of corpus names" in pending /* {
@@ -56,12 +61,13 @@ class DataInstallerSpec extends FlatSpec {
     projectDir.delete()
   }*/
 
-  it should "create subdirectories as necessary for installation" in pending /* {
+  it should "create subdirectories as necessary for installation" in pending/* {
     val repo = File("src/test/resources")
     val datasource = repo / "datasets"
     val c = Vector("analytical_types")
     // Ensure target directory does not exist:
-    val targetDir = repo / "parsers" /  c.mkString("-") / "lexica"
+    val parserDir =   repo / "parsers" / s"dummyparser-${r.nextInt(1000)}"
+    val targetDir = parserDir /  "lexica"
     if (targetDir.exists) {
       targetDir.delete()
     }

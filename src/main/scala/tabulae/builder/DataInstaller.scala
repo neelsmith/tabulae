@@ -16,15 +16,15 @@ import better.files.Dsl._
 object DataInstaller {
 
 
-  def apply(dataSource: File, repo: File, corpusList: Vector[String]): Unit = {
+  def apply(dataSets: File, corpusList: Vector[String], parsers: File, fstSrc: File ): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
-    val lexica = mkdirs(repo / "parsers" / corpusList.mkString("-") / "lexica")
+    val lexica = parsers / corpusList.mkString("-") / "lexica"
     if (! lexica.exists) {
       mkdirs(lexica)
     }
-      
+
     val verbsTarget = lexica / "lexicon-verbs.fst"
-    VerbDataInstaller(dataSource, corpusList, verbsTarget)
+    VerbDataInstaller(dataSets, corpusList, verbsTarget)
 
 
 /*
