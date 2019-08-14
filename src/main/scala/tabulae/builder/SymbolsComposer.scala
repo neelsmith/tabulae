@@ -13,21 +13,10 @@ object SymbolsComposer {
   /** Create all FST files defining symbols of a
   * parser's FST alphabet.
   *
-  * @param repo Root of tabulae repository.  Source data
-  * will be drawn from repo/fst/symbols.
-  * @param corpusList Name of corpus.  Output will be written
-  * in the parsers/CORPUS build space.
   */
-  // apply(repo: ScalaFile, corpusList: Vector[String]) : Unit = {
   def apply(corpusDir: ScalaFile, fstSource:  ScalaFile) : Unit = {
-    // we need:
-    // corpus directory
-    // symbols source directory
-    // that's all?
-
-    //val fstDir = repo / "parsers" / corpusList.mkString("-") / "fst"
-    if (! fstSource.exists) { mkdirs(fstSource)}
-    assert(fstSource.exists,"SymbolsComposer: failed to make directory " + fstSource)
+    //if (! fstSource.exists) { mkdirs(fstSource)}
+    //assert(fstSource.exists,"SymbolsComposer: failed to make directory " + fstSource)
 
     if (! corpusDir.exists) { mkdirs(corpusDir)}
     assert(corpusDir.exists,"SymbolsComposer: failed to make directory " + corpusDir)
@@ -37,14 +26,19 @@ object SymbolsComposer {
     assert(symbolDir.exists,"SymbolsComposer: failed to make directory " + symbolDir)
 
     composeMainFile(corpusDir)
-
     copyFst(fstSource, symbolDir )
-
     rewritePhonologyFile(symbolDir / "phonology.fst", corpusDir)
   }
 
-  // This only works if you've already installed the source
-  // files (eg, by invoking copySecondaryFiles)
+  /** Rewrite phonology.fst to replace references to placeholder string with
+  * explicit full path to this installation.  This only works if you've already
+  * installed the fst file to rewrite (duh), hence invoked in apply
+  * function *after* copyFst.
+  *
+  * @param f Location of phonology.fst file to rewrite.
+  * @param workDir File object for working directory.  This gives
+  * us the full path we need to use in rewriting phonology.fst.
+  */
   def rewritePhonologyFile(f: ScalaFile, workDir: ScalaFile): Unit = {
     val lines = f.lines.toVector
     val rewritten = lines.map(_.replaceAll("@workdir@", workDir.toString + "/")).mkString("\n")
@@ -54,8 +48,7 @@ object SymbolsComposer {
 
   /** Install symbols from src into project in dest.
   *
-  * @param src Directory with symbols files (e.g., "fst/symbols"
-  * in this repo).
+  * @param src Directory with fst files defining symbols.
   * @param dest Directory where files should be written. This
   * will be parsers/CORPUS/symbols.
   */

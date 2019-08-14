@@ -7,7 +7,9 @@ import java.io.{File => JFile}
 import better.files.Dsl._
 import java.util.Calendar
 
-// CHANGE TO USE RANDOMIZED TEMP FILE NAMES
+
+
+
 class BuildComposerSpec extends FlatSpec {
 
 
@@ -16,7 +18,11 @@ class BuildComposerSpec extends FlatSpec {
   r.setSeed(millis)
 
 
-  "The BuildComposer object" should "do a lot of things by invoking other composers..." in pending
+  "The BuildComposer object" should  "successfully invoke the AcceptorComposer" in pending
+  it should "successfully invoke the SymbolsComposer" in pending
+  it should "successfully invoke the InflectionComposer" in pending
+  it should "successfully invoke the ParserComposer" in pending
+  it should "successfully invoke the MakefileComposer" in pending
 
   it should "install the alphabet.fst file" in {
     val dataSource = File("src/test/resources/datasets")
@@ -25,9 +31,6 @@ class BuildComposerSpec extends FlatSpec {
     val fst = File("src/test/resources/datasets/fst")
     val compiler = "/usr/local/bin/fst-compiler-utf8"
 
-/*
-dataSource: ScalaFile, corpusList: Vector[String], parsers: ScalaFile,  fstSource: ScalaFile, fstcompiler: String
-    */
     val target = tempParserDir / corpusList.mkString("-") / "symbols/alphabet.fst"
     // Test when doesn't exist yet:
     if (target.exists) {
@@ -39,21 +42,24 @@ dataSource: ScalaFile, corpusList: Vector[String], parsers: ScalaFile,  fstSourc
     tempParserDir.delete()
   }
 
-  it should "overwrite the alphabet.fst file if it already exists" in pending /*{
-    val targetDir = repo / "parsers" / corpusList.mkString("-") / "symbols"
-    if (targetDir.exists) {
-      targetDir.delete()
-    }
-    mkdirs(targetDir)
-    val alphabetFile = targetDir / "alphabet.fst"
-    alphabetFile.overwrite("Fake data in pre-existing file.\n")
+  it should "overwrite the alphabet.fst file if it already exists" in {
+    val dataSource = File("src/test/resources/datasets")
+    val corpusList = Vector("analytical_types")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val fst = File("src/test/resources/datasets/fst")
+    val compiler = "/usr/local/bin/fst-compiler-utf8"
 
-    BuildComposer.installAlphabet(dataSource, repo, corpusList)
+    val alphabetFile = tempParserDir / corpusList.mkString("-") / "symbols/alphabet.fst"
+    // Test when doesn't exist yet:
+    if (alphabetFile.exists) {
+      tempParserDir.delete()
+    }
+    BuildComposer.installAlphabet(dataSource, corpusList, tempParserDir)
 
     val expectedStart = "% Characters for Latin character set with distinct i/j, u/v"
 
     val alphabetText = alphabetFile.lines.mkString("\n")
     assert(alphabetText.startsWith(expectedStart))
-    (repo / "parsers").delete()
-  }*/
+    tempParserDir.delete()
+  }
 }
