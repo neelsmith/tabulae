@@ -15,9 +15,76 @@ class ParserComposerSpec extends FlatSpec {
   val millis = Calendar.getInstance().getTimeInMillis()
   r.setSeed(millis)
 
+  val datasets = File("src/test/resources/datasets/")
+  val corpora =  Vector("analytical_types")
+  val fstSrc = datasets / "fst"
 
-  "The ParserComposer object" should  "ensure that lexica are already installed" in pending
-  it should "ensure that inflectional rules are already installed" in pending
+  def installLexica(datasets: File, corpora: Vector[String], projectDir: File) = {
+    val lexDir = projectDir / "lexica"
+    if (! lexDir.exists) {mkdirs(lexDir)}
+    val targetFile = lexDir / "lexicon-verbs.fst"
+    VerbDataInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists,"VerbDataInstaller:  did not create " + targetFile)
+  }
+  def installRules(datasets: File, corpora: Vector[String], projectDir: File) = {
+    val inflDir = projectDir / "inflection"
+    if (! inflDir.exists) { mkdirs(inflDir)}
+    val targetFile = inflDir / "verbinfl.fst"
+    VerbRulesInstaller(datasets, corpora, targetFile)
+  }
+
+
+
+
+  "The ParserComposer object" should  "ensure that lexica are already installed" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to build a parser:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+
+    SymbolsComposer(symbolsDir, fstSrc)
+
+    // but remove lexica:
+    (projectDir / "lexica").delete()
+    try {
+      ParserComposer(projectDir)
+    } catch {
+      case t: Throwable => {
+        val expected = "ParserComposer:  cannot compose parser FST until lexica have been installed"
+        assert(t.toString.contains(expected))
+      }
+    }
+    tempParserDir.delete()
+  }
+
+  it should "ensure that inflectional rules are already installed" in pending /*{
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to build a parser:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    SymbolsComposer(projectDir, fstSrc)
+
+    // but remove inflectional reules:
+    (projectDir / "inflection").delete()
+
+    try {
+      ParserComposer(projectDir)
+      fail("SHOULD NOT HAVE SUCCEEDED")
+    } catch {
+      case t: Throwable => {
+        println(t)
+      }
+    }
+  }*/
   it should "ensure that the central symbols.fst file is already written" in pending
   it should "write the main parser file latin.fst" in pending
 }

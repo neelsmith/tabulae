@@ -5,22 +5,24 @@ import org.scalatest.FlatSpec
 import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
-
+import java.util.Calendar
 
 class SymbolsComposerSpec extends FlatSpec {
 
+  val r = scala.util.Random
+  val millis = Calendar.getInstance().getTimeInMillis()
+  r.setSeed(millis)
+
   "The SymbolsComposer object" should "write fst files in the symbols subdirectory of the parser directory" in {
-    val repo = File(s"src/test/resources/datasets")
-    val fst = repo / "fst/symbols"
-    val parsers = repo / "parsers"
-    val corpusDir = parsers / "analytical_types"
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
 
+    val projectDir = tempParserDir / "analytical_types"
+    val fst = File("src/test/resources/datasets/fst")
+    SymbolsComposer(projectDir, fst)
 
-    val  sc = SymbolsComposer(corpusDir, fst)
-
-    val symbolsDir = corpusDir / "symbols"
+    val symbolsDir = projectDir / "symbols"
     val expectedFiles = Vector(
-      corpusDir / "symbols.fst",
+      projectDir / "symbols.fst",
       symbolsDir / "markup.fst",
       symbolsDir / "morphsymbols.fst",
       symbolsDir / "phonology.fst",
@@ -30,8 +32,8 @@ class SymbolsComposerSpec extends FlatSpec {
       assert(f.exists, "SymbolsComposer did not create expected file " + f)
     }
     // tidy up
-    parsers.delete()
-    assert(parsers.exists == false)
+    tempParserDir.delete()
+
   }
 
 

@@ -12,11 +12,10 @@ object VerbDataInstaller {
   *
   * @param dataSource Root directory for corpus-specific data sources.
   * @param corpusList List of corpora within dataSource directory.
-  * @param targetFile File to write FST statements to.
+  * @param targetFile File to write FST statements to.  The directory
+  * containing targetFile must already exist.
   */
   def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
-    //val verbFst = fstForVerbData(srcDir)
-
     val srcData = for (corpus <- corpusList) yield {
       val verbsDir = dataSource / corpus / "stems-tables/verbs-simplex"
       if (! verbsDir.exists) {
@@ -27,6 +26,7 @@ object VerbDataInstaller {
     }
     val fst = srcData.mkString("\n")
     if (fst.nonEmpty) {
+      // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)
     } else {}
 

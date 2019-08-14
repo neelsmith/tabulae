@@ -2,21 +2,22 @@ package edu.holycross.shot.tabulae.builder
 
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
+import java.util.Calendar
 
 /**
 */
 object SymbolsComposer {
 
-  // Works with a repository directory and a corpus name
-  // to compose files of FST symbols.
-  //
+
   /** Create all FST files defining symbols of a
   * parser's FST alphabet.
   *
+  * @param corpusDir Project directory where parser is compiled.
+  * @param fstSource
+  *
   */
   def apply(corpusDir: ScalaFile, fstSource:  ScalaFile) : Unit = {
-    //if (! fstSource.exists) { mkdirs(fstSource)}
-    //assert(fstSource.exists,"SymbolsComposer: failed to make directory " + fstSource)
+    println("sYMbols cOMPOSR: from " + fstSource + " to " + corpusDir)
 
     if (! corpusDir.exists) { mkdirs(corpusDir)}
     assert(corpusDir.exists,"SymbolsComposer: failed to make directory " + corpusDir)
@@ -26,7 +27,8 @@ object SymbolsComposer {
     assert(symbolDir.exists,"SymbolsComposer: failed to make directory " + symbolDir)
 
     composeMainFile(corpusDir)
-    copyFst(fstSource, symbolDir )
+    copyFst(fstSource / "symbols", symbolDir )
+
     rewritePhonologyFile(symbolDir / "phonology.fst", corpusDir)
   }
 
@@ -55,9 +57,14 @@ object SymbolsComposer {
   def copyFst(src: ScalaFile, dest: ScalaFile) : Unit = {
     if (! dest.exists()) {mkdirs(dest)}
     assert(dest.exists, "SymbolsComposer: failed to make directory " + dest)
+    println("COPYING FT INTO " + dest)
+
+    println("COPYING FRO " + src)
      val fstFiles = src.glob("*.fst").toVector
+     println("FILES TO cOPY ARE " + fstFiles)
      for (f <- fstFiles) {
       val targetFile = dest / f.name
+      println("==>COPY " + f + " to " + targetFile)
       targetFile.overwrite(f.lines.mkString("\n"))
      }
   }
