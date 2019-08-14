@@ -8,8 +8,6 @@ import better.files.Dsl._
 import java.util.Calendar
 
 
-
-
 class BuildComposerSpec extends FlatSpec {
 
 

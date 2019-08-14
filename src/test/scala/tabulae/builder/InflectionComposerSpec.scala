@@ -5,25 +5,40 @@ import org.scalatest.FlatSpec
 import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
+import java.util.Calendar
 
-
-// CHANGE TO USE RANDOMIZED TEMP FILE NAMES
 class InflectionComposerSpec extends FlatSpec {
 
-  "The InflectionComposer object" should "write inflection.fst in the parser root directory" in pending /*{
-    val projectDirectory = File("src/test/resources/inflection-fst-files")
-    val topLevelInflectionFile = projectDirectory / "inflection.fst"
-    // Ensure file does not exist:
-    if (topLevelInflectionFile.exists) {
-      topLevelInflectionFile.delete()
+  val r = scala.util.Random
+  val millis = Calendar.getInstance().getTimeInMillis()
+  r.setSeed(millis)
+
+  "The InflectionComposer object" should "write inflection.fst in the parser root directory" in {
+    val datasets = File("src/test/resources/datasets/")
+    val corpora = Vector("analytical_types")
+
+    val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val projectDirectory = tempParserDir / corpora.mkString("_")
+    val targetDir = projectDirectory / "inflection"
+    if (targetDir.exists) {
+      tempParserDir.delete()
     }
-    InflectionComposer( projectDirectory )
-    assert(topLevelInflectionFile.exists)
+    mkdirs(targetDir)
+    assert(targetDir.exists,"InflectionComposer:  could not create " + targetDir)
+    // install some rules data:
+    val verbRulesFile = targetDir / "verbinfl.fst"
+
+  VerbRulesInstaller(datasets, corpora, verbRulesFile)
+  InflectionComposer( projectDirectory )
+
+  val topLevelInflectionFile = projectDirectory / "inflection.fst"
+  assert(topLevelInflectionFile.exists)
 
     val content = topLevelInflectionFile.lines.mkString("\n")
-    assert(content.contains("inflection-fst-files/inflection/adjinfl.a"))
-    topLevelInflectionFile.delete()
-  }*/
+    val expected = "analytical_types/inflection/verbinfl.a"
+    assert(content.contains(expected))
+    tempParserDir.delete()
+  }
 
   it should "throw an exception if the project has no inflectional files" in pending /*{
     val projectDirectory = File("src/test/resources/no-fst")
