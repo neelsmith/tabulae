@@ -97,6 +97,7 @@ class DataInstallerSpec extends FlatSpec {
 
     assert(verbsFile.lines.toVector.filter(_.nonEmpty) == expectedVerbLines)
 
+    tempParserDir.delete()
 
   }
 
