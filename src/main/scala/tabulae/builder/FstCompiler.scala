@@ -28,7 +28,7 @@ object FstCompiler {
     conf: Configuration) : Unit = {
     // Install data and rules, converting tabular data to FST
     //println(s"\n\n  Install data for ${corpus} in ${dataDirectory}...")
-    DataInstaller(dataSets, corpusList, parser, fstSource)
+    DataInstaller(dataSets, corpusList, parser)
 
     //println(s"Install rules for ${corpus} in ${dataDirectory}...")
     RulesInstaller(dataSets, corpusList, parser, fstSource)

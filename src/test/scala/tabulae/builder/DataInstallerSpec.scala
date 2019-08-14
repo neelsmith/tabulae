@@ -61,22 +61,21 @@ class DataInstallerSpec extends FlatSpec {
     projectDir.delete()
   }*/
 
-  it should "create subdirectories as necessary for installation" in pending/* {
-    val repo = File("src/test/resources")
-    val datasource = repo / "datasets"
+  it should "create subdirectories as necessary for installation" in {
+    val datasets = File("src/test/resources/datasets")
     val c = Vector("analytical_types")
     // Ensure target directory does not exist:
-    val parserDir =   repo / "parsers" / s"dummyparser-${r.nextInt(1000)}"
-    val targetDir = parserDir /  "lexica"
+    val parserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val targetDir = parserDir /  c.mkString("-") / "lexica"
     if (targetDir.exists) {
       targetDir.delete()
     }
-    val  di = DataInstaller(datasource, repo, c)
-    assert(targetDir.exists)
+    val  di = DataInstaller(datasets, c, parserDir)
+    assert(targetDir.exists, "DataInstaller did not create " + targetDir)
 
-    val projectDir = repo / "parsers" / c.mkString("-")
+    val projectDir = parserDir / c.mkString("-")
     projectDir.delete()
-  }*/
+  }
 
 
 

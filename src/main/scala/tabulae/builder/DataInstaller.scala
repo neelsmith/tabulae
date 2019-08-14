@@ -16,7 +16,7 @@ import better.files.Dsl._
 object DataInstaller {
 
 
-  def apply(dataSets: File, corpusList: Vector[String], parsers: File, fstSrc: File ): Unit = {
+  def apply(dataSets: File, corpusList: Vector[String], parsers: File): Unit = {
     //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
     val lexica = parsers / corpusList.mkString("-") / "lexica"
     if (! lexica.exists) {
