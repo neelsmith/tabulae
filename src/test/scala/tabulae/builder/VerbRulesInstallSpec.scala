@@ -29,17 +29,13 @@ class VerbRulesInstallSpec extends FlatSpec {
     assert(targetDir.exists,"VerbRulesInstaller:  could not create " + targetDir)
 
     val targetFile = targetDir / "verbinfl.fst"
-    println("Target " + targetFile)
 
-    //dataSource: File, corpusList: Vector[String], targetFile: File
     VerbRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists,"VerbRulesInstaller:  did not create destination file " + targetFile)
 
     val expectedLines = Vector("$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u>", "$verbinfl$")
     assert(targetFile.lines.toVector.filter(_.nonEmpty) == expectedLines)
 
-
-    //println("THIS WAS WRITTEN:\n" + targetFile.lines.toVector.mkString("\n"))
     tempParserDir.delete()
   }
 
@@ -104,8 +100,6 @@ class VerbRulesInstallSpec extends FlatSpec {
 
     val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
     val actualString = targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
-    println("THIS WAS WRITTEN:\n" + actualString)
-    println("Expected: \n" + expectedString)
 
     assert(actualString == expectedString)
     tempParserDir.delete()

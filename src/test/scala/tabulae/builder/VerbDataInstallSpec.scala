@@ -29,24 +29,14 @@ class VerbDataInstallSpec extends FlatSpec {
     assert(targetDir.exists,"VerbDataInstaller:  could not create " + targetDir)
 
     val targetFile = targetDir / "lexicon-verbs.fst"
-    println("Target " + targetFile)
 
-    //dataSource: File, corpusList: Vector[String], targetFile: File
     VerbDataInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists,"VerbDataInstaller:  did not create " + targetFile)
 
     val expected = "<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>"
     assert(targetFile.lines.toVector(0) == expected)
 
-    try {
-      parserDir.delete()
-      println("Deleted temp dir.")
-    } catch {
-      case t: Throwable => {
-        println("Failed to delete parsers dir. " + t)
-      }
-    }
-
+    parserDir.delete()
   }
 
 
@@ -87,7 +77,6 @@ class VerbDataInstallSpec extends FlatSpec {
     val targetDir = parserDir / "lexica"
     if (targetDir.exists) {
       parserDir.delete()
-      println("Removed " + parserDir  + ": " + (parserDir.exists == false))
     }
     mkdirs(targetDir)
     assert(targetDir.exists, "VerbDataInstallerSpec: could not create " + targetDir)

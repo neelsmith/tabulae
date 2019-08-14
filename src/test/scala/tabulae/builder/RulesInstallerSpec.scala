@@ -73,6 +73,18 @@ class RulesInstallerSpec extends FlatSpec {
 
     val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
     // VerbRulesInstaller is not working proprerly
+
+      val expectedLines =  Vector("$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u> |\\",
+      "<conj1><verb>as<2nd><sg><pres><indic><act><u>proof\\.are\\_presind2</u>",
+      "$verbinfl$")
+
+      val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
+
+      val verbFile = targetDir / "verbinfl.fst"
+      val actualString = verbFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
+
+      assert(actualString == expectedString)
+      tempParserDir.delete()
   }
 
   it should "create subdirectories as necessary for installation" in  {
