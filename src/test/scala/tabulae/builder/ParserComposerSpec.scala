@@ -107,12 +107,28 @@ class ParserComposerSpec extends FlatSpec {
       ParserComposer(projectDir)
       fail("Should not have created a parser.")
     } catch {
-      case t: Throwable => {      
+      case t: Throwable => {
         val expected = "ParserComposer:  cannot compose parser FST until FST symbols have been installed"
         assert(t.toString.contains(expected))
       }
     }
     tempParserDir.delete()
   }
-  it should "write the main parser file latin.fst" in pending
+  it should "write the main parser file latin.fst" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to build a parser:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+
+    ParserComposer(projectDir)
+    val parserFst = projectDir / "latin.fst"
+    assert(parserFst.exists, "ParserComposer did not write parser file " + parserFst)
+    tempParserDir.delete()
+  }
 }
