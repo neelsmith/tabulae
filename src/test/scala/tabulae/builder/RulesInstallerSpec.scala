@@ -15,41 +15,46 @@ class RulesInstallerSpec extends FlatSpec {
   val millis = Calendar.getInstance().getTimeInMillis()
   r.setSeed(millis)
 
-  "The RulesInstaller object" should "install inflectional from a Vector of corpus names" in pending /* {
-    val repo = File("src/test/resources")
-    val datasource = repo / "datasets"
+  "The RulesInstaller object" should "install inflectional from a Vector of corpus names" in  {
+    val datasets = File("src/test/resources/datasets")
     val c = Vector("analytical_types")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val fst = File("src/test/resources/datasets/fst")
+
+    val projectDir = tempParserDir / c.mkString("-")
 
 
     // Ensure target directory is empty before testing:
-    val projectDir = repo / "parsers" /  c.mkString("-")
     val targetDir =  projectDir / "inflection"
     if (targetDir.exists) {
       targetDir.delete()
-      mkdirs(targetDir)
     }
+    mkdirs(targetDir)
     assert(targetDir.exists, "Unable to create new inflection directory " + targetDir)
 
-    val  ri = RulesInstaller(datasource, repo, c)
+    val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
 
-    val expectedFiles = Vector(targetDir / "adjinfl.fst",
+    val expectedFiles = Vector(
+    /*targetDir / "adjinfl.fst",
     targetDir / "advinfl.fst",
     targetDir / "gerundinfl.fst",
     targetDir / "gerundiveinfl.fst",
-    targetDir / "indeclinfl.fst",
     targetDir / "infininfl.fst",
-    targetDir / "irreginfl.fst",
+
     targetDir / "nouninfl.fst",
     targetDir / "ptcplinfl.fst",
     targetDir / "supineinfl.fst",
+    */
+
+    targetDir / "indeclinfl.fst",
+    targetDir / "irreginfl.fst",
     targetDir / "verbinfl.fst")
     for (f <- expectedFiles) {
-      assert(f.exists)
+      assert(f.exists, "Did not find expected file " + f)
     }
-
-    val projectDir = repo / "parsers" / c.mkString("-")
-    projectDir.delete()
-  }*/
+    //tidy up
+    tempParserDir.delete()
+  }
 
   it should "install correctly from more than one source" in pending
 
