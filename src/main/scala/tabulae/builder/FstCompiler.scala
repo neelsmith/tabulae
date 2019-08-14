@@ -12,13 +12,6 @@ object FstCompiler {
 
   /** Compile lexica, morphological rule sets and core parser logic
   *
-  * @param dataDirectory Base directory for finding source data from which
-  * the parser will be built.
-  * @param baseDir A writable working directory where the binary parser
-  * will be written.  Specifically, the parser will be written within a subdirectory named `corpus` of a subdirectory named "`parsers`" of
-  * `baseDir`.
-  * @param corpusList  List of "corpora", used as name of subdirectory where
-  * binary parser will be written.
   */
   def compileAll(
     dataSets: ScalaFile,
