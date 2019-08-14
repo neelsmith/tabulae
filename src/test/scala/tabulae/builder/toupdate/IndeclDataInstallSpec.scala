@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import better.files._
 import java.io.{File => JFile}
 
-class IndeclDataInstallerSpec extends FlatSpec {
+class IndeclDataInstallSpec extends FlatSpec {
 
   "The IndeclRulesInstaller object" should "respond to bad data with an exception" in pending /*{
     try {

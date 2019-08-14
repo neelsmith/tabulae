@@ -4,7 +4,7 @@ import org.scalatest.FlatSpec
 import better.files._
 import java.io.{File => JFile}
 
-class NounRulesInstallerSpec extends FlatSpec {
+class NounRulesInstallSpec extends FlatSpec {
 
   "The NounRulesInstaller object" should "respond to bad data with an exception" in pending /*{
     try {

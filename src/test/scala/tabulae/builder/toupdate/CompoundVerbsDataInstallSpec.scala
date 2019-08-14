@@ -6,7 +6,7 @@ import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
 
-class CompoundVerbsDataInstallerSpec extends FlatSpec {
+class CompoundVerbsDataInstallSpec extends FlatSpec {
 
 
   "The DataInstaller object" should "install compound verb data" in pending /*{

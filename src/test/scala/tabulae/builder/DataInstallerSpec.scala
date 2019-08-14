@@ -15,21 +15,26 @@ class DataInstallerSpec extends FlatSpec {
   r.setSeed(millis)
 
 // USE RANDOMIZED FILE NAMES FOR ALL THESE TESTS
-  "The DataInstaller object" should "install data from a Vector of corpus names" in pending /* {
-    val repo = File("src/test/resources")
-    val datasource = repo / "datasets"
+  "The DataInstaller object" should "install data from a Vector of corpus names" in {
+
+    val datasets = File("src/test/resources/datasets")
     val c = Vector("analytical_types")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+
+
+
     // Ensure target directory is empty before testing:
-    val targetDir = repo / "parsers" /  c.mkString("-") / "lexica"
+    val targetDir = tempParserDir /  c.mkString("-") / "lexica"
     if (targetDir.exists) {
       targetDir.delete()
       mkdirs(targetDir)
     }
 
-    val  di = DataInstaller(datasource, repo, c)
+
+    val  di = DataInstaller(datasets, c, tempParserDir)
     val expectedFiles =  Vector(
         targetDir / "lexicon-verbs.fst"
-
+/*
       targetDir / "lexicon-adjectives.fst",
       targetDir / "lexicon-compoundverbs.fst",
       targetDir / "lexicon-indeclinables.fst",
@@ -50,16 +55,14 @@ class DataInstallerSpec extends FlatSpec {
       targetDir / "lexicon-irregsupines.fst",
       targetDir / "lexicon-irregverbs.fst",
       targetDir / "lexicon-nouns.fst",
-
+*/
     )
     for (f <- expectedFiles) {
       println("Check for file " + f.toString)
-      assert(f.exists)
+      assert(f.exists, "Expected file " + f + " not created.")
     }
-
-    val projectDir = repo / "parsers" / c.mkString("-")
-    projectDir.delete()
-  }*/
+    tempParserDir.delete()
+  }
 
   it should "create subdirectories as necessary for installation" in {
     val datasets = File("src/test/resources/datasets")
