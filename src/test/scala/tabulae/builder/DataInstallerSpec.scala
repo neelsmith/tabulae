@@ -78,25 +78,26 @@ class DataInstallerSpec extends FlatSpec {
 
 
 
-  it should "install data correctly from multiple sources" in pending /*{
-    val repo = File("src/test/resources")
-    val datasource = repo / "datasets"
-    val c = Vector("analytical_types", "shared")
+  it should "install data correctly from multiple sources" in {
 
-    val targetDir = repo / "parsers" /  c.mkString("-") / "lexica"
+    val datasource = File("src/test/resources/datasets")
+    val c = Vector("analytical_types", "shared")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+
+    val targetDir = tempParserDir / c.mkString("-") / "lexica"
     if (targetDir.exists) {
       targetDir.delete()
       mkdirs(targetDir)
     }
 
-    val  di = DataInstaller(datasource, repo, c)
-    val verbsFile =   File("src/test/resources/parsers/analytical_types-shared/lexica/lexicon-verbs.fst")
-    assert(verbsFile.exists)
+    val  di = DataInstaller(datasource, c, tempParserDir)
+    val verbsFile =   tempParserDir / "analytical_types-shared/lexica/lexicon-verbs.fst"
+    assert(verbsFile.exists, "DataInstaller did not write verbs file " + verbsFile)
     val expectedVerbLines = Vector("<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>", "<u>proof\\.v2</u><u>lexent\\.n2280</u><#>am<verb><conj1>")
 
     assert(verbsFile.lines.toVector.filter(_.nonEmpty) == expectedVerbLines)
 
 
-  }*/
+  }
 
 }
