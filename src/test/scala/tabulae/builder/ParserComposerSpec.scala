@@ -82,13 +82,37 @@ class ParserComposerSpec extends FlatSpec {
       fail("Should not have created a parser.")
     } catch {
       case t: Throwable => {
-        println(t)
         val expected = "ParserComposer:  cannot compose parser FST until inflectional rules have been installed"
         assert(t.toString.contains(expected))
       }
     }
     tempParserDir.delete()
   }
-  it should "ensure that the central symbols.fst file is already written" in pending
+  it should "ensure that the central symbols.fst file is already written" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to build a parser:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+
+    SymbolsComposer(symbolsDir, fstSrc)
+
+    // but remove symbols file:
+    (projectDir / "symbols.fst").delete()
+    try {
+      ParserComposer(projectDir)
+      fail("Should not have created a parser.")
+    } catch {
+      case t: Throwable => {      
+        val expected = "ParserComposer:  cannot compose parser FST until FST symbols have been installed"
+        assert(t.toString.contains(expected))
+      }
+    }
+    tempParserDir.delete()
+  }
   it should "write the main parser file latin.fst" in pending
 }

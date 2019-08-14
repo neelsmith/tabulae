@@ -29,6 +29,9 @@ object ParserComposer {
     val rules = projectDir / "inflection"
     if (! rules.exists) { throw new Exception("ParserComposer:  cannot compose parser FST until inflectional rules have been installed.")}
 
+    val symbolsFile = projectDir / "symbols.fst"
+    if (! symbolsFile.exists) { throw new Exception("ParserComposer:  cannot compose parser FST until FST symbols have been installed.")}
+
     val latin = StringBuilder.newBuilder
     latin.append(header)
     latin.append("#include \"" + projectDir.toString + "/symbols.fst\"\n\n" )
