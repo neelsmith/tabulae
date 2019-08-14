@@ -6,12 +6,12 @@ import better.files.Dsl._
 
 /** Install stems data for a corpus-specific parser.
 *
-* @param dataSource Root directory for corpus-specific data sets.
-* @param repo Root of tabulae repository.  Data will be installed to
-* repo/parsers/CORPUS
-* @param corpusList(0) Name of corpus.  This is the name of the subdirectory of
-* dataSource with stem tables, and the name of the destination directory for FST
-* in repo/parsers.
+* @param dataSets Root directory for corpus-specific data sets.
+* @param corpusList "Corpus names" are names subdirectories of the
+* dataSets directory.  Each corpus can have stem tables to install.
+* @param parsers Writable directory for work compiling parser. The parser
+* source will be assembled in a sub-directory named from the list of names
+* in corpusList.
 */
 object DataInstaller {
 

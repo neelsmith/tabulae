@@ -11,6 +11,9 @@ import java.util.Calendar
 // CHANGE TO USE RANDOMIZED TEMP FILE NAMES
 class RulesInstallerSpec extends FlatSpec {
 
+  val r = scala.util.Random
+  val millis = Calendar.getInstance().getTimeInMillis()
+  r.setSeed(millis)
 
   "The RulesInstaller object" should "install inflectional from a Vector of corpus names" in pending /* {
     val repo = File("src/test/resources")
@@ -50,20 +53,24 @@ class RulesInstallerSpec extends FlatSpec {
 
   it should "install correctly from more than one source" in pending
 
-  it should "create subdirectories as necessary for installation" in pending /* {
-    val repo = File("src/test/resources")
-    val datasource = repo / "datasets"
+  it should "create subdirectories as necessary for installation" in  {
+    val datasets = File("src/test/resources/datasets")
     val c = Vector("analytical_types")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val fst = File("src/test/resources/datasets/fst")
 
-    val projectDir = repo / "parsers" / c.mkString("-")
+    val projectDir = tempParserDir / c.mkString("-")
+
     // Ensure target directory does not exist:
     val targetDir = projectDir / "inflection"
     if (targetDir.exists) {
       targetDir.delete()
       assert(targetDir.exists == false, "Unable to delete previous dir " + targetDir)
     }
-    val  ri = RulesInstaller(datasource, repo, c)
-    assert(targetDir.exists)
-    projectDir.delete()
-  }*/
+
+    val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
+    assert(targetDir.exists, "RulesInstaller did not create target directory " + targetDir)
+    // tidy up
+    tempParserDir.delete()
+  }
 }

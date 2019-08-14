@@ -6,22 +6,22 @@ import better.files.Dsl._
 
 object RulesInstaller {
 
-  /** Format compilable FST rules for a named corpus.
+  /** Install stems data for a corpus-specific parser.
   *
+  * @param dataSets Root directory for corpus-specific data sets.
+  * @param corpusList "Corpus names" are names subdirectories of the
+  * dataSets directory.  Each corpus can have stem tables to install.
+  * @param parsers Writable directory for work compiling parser. The parser
+  * source will be assembled in a sub-directory named from the list of names
+  * in corpusList.
+  * @param fst Root directory with pre-composed fst not derived from
+  * user-managed tables.
   */
   def apply(dataSets: File, corpusList: Vector[String], parsers: File, fst: File ): Unit = {
 
     val inflDir = parsers / corpusList.mkString("-") / "inflection"
     if (! inflDir.exists) {mkdirs(inflDir)}
     assert(inflDir.exists, "RulesInstaller: Unable to create inflection directory " + inflDir)
-
-    println("INFLDIR IS " + inflDir)
-
-    // CHANGE TO WORK ON ALL CORPORA!
-    println("SOURCE DIR IS " + dataSets)
-    val srcCorpus = dataSets / corpusList(0)
-    println("Corpus source DIR IS " + srcCorpus)
-
 
     val verbsFst = inflDir / "verbinfl.fst"
     VerbRulesInstaller(dataSets, corpusList, verbsFst )
