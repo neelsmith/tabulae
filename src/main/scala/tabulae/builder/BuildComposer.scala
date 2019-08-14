@@ -21,8 +21,8 @@ object BuildComposer {
   * @param corpusList Name of corpus.  Alphabet file will be copied from
   * data source area to repo/parsers/CORPUS space.
   */
-  def installAlphabet(dataSrc: ScalaFile, repo: ScalaFile, corpusList: Vector[String]): Unit = {
-    val symbolsDir = repo / "parsers" / corpusList.mkString("_") / "symbols"
+  def installAlphabet(dataSrc: ScalaFile, corpusList: Vector[String],  parsers: ScalaFile): Unit = {
+    val symbolsDir = parsers / corpusList.mkString("_") / "symbols"
     mkdirs(symbolsDir)
     // Draw alphabet.fst from first example found:
     val alphabetFiles = for (c <- corpusList) yield {
@@ -48,27 +48,24 @@ object BuildComposer {
   /**  Assemble a tabulae build.
   *
   * @param dataSource Root directory for corpus-specific datasets.
-  * @param repo Root directory of tabulae repository.  Build space will
-  * be created in repo/parsers/CORPUSLIST.
-  * @param corpus Name of corpus. This is the name of an extant subdirectory
-  * of dataSource, and will the name of the subdirectory in repo/parsers
-  * where the build is assembled.
+  * @param corpusList
+  * @param parsers
+  * @param fstSource
   * @param fstcompiler:  Explicit path to SFST compiler binary.
   */
-  def apply(dataSource: ScalaFile, repo: ScalaFile, corpusList: Vector[String], fstcompiler: String) : Unit = {
+  def apply(dataSource: ScalaFile, corpusList: Vector[String], parsers: ScalaFile,  fstSource: ScalaFile, fstcompiler: String) : Unit = {
     println("Composing a lot of build things")
     println("from data source " + dataSource)
-    println("and tabulae repo " + repo)
+    println("into  " + parsers)
 
-    installAlphabet(dataSource, repo, corpusList)
+    installAlphabet(dataSource, corpusList, parsers)
 
 
 
-    AcceptorComposer(repo, corpusList)
+    AcceptorComposer(parsers, corpusList)
 
-    val corpusDir = repo / "parsers" / corpusList.mkString("-")
-    val fstSrc = repo / "fst"
-    SymbolsComposer(corpusDir, fstSrc)
+    val corpusDir = parsers / corpusList.mkString("-")
+    SymbolsComposer(corpusDir, fstSource)
 
     //corpusDir: ScalaFile, fstSource:  ScalaFile
     InflectionComposer(corpusDir)

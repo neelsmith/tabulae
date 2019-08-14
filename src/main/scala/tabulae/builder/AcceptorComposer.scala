@@ -20,8 +20,8 @@ object AcceptorComposer {
   * @param repo Root of tabulae repository.
   * @param corpusList  List of "corpora" names.
   */
-  def apply(repo: ScalaFile, corpusList: Vector[String]): Unit = {
-    val projectDir =  repo / "parsers" / corpusList.mkString("-")
+  def apply(parsers: ScalaFile, corpusList: Vector[String]): Unit = {
+    val projectDir = parsers / corpusList.mkString("-")
     composeMainAcceptor(projectDir)
   }
 
@@ -430,7 +430,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     val online = xducerList.filter(_.nonEmpty)
     if (online.isEmpty) {
       throw new Exception("AcceptorComposer:  no acceptors recognized.")
-      
+
     } else {
       fst.append(online.mkString(" | "))
       fst.append("\n")

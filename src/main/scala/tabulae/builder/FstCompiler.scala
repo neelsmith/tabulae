@@ -35,7 +35,8 @@ object FstCompiler {
 
     //println("Compose build")
     // Compose makefiles and higher-order FST for build system
-    //BuildComposer(dataDirectory, baseDir, corpusList, conf.fstcompile)
+    BuildComposer(dataSets, corpusList, parser, fstSource, conf.fstcompile)
+
 
     // Build it!
     val buildDirectory = parser / corpusList.mkString("-")
