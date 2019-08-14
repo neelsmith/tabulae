@@ -5,30 +5,64 @@ import org.scalatest.FlatSpec
 import better.files._
 import java.io.{File => JFile}
 import better.files.Dsl._
+import java.util.Calendar
 
 class AcceptorComposerSpec extends FlatSpec {
+  val r = scala.util.Random
+  val millis = Calendar.getInstance().getTimeInMillis()
+  r.setSeed(millis)
 
-  val parserRoot = File("src/test/resources/sample-parser")
-  val noFst = File("src/test/resources/no-fst")
 
-  "The AcceptorComposer object" should "write the central acceptor.fst file" in pending
+  "The AcceptorComposer object" should "write the central acceptor.fst file for verb data" in {
+    val datasets = File("src/test/resources/datasets/")
+    val corpora = Vector("analytical_types")
+
+    // write some verb data there:
+
+    val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val targetDir = tempParserDir / corpora.mkString("_") / "lexica"
+    if (targetDir.exists) {
+      tempParserDir.delete()
+    }
+    mkdirs(targetDir)
+    assert(targetDir.exists,"AcceptorComposer:  could not create " + targetDir)
+    val targetFile = targetDir / "lexicon-verbs.fst"
+    VerbDataInstaller(datasets, corpora, targetFile)
+
+    // then try composing the acceptor:
+    AcceptorComposer(tempParserDir, corpora)
+    val mainAcceptor = tempParserDir / corpora.mkString("_") / "acceptor.fst"
+    assert(mainAcceptor.exists, "AcceptorComposer did not create main acceptor file " + mainAcceptor)
+
+    val actualString = mainAcceptor.lines.toVector.mkString("\n")
+    val expected = "$acceptor$ = $squashverburn$ | $squashinfurn$ | $squashptcplurn$ | $squashgerundiveurn$ | $squashgerundurn$ | $squashsupineurn$"
+
+    assert (actualString.contains(expected))
+
+    tempParserDir.delete()
+  }
+
+
   it should "object if there are no FST sources" in pending
 
 
-  it should "recognize when verbs should be included" in pending /*{
+  it should "recognize when verbs should be included" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
     assert(AcceptorComposer.includeVerbs(parserRoot))
-  }*/
+  }
 
-  it should "recognize when verbs should not be included" in pending /*{
+  it should "recognize when verbs should not be included" in {
+    val noFst = File("src/test/resources/no-fst")
     assert(AcceptorComposer.includeVerbs(noFst) == false)
-  }*/
-  it should "compose acceptor's FST statements for verbs" in pending /*{
+  }
+  it should "compose acceptor's FST statements for verbs" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
     val verbAcceptorFst = AcceptorComposer.verbAcceptor(parserRoot)
 
     val expected = "% Conjugated verb form acceptor\n$=verbclass$ = [#verbclass#]\n$squashverburn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
 
     assert(verbAcceptorFst.trim == expected)
-  }*/
+  }
 
   it should "compose acceptor's FST statements for nouns" in pending
   it should "compose acceptor's FST statements for adjectives" in pending

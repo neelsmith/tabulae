@@ -58,7 +58,6 @@ class DataInstallerSpec extends FlatSpec {
 */
     )
     for (f <- expectedFiles) {
-      println("Check for file " + f.toString)
       assert(f.exists, "Expected file " + f + " not created.")
     }
     tempParserDir.delete()

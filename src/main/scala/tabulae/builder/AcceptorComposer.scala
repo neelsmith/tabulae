@@ -15,9 +15,10 @@ import better.files.Dsl._
 object AcceptorComposer {
 
   /** Compose acceptor.fst and the intermediate fst files
-  * it depends on for a named corpus.
+  * it depends on for a named corpus.  Note that this will only
+  * work if some lexica files have already been installed.
   *
-  * @param repo Root of tabulae repository.
+  * @param parsers Root of working area for writing parsers.
   * @param corpusList  List of "corpora" names.
   */
   def apply(parsers: ScalaFile, corpusList: Vector[String]): Unit = {
@@ -33,14 +34,14 @@ object AcceptorComposer {
   * parser where acceptor.fst should be written.
   */
   def composeMainAcceptor(projectDir: ScalaFile): Unit = {
-    if (! projectDir.exists()) {mkdirs(projectDir)}
+    //println("MAKEING MAIN ACCEPTOR FOR " + projectDir)
     val fst = StringBuilder.newBuilder
     // automatically included
     fst.append("#include \"" + projectDir.toString + "/symbols.fst\"\n")
 
     // All the individual acceptor transducers:
     val acceptors : Vector[String] = Vector(
-      verbAcceptor(projectDir),
+      verbAcceptor(projectDir) ,
       indeclAcceptor(projectDir),
       infinitiveAcceptor(projectDir),
       participleAcceptor(projectDir),
@@ -257,12 +258,11 @@ $squashirreginfinnurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#
   /** String defining verb acceptor. */
   def verbAcceptor(dir : ScalaFile): String = {
     if (includeVerbs(dir) ) {
-    """
+"""
 % Conjugated verb form acceptor
 $=verbclass$ = [#verbclass#]
 $squashverburn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  $separator$+$=verbclass$ <verb>[#stemchars#]* [#person#] [#number#] [#tense#] [#mood#] [#voice#]<u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
 """
-
 
 } else { "" }
 }

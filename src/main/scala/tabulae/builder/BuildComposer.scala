@@ -67,7 +67,6 @@ object BuildComposer {
     val corpusDir = parsers / corpusList.mkString("-")
     SymbolsComposer(corpusDir, fstSource)
 
-    //corpusDir: ScalaFile, fstSource:  ScalaFile
     InflectionComposer(corpusDir)
     ParserComposer(corpusDir)
     MakefileComposer(corpusDir, fstcompiler)
