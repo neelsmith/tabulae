@@ -14,6 +14,21 @@ object MakefileComposer {
   * @param fstcompiler Full path to FST compiler.
   */
   def apply(projectDir: ScalaFile, fstcompiler: String) : Unit = {
+    if (! projectDir.exists) {
+      throw new Exception("MakefileComposer: cannot compose main makefile for nonexistent directory " + projectDir)
+    }
+    if (! (projectDir / "symbols.fst").exists) {
+      throw new Exception("MakefileComposer: cannot compose main makefile until symbols.fst is installed in " + projectDir)
+    }
+    if (! (projectDir / "symbols/phonology.fst").exists) {
+      throw new Exception("MakefileComposer: cannot compose main makefile until symbols/phonology.fst is installed in " + projectDir)
+    }
+    if (! (projectDir / "inflection.fst").exists) {
+      throw new Exception("MakefileComposer: cannot compose main makefile until inflection.fst is installed in " + projectDir)
+    } else {
+      //println("KFOUND inflection.fst in " + projectDir)
+    }
+
     composeInflectionMake(projectDir, fstcompiler)
     composeMainMake(projectDir, fstcompiler)
   }
@@ -45,19 +60,16 @@ object MakefileComposer {
   * @
   */
   def composeMainMake(projectDir: ScalaFile, fstcompiler: String): Unit = {
-    if (! projectDir.exists) {
-      throw new Exception("Cannot compose main makefile for nonexistent directory " + projectDir)
-    }
-
-    val acceptorDir = projectDir / "acceptors"
+    //val acceptorDir = projectDir / "acceptors"
     val makeFileText = StringBuilder.newBuilder
     makeFileText.append(s"${projectDir.toString}/latin.a: ${projectDir.toString}/symbols.fst ${projectDir.toString}/symbols/phonology.fst ${projectDir.toString}/inflection.a ${projectDir.toString}/acceptor.a \n")
 
 
+    /*
     if (acceptorDir.exists) {
       val dotAs = dotAsForFst(acceptorDir).mkString(" ")
       makeFileText.append(s"${projectDir.toString}/verb.a: " + dotAs + "\n\n")
-    }
+    }*/
 
     makeFileText.append("%.a: %.fst\n\t" + fstcompiler + " $< $@\n")
      //later:  ${projectDir.toString}/generator.a ")

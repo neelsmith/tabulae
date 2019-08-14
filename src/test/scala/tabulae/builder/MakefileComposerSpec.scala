@@ -54,22 +54,126 @@ class MakefileComposerSpec extends FlatSpec {
       fail("Should not have made makefiles")
     } catch {
       case t : Throwable => {
-        val expected = "MakefileComposer: no inflection rules installed"
+        val expected = "MakefileComposer: cannot compose main makefile until inflection.fst"
         assert(t.toString.contains(expected))
       }
     }
-
-
-
-
+    tempParserDir.delete()
   }
 
 
-  it should "ensure that symbols.fst exists" in pending
+  it should "ensure that symbols.fst exists" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
 
-  it should "ensure that symbols/phonology.fst exists" in pending
-  it should "ensure that inflection.fst exists" in pending
+    // install enough data to compose makefiles:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+
+    // remove symbols.fst:
+    (projectDir / "symbols.fst").delete()
+    try {
+      MakefileComposer(projectDir, compiler)
+      fail("Should not have made makefiles")
+    } catch {
+      case t : Throwable => {
+        val expected = "MakefileComposer: cannot compose main makefile until symbols.fst is installed"
+        assert(t.toString.contains(expected))
+      }
+    }
+    tempParserDir.delete()
+  }
+
+  it should "ensure that symbols/phonology.fst exists" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to compose makefiles:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+
+    // remove phonology.fst:
+    (projectDir / "symbols/phonology.fst").delete()
+    try {
+      MakefileComposer(projectDir, compiler)
+      fail("Should not have made makefiles")
+    } catch {
+      case t : Throwable => {
+        val expected = "MakefileComposer: cannot compose main makefile until symbols/phonology.fst is installed"
+        assert(t.toString.contains(expected))
+      }
+    }
+    tempParserDir.delete()
+  }
+
+  // NOT YET INSTALLED
+  it should "ensure that inflection.fst exists" in  pending /*{
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to compose makefiles:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+    // remove inflection.fst:
+    //(projectDir / "inflection.fst").delete()
+    println("Does inflection.fst exist? " + (projectDir / "inflection.fst").exists)
+    try {
+      MakefileComposer(projectDir, compiler)
+      fail("Should not have made makefiles")
+    } catch {
+      case t : Throwable => {
+        val expected = "MakefileComposer: cannot compose main makefile until inflection.fst is installed"
+        assert(t.toString.contains(expected))
+      }
+    }
+    tempParserDir.delete()
+  }*/
+  // NOT YET INSTALLED
   it should "ensure that acceptor.fst exists" in pending
-  it should "compose the central makefile" in pending
-  it should "compose the makefile for the inflection directory" in pending
+  it should "compose the central makefile" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to compose makefiles:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+    InflectionComposer( projectDir )
+
+    MakefileComposer(projectDir, compiler)
+    assert((projectDir / "makefile").exists)
+    tempParserDir.delete()
+  }
+  it should "compose the makefile for the inflection directory" in {
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val projectDir = tempParserDir / corpora.mkString("-")
+    mkdirs(projectDir)
+
+    // install enough data to compose makefiles:
+    // lexicon, rules, and symbols.
+    installLexica(datasets, corpora, projectDir)
+    installRules(datasets, corpora, projectDir)
+    val symbolsDir = projectDir
+    SymbolsComposer(symbolsDir, fstSrc)
+    InflectionComposer( projectDir )
+
+    MakefileComposer(projectDir, compiler)
+    assert((projectDir / "inflection/makefile").exists)
+    tempParserDir.delete()
+  }
 }
