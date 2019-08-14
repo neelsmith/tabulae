@@ -2,7 +2,7 @@ package edu.holycross.shot.tabulae.builder
 
 import better.files.{File => ScalaFile, _}
 import better.files.Dsl._
-import java.util.Calendar
+
 
 /**
 */
@@ -17,8 +17,6 @@ object SymbolsComposer {
   *
   */
   def apply(corpusDir: ScalaFile, fstSource:  ScalaFile) : Unit = {
-    println("sYMbols cOMPOSR: from " + fstSource + " to " + corpusDir)
-
     if (! corpusDir.exists) { mkdirs(corpusDir)}
     assert(corpusDir.exists,"SymbolsComposer: failed to make directory " + corpusDir)
 
@@ -57,14 +55,10 @@ object SymbolsComposer {
   def copyFst(src: ScalaFile, dest: ScalaFile) : Unit = {
     if (! dest.exists()) {mkdirs(dest)}
     assert(dest.exists, "SymbolsComposer: failed to make directory " + dest)
-    println("COPYING FT INTO " + dest)
 
-    println("COPYING FRO " + src)
      val fstFiles = src.glob("*.fst").toVector
-     println("FILES TO cOPY ARE " + fstFiles)
      for (f <- fstFiles) {
       val targetFile = dest / f.name
-      println("==>COPY " + f + " to " + targetFile)
       targetFile.overwrite(f.lines.mkString("\n"))
      }
   }
