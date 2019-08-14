@@ -65,16 +65,15 @@ class DataInstallerSpec extends FlatSpec {
     val datasets = File("src/test/resources/datasets")
     val c = Vector("analytical_types")
     // Ensure target directory does not exist:
-    val parserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
-    val targetDir = parserDir /  c.mkString("-") / "lexica"
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val targetDir = tempParserDir /  c.mkString("-") / "lexica"
     if (targetDir.exists) {
       targetDir.delete()
     }
-    val  di = DataInstaller(datasets, c, parserDir)
+    val  di = DataInstaller(datasets, c, tempParserDir)
     assert(targetDir.exists, "DataInstaller did not create " + targetDir)
 
-    val projectDir = parserDir / c.mkString("-")
-    projectDir.delete()
+    tempParserDir.delete()
   }
 
 
