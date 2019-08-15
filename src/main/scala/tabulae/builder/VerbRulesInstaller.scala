@@ -26,7 +26,7 @@ object VerbRulesInstaller {
       val data = fstForVerbRules(verbsDir)
       data
     }
-    val fst = srcData.mkString(" |\\\n")
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
 
     if (fst.nonEmpty) {
       targetFile.overwrite("$verbinfl$ = " + fst + "\n\n$verbinfl$\n")

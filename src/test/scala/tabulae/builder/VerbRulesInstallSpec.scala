@@ -103,7 +103,23 @@ class VerbRulesInstallSpec extends FlatSpec {
 
     assert(actualString == expectedString)
     tempParserDir.delete()
+  }
 
+  it should "do nothing if no verb data are present in HC corpus" in {
+    val datasets = File("src/test/resources/lex-no-rules/")
+    val corpora = Vector("lat24", "shared")
+    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val targetDir = parserDir / "inflection"
+    val targetFile = targetDir / "verbinfl.fst"
+    if (targetDir.exists) {
+      parserDir.delete()
+    }
+    mkdirs(targetDir)
+
+    VerbRulesInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
+
+    parserDir.delete()
   }
 
 }
