@@ -41,12 +41,12 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
 
 
 
-  it should "do nothing if no verb data are present in a given corpus" in pending /* {
+  it should "do nothing if no verb data are present in a given corpus" in  {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("no-lexica")
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "inflection"
-    val targetFile = targetDir / "verbinfl.fst"
+    val targetFile = targetDir / "infininfl.fst"
     if (targetDir.exists) {
       parserDir.delete()
     }
@@ -54,30 +54,24 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
 
     InfinitiveRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
-    try {
-      parserDir.delete()
 
-    } catch {
-      case t: Throwable => {
-        println("Failed to delete parsers dir. " + t)
-      }
-    }
-  }*/
+    parserDir.delete()
+  }
 
-  it should "return an empty string if no data are found in the source directory" in pending /*{
+  it should "return an empty string if no data are found in the source directory" in {
     val emptyDir = File("src/test/resources/no-fst")
-    val output = InfinitiveRulesInstaller.fstForVerbRules(emptyDir)
+    val output = InfinitiveRulesInstaller.fstForInfinitiveRules(emptyDir)
     assert(output.isEmpty)
-  }*/
+  }
 
-  it should "return an empty string if asked to create FST strings from a non-existent directory" in  pending /*{
+  it should "return an empty string if asked to create FST strings from a non-existent directory" in  {
     val emptyDir = File("src/test/resources/no-fst")
-    val fst = InfinitiveRulesInstaller.fstForVerbRules(emptyDir)
+    val fst = InfinitiveRulesInstaller.fstForInfinitiveRules(emptyDir)
     assert(fst.isEmpty)
-  }*/
+  }
 
 
-  it should "composite data from multiple sources" in pending /*{
+  it should "composite data from multiple sources" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types", "shared")
     val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
@@ -87,30 +81,32 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
     }
     mkdirs(targetDir)
     assert(targetDir.exists, "InfinitiveRulesInstallerSpec: could not create " + targetDir)
-    val targetFile = targetDir / "verbinfl.fst"
+    val targetFile = targetDir / "infininfl.fst"
     //dataSource: File, corpusList: Vector[String], targetFile: File
     InfinitiveRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists, "InfinitiveRulesInstallerSpec: InfinitiveRulesInstaller did not create " + targetFile)
 
 
 
-    val expectedLines =  Vector("$verbinfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u> |\\",
-    "<conj1><verb>as<2nd><sg><pres><indic><act><u>proof\\.are\\_presind2</u>",
-    "$verbinfl$")
+    //val expectedLines =  Vector("$infininfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u> |\\",
+    //"<conj1><verb>as<2nd><sg><pres><indic><act><u>proof\\.are\\_presind2</u>",
+    //"$infininfl$")
+
+    val expectedLines = Vector("$infinitiveinfl$=<conj1><infin>avisse<pft><act><u>proof\\.are\\_inf1</u>|\\", "<conj1><infin>are<pre><act><u>proof\\.are\\_inf2</u>", "$infinitiveinfl$")
 
     val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
     val actualString = targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
-
+    println(actualString)
     assert(actualString == expectedString)
     tempParserDir.delete()
   }
-*/
+
   it should "do nothing if no verb data are present in multiple named corpora" in pending /*{
     val datasets = File("src/test/resources/lex-no-rules/")
     val corpora = Vector("lat24", "shared")
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = parserDir / "inflection"
-    val targetFile = targetDir / "verbinfl.fst"
+    val targetFile = targetDir / "infininfl.fst"
     if (targetDir.exists) {
       parserDir.delete()
     }
