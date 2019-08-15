@@ -10,14 +10,30 @@ object IrregInfinitiveDataInstaller {
   /** Creates FST file for each CEX file of
   * irregular verb stems.
   *
-  * @param dataSource Root directory of morphological data set.
-  * @param targetFile File to write FST statements to.
+  * @param dataSource Root directory for corpus-specific data sources.
+  * @param corpusList List of corpora within dataSource directory.
+  * @param targetFile File to write FST statements to.  The directory
+  * containing targetFile must already exist.
   */
-  def apply(dataSource: File, targetFile: File) = {
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
+    val srcData = for (corpus <- corpusList) yield {
+      val irregInfinsDir = dataSource / corpus / "irregular-stems/infinitives"
+      if (! irregInfinsDir.exists) {
+        mkdirs(irregInfinsDir)
+      }
+      val data = fstForIrregInfinitiveData(irregInfinsDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString("\n")
+    if (fst.nonEmpty) {
+      // Directory containing targetFile must already exist!
+      targetFile.overwrite(fst)
+    } else {}
+    /*
     val irregInfinitiveFst = fstForIrregInfinitiveData(dataSource)
     if (irregInfinitiveFst.nonEmpty) {
       targetFile.overwrite(irregInfinitiveFst)
-    } else {}
+    } else {}*/
   }
 
   /** Create FST string for a verb tables in a given directory.
