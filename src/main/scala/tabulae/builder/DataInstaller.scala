@@ -27,6 +27,10 @@ object DataInstaller {
     VerbDataInstaller(dataSets, corpusList, verbsTarget)
 
 
+    val irregVerbsTarget = lexica / "lexicon-irregverbs.fst"
+    IrregVerbDataInstaller(dataSets, corpusList, irregVerbsTarget)
+
+
 /*
     val nounsTarget = lexica / "lexicon-nouns.fst"
     NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
@@ -43,8 +47,6 @@ object DataInstaller {
 
 
 
-    val irregVerbsTarget = lexica / "lexicon-irregverbs.fst"
-    IrregVerbDataInstaller(dataSource / corpusList(0) / "irregular-stems/verbs", irregVerbsTarget)
 
     val irregNounsTarget = lexica / "lexicon-irregnouns.fst"
     IrregNounDataInstaller(dataSource / corpusList(0)/ "irregular-stems/nouns", irregNounsTarget)

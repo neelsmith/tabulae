@@ -5,7 +5,6 @@ import better.files.File._
 import better.files.Dsl._
 
 
-
 case class CompoundEntry(
   ruleId: String, compoundLexEnt: String, prefix: String, simplexLexEnt: String
 )

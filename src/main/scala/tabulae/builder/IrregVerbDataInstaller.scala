@@ -5,19 +5,38 @@ import better.files.File._
 import better.files.Dsl._
 
 
+
 object IrregVerbDataInstaller {
 
   /** Creates FST file for each CEX file of
   * irregular verb stems.
   *
-  * @param dataSource Root directory of morphological data set.
-  * @param targetFile File to write FST statements to.
+  * @param dataSource Root directory for corpus-specific data sources.
+  * @param corpusList List of corpora within dataSource directory.
+  * @param targetFile File to write FST statements to.  The directory
+  * containing targetFile must already exist.
   */
-  def apply(dataSource: File, targetFile: File) = {
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
+    val srcData = for (corpus <- corpusList) yield {
+      val irregVerbsDir = dataSource / corpus / "irregular-stems/verbs"
+      if (! irregVerbsDir.exists) {
+        mkdirs(irregVerbsDir)
+      }
+      val data = fstForIrregVerbData(irregVerbsDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString("\n")
+    if (fst.nonEmpty) {
+      // Directory containing targetFile must already exist!
+      targetFile.overwrite(fst)
+    } else {}
+
+    /*
     val irregVerbFst = fstForIrregVerbData(dataSource)
     if (irregVerbFst.nonEmpty) {
       targetFile.overwrite(irregVerbFst)
     } else {}
+    */
   }
 
   /** Create FST string for a verb tables in a given directory.
