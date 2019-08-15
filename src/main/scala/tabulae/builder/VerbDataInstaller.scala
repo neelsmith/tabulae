@@ -24,7 +24,7 @@ object VerbDataInstaller {
       val data = fstForVerbData(verbsDir)
       data
     }
-    val fst = srcData.mkString("\n")
+    val fst = srcData.filter(_.nonEmpty).mkString("\n")
     if (fst.nonEmpty) {
       // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)

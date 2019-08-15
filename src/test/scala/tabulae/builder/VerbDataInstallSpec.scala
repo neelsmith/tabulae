@@ -99,4 +99,21 @@ class VerbDataInstallSpec extends FlatSpec {
 
   }
 
+  it should "do nothing if no verb data are present in one or more extant corpora" in {
+    val datasets = File("src/test/resources/named-empty-copora")
+
+    val corpora = Vector("shared", "lat24")
+    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val targetDir = parserDir / "lexica"
+    val targetFile = targetDir / "lexicon-verbs.fst"
+    if (targetDir.exists) {
+      parserDir.delete()
+    }
+    mkdirs(targetDir)
+
+    VerbDataInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists == false, "Oops, made " + targetFile)
+    parserDir.delete()
+  }
+
 }
