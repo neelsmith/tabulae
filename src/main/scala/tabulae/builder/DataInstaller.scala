@@ -26,10 +26,11 @@ object DataInstaller {
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSets, corpusList, verbsTarget)
 
-
     val irregVerbsTarget = lexica / "lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSets, corpusList, irregVerbsTarget)
 
+    val indeclTarget = lexica / "lexicon-indeclinables.fst"
+    IndeclDataInstaller(dataSets, corpusList, indeclTarget)
 
 /*
     val nounsTarget = lexica / "lexicon-nouns.fst"
@@ -38,8 +39,7 @@ object DataInstaller {
     val adjsTarget = lexica / "lexicon-adjectives.fst"
     AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
 
-    val indeclTarget = lexica / "lexicon-indeclinables.fst"
-    IndeclDataInstaller(dataSource / corpusList(0) / "stems-tables/indeclinables", indeclTarget)
+
 
     val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
     CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)

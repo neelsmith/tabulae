@@ -24,14 +24,17 @@ object CompoundVerbDataInstaller {
     val irregDir = corpus / "irregular-stems/verbs"
     val irregVerbMap = irregMap(irregDir)
 
-    val participleMap = irregParticipleMap(corpus / "irregular-stems/participles")
     val infinitiveMap = irregInfinitiveMap(corpus / "irregular-stems/infinitives")
-    val gerundMap = irregGerundMap(corpus / "irregular-stems/gerunds")
-    val gerundiveMap = irregGerundiveMap(corpus / "irregular-stems/gerundives")
-    val supineMap = irregSupineMap(corpus / "irregular-stems/supines")
 
+    /// Not fully persuaded these are real...
+    //val participleMap = irregParticipleMap(corpus / "irregular-stems/participles")
+    //val gerundMap = irregGerundMap(corpus / "irregular-stems/gerunds")
+    //val gerundiveMap = irregGerundiveMap(corpus / "irregular-stems/gerundives")
+    //val supineMap = irregSupineMap(corpus / "irregular-stems/supines")
+    //
+    //val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ participleMap.keySet ++ infinitiveMap.keySet ++ gerundMap.keySet ++ gerundiveMap.keySet ++ supineMap.keySet
 
-    val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ participleMap.keySet ++ infinitiveMap.keySet ++ gerundMap.keySet ++ gerundiveMap.keySet ++ supineMap.keySet
+    val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ infinitiveMap.keySet
 
     val compoundDir= corpus / "stems-tables/verbs-compound"
     val compoundEntries= compoundInfo(compoundDir)
@@ -47,36 +50,33 @@ object CompoundVerbDataInstaller {
           targetDir / "lexicon-irregcompoundverbs.fst",
           irregVerbMap)
 
-
-    installIrregularParticiples(
-      compoundEntries,
-      targetDir / "lexicon-irregcompoundparticiples.fst",
-      participleMap
-    )
-
     installIrregularInfinitives(
       compoundEntries,
       targetDir / "lexicon-irregcompoundinfinitives.fst",
       infinitiveMap
     )
 
+    /*
+    installIrregularParticiples(
+      compoundEntries,
+      targetDir / "lexicon-irregcompoundparticiples.fst",
+      participleMap
+    )
     installIrregularGerundives(
       compoundEntries,
       targetDir / "lexicon-irregcompoundgerundives.fst",
       gerundiveMap
     )
-
     installIrregularGerunds(
       compoundEntries,
       targetDir / "lexicon-irregcompoundgerunds.fst",
       gerundMap
     )
-
     installIrregularSupines(
       compoundEntries,
       targetDir / "lexicon-irregcompoundsupines.fst",
       supineMap
-    )
+    ) */
 
   }
 
@@ -193,7 +193,34 @@ object CompoundVerbDataInstaller {
     (targetFile).overwrite(verbFst)
   }
 
+  def installIrregularInfinitives(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
+    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
+      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+        val irregLines =  compoundMap(c.simplexLexEnt)
+        val compoundLines = for (ln <- irregLines) yield {
+          val cols = ln.split("#").toVector
 
+          if (cols.size < 5)  {
+            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+          } else {
+            val ruleId = cols(0)
+            val lexent = cols(1)
+            val stem = cols(2)
+            val  tense =cols(3)
+            val voice = cols(4)
+            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${tense}#${voice}"
+          }
+        }
+        compoundLines
+      } else {
+        Vector.empty[String]
+      }
+    }
+    val infinFst = IrregInfinitiveDataInstaller.infinitiveLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
+    (targetFile).overwrite(infinFst)
+  }
+
+/*
   def installIrregularParticiples(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
     val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
       if (compoundMap.keySet.contains(c.simplexLexEnt)) {
@@ -222,32 +249,6 @@ object CompoundVerbDataInstaller {
     }
     val ptcplFst = IrregParticipleDataInstaller.participleLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
     (targetFile).overwrite(ptcplFst)
-  }
-  def installIrregularInfinitives(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
-    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
-      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
-        val irregLines =  compoundMap(c.simplexLexEnt)
-        val compoundLines = for (ln <- irregLines) yield {
-          val cols = ln.split("#").toVector
-
-          if (cols.size < 5)  {
-            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
-          } else {
-            val ruleId = cols(0)
-            val lexent = cols(1)
-            val stem = cols(2)
-            val  tense =cols(3)
-            val voice = cols(4)
-            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${tense}#${voice}"
-          }
-        }
-        compoundLines
-      } else {
-        Vector.empty[String]
-      }
-    }
-    val infinFst = IrregInfinitiveDataInstaller.infinitiveLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
-    (targetFile).overwrite(infinFst)
   }
 
   def installIrregularGerundives(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
@@ -335,7 +336,7 @@ object CompoundVerbDataInstaller {
     val  gerundFst = IrregGerundDataInstaller.gerundLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
     (targetFile).overwrite(gerundFst)
   }
-
+*/
   /** Map lexical URNs to data for simplex verb stems.
   *
   * @param simplexDir Directory containing .cex files
@@ -395,6 +396,29 @@ object CompoundVerbDataInstaller {
     grouped.map{ case (k, v) => (k, v.map(_.v))}
   }
 
+
+  def irregInfinitiveMap(irregDir: File) : Map[String, Vector[String]]= {
+    val raw = cexRules(irregDir)
+    val pairs =  raw.map( s => {
+      val cols = s.split("#")
+      if (cols.size < 5) {
+        throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular infinitive form " + s)
+      } else {
+        //proof.irrinf1#lexent.n15868#isse#pft#act
+        val ruleId = cols(0)
+        val lexent = cols(1)
+        val stem = cols(2)
+        val tense = cols(3)
+        val voice = cols(4)
+        val stemClass = "irreginfin"
+        val data = List(ruleId, lexent, stem, tense,voice,stemClass).mkString("#")
+        KVPair(lexent,data)
+      }
+    })
+    val grouped = pairs.groupBy(_.k)
+    grouped.map{ case (k, v) => (k, v.map(_.v))}
+  }
+  /*
   def irregParticipleMap(irregDir: File) : Map[String, Vector[String]] = {
     val raw = cexRules(irregDir)
     val pairs = raw.map( s => {
@@ -413,27 +437,6 @@ object CompoundVerbDataInstaller {
         val voice = cols(7)
         val stemClass = "irregptcpl"
         val data = List(ruleId, lexent, stem, gender, grammCase, num,tense,voice,stemClass).mkString("#")
-        KVPair(lexent,data)
-      }
-    })
-    val grouped = pairs.groupBy(_.k)
-    grouped.map{ case (k, v) => (k, v.map(_.v))}
-  }
-  def irregInfinitiveMap(irregDir: File) : Map[String, Vector[String]]= {
-    val raw = cexRules(irregDir)
-    val pairs =  raw.map( s => {
-      val cols = s.split("#")
-      if (cols.size < 5) {
-        throw new Exception("CompoundVerbDataInstaller: too few columns in line for irregular infinitive form " + s)
-      } else {
-        //proof.irrinf1#lexent.n15868#isse#pft#act
-        val ruleId = cols(0)
-        val lexent = cols(1)
-        val stem = cols(2)
-        val tense = cols(3)
-        val voice = cols(4)
-        val stemClass = "irreginfin"
-        val data = List(ruleId, lexent, stem, tense,voice,stemClass).mkString("#")
         KVPair(lexent,data)
       }
     })
@@ -501,7 +504,7 @@ object CompoundVerbDataInstaller {
     })
     val grouped = pairs.groupBy(_.k)
     grouped.map{ case (k, v) => (k, v.map(_.v))}
-  }
+  }*/
 
 
   /** Create FST string for a verb tables in a given directory.
