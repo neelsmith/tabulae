@@ -87,11 +87,6 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
     assert(targetFile.exists, "InfinitiveRulesInstallerSpec: InfinitiveRulesInstaller did not create " + targetFile)
 
 
-
-    //val expectedLines =  Vector("$infininfl$ =  <conj1><verb>o<1st><sg><pres><indic><act><u>proof\\.are\\_presind1</u> |\\",
-    //"<conj1><verb>as<2nd><sg><pres><indic><act><u>proof\\.are\\_presind2</u>",
-    //"$infininfl$")
-
     val expectedLines = Vector("$infinitiveinfl$=<conj1><infin>avisse<pft><act><u>proof\\.are\\_inf1</u>|\\", "<conj1><infin>are<pre><act><u>proof\\.are\\_inf2</u>", "$infinitiveinfl$")
 
     val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
@@ -101,7 +96,7 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
     tempParserDir.delete()
   }
 
-  it should "do nothing if no verb data are present in multiple named corpora" in pending /*{
+  it should "do nothing if no verb data are present in multiple named corpora" in {
     val datasets = File("src/test/resources/lex-no-rules/")
     val corpora = Vector("lat24", "shared")
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
@@ -116,6 +111,6 @@ class InfinitiveRulesInstallSpec extends FlatSpec {
     assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
 
     parserDir.delete()
-  }*/
+  }
 
 }

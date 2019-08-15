@@ -26,6 +26,10 @@ object RulesInstaller {
     val verbsFst = inflDir / "verbinfl.fst"
     VerbRulesInstaller(dataSets, corpusList, verbsFst)
 
+    val infinFst = inflDir / "infininfl.fst"
+    InfinitiveRulesInstaller( dataSets, corpusList, infinFst)
+
+
 /*
     val nounsSrc = srcCorpus / "rules-tables/nouns"
     val nounsFst = inflDir / "nouninfl.fst"
@@ -41,9 +45,7 @@ object RulesInstaller {
 
 
 
-    val infinSrc = srcCorpus / "rules-tables/infinitives"
-    val infinFst = inflDir / "infininfl.fst"
-    InfinitiveRulesInstaller( infinSrc,infinFst )
+
 
     val ptcplSrc = srcCorpus / "rules-tables/participles"
     val ptcplFst = inflDir / "ptcplinfl.fst"
