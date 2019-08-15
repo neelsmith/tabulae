@@ -429,7 +429,7 @@ $squashadjurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\.
     }
     val online = xducerList.filter(_.nonEmpty)
     if (online.isEmpty) {
-      throw new Exception("AcceptorComposer:  no acceptors recognized.")
+      throw new Exception("AcceptorComposer:  no lexica found.")
 
     } else {
       fst.append(online.mkString(" | "))
