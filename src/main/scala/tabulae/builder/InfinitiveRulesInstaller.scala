@@ -13,13 +13,28 @@ object InfinitiveRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+    val srcData = for (corpus <- corpusList) yield {
+      val infinitiveDir = srcDir / corpus / "rules-tables/infinitives"
+      if (! infinitiveDir.exists) {
+        mkdirs(infinitiveDir)
+      }
+      val data = fstForInfinitiveRules(infinitiveDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$infinitiveinfl$ = " + fst + "\n\n$infinitiveinfl$\n")
+    } else {}
+    /*
     val infinitiveFst = fstForInfinitiveRules(srcDir)
     if(infinitiveFst.nonEmpty) {
       targetFile.overwrite(infinitiveFst)
-    } else {}
+    } else {}*/
   }
 
 
@@ -38,7 +53,7 @@ object InfinitiveRulesInstaller {
       val fst = infinitiveRulesToFst(rules)
 
       if (fst.nonEmpty) {
-        "$infinitiveinfl$ = " + fst + "\n\n$infinitiveinfl$\n"
+         fst
       } else {
         ""
       }
