@@ -22,7 +22,7 @@ object BuildComposer {
   * data source area to repo/parsers/CORPUS space.
   */
   def installAlphabet(dataSrc: ScalaFile, corpusList: Vector[String],  parsers: ScalaFile): Unit = {
-    val symbolsDir = parsers / corpusList.mkString("_") / "symbols"
+    val symbolsDir = parsers / corpusList.mkString("-") / "symbols"
     mkdirs(symbolsDir)
     // Draw alphabet.fst from first example found:
     val alphabetFiles = for (c <- corpusList) yield {
