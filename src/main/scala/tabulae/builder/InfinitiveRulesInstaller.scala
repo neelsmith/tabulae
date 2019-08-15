@@ -30,11 +30,6 @@ object InfinitiveRulesInstaller {
     if (fst.nonEmpty) {
       targetFile.overwrite("$infinitiveinfl$ = " + fst + "\n\n$infinitiveinfl$\n")
     } else {}
-    /*
-    val infinitiveFst = fstForInfinitiveRules(srcDir)
-    if(infinitiveFst.nonEmpty) {
-      targetFile.overwrite(infinitiveFst)
-    } else {}*/
   }
 
 

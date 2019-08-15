@@ -10,17 +10,33 @@ import java.io.{File => JFile}
 */
 object ParticipleRulesInstaller {
 
+
   /** Write FST rules for all participle data in a directory
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+    val srcData = for (corpus <- corpusList) yield {
+      val participleDir = srcDir / corpus / "rules-tables/participles"
+      if (! participleDir.exists) {
+        mkdirs(participleDir)
+      }
+      val data = fstForParticipleRules(participleDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$participleinfl$ = " + fst + "\n\n$participleinfl$\n")
+    } else {}
+    /*
     val participleFst = fstForParticipleRules(srcDir)
       if(participleFst.nonEmpty) {
         targetFile.overwrite(participleFst)
-      } else {}
+      } else {}*/
   }
 
 
@@ -36,7 +52,7 @@ object ParticipleRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = participleRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$participleinfl$ = " + fst + "\n\n$participleinfl$\n"
+      fst
     } else {
       ""
     }
