@@ -20,7 +20,7 @@ class CompleteBuildSpec extends FlatSpec {
     val c = Vector("analytical_types")
     val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
     val fst = datasets / "fst"
-    val conf = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
+
     val projectDir = tempParserDir / c.mkString("-")
     val target = projectDir / "latin.a"
     if (target.exists()) {
@@ -28,10 +28,17 @@ class CompleteBuildSpec extends FlatSpec {
       rm(target)
       assert(target.exists == false, "Unable to remove target file " + target)
     }
-    FstCompiler.compile(datasets, c, tempParserDir, fst, conf)
 
-    assert(target.exists)
+    if (File("/usr/local/bin/fst-compiler-utf8").exists) {
+      val conf_mac = Configuration("/usr/local/bin/fst-compiler-utf8", "/usr/local/bin/fst-infl",  "/usr/bin/make", "datasets")
+      FstCompiler.compile(datasets, c, tempParserDir, fst, conf_mac)
 
-    //tempParserDir.delete()
+    } else {
+      val conf_linux = Configuration("/usr/bin/fst-compiler-utf8", "/usr/bin/fst-infl",  "/usr/bin/make", "datasets")
+      FstCompiler.compile(datasets, c, tempParserDir, fst, conf_linux)
+    }
+
+    assert(target.exists, "Failed to compile binary parser " + target)
+    tempParserDir.delete()
   }
 }
