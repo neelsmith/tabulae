@@ -6,6 +6,7 @@ import better.files.Dsl._
 import java.io.{File => JFile}
 
 
+
 /** Object for converting tabular source to FST statements.
 */
 object AdjectiveRulesInstaller {
@@ -14,12 +15,22 @@ object AdjectiveRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
-    val adjectiveFst = fstForAdjectiveRules(srcDir)
-    if(adjectiveFst.nonEmpty) {
-      targetFile.overwrite(adjectiveFst)
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit =  {
+    val srcData = for (corpus <- corpusList) yield {
+      val adjectivesDir = srcDir / corpus / "rules-tables/adjectives"
+      if (! adjectivesDir.exists) {
+        mkdirs(adjectivesDir)
+      }
+      val data = fstForAdjectiveRules(adjectivesDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$adjectiveinfl$ = " + fst + "\n\n$adjectiveinfl$\n")
     } else {}
   }
 
@@ -36,7 +47,7 @@ object AdjectiveRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = adjectiveRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$adjectiveinfl$ = " + fst + "\n\n$adjectiveinfl$\n"
+      fst
     } else {
       ""
     }

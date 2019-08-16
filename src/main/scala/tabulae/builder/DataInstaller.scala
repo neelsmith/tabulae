@@ -37,18 +37,18 @@ object DataInstaller {
     val indeclTarget = lexica / "lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSets, corpusList, indeclTarget)
 
-/*
     val nounsTarget = lexica / "lexicon-nouns.fst"
-    NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
+    NounDataInstaller(dataSets, corpusList, nounsTarget)
 
     val irregPronounsTarget = lexica / "lexicon-irregpronouns.fst"
-    IrregPronounDataInstaller(dataSource/corpusList(0) / "irregular-stems/pronouns", irregPronounsTarget)
+    IrregPronounDataInstaller(dataSets, corpusList, irregPronounsTarget)
+
+    val adjsTarget = lexica / "lexicon-adjectives.fst"
+    AdjectiveDataInstaller(dataSets, corpusList, adjsTarget)
+/*
 
     val irregNounsTarget = lexica / "lexicon-irregnouns.fst"
     IrregNounDataInstaller(dataSource / corpusList(0)/ "irregular-stems/nouns", irregNounsTarget)
-
-    val adjsTarget = lexica / "lexicon-adjectives.fst"
-    AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
 
     val irregAdjectivesTarget = lexica / "lexicon-irregadjectives.fst"
     IrregAdjectiveDataInstaller(dataSource / corpusList(0) / "irregular-stems/adjectives", irregAdjectivesTarget)
