@@ -41,17 +41,19 @@ class DataInstallerSpec extends FlatSpec {
         targetDir / "lexicon-irreginfinitives.fst",
 
         targetDir / "lexicon-indeclinables.fst",
+        targetDir / "lexicon-adjectives.fst",
+        targetDir / "lexicon-nouns.fst",
+
+        targetDir / "lexicon-irregpronouns.fst"
+
 /*
       targetDir / "lexicon-irregcompoundverbs.fst",
       targetDir / "lexicon-irregcompoundinfinitives.fst",
 
-      targetDir / "lexicon-adjectives.fst",
       targetDir / "lexicon-irregadjectives.fst",
       targetDir / "lexicon-irregadverbs.fst",
-
-      targetDir / "lexicon-nouns.fst",
       targetDir / "lexicon-irregnouns.fst",
-      targetDir / "lexicon-irregpronouns.fst",
+  ,
 */
 
   //Maybe bogus:

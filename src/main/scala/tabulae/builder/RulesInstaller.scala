@@ -32,27 +32,27 @@ object RulesInstaller {
     val ptcplFst = inflDir / "ptcplinfl.fst"
     ParticipleRulesInstaller( dataSets, corpusList, infinFst  )
 
-/*
-    val nounsSrc = srcCorpus / "rules-tables/nouns"
+
     val nounsFst = inflDir / "nouninfl.fst"
-    NounRulesInstaller( nounsSrc,nounsFst )
+    NounRulesInstaller( dataSets, corpusList,nounsFst )
 
-    val adjsSrc = srcCorpus / "rules-tables/adjectives"
     val adjectivesFst = inflDir / "adjinfl.fst"
-    AdjectiveRulesInstaller( adjsSrc,adjectivesFst )
+    AdjectiveRulesInstaller( dataSets, corpusList, adjectivesFst )
 
-    val advsSrc = srcCorpus / "rules-tables/adverbs"
     val advsFst = inflDir / "advinfl.fst"
-    AdverbRulesInstaller( advsSrc,advsFst )
+    AdverbRulesInstaller( dataSets, corpusList, advsFst )
 
 
-    val gndvSrc = srcCorpus / "rules-tables/gerundives"
+
     val gndvFst = inflDir / "gerundiveinfl.fst"
-    GerundiveRulesInstaller( gndvSrc,gndvFst  )
+    GerundiveRulesInstaller( dataSets, corpusList, gndvFst  )
 
-    val gndSrc = srcCorpus / "rules-tables/gerunds"
+
     val gndFst = inflDir / "gerundinfl.fst"
-    GerundRulesInstaller( gndSrc,gndFst  )
+    GerundRulesInstaller( dataSets, corpusList, gndFst  )
+
+
+/*
 
     val supineSrc = srcCorpus / "rules-tables/supines"
     val supineFst = inflDir / "supineinfl.fst"
