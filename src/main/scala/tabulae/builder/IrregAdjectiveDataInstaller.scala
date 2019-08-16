@@ -16,7 +16,7 @@ object IrregAdjectiveDataInstaller {
   * @param targetFile File to write FST statements to.  The directory
   * containing targetFile must already exist.
   */
-  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) ={
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
     val srcData = for (corpus <- corpusList) yield {
       val irregAdjectivesDir = dataSource / corpus / "irregular-stems/adjectives"
       if (! irregAdjectivesDir.exists) {
