@@ -12,15 +12,31 @@ object AdjectiveDataInstaller {
   /** Write FST rules for all adjective stem data in a given directory
   * of tabular files.
   *
-  * @param srcDir Directory with inflectional rules.
-  * @param targetFile File to write FST statements to.
+  * @param dataSource Root directory for corpus-specific data sources.
+  * @param corpusList List of corpora within dataSource directory.
+  * @param targetFile File to write FST statements to.  The directory
+  * containing targetFile must already exist.
   */
-  def apply(srcDir: File, targetFile: File) = {
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) ={
+    val srcData = for (corpus <- corpusList) yield {
+      val adjectivesDir = dataSource / corpus / "stems-tables/adjectives"
+      if (! adjectivesDir.exists) {
+        mkdirs(adjectivesDir)
+      }
+      val data = fstForAdjectiveData(adjectivesDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString("\n")
+    if (fst.nonEmpty) {
+      // Directory containing targetFile must already exist!
+      targetFile.overwrite(fst)
+    } else {}
+    /*
     val adjectiveFst = fstForAdjectiveData(srcDir)
 
     if (adjectiveFst.nonEmpty) {
       targetFile.overwrite(adjectiveFst)
-    } else { }
+    } else { }*/
   }
 
   /** Translates one line of CEX data documenting a adjective stem

@@ -32,11 +32,6 @@ object NounDataInstaller {
       // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)
     } else {}
-    /*
-      val nounFst = fstForNounData(srcDir)
-      if (nounFst.nonEmpty) {
-        targetFile.overwrite(nounFst)
-      } else {}*/
   }
 
   /** Translates one line of CEX data documenting a noun stem
