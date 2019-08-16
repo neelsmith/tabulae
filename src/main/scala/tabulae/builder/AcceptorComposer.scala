@@ -225,7 +225,7 @@ $squashirreggerundiveurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnch
   """
 % Irregular participle acceptor
 $squashirregptcplurn$ = <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $tense$ $voice$ <irregptcpl> <div> <irregptcpl> <u>[#urnchar#]:<>+\.:<>[#urnchar#]:<>+</u>
-  """
+"""
 } else {""}
   }
 

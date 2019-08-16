@@ -162,16 +162,85 @@ class AcceptorComposerSpec extends FlatSpec {
 
 
 
-  it should "compose acceptor's FST statements for irregular verbs" in pending
-  it should "compose acceptor's FST statements for irregular infinitives" in pending
-  it should "compose acceptor's FST statements for irregular participles" in pending
-  it should "compose acceptor's FST statements for irregular gerunds" in pending
+  it should "compose acceptor's FST statements for irregular verbs" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregVerbAcceptorFst = AcceptorComposer.irregVerbAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular verb acceptor","$squashirregverburn$ =  <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+[#person#] [#number#] [#tense#] [#mood#] [#voice#]<irregcverb><div><irregcverb><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregVerbAcceptorFst)
+    assert (expected == irregVerbAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for irregular infinitives" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregInfinitiveAcceptorFst = AcceptorComposer.irregInfinitiveAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular infinitive acceptor","$squashirreginfinnurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $tense$ $voice$ <irreginfin> <div> <irreginfin> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregInfinitiveAcceptorFst)
+    assert (expected == irregInfinitiveAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+
+  it should "compose acceptor's FST statements for irregular nouns" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregNounAcceptorFst = AcceptorComposer.irregNounAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular noun acceptor","$squashirregnounurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregnoun> <div> <irregnoun> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregNounAcceptorFst)
+    assert (expected == irregNounAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for irregular adverbs" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregAdvAcceptorFst = AcceptorComposer.irregAdverbAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular adverb acceptor","$squashirregadvurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $degree$ <irregadv> <div> <irregadv> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregAdvAcceptorFst)
+    assert (expected == irregAdvAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for irregular pronouns" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregPronAcceptorFst = AcceptorComposer.irregPronounAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular pronoun acceptor","$squashirregpronurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ <irregpron> <div> <irregpron> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregPronAcceptorFst)
+    assert (expected == irregPronAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for irregular adjectives" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregAdjectiveAcceptorFst = AcceptorComposer.irregAdjectiveAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular adjective acceptor","$squashirregadjurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $degree$ <irregadj> <div> <irregadj> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(irregAdjectiveAcceptorFst)
+    assert (expected == irregAdjectiveAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+
+  // THESE AREA PROBABLY BOGUS:
+  /*
+  it should "compose acceptor's FST statements for irregular participles" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregPtcplAcceptorFst = AcceptorComposer.irregParticipleAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular participle acceptor","$squashirregptcplurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $tense$ $voice$ <irregptcpl> <div> <irregptcpl> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    assert (expected == irregPtcplAcceptorFst.trim.split("\n").toVector.filter(_.nonEmpty))
+  }
+
+  it should "compose acceptor's FST statements for irregular gerunds" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val irregPtcplAcceptorFst = AcceptorComposer.irregParticipleAcceptor(parserRoot)
+    val expected = Vector(
+      "% Irregular participle acceptor","$squashirregptcplurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ $gender$ $case$ $number$ $tense$ $voice$ <irregptcpl> <div> <irregptcpl> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    assert (expected == irregPtcplAcceptorFst.trim.split("\n").toVector.filter(_.nonEmpty))
+  }
   it should "compose acceptor's FST statements for irregular gerundives" in pending
   it should "compose acceptor's FST statements for irregular supines" in pending
-  it should "compose acceptor's FST statements for irregular nouns" in pending
-  it should "compose acceptor's FST statements for irregular adverbs" in pending
-  it should "compose acceptor's FST statements for irregular pronouns" in pending
-  it should "compose acceptor's FST statements for irregular adjectives" in pending
+  */
+
 
 
 
