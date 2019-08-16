@@ -48,15 +48,11 @@ class DataInstallerSpec extends FlatSpec {
         targetDir / "lexicon-irregadjectives.fst",
         targetDir / "lexicon-irregadverbs.fst",
 
-        targetDir / "lexicon-irregpronouns.fst"
+        targetDir / "lexicon-irregpronouns.fst",
 
-/*
-      targetDir / "lexicon-irregcompoundverbs.fst",
-      targetDir / "lexicon-irregcompoundinfinitives.fst",
+        targetDir / "lexicon-irregcompoundverbs.fst",
+        targetDir / "lexicon-irregcompoundinfinitives.fst"
 
-
-
-*/
 
   //Maybe bogus:
 /*

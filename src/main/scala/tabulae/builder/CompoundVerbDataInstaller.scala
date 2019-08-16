@@ -11,6 +11,13 @@ case class CompoundEntry(
 
 object CompoundVerbDataInstaller {
 
+
+  /** Recursively create a single map of key values to a Vector of Strings,
+  * from a list of maps structured that way.
+  *
+  * @param mapList List of maps to merge.
+  * @param singleMap Contents of single merged map so far.
+  */
   def mergeMaps(
     mapList: Vector[Map[String, Vector[String]]],
     singleMap:   Map[String, Vector[String]] =   Map.empty[String, Vector[String]] ) :
@@ -28,36 +35,21 @@ object CompoundVerbDataInstaller {
   *
   */
   def apply(dataSets: File, corpusList: Vector[String], targetDir: File) : Unit = {
-
     // Let's develop these one at a time...
     val simplexMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
       simplexMap(dataSets / c / "stems-tables/verbs-simplex")
     }
     val regularVerbMap = mergeMaps(simplexMaps)
-    //println("SIMPLEx; " + regularVerbMap)
-
 
     val irregVerbMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
       irregMap(dataSets / c / "irregular-stems/verbs")
     }
     val irregVerbMap = mergeMaps(irregVerbMaps)
 
-
     val infinitiveMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
       irregInfinitiveMap(dataSets / c / "irregular-stems/infinitives")
     }
     val infinitiveMap = mergeMaps(infinitiveMaps)
-
-
-    /// Not fully persuaded these are real...
-    //val participleMap = irregParticipleMap(corpus / "irregular-stems/participles")
-    //val gerundMap = irregGerundMap(corpus / "irregular-stems/gerunds")
-    //val gerundiveMap = irregGerundiveMap(corpus / "irregular-stems/gerundives")
-    //val supineMap = irregSupineMap(corpus / "irregular-stems/supines")
-    //
-    //val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ participleMap.keySet ++ infinitiveMap.keySet ++ gerundMap.keySet ++ gerundiveMap.keySet ++ supineMap.keySet
-
-
 
     val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ infinitiveMap.keySet
 
@@ -66,16 +58,20 @@ object CompoundVerbDataInstaller {
       compoundInfo(compoundDir)
     }
     val compoundEntries= compoundEntryLists.flatten
-    //println("COMPOUND ENTRIES: "+ compoundEntries)
+    require(reffOK(compoundEntries, allVerbKeys), "CompoundVerbDataInstaller: compound verb data includes invalid references to simplex forms.")
 
-    require(reffOK(compoundEntries, allVerbKeys))
-
+    /*
+    println("Ready to install from:")
+    println("\tCompound map " + compoundEntries)
+    println("\tregulars " + regularVerbMap)
+    println("\tirregulars " + irregVerbMap)
+    println("\tinfinitives " + infinitiveMap)
+    */
     installRegularCompounds(
       compoundEntries,
       targetDir / "lexicon-compoundverbs.fst",
       regularVerbMap
     )
-
 
     installIrregularCompounds(compoundEntries,
           targetDir / "lexicon-irregcompoundverbs.fst",
@@ -125,16 +121,22 @@ object CompoundVerbDataInstaller {
   * regular and irregular stems in a data set.
   */
   def reffOK (compounds: Vector[CompoundEntry], keys: Set[String]) : Boolean = {
-    for (c <- compounds) {
-      if (keys.contains(c.simplexLexEnt)) {
-        //ok
-      } else {
-        println("CompoundVerbDataInstaller:  bad reference to simplex verb " + c.simplexLexEnt + " in compound verb object " + c)
-        println("Key set for simplex verbs was " + keys)
-        throw new Exception("CompoundVerbDataInstaller:  bad reference to simplex verb " + c.simplexLexEnt + " in compound verb object " + c)
+    if (compounds.isEmpty) {
+      // It's empty, so no conflicts
+      true
+
+    } else {
+      for (c <- compounds) {
+        if (keys.contains(c.simplexLexEnt)) {
+          //ok
+        } else {
+          println("CompoundVerbDataInstaller:  bad reference to simplex verb " + c.simplexLexEnt + " in compound verb object " + c)
+          println("Key set for simplex verbs was " + keys)
+          throw new Exception("CompoundVerbDataInstaller:  bad reference to simplex verb " + c.simplexLexEnt + " in compound verb object " + c)
+        }
       }
+      true
     }
-    true
   }
 
   /** Create a Vector of [[CompoundEntry]]s from the CEX
@@ -166,91 +168,97 @@ object CompoundVerbDataInstaller {
   * @param simplexMap Map of lexical entity IDs to simplex
   * stem data in CEX format.
   */
-  def installRegularCompounds(compounds: Vector[CompoundEntry], targetFile: File, simplexMap: Map[String, Vector[String]]) = {//: Unit = {
-    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
-      if (simplexMap.keySet.contains(c.simplexLexEnt)) {
-        val simplexLines =  simplexMap(c.simplexLexEnt)
-        val compoundLines= for (ln <- simplexLines) yield {
-          val cols = ln.split("#").toVector
-          //Rule#LexicalEntity#Stem#Class
-          if (cols.size < 3)  {
-            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
-          } else {
-            val simplexRule = cols(0)
-            val stem = cols(1)
-            val stemClass = cols(2)
+  def installRegularCompounds(compounds: Vector[CompoundEntry], targetFile: File, simplexMap: Map[String, Vector[String]]) : Unit = {
 
-            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${stemClass}"
+    if (compounds.isEmpty) {} else {
+
+      val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
+        if (simplexMap.keySet.contains(c.simplexLexEnt)) {
+          val simplexLines =  simplexMap(c.simplexLexEnt)
+          val compoundLines= for (ln <- simplexLines) yield {
+            val cols = ln.split("#").toVector
+            //Rule#LexicalEntity#Stem#Class
+            if (cols.size < 3)  {
+              throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+            } else {
+              val simplexRule = cols(0)
+              val stem = cols(1)
+              val stemClass = cols(2)
+
+              s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${stemClass}"
+            }
           }
+          compoundLines
+        } else {
+          Vector.empty[String]
         }
-        compoundLines
-      } else {
-        Vector.empty[String]
       }
+      val verbFst = VerbDataInstaller.verbLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
+      (targetFile).overwrite(verbFst)
     }
-
-    val verbFst = VerbDataInstaller.verbLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
-    (targetFile).overwrite(verbFst)
-
   }
 
   def installIrregularCompounds(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
-    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
-      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
-        val irregLines =  compoundMap(c.simplexLexEnt)
-        val compoundLines = for (ln <- irregLines) yield {
-          val cols = ln.split("#").toVector
-          if (cols.size < 9)  {
-            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
-          } else {
-            val ruleId = cols(0)
-            val lexent = cols(1)
-            val stem = cols(2)
-            val  person =cols(3)
-            val num = cols(4)
-            val  tense = cols(5)
-            val mood = cols(6)
-            val voice = cols(7)
-            val stemClass = cols(8)
+    if (compounds.isEmpty) {} else {
+      val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
+        if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+          val irregLines =  compoundMap(c.simplexLexEnt)
+          val compoundLines = for (ln <- irregLines) yield {
+            val cols = ln.split("#").toVector
+            if (cols.size < 9)  {
+              throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+            } else {
+              val ruleId = cols(0)
+              val lexent = cols(1)
+              val stem = cols(2)
+              val  person =cols(3)
+              val num = cols(4)
+              val  tense = cols(5)
+              val mood = cols(6)
+              val voice = cols(7)
+              val stemClass = cols(8)
 
-            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${person}#${num}#${tense}#${mood}#${voice}"
+              s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${person}#${num}#${tense}#${mood}#${voice}"
+            }
           }
+          compoundLines
+        } else {
+          Vector.empty[String]
         }
-        compoundLines
-      } else {
-        Vector.empty[String]
       }
-    }
 
-    val verbFst = IrregVerbDataInstaller.verbLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
-    (targetFile).overwrite(verbFst)
+      val verbFst = IrregVerbDataInstaller.verbLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
+      (targetFile).overwrite(verbFst)
+    }
   }
 
   def installIrregularInfinitives(compounds: Vector[CompoundEntry], targetFile: File, compoundMap: Map[String, Vector[String]]) : Unit = {
-    val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
-      if (compoundMap.keySet.contains(c.simplexLexEnt)) {
-        val irregLines =  compoundMap(c.simplexLexEnt)
-        val compoundLines = for (ln <- irregLines) yield {
-          val cols = ln.split("#").toVector
+    if (compounds.isEmpty) {} else {
+      val compoundDataLines = for ((c,i) <- compounds.zipWithIndex) yield {
+        if (compoundMap.keySet.contains(c.simplexLexEnt)) {
+          val irregLines =  compoundMap(c.simplexLexEnt)
+          val compoundLines = for (ln <- irregLines) yield {
+            val cols = ln.split("#").toVector
 
-          if (cols.size < 5)  {
-            throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
-          } else {
-            val ruleId = cols(0)
-            val lexent = cols(1)
-            val stem = cols(2)
-            val  tense =cols(3)
-            val voice = cols(4)
-            s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${tense}#${voice}"
+            if (cols.size < 5)  {
+              throw new Exception("CompoundVerbDataInstaller: two few columns in data source " + cols)
+            } else {
+              val ruleId = cols(0)
+              val lexent = cols(1)
+              val stem = cols(2)
+              val  tense =cols(3)
+              val voice = cols(4)
+              s"${c.ruleId}_${i}#${c.compoundLexEnt}#${c.prefix}${stem}#${tense}#${voice}"
+            }
           }
+          compoundLines
+        } else {
+          Vector.empty[String]
         }
-        compoundLines
-      } else {
-        Vector.empty[String]
       }
+      val infinFst = IrregInfinitiveDataInstaller.infinitiveLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
+      (targetFile).overwrite(infinFst)
     }
-    val infinFst = IrregInfinitiveDataInstaller.infinitiveLinesToFst(compoundDataLines.flatten.filter(_.nonEmpty))
-    (targetFile).overwrite(infinFst)
   }
 
 /*
@@ -550,12 +558,17 @@ object CompoundVerbDataInstaller {
   * @param dir Directory with tables of verb data.
   */
   def cexRules(dir: File) : Vector[String] = {
-    val verbFiles = dir.glob("*.cex").toVector
-    val fstLines = for (f <- verbFiles) yield {
-      // omit empty lines and header
-      f.lines.toVector.tail.filter(_.nonEmpty)
+
+    if (! dir.exists) {
+      Vector.empty[String]
+    } else {
+      val verbFiles = dir.glob("*.cex").toVector
+      val fstLines = for (f <- verbFiles) yield {
+        // omit empty lines and header
+        f.lines.toVector.tail.filter(_.nonEmpty)
+      }
+      fstLines.flatten
     }
-    fstLines.flatten
   }
 
 }
