@@ -88,7 +88,9 @@ class ParserComposerSpec extends FlatSpec {
     }
     tempParserDir.delete()
   }
-  it should "ensure that the central symbols.fst file is already written" in {
+
+
+  it should "ensure that the central symbols.fst file is already written" in pending /*{
     val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
     val projectDir = tempParserDir / corpora.mkString("-")
     mkdirs(projectDir)
@@ -113,7 +115,7 @@ class ParserComposerSpec extends FlatSpec {
       }
     }
     tempParserDir.delete()
-  }
+  }*/
   it should "write the main parser file latin.fst" in {
     val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
     val projectDir = tempParserDir / corpora.mkString("-")

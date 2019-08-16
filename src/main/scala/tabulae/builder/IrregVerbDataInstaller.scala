@@ -6,6 +6,7 @@ import better.files.Dsl._
 
 
 
+
 object IrregVerbDataInstaller {
 
   /** Creates FST file for each CEX file of
@@ -30,13 +31,6 @@ object IrregVerbDataInstaller {
       // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)
     } else {}
-
-    /*
-    val irregVerbFst = fstForIrregVerbData(dataSource)
-    if (irregVerbFst.nonEmpty) {
-      targetFile.overwrite(irregVerbFst)
-    } else {}
-    */
   }
 
   /** Create FST string for a verb tables in a given directory.
