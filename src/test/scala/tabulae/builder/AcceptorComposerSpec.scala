@@ -132,9 +132,33 @@ class AcceptorComposerSpec extends FlatSpec {
     //println(ptcplAcceptorFst)
     assert (expected == ptcplAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
   }
-  it should "compose acceptor's FST statements for gerundives" in pending
-  it should "compose acceptor's FST statements for gerunds" in pending
-  it should "compose acceptor's FST statements for supines" in pending
+  it should "compose acceptor's FST statements for gerundives" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val gerundiveAcceptorFst = AcceptorComposer.gerundiveAcceptor(parserRoot)
+    val expected = Vector(
+      "% Gerundive acceptor","$=verbclass$ = [#verbclass#]","$squashgerundiveurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <gerundive>[#stemchars#]* [#gender#] [#case#][#number#] <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(gerundiveAcceptorFst)
+    assert (expected == gerundiveAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for gerunds" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val gerundAcceptorFst = AcceptorComposer.gerundAcceptor(parserRoot)
+    val expected = Vector(
+      "% Gerund acceptor","$=verbclass$ = [#verbclass#]","$squashgerundurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <gerund>[#stemchars#]* [#case#] <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(gerundAcceptorFst)
+    assert (expected == gerundAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for supines" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val supineAcceptorFst = AcceptorComposer.supineAcceptor(parserRoot)
+    val expected = Vector(
+      "% Supine acceptor","$=verbclass$ = [#verbclass#]","$squashsupineurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$ <div> $=verbclass$ <supine>[#stemchars#]* [#case#] <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(supineAcceptorFst)
+    assert (expected == supineAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
 
 
 
