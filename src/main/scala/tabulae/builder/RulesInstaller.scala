@@ -6,7 +6,7 @@ import better.files.Dsl._
 
 object RulesInstaller {
 
-  /** Install stems data for a corpus-specific parser.
+  /** Install inflectional rules for a corpus-specific parser.
   *
   * @param dataSets Root directory for corpus-specific data sets.
   * @param corpusList "Corpus names" are names subdirectories of the
