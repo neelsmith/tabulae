@@ -7,19 +7,36 @@ import java.io.{File => JFile}
 
 
 
+
 object NounDataInstaller {
 
   /** Write FST rules for all noun stem data in a given directory
   * of tabular files.
   *
-  * @param srcDir Directory with inflectional rules.
-  * @param targetFile File to write FST statements to.
+  * @param dataSource Root directory for corpus-specific data sources.
+  * @param corpusList List of corpora within dataSource directory.
+  * @param targetFile File to write FST statements to.  The directory
+  * containing targetFile must already exist.
   */
-  def apply(srcDir: File, targetFile: File) = {
+  def apply(dataSource: File, corpusList: Vector[String], targetFile: File) = {
+    val srcData = for (corpus <- corpusList) yield {
+      val nounsDir = dataSource / corpus / "stems-tables/nouns"
+      if (! nounsDir.exists) {
+        mkdirs(nounsDir)
+      }
+      val data = fstForNounData(nounsDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString("\n")
+    if (fst.nonEmpty) {
+      // Directory containing targetFile must already exist!
+      targetFile.overwrite(fst)
+    } else {}
+    /*
       val nounFst = fstForNounData(srcDir)
       if (nounFst.nonEmpty) {
         targetFile.overwrite(nounFst)
-      } else {}
+      } else {}*/
   }
 
   /** Translates one line of CEX data documenting a noun stem

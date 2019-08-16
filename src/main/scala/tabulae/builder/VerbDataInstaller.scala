@@ -29,7 +29,6 @@ object VerbDataInstaller {
       // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)
     } else {}
-
   }
 
   /** Create FST string for a verb tables in a given directory.

@@ -12,17 +12,33 @@ import java.io.{File => JFile}
 */
 object NounRulesInstaller {
 
+
   /** Write FST rules for all noun data in a directory
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit =  {
+    val srcData = for (corpus <- corpusList) yield {
+      val nounsDir = srcDir / corpus / "rules-tables/nouns"
+      if (! nounsDir.exists) {
+        mkdirs(nounsDir)
+      }
+      val data = fstForNounRules(nounsDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$nouninfl$ = " + fst + "\n\n$nouninfl$\n")
+    } else {}
+    /*
     val nounFst = fstForNounRules(srcDir)
       if(nounFst.nonEmpty) {
         targetFile.overwrite(nounFst)
-      } else {}
+      } else {}*/
   }
 
 
@@ -38,7 +54,7 @@ object NounRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = nounRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$nouninfl$ = " + fst + "\n\n$nouninfl$\n"
+      fst
     } else {
       ""
     }
