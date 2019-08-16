@@ -75,7 +75,6 @@ class AcceptorComposerSpec extends FlatSpec {
   it should "compose acceptor's FST statements for nouns" in {
     val parserRoot = File("src/test/resources/sample-parser-data")
     val nounAcceptorFst = AcceptorComposer.nounAcceptor(parserRoot)
-    println(nounAcceptorFst)
     val expected = Vector(
       "% Noun acceptor:",
       "$=nounclass$ = [#nounclass#]",
@@ -84,12 +83,55 @@ class AcceptorComposerSpec extends FlatSpec {
     assert (expected == nounAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
   }
 
-  
-  it should "compose acceptor's FST statements for adjectives" in pending
-  it should "compose acceptor's FST statements for adverbs" in pending
-  it should "compose acceptor's FST statements for indeclinables" in pending
-  it should "compose acceptor's FST statements for infinitives" in pending
-  it should "compose acceptor's FST statements for participles" in pending
+
+  it should "compose acceptor's FST statements for adjectives" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val adjAcceptorFst = AcceptorComposer.adjectiveAcceptor(parserRoot)
+    val expected = Vector(
+      "% Adjective acceptor:","$=adjectiveclass$ = [#adjectiveclass#]","$squashadjurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj>$=adjectiveclass$   <div> $=adjectiveclass$  <adj> [#stemchars#]* $=gender$ $case$ $number$ $degree$ <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    assert (expected == adjAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for adverbs" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val advAcceptorFst = AcceptorComposer.adverbAcceptor(parserRoot)
+    val expected = Vector(
+      "$=adjectiveclass$ = [#adjectiveclass#]","$squashadvurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<adj>$=adjectiveclass$   <div> $=adjectiveclass$  <adv> [#stemchars#]* $degree$ <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(advAcceptorFst)
+    assert (expected == advAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for indeclinables" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val indeclAcceptorFst = AcceptorComposer.indeclAcceptor(parserRoot)
+    val expected = Vector(
+      "% Indeclinable form acceptor:",
+      "$=indeclclass$ = [#indecl#]",
+      "$squashindeclurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> [#stemchars#]+ <indecl> $=indeclclass$ <div>   $=indeclclass$ <indecl><u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(indeclAcceptorFst)
+    assert (expected == indeclAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for infinitives" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val infinitiveAcceptorFst = AcceptorComposer.infinitiveAcceptor(parserRoot)
+    val expected = Vector(
+      "% Infinitive acceptor",
+      "$=verbclass$ = [#verbclass#]",
+      "$squashinfurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  <div> $=verbclass$  <infin>  [#stemchars#]* $tense$ $voice$ <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(infinitiveAcceptorFst)
+    assert (expected == infinitiveAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+  it should "compose acceptor's FST statements for participles" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val ptcplAcceptorFst = AcceptorComposer.participleAcceptor(parserRoot)
+    val expected = Vector(
+      "% Participle acceptor","$=verbclass$ = [#verbclass#]","$squashptcplurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<verb>$=verbclass$  <div> $=verbclass$  <ptcpl>  [#stemchars#]* $gender$ $case$ $number$ $tense$ $voice$ <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    //println(ptcplAcceptorFst)
+    assert (expected == ptcplAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
   it should "compose acceptor's FST statements for gerundives" in pending
   it should "compose acceptor's FST statements for gerunds" in pending
   it should "compose acceptor's FST statements for supines" in pending
