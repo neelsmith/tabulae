@@ -64,7 +64,27 @@ class AcceptorComposerSpec extends FlatSpec {
     assert(verbAcceptorFst.trim == expected)
   }
 
-  it should "compose acceptor's FST statements for nouns" in pending
+  it should "recognize when nouns should be included" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    assert(AcceptorComposer.includeNouns(parserRoot))
+  }
+  it should "recognize when nouns should not be included" in {
+    val noFst = File("src/test/resources/no-fst")
+    assert(AcceptorComposer.includeNouns(noFst) == false)
+  }
+  it should "compose acceptor's FST statements for nouns" in {
+    val parserRoot = File("src/test/resources/sample-parser-data")
+    val nounAcceptorFst = AcceptorComposer.nounAcceptor(parserRoot)
+    println(nounAcceptorFst)
+    val expected = Vector(
+      "% Noun acceptor:",
+      "$=nounclass$ = [#nounclass#]",
+      "$squashnounurn$ = <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u> <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>[#stemchars#]+<noun>$=gender$ $=nounclass$   <div> $=nounclass$  <noun> [#stemchars#]* $=gender$ $case$ $number$ <u>[#urnchar#]:<>+\\.:<>[#urnchar#]:<>+</u>"
+    )
+    assert (expected == nounAcceptorFst.split("\n").toVector.filter(_.nonEmpty))
+  }
+
+  
   it should "compose acceptor's FST statements for adjectives" in pending
   it should "compose acceptor's FST statements for adverbs" in pending
   it should "compose acceptor's FST statements for indeclinables" in pending
