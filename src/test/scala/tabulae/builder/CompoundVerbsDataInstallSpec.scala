@@ -13,31 +13,38 @@ class CompoundVerbsDataInstallSpec extends FlatSpec {
   val millis = Calendar.getInstance().getTimeInMillis()
   r.setSeed(millis)
 
-  "The CompoundVerbDataInstaller object" should "install verb data from a single source" in pending /* {
+  "The CompoundVerbDataInstaller object" should "install verb data from a single source" in  {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types")
-    val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
-    val targetDir = parserDir / "lexica"
+    val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
+    val targetDir = tempParserDir / "lexica"
     if (targetDir.exists) {
-      parserDir.delete()
+      tempParserDir.delete()
     }
     mkdirs(targetDir)
     assert(targetDir.exists,"CompoundVerbDataInstaller:  could not create " + targetDir)
 
-    val targetFile = targetDir / "lexicon-verbs.fst"
 
-    CompoundVerbDataInstaller(datasets, corpora, targetFile)
+    CompoundVerbDataInstaller(datasets, corpora, targetDir)
+    val targetFile = targetDir / "lexicon-compoundverbs.fst"
     assert(targetFile.exists,"CompoundVerbDataInstaller:  did not create " + targetFile)
 
-    val expected = "<u>proof\\.v1</u><u>lexent\\.n29616</u><#>monstr<verb><conj1>"
+    val expected = "<u>proof\\.comp1\\_0</u><u>lexent\\.n13047</u><#>demonstr<verb><conj1>"
     assert(targetFile.lines.toVector(0) == expected)
 
-    parserDir.delete()
-  }*/
+    tempParserDir.delete()
+  }
 
+  it should "know how to merge two maps of compound forms" in {
+    val map1 = Map("lexent.n13047" -> Vector("proof.comp1#lexent.n13047#de#lexent.n29616"))
+    val map2 = Map("lexent.n23008" -> Vector("proof.comp2#lexent.n23008#in#lexent.n15868"))
+    val merged = CompoundVerbDataInstaller.mergeMaps(Vector(map1, map2))
+    assert(merged.size == 2)
+  }
 
+  it should "object if compound verb entries refer to simplex verbs not in the project" in pending
 
-  it should "do nothing if no verb data are present in a given corpus" in  pending /* {
+  it should "do nothing if no verb data are present in a given corpus" in  pending/* {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("no-lexica")
     val parserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
@@ -90,7 +97,7 @@ class CompoundVerbsDataInstallSpec extends FlatSpec {
 
   }*/
 
-  it should "do nothing if no verb data are present in one or more extant corpora" in  pending /*  {
+  it should "do nothing if no verb data are present in one or more extant corpora" in  pending /*{
     val datasets = File("src/test/resources/named-empty-copora")
 
     val corpora = Vector("shared", "lat24")
@@ -106,5 +113,8 @@ class CompoundVerbsDataInstallSpec extends FlatSpec {
     assert(targetFile.exists == false, "Oops, made " + targetFile)
     parserDir.delete()
   }*/
+
+  it should "install compound irregular verb forms" in pending
+  it should "install compound irregular in" in pending
 
 }

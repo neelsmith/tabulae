@@ -15,19 +15,24 @@ import better.files.Dsl._
 */
 object DataInstaller {
 
-
   def apply(dataSets: File, corpusList: Vector[String], parsers: File): Unit = {
-    //println(s"Convert morphological lexicon tables in ${dataSource} to FST")
     val lexica = parsers / corpusList.mkString("-") / "lexica"
     if (! lexica.exists) {
       mkdirs(lexica)
     }
 
+    // All varieties of verb data:
     val verbsTarget = lexica / "lexicon-verbs.fst"
     VerbDataInstaller(dataSets, corpusList, verbsTarget)
 
     val irregVerbsTarget = lexica / "lexicon-irregverbs.fst"
     IrregVerbDataInstaller(dataSets, corpusList, irregVerbsTarget)
+
+    val irregInfinsTarget = lexica / "lexicon-irreginfinitives.fst"
+    IrregInfinitiveDataInstaller(dataSets, corpusList, irregInfinsTarget)
+
+    CompoundVerbDataInstaller(dataSets, corpusList, lexica)
+    /// end verb data
 
     val indeclTarget = lexica / "lexicon-indeclinables.fst"
     IndeclDataInstaller(dataSets, corpusList, indeclTarget)
@@ -36,34 +41,25 @@ object DataInstaller {
     val nounsTarget = lexica / "lexicon-nouns.fst"
     NounDataInstaller(dataSource /corpusList(0) / "stems-tables/nouns", nounsTarget)
 
-    val adjsTarget = lexica / "lexicon-adjectives.fst"
-    AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
-
-
-
-    val compoundVerbsTarget = lexica / "lexicon-compoundverbs.fst"
-    CompoundVerbDataInstaller(dataSource / corpusList(0), lexica)
-
-
-
-
+    val irregPronounsTarget = lexica / "lexicon-irregpronouns.fst"
+    IrregPronounDataInstaller(dataSource/corpusList(0) / "irregular-stems/pronouns", irregPronounsTarget)
 
     val irregNounsTarget = lexica / "lexicon-irregnouns.fst"
     IrregNounDataInstaller(dataSource / corpusList(0)/ "irregular-stems/nouns", irregNounsTarget)
+
+    val adjsTarget = lexica / "lexicon-adjectives.fst"
+    AdjectiveDataInstaller(dataSource / corpusList(0) / "stems-tables/adjectives", adjsTarget)
 
     val irregAdjectivesTarget = lexica / "lexicon-irregadjectives.fst"
     IrregAdjectiveDataInstaller(dataSource / corpusList(0) / "irregular-stems/adjectives", irregAdjectivesTarget)
 
     val irregAdverbsTarget = lexica / "lexicon-irregadverbs.fst"
     IrregAdverbDataInstaller(dataSource/corpusList(0) / "irregular-stems/adverbs", irregAdverbsTarget)
-
-    val irregPronounsTarget = lexica / "lexicon-irregpronouns.fst"
-    IrregPronounDataInstaller(dataSource/corpusList(0) / "irregular-stems/pronouns", irregPronounsTarget)
+*/
 
 
-    val irregInfinsTarget = lexica / "lexicon-irreginfinitives.fst"
-    IrregInfinitiveDataInstaller(dataSource/corpusList(0) / "irregular-stems/infinitives", irregInfinsTarget)
-
+// THESE MAY ALL BE BOGUS:
+/*
     val irregPtcplsTarget = lexica / "lexicon-irregparticiples.fst"
     IrregParticipleDataInstaller(dataSource/corpusList(0) / "irregular-stems/participles", irregPtcplsTarget)
 

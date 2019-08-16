@@ -33,28 +33,40 @@ class DataInstallerSpec extends FlatSpec {
 
     val  di = DataInstaller(datasets, c, tempParserDir)
     val expectedFiles =  Vector(
-        targetDir / "lexicon-verbs.fst"
+
+        targetDir / "lexicon-verbs.fst",
+        targetDir / "lexicon-irregverbs.fst",
+        targetDir / "lexicon-compoundverbs.fst",
+
+        targetDir / "lexicon-irreginfinitives.fst",
+
+        targetDir / "lexicon-indeclinables.fst",
 /*
+      targetDir / "lexicon-irregcompoundverbs.fst",
+      targetDir / "lexicon-irregcompoundinfinitives.fst",
+
       targetDir / "lexicon-adjectives.fst",
-      targetDir / "lexicon-compoundverbs.fst",
-      targetDir / "lexicon-indeclinables.fst",
       targetDir / "lexicon-irregadjectives.fst",
       targetDir / "lexicon-irregadverbs.fst",
-      targetDir / "lexicon-irregcompoundgerundives.fst",
-      targetDir / "lexicon-irregcompoundgerunds.fst",
-      targetDir / "lexicon-irregcompoundinfinitives.fst",
-      targetDir / "lexicon-irregcompoundparticiples.fst",
-      targetDir / "lexicon-irregcompoundsupines.fst",
-      targetDir / "lexicon-irregcompoundverbs.fst",
-      targetDir / "lexicon-irreggerundives.fst",
-      targetDir / "lexicon-irreggerunds.fst",
-      targetDir / "lexicon-irreginfinitives.fst",
-      targetDir / "lexicon-irregnouns.fst",
-      targetDir / "lexicon-irregparticiples.fst",
-      targetDir / "lexicon-irregpronouns.fst",
-      targetDir / "lexicon-irregsupines.fst",
-      targetDir / "lexicon-irregverbs.fst",
+
       targetDir / "lexicon-nouns.fst",
+      targetDir / "lexicon-irregnouns.fst",
+      targetDir / "lexicon-irregpronouns.fst",
+*/
+
+  //Maybe bogus:
+/*
+  targetDir / "lexicon-irreggerundives.fst",
+  targetDir / "lexicon-irreggerunds.fst",
+
+  targetDir / "lexicon-irregparticiples.fst",
+
+  targetDir / "lexicon-irregsupines.fst",
+
+  targetDir / "lexicon-irregcompoundgerundives.fst",
+  targetDir / "lexicon-irregcompoundgerunds.fst",
+  targetDir / "lexicon-irregcompoundparticiples.fst",
+  targetDir / "lexicon-irregcompoundsupines.fst",
 */
     )
     for (f <- expectedFiles) {

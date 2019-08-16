@@ -11,20 +11,43 @@ case class CompoundEntry(
 
 object CompoundVerbDataInstaller {
 
+  def mergeMaps(
+    mapList: Vector[Map[String, Vector[String]]],
+    singleMap:   Map[String, Vector[String]] =   Map.empty[String, Vector[String]] ) :
+    Map[String, Vector[String]] = {
+
+    if (mapList.isEmpty){
+      singleMap
+    } else {
+      mergeMaps(mapList.tail, singleMap ++ mapList.head)
+    }
+  }
+
   /** Write FST rules for all compound verb stem data
   * in a corpus.
   *
-  * @param corpus Dataset for a corpus.
-  * @param targetFile File to write FST statements to.
   */
-  def apply(corpus: File, targetDir: File) = {
-    val simplexDir = corpus / "stems-tables/verbs-simplex"
-    val regularVerbMap = rulesMap(simplexDir)
+  def apply(dataSets: File, corpusList: Vector[String], targetDir: File) : Unit = {
 
-    val irregDir = corpus / "irregular-stems/verbs"
-    val irregVerbMap = irregMap(irregDir)
+    // Let's develop these one at a time...
+    val simplexMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
+      simplexMap(dataSets / c / "stems-tables/verbs-simplex")
+    }
+    val regularVerbMap = mergeMaps(simplexMaps)
+    //println("SIMPLEx; " + regularVerbMap)
 
-    val infinitiveMap = irregInfinitiveMap(corpus / "irregular-stems/infinitives")
+
+    val irregVerbMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
+      irregMap(dataSets / c / "irregular-stems/verbs")
+    }
+    val irregVerbMap = mergeMaps(irregVerbMaps)
+
+
+    val infinitiveMaps : Vector[Map[String, Vector[String]]] = for (c <- corpusList) yield {
+      irregInfinitiveMap(dataSets / c / "irregular-stems/infinitives")
+    }
+    val infinitiveMap = mergeMaps(infinitiveMaps)
+
 
     /// Not fully persuaded these are real...
     //val participleMap = irregParticipleMap(corpus / "irregular-stems/participles")
@@ -34,10 +57,17 @@ object CompoundVerbDataInstaller {
     //
     //val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ participleMap.keySet ++ infinitiveMap.keySet ++ gerundMap.keySet ++ gerundiveMap.keySet ++ supineMap.keySet
 
+
+
     val allVerbKeys = regularVerbMap.keySet ++ irregVerbMap.keySet ++ infinitiveMap.keySet
 
-    val compoundDir= corpus / "stems-tables/verbs-compound"
-    val compoundEntries= compoundInfo(compoundDir)
+    val compoundEntryLists = for (c <- corpusList) yield {
+      val compoundDir = dataSets / c / "stems-tables/verbs-compound"
+      compoundInfo(compoundDir)
+    }
+    val compoundEntries= compoundEntryLists.flatten
+    //println("COMPOUND ENTRIES: "+ compoundEntries)
+
     require(reffOK(compoundEntries, allVerbKeys))
 
     installRegularCompounds(
@@ -46,16 +76,19 @@ object CompoundVerbDataInstaller {
       regularVerbMap
     )
 
+
     installIrregularCompounds(compoundEntries,
           targetDir / "lexicon-irregcompoundverbs.fst",
           irregVerbMap)
 
-    installIrregularInfinitives(
-      compoundEntries,
+    installIrregularInfinitives(compoundEntries,
       targetDir / "lexicon-irregcompoundinfinitives.fst",
-      infinitiveMap
-    )
+      infinitiveMap)
 
+
+
+
+    // DON'T DO THESE YET...
     /*
     installIrregularParticiples(
       compoundEntries,
@@ -110,7 +143,7 @@ object CompoundVerbDataInstaller {
   * @param compoundDir Directory containing CEX files with
   * information about compound verb stems.
   */
-  def compoundInfo(compoundDir: File):Vector[CompoundEntry] = {
+  def compoundInfo(compoundDir: File): Vector[CompoundEntry] = {
     val cexData = cexRules(compoundDir)
     val compoundEntries = for (cexRow <- cexData.filter(_.nonEmpty))  yield {
       val cols = cexRow.split("#")
@@ -345,8 +378,13 @@ object CompoundVerbDataInstaller {
 
   case class KVPair(k: String, v: String)
 
-  def rulesMap(simplexDir: File): Map[String, Vector[String]] = {
-    val raw = cexRules(simplexDir)
+  /**  Reads data from a source directory and maps ID for lexeme
+  * to a Vector of data triples (rule, stem and stem class).
+  *
+  * @param simplexDir
+  */
+  def simplexMap(sourceDir: File): Map[String, Vector[String]] = {
+    val raw = cexRules(sourceDir)
     //ag.v1#lexent.n2280#am#conj1
     val pairs = raw.map( s => {
       val cols = s.split("#")
