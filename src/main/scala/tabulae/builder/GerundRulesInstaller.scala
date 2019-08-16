@@ -6,6 +6,7 @@ import better.files.Dsl._
 import java.io.{File => JFile}
 
 
+
 /** Object for converting tabular source to FST statements.
 */
 object GerundRulesInstaller {
@@ -14,13 +15,28 @@ object GerundRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+    val srcData = for (corpus <- corpusList) yield {
+      val gerundDir = srcDir / corpus / "rules-tables/gerunds"
+      if (! gerundDir.exists) {
+        mkdirs(gerundDir)
+      }
+      val data = fstForGerundRules(gerundDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$gerundinfl$ = " + fst + "\n\n$gerundinfl$\n")
+    } else {}
+    /*
     val GerundFst = fstForGerundRules(srcDir)
       if(GerundFst.nonEmpty) {
         targetFile.overwrite(GerundFst)
-      } else {}
+      } else {}*/
   }
 
 
@@ -36,7 +52,7 @@ object GerundRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = gerundRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$gerundinfl$ = " + fst + "\n\n$gerundinfl$\n"
+      fst
     } else {
       ""
     }
