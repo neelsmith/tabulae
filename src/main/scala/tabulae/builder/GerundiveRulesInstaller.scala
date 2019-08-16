@@ -10,22 +10,32 @@ import java.io.{File => JFile}
 */
 object GerundiveRulesInstaller {
 
-  /** Write FST rules for all Gerundive data in a directory
+  /** Write FST rules for all Gerundiveive data in a directory
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
-    val GerundiveFst = fstForGerundiveRules(srcDir)
-      if(GerundiveFst.nonEmpty) {
-        targetFile.overwrite(GerundiveFst)
-      } else {}
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit =  {
+    val srcData = for (corpus <- corpusList) yield {
+      val gerundiveDir = srcDir / corpus / "rules-tables/gerundives"
+      if (! gerundiveDir.exists) {
+        mkdirs(gerundiveDir)
+      }
+      val data = fstForGerundiveRules(gerundiveDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$gerundiveinfl$ = " + fst + "\n\n$gerundiveinfl$\n")
+    } else {}
   }
 
 
   /** Compose FST statements for all tables of
-  * Gerundive data found in a directory.
+  * Gerundiveive data found in a directory.
   *
   * @param srcDir Directory with lexical tables.
   */
@@ -36,7 +46,7 @@ object GerundiveRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = gerundiveRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$Gerundiveinfl$ = " + fst + "\n\n$Gerundiveinfl$\n"
+      fst
     } else {
       ""
     }
