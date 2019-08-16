@@ -15,13 +15,28 @@ object AdverbRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+    val srcData = for (corpus <- corpusList) yield {
+      val adverbsDir = srcDir / corpus / "rules-tables/adverbs"
+      if (! adverbsDir.exists) {
+        mkdirs(adverbsDir)
+      }
+      val data = fstForAdverbRules(adverbsDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$adverbinfl$ = " + fst + "\n\n$adverbinfl$\n")
+    } else {}
+    /*
     val adverbFst = fstForAdverbRules(srcDir)
     if(adverbFst.nonEmpty) {
       targetFile.overwrite(adverbFst)
-    } else {}
+    } else {}*/
   }
 
 
@@ -36,7 +51,7 @@ object AdverbRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = adverbRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$adverbinfl$ = " + fst + "\n\n$adverbinfl$\n"
+      fst
     } else {
       ""
     }
