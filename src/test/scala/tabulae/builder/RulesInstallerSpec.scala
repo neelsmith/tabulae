@@ -35,7 +35,7 @@ class RulesInstallerSpec extends FlatSpec {
     val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
 
     val expectedFiles = Vector(
-    /*targetDir / "adjinfl.fst",
+    targetDir / "adjinfl.fst",
     targetDir / "advinfl.fst",
     targetDir / "gerundinfl.fst",
     targetDir / "gerundiveinfl.fst",
@@ -44,7 +44,7 @@ class RulesInstallerSpec extends FlatSpec {
     targetDir / "nouninfl.fst",
     targetDir / "ptcplinfl.fst",
     targetDir / "supineinfl.fst",
-    */
+
 
     targetDir / "indeclinfl.fst",
     targetDir / "irreginfl.fst",
@@ -105,6 +105,27 @@ class RulesInstallerSpec extends FlatSpec {
     val  ri = RulesInstaller(datasets, c, tempParserDir, fst)
     assert(targetDir.exists, "RulesInstaller did not create target directory " + targetDir)
     // tidy up
+    tempParserDir.delete()
+  }
+
+  it should "install fst for invariants" in {
+    // Install these two files in target inflection directory:
+    //indeclinfl.fst
+    // irreginfl.fst
+    val c = Vector("analytical_types")
+    val tempParserDir =  File("src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
+    val fstSrc = File("src/test/resources/datasets/fst/inflection")
+    val fstTarget = tempParserDir / c.mkString("-") / "inflection"
+
+    RulesInstaller.installInvariants(fstSrc, fstTarget)
+
+
+    val indeclFst = fstTarget / "indeclinfl.fst"
+    assert(indeclFst.exists, "RulesInstaller did not created file " + indeclFst)
+
+    val irregFst = fstTarget / "irreginfl.fst"
+    assert(irregFst.exists, "RulesInstaller did not created file " + irregFst)
+
     tempParserDir.delete()
   }
 }

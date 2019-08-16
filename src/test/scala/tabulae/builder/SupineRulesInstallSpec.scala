@@ -10,14 +10,14 @@ import java.util.Calendar
 
 
 
-class GerundRulesInstallSpec extends FlatSpec {
+class SupineRulesInstallSpec extends FlatSpec {
 
   val r = scala.util.Random
   val millis = Calendar.getInstance().getTimeInMillis()
   r.setSeed(millis)
 
 
-  "The GerundRulesInstaller object" should "install gerund data from a single source" in {
+  "The SupineRulesInstaller object" should "install supine data from a single source" in {
     val datasets = File("src/test/resources/datasets/")
     val corpora = Vector("analytical_types")
     val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
@@ -26,16 +26,15 @@ class GerundRulesInstallSpec extends FlatSpec {
       tempParserDir.delete()
     }
     mkdirs(targetDir)
-    assert(targetDir.exists,"GerundRulesInstaller:  could not create " + targetDir)
+    assert(targetDir.exists,"SupineRulesInstaller:  could not create " + targetDir)
 
-    val targetFile = targetDir / "gerundinfl.fst"
+    val targetFile = targetDir / "supineinfl.fst"
 
-    GerundRulesInstaller(datasets, corpora, targetFile)
-    assert(targetFile.exists,"GerundRulesInstaller:  did not create destination file " + targetFile)
+    SupineRulesInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists,"SupineRulesInstaller:  did not create destination file " + targetFile)
 
-    val expectedLines = Vector("$gerundinfl$ =  <conj1><gerund>andum<nom><u>proof\\.gerundconj1\\_1</u> |\\",  "<conj1><gerund>andum<acc><u>proof\\.gerundconj1\\_2</u>", "$gerundinfl$")
-
-    assert(targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","") == expectedLines.mkString("\n").replaceAll(" ",""))
+    val expectedLines = Vector("$supineinfl$ =  <conj1><supine>atu<abl><u>proof\\.conj1\\_1</u>", "$supineinfl$")
+    assert(expectedLines == targetFile.lines.toVector.filter(_.nonEmpty))
     tempParserDir.delete()
   }
 
@@ -46,13 +45,13 @@ class GerundRulesInstallSpec extends FlatSpec {
     val corpora = Vector("no-lexica")
     val tempParserDir = File(s"src/test/resources/parsers/dummyparser-${r.nextInt(1000)}")
     val targetDir = tempParserDir / "inflection"
-    val targetFile = targetDir / "gerundinfl.fst"
+    val targetFile = targetDir / "supineinfl.fst"
     if (targetDir.exists) {
       tempParserDir.delete()
     }
     mkdirs(targetDir)
 
-    GerundRulesInstaller(datasets, corpora, targetFile)
+    SupineRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
 
     tempParserDir.delete()
@@ -60,13 +59,13 @@ class GerundRulesInstallSpec extends FlatSpec {
 
   it should "return an empty string if no data are found in the source directory" in  {
     val emptyDir = File("src/test/resources/no-fst")
-    val output = GerundRulesInstaller.fstForGerundRules(emptyDir)
+    val output = SupineRulesInstaller.fstForSupineRules(emptyDir)
     assert(output.isEmpty)
   }
 
   it should "return an empty string if asked to create FST strings from a non-existent directory" in  {
     val emptyDir = File("src/test/resources/no-fst")
-    val fst = GerundRulesInstaller.fstForGerundRules(emptyDir)
+    val fst = SupineRulesInstaller.fstForSupineRules(emptyDir)
     assert(fst.isEmpty)
   }
 
@@ -80,24 +79,18 @@ class GerundRulesInstallSpec extends FlatSpec {
       tempParserDir.delete()
     }
     mkdirs(targetDir)
-    assert(targetDir.exists, "GerundRulesInstallerSpec: could not create " + targetDir)
-    val targetFile = targetDir / "gerundinfl.fst"
+    assert(targetDir.exists, "SupineRulesInstallerSpec: could not create " + targetDir)
+    val targetFile = targetDir / "supineinfl.fst"
 
-    GerundRulesInstaller(datasets, corpora, targetFile)
-    assert(targetFile.exists, "GerundRulesInstallerSpec: GerundRulesInstaller did not create " + targetFile)
+    SupineRulesInstaller(datasets, corpora, targetFile)
+    assert(targetFile.exists, "SupineRulesInstallerSpec: SupineRulesInstaller did not create " + targetFile)
 
 
     val expectedLines = Vector(
-      "$gerundinfl$=<conj1><gerund>andum<nom><u>proof\\.gerundconj1\\_1</u>|\\",
-      "<conj1><gerund>andum<acc><u>proof\\.gerundconj1\\_2</u>|\\",
-      "<conj1><gerund>andi<gen><u>proof\\.gerundconj1\\_3</u>",
-      "$gerundinfl$"
+      "$supineinfl$ =  <conj1><supine>atu<abl><u>proof\\.conj1\\_1</u> |\\",  "<conj1><supine>atum<acc><u>proof\\.conj1sup2</u>",
+      "$supineinfl$"
     )
-
-    val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
-    val actualString = targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
-
-    assert(actualString == expectedString)
+    assert(expectedLines == targetFile.lines.toVector.filter(_.nonEmpty).map(_.trim))
     tempParserDir.delete()
   }
 
@@ -112,7 +105,7 @@ class GerundRulesInstallSpec extends FlatSpec {
     }
     mkdirs(targetDir)
 
-    GerundRulesInstaller(datasets, corpora, targetFile)
+    SupineRulesInstaller(datasets, corpora, targetFile)
     assert(targetFile.exists == false, "Somehow wound up with file " + targetFile)
 
     parserDir.delete()

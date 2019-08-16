@@ -14,13 +14,23 @@ object SupineRulesInstaller {
   * of tabular files.
   *
   * @param srcDir Directory with inflectional rules.
+  * @param corpusList List of corpora within dataSource directory.
   * @param targetFile File to write FST statements to.
   */
-  def apply(srcDir: File, targetFile: File): Unit = {
-    val SupineFst = fstForSupineRules(srcDir)
-      if(SupineFst.nonEmpty) {
-        targetFile.overwrite(SupineFst)
-      } else {}
+  def apply(srcDir: File, corpusList: Vector[String], targetFile: File): Unit = {
+    val srcData = for (corpus <- corpusList) yield {
+      val supinesDir = srcDir / corpus / "rules-tables/supines"
+      if (! supinesDir.exists) {
+        mkdirs(supinesDir)
+      }
+      val data = fstForSupineRules(supinesDir)
+      data
+    }
+    val fst = srcData.filter(_.nonEmpty).mkString(" |\\\n")
+
+    if (fst.nonEmpty) {
+      targetFile.overwrite("$supineinfl$ = " + fst + "\n\n$supineinfl$\n")
+    } else {}
   }
 
 
@@ -36,7 +46,7 @@ object SupineRulesInstaller {
       f.lines.toVector.filter(_.nonEmpty).drop(1))
     val fst = supineRulesToFst(rules.toVector)
     if (fst.nonEmpty) {
-      "$Supineinfl$ = " + fst + "\n\n$Supineinfl$\n"
+      fst 
     } else {
       ""
     }

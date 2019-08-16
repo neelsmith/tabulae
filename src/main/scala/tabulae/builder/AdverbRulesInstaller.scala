@@ -32,11 +32,6 @@ object AdverbRulesInstaller {
     if (fst.nonEmpty) {
       targetFile.overwrite("$adverbinfl$ = " + fst + "\n\n$adverbinfl$\n")
     } else {}
-    /*
-    val adverbFst = fstForAdverbRules(srcDir)
-    if(adverbFst.nonEmpty) {
-      targetFile.overwrite(adverbFst)
-    } else {}*/
   }
 
 

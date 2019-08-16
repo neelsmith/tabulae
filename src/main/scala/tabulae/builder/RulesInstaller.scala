@@ -30,8 +30,7 @@ object RulesInstaller {
     InfinitiveRulesInstaller( dataSets, corpusList, infinFst)
 
     val ptcplFst = inflDir / "ptcplinfl.fst"
-    ParticipleRulesInstaller( dataSets, corpusList, infinFst  )
-
+    ParticipleRulesInstaller( dataSets, corpusList, ptcplFst  )
 
     val nounsFst = inflDir / "nouninfl.fst"
     NounRulesInstaller( dataSets, corpusList,nounsFst )
@@ -43,21 +42,15 @@ object RulesInstaller {
     AdverbRulesInstaller( dataSets, corpusList, advsFst )
 
 
-
     val gndvFst = inflDir / "gerundiveinfl.fst"
     GerundiveRulesInstaller( dataSets, corpusList, gndvFst  )
-
 
     val gndFst = inflDir / "gerundinfl.fst"
     GerundRulesInstaller( dataSets, corpusList, gndFst  )
 
 
-/*
-
-    val supineSrc = srcCorpus / "rules-tables/supines"
     val supineFst = inflDir / "supineinfl.fst"
-    SupineRulesInstaller( supineSrc,supineFst  )
-*/
+    SupineRulesInstaller( dataSets, corpusList, supineFst  )
 
     val inflFst = fst / "inflection"
     installInvariants(inflFst, inflDir)
