@@ -49,10 +49,10 @@ object DataInstaller {
 
     val irregNounsTarget = lexica / "lexicon-irregnouns.fst"
     IrregNounDataInstaller(dataSets, corpusList, irregNounsTarget)
-/*
-    val irregAdjectivesTarget = lexica / "lexicon-irregadjectives.fst"
-    IrregAdjectiveDataInstaller(dataSource / corpusList(0) / "irregular-stems/adjectives", irregAdjectivesTarget)
 
+    val irregAdjectivesTarget = lexica / "lexicon-irregadjectives.fst"
+    IrregAdjectiveDataInstaller(dataSets, corpusList, irregAdjectivesTarget)
+/*
     val irregAdverbsTarget = lexica / "lexicon-irregadverbs.fst"
     IrregAdverbDataInstaller(dataSource/corpusList(0) / "irregular-stems/adverbs", irregAdverbsTarget)
 */

@@ -29,11 +29,6 @@ object IrregNounDataInstaller {
       // Directory containing targetFile must already exist!
       targetFile.overwrite(fst)
     } else {}
-    /*()
-    val irregNounFst = fstForIrregNounData(dataSource)
-    if (irregNounFst.nonEmpty) {
-      targetFile.overwrite(irregNounFst)
-    } else {}*/
   }
 
   /** Create FST string for a verb tables in a given directory.
