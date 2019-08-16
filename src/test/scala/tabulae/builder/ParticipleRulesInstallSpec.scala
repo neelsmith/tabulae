@@ -96,7 +96,7 @@ class ParticipleRulesInstallSpec extends FlatSpec {
 
     val expectedString =  expectedLines.mkString("\n").replaceAll(" ","")
     val actualString = targetFile.lines.toVector.filter(_.nonEmpty).mkString("\n").replaceAll(" ","")
-    println(actualString)
+    //println(actualString)
     assert(actualString == expectedString)
     tempParserDir.delete()
   }
