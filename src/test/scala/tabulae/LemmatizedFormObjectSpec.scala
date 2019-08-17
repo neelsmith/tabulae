@@ -11,7 +11,7 @@ class LemmatizedFormObjectSpec extends FlatSpec {
   val lemmatizedVerbForm = LemmatizedForm(verbFst)
 
   "The LemmatizedFormObjectSpec" should "make a verb from FST" in {
-    lemmatizedVerbForm match {
+    (lemmatizedVerbForm).get match {
       case vf : VerbForm => assert(true)
       case _ => fail("Did not get a VerbFrom from fst " + verbFst)
     }
@@ -19,14 +19,14 @@ class LemmatizedFormObjectSpec extends FlatSpec {
   }
 
   it should "correctly identify the lemma ID (short URN)" in {
-    assert(lemmatizedVerbForm.lemmaId == "ls.n17516")
+    assert(lemmatizedVerbForm.get.lemmaId == "ls.n17516")
   }
 
   it should "correctly identify the stem ID (short URN)" in {
-    assert(lemmatizedVerbForm.stemId == "ocremorph.n17516b")
+    assert(lemmatizedVerbForm.get.stemId == "ocremorph.n17516b")
   }
 
   it should "correctly identify the inflectional rule ID (short URN)" in {
-    assert(lemmatizedVerbForm.ruleId == "livymorph.pftact_pft3")
+    assert(lemmatizedVerbForm.get.ruleId == "livymorph.pftact_pft3")
   }
 }

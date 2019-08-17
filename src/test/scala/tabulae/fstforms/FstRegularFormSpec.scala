@@ -9,7 +9,7 @@ class FstRegularFormSpec extends FlatSpec {
   "The Form object" should "construct a parsed noun form from FST string input" in {
     val fst = "<u>dev1.n1</u><u>lexent.n1</u>femin<noun><fem><a_ae><div><a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
     val f = LemmatizedForm(fst)
-    f match {
+    f.get match {
       case nf: NounForm => {
         assert (nf.gender == Feminine)
     assert (nf.grammaticalCase == Accusative)
@@ -24,7 +24,7 @@ class FstRegularFormSpec extends FlatSpec {
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val fst = stemFst + "<div>" + ruleFst
     val f = LemmatizedForm(fst)
-    f match {
+    f.get match {
       case vf: VerbForm => {
         assert (vf.person == First)
         assert (vf.grammaticalNumber == Singular)
@@ -39,7 +39,7 @@ class FstRegularFormSpec extends FlatSpec {
   it should "construct a parsed adjectival form from FST string input" in   {
     val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
     val f = LemmatizedForm(fst)
-    f match {
+    f.get match {
       case adjForm: AdjectiveForm => {
         assert(adjForm.gender == Masculine)
       }
@@ -51,7 +51,7 @@ class FstRegularFormSpec extends FlatSpec {
   it should "construct a parsed participal form from FST string input" in {
     val fst = "<u>plinymorph.verb2</u><u>lexent.n29544</u><#>mon<verb><conj2><div><conj2><ptcpl>ens<masc><nom><sg><pres><act><u>lverbinfl.ere_conj2presapl1</u>"
     val f = LemmatizedForm(fst)
-    f match {
+    f.get match {
       case ptcplForm: ParticipleForm => {
         assert(ptcplForm.gender == Masculine)
       }
@@ -86,7 +86,7 @@ class FstRegularFormSpec extends FlatSpec {
 
     val fst = stemFst + "<div>" +  ruleFst
     val f = LemmatizedForm(fst)
-    f match {
+    f.get match {
       case indeclForm: IndeclinableForm => {
         assert(indeclForm.pos == Conjunction)
       }

@@ -37,7 +37,11 @@ object FstReader {
         Vector.empty[LemmatizedForm]
 
       } else {
-        popAnalyses(fstLines.tail, analysisVector :+ LemmatizedForm(fstLines.head) )
+        LemmatizedForm(fstLines.head) match {
+          case None =>   popAnalyses(fstLines.tail, analysisVector)
+          case f: Option[LemmatizedForm] => popAnalyses(fstLines.tail, analysisVector :+ f.get)
+        }
+
       }
     }
   }
