@@ -9,15 +9,17 @@
 
 Status:  **active development**. [Release notes](releases.md)
 
-Release **4.0.0** will introduce a major change:  it will permit integrating multiple data sources to compile a single parser.  This should greatly facilitate the development of parsers for related corpora with shared content (whether shared lexicon or shared inflectional rules).
+Release **4.0.0** permits integrating multiple data sources to compile a single parser.  This should greatly facilitate the development of parsers for related corpora with shared content (whether shared lexicon or shared inflectional rules). This will not necessitate any modifications to existing `tabulae` data sets: from an end-user's point of view, nothing changes, and scripts working with parsed output  be unaffected.
 
-This will not necessitate any modifications to data sets already developed: from an end-user's point of view, nothing changes, and scripts working with parsed output will be unaffected.  Users should therefore continue to work with version **3.4.0**.  Underlying code APIs concerned with building and compiling a parser, however, will undergo breaking changes.  The daily contents
-of the `master` branch may not be compatible with prior scripts for building parsers until the **4.0.0** release.
+With version **4.0.0**, all code for generating fst source code and compiling a binary parser from tabular data sources has been  rewritten and thoroughly tested.
+
+Current development is now focusing on code for working with the output of `tabulae` parsers.
+
 
 ## Information and documentation
 
+The project web site (<https://neelsmith.github.io/tabulae>) is not up to date with version 4.0.0.
 
--   see the project web site: <https://neelsmith.github.io/tabulae>.
 -  I presented `tabulae` at [DH2019](https://dh2019.adho.org) in a short paper, "A Corpus-linguistic Approach to the Analysis of Latin Morphology"
 -   read more about its rationale and approach to parsing a historical language in "Morphological Analysis of Historical Languages" (*Bulletin of the Institute for Classical Studies* 59-2, 2016, 89-102)
 
