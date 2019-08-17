@@ -14,7 +14,7 @@ class AnalyzedTokenObjectSpec extends FlatSpec {
 """
 
   val fst = fstStr.split("\n").toVector
-  val analyzedTokens = FstFileReader.parseFstLines(fst)
+  val analyzedTokens = FstReader.parseFstLines(fst)
 
 
 

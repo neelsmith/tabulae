@@ -12,7 +12,7 @@ import org.scalatest.FlatSpec
 class AnalyzedTokenIndeclSpec extends FlatSpec {
 
   val fst = "> de\n<u>ocremorph.n12361</u><u>ls.n12361</u>de<indecl><indeclprep><div><indeclprep><indecl><u>indeclinfl.1</u>\n".split("\n").toVector
-  val analyzedTokens = FstFileReader.parseFstLines(fst)
+  val analyzedTokens = FstReader.parseFstLines(fst)
   val firstToken = analyzedTokens(0)
 
   "An AnalyzedToken" should "recognize the category of indeclinable tokens" in {

@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 class AnalyzedTokenCexSpec extends FlatSpec {
 
   val fst = "> designatvs\n<u>ocremorph.n13382c</u><u>ls.n13382</u><#>designat<verb><pftpass><div><pftpass><ptcpl>vs<masc><nom><sg><pft><pass><u>ocremorph.pft_perfppl1</u>\n".split("\n").toVector
-  val analyzedTokens = FstFileReader.parseFstLines(fst)
+  val analyzedTokens = FstReader.parseFstLines(fst)
   val tkn = analyzedTokens(0)
 
 

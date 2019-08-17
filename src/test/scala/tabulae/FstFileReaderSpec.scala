@@ -3,7 +3,7 @@ package edu.holycross.shot.tabulae
 
 import org.scalatest.FlatSpec
 
-class FstFileReaderSpec extends FlatSpec {
+class FstReaderSpec extends FlatSpec {
 
 
   val fstLines = Vector(
@@ -17,24 +17,24 @@ class FstFileReaderSpec extends FlatSpec {
   val verbFst = "> fecit\n<u>ocremorph.n17516b</u><u>ls.n17516</u><#>fec<verb><pftact><div><pftact><verb>it<3rd><sg><pft><indic><act><u>livymorph.pftact_pft3</u>\n"
 
 
-  "The FstFileReader object" should "recognize strings for a new token analysis" in {
+  "The FstReader object" should "recognize strings for a new token analysis" in {
     val fst = "> actio"
-    assert(FstFileReader.isToken(fst))
+    assert(FstReader.isToken(fst))
   }
 
   it should "distinguish fst lines that are not new tokens" in {
     val fst = "<u>ocremorph.geoadj1</u><u>ls.n617</u>acti<adj><us_a_um><div><us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
-    assert(FstFileReader.isToken(fst) == false)
+    assert(FstReader.isToken(fst) == false)
   }
 
   it should "" in {
 
   }
 
-  
+
   it should "pop off analyses from the top (front) of a Vector of FST strings" in pending  /*{
 
-    val forms = FstFileReader.popAnalyses(fstLines.tail)
+    val forms = FstReader.popAnalyses(fstLines.tail)
     val expectedSize = 4
     assert(forms.size == expectedSize)
 
@@ -47,7 +47,7 @@ class FstFileReaderSpec extends FlatSpec {
   }*/
 
   it should "create an AnalyzedToken from FST strings" in pending /*{
-    val analyzed = FstFileReader.popAnalyzedToken(fstLines)
+    val analyzed = FstReader.popAnalyzedToken(fstLines)
     val expectedToken = "actio"
     assert(analyzed.token == expectedToken)
 
@@ -62,14 +62,14 @@ class FstFileReaderSpec extends FlatSpec {
   }*/
 
   it should "create a Vector of AnalyzedTokens from a Vector of FST Strings" in pending /* {
-    val analyzedTokens = FstFileReader.parseFstLines(fstLines)
+    val analyzedTokens = FstReader.parseFstLines(fstLines)
     val expectedTokens = 1
     assert(analyzedTokens.size == expectedTokens)
   }*/
 
   it should "create a Vector of AnalyzedTokens from a small sample file" in pending /*{
     val f = "src/test/resources/tiny.txt"
-    val analyzedTokens = FstFileReader.formsFromFile(f)
+    val analyzedTokens = FstReader.formsFromFile(f)
 
     val expectedSize = 2
     assert(analyzedTokens.size == expectedSize)
@@ -80,14 +80,14 @@ class FstFileReaderSpec extends FlatSpec {
 
   /* {
     val f = "src/test/resources/coins-no-indecl.txt"
-    val analyzedTokens = FstFileReader.formsFromFile(f)
+    val analyzedTokens = FstReader.formsFromFile(f)
 
     println("TOKENS: " + analyzedTokens.size)
   }*/
 
   it should "recognize failed analyses" in {
     val failed = Vector("no result for abdi")
-    val analyses = FstFileReader.popAnalyses(failed)
+    val analyses = FstReader.popAnalyses(failed)
     assert (analyses.isEmpty)
   }
 

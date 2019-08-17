@@ -8,7 +8,7 @@ import scala.io.Source
 * written in SFST output form into objects.
 *
 */
-object FstFileReader {
+object FstReader {
 
 
   /** True if s represents a token.

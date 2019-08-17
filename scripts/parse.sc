@@ -18,7 +18,7 @@ def compile(corpus: String, datasets: String = "datasets") = {
   val conf =  Configuration(compiler, fstinfl, make, datasets)
   try {
     FstCompiler.compile(File(datasets), repo, corpus, conf, true)
-    val tabulaeParser = repo/"parsers"/corpus/"latin.a"
+    val tabulaeParser = repo / "parsers" / corpus / "latin.a"
 
     println("\nCompilation completed.\nParser is available in " +  tabulaeParser)
   } catch {

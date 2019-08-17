@@ -5,13 +5,10 @@ import edu.holycross.shot.ohco2._
 
 import org.scalatest.FlatSpec
 
-
-
-
 class AnalyzedTokenVerbSpec extends FlatSpec {
 
   val fst = "> fecit\n<u>ocremorph.n17516b</u><u>ls.n17516</u><#>fec<verb><pftact><div><pftact><verb>it<3rd><sg><pft><indic><act><u>livymorph.pftact_pft3</u>\n".split("\n").toVector
-  val analyzedTokens = FstFileReader.parseFstLines(fst)
+  val analyzedTokens = FstReader.parseFstLines(fst)
   val tkn = analyzedTokens(0)
 
   "An AnalyzedToken" should "recognize the category of verb tokens" in {
