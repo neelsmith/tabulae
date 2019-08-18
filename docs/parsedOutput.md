@@ -19,8 +19,10 @@ The `LemmatizedForm` trait is implemented by classes for possible analytical pat
 
 - `VerbForm` (conjugated verb form): analytical pattern PNTMV.  See [an example](../forms/verb/).
 - `ParticipleForm`: analytical pattern GCNTV
+- `InfinitiveForm`: analytical pattern TV
 - `GerundiveForm`:  analytical pattern GCN
 - `GerundForm`:  analytical pattern C
+- `SupineForm`: analytical pattern C
 - `AdverbForm`:  analytical pattern D
 - `NounForm`: analytical pattern GCN
 - `AdjectiveForm`: analytical pattern GCND
