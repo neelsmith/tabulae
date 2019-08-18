@@ -5,9 +5,9 @@ layout: page
 
 
 
-## Creating a `VerbFrom` from SFST
+## Creating a `VerbFrom` from SFST output
 
-The SFST output for analysis of a conjugated verb form looks like this (where each entry in the Vector is one line output):
+The SFST output for analysis of a conjugated verb form looks like this (where each entry in the Vector is one line of output):
 
 ```tut:silent
 val fstLines = Vector(
@@ -15,7 +15,7 @@ val fstLines = Vector(
 "<u>ocremorph.n17516b</u><u>ls.n17516</u><#>fec<verb><pftact><div><pftact><verb>it<3rd><sg><pft><indic><act><u>livymorph.pftact_pft3</u>")
 ```
 
-The `FstReader` object can parse a Vector of SFST output lines, and creates a (possibly empty) Vector of `AnalyzedToken`s.  We should get only one token from the FST above:
+The `FstReader` object can parse a Vector of SFST output lines, and create a (possibly empty) Vector of `AnalyzedToken`s.  We should get only one token from the FST above:
 
 
 ```tut:silent
