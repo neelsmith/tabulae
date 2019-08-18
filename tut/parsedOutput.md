@@ -17,11 +17,11 @@ The `apply` function of the `LemmatizedForm` object considers a single line of S
 
 The `LemmatizedForm` interface is implemented by classes for possible analytical pattern, namely:
 
-- `VerbForm` (conjugated verb form)
-- `ParticipleForm`
-- `GerundiveForm`
-- `GerundForm`
-- `AdverbForm`
-- `NounForm`
-- `AdjectiveForm`
-- `IndeclinableForm`
+- `VerbForm` (conjugated verb form): PNTMV.  See [an example](../forms/verb/).
+- `ParticipleForm`: GCNTV
+- `GerundiveForm`:  GCN
+- `GerundForm`:  C
+- `AdverbForm`:  D
+- `NounForm`: GCN
+- `AdjectiveForm`: GCND
+- `IndeclinableForm`: Pos
