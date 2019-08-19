@@ -105,9 +105,4 @@ object FstReader {
   }
 
 
-  def fromFile(fileName: String) : Vector[AnalyzedToken]= {
-    val lines = Source.fromFile(fileName).getLines.toVector
-    parseFstLines(lines.filter(_.nonEmpty))
-  }
-
 }

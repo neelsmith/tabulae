@@ -41,6 +41,6 @@ class OneEachSpec extends FlatSpec {
     }
 
     assert(target.exists, "Failed to compile binary parser " + target)
-    //tempParserDir.delete()
+    tempParserDir.delete()
   }
 }
