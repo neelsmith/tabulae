@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -441,9 +441,9 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.GerundiveRulesInstaller#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(srcDir:better.files.File,targetFile:better.files.File):Unit"></a><a id="apply(File,File):Unit"></a>
+      <a id="apply(srcDir:better.files.File,corpusList:Vector[String],targetFile:better.files.File):Unit"></a><a id="apply(File,Vector[String],File):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/GerundiveRulesInstaller$.html#apply(srcDir:better.files.File,targetFile:better.files.File):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/GerundiveRulesInstaller$.html#apply(srcDir:better.files.File,corpusList:Vector[String],targetFile:better.files.File):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -452,13 +452,13 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="srcDir">srcDir: <span class="extype" name="better.files.File">File</span></span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">apply</span><span class="params">(<span name="srcDir">srcDir: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      <p class="shortcomment cmt">Write FST rules for all Gerundive data in a directory
-of tabular files.</p><div class="fullcomment"><div class="comment cmt"><p>Write FST rules for all Gerundive data in a directory
+      <p class="shortcomment cmt">Write FST rules for all Gerundiveive data in a directory
+of tabular files.</p><div class="fullcomment"><div class="comment cmt"><p>Write FST rules for all Gerundiveive data in a directory
 of tabular files.
-</p></div><dl class="paramcmts block"><dt class="param">srcDir</dt><dd class="cmt"><p>Directory with inflectional rules.</p></dd><dt class="param">targetFile</dt><dd class="cmt"><p>File to write FST statements to.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">srcDir</dt><dd class="cmt"><p>Directory with inflectional rules.</p></dd><dt class="param">corpusList</dt><dd class="cmt"><p>List of corpora within dataSource directory.</p></dd><dt class="param">targetFile</dt><dd class="cmt"><p>File to write FST statements to.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -569,8 +569,8 @@ of tabular files.
       </span>
       
       <p class="shortcomment cmt">Compose FST statements for all tables of
-Gerundive data found in a directory.</p><div class="fullcomment"><div class="comment cmt"><p>Compose FST statements for all tables of
-Gerundive data found in a directory.
+Gerundiveive data found in a directory.</p><div class="fullcomment"><div class="comment cmt"><p>Compose FST statements for all tables of
+Gerundiveive data found in a directory.
 </p></div><dl class="paramcmts block"><dt class="param">srcDir</dt><dd class="cmt"><p>Directory with lexical tables.</p></dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.GerundiveRulesInstaller#gerundiveRuleToFst" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="gerundiveRuleToFst(line:String):String"></a><a id="gerundiveRuleToFst(String):String"></a>

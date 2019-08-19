@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -297,6 +293,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
                         <a href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline.">UtilsInstaller</a>
                       </li><li class="current-entities indented5">
@@ -336,7 +336,9 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
 
       
           <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Factory object for composing and writing to a file the top-level
-acceptor transducer, acceptor.fst, in the root of the project FST build.</p><p>The acceptor transducer is the final stage in the morphological pipeline.
+acceptor transducer, acceptor.fst, in the root of the project FST build.
+It checks for every possible lexicon file, and includes acceptors for
+those kinds that are present in this given build.</p><p>The acceptor transducer is the final stage in the morphological pipeline.
 See documentation on the tabulae github repository for details.</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
@@ -491,9 +493,9 @@ See documentation on the tabulae github repository for details.</p></div><div cl
       
       <p class="shortcomment cmt">String defining final noun acceptor transducer.</p>
     </li><li name="edu.holycross.shot.tabulae.builder.AcceptorComposer#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(repo:better.files.File,corpus:String):Unit"></a><a id="apply(File,String):Unit"></a>
+      <a id="apply(parsers:better.files.File,corpusList:Vector[String]):Unit"></a><a id="apply(File,Vector[String]):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/AcceptorComposer$.html#apply(repo:better.files.File,corpus:String):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/AcceptorComposer$.html#apply(parsers:better.files.File,corpusList:Vector[String]):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -502,13 +504,14 @@ See documentation on the tabulae github repository for details.</p></div><div cl
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">apply</span><span class="params">(<span name="parsers">parsers: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
       <p class="shortcomment cmt">Compose acceptor.fst and the intermediate fst files
 it depends on for a named corpus.</p><div class="fullcomment"><div class="comment cmt"><p>Compose acceptor.fst and the intermediate fst files
-it depends on for a named corpus.
-</p></div><dl class="paramcmts block"><dt class="param">repo</dt><dd class="cmt"><p>Root of Kanónes repository.</p></dd><dt class="param">corpus</dt><dd class="cmt"><p>Corpus to build acceptor for.</p></dd></dl></div>
+it depends on for a named corpus.  Note that this will only
+work if some lexica files have already been installed.
+</p></div><dl class="paramcmts block"><dt class="param">parsers</dt><dd class="cmt"><p>Root of working area for writing parsers.</p></dd><dt class="param">corpusList</dt><dd class="cmt"><p>List of &quot;corpora&quot; names.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -1326,9 +1329,9 @@ parser where acceptor.fst should be written.</p></dd></dl></div>
       </span>
       
       <p class="shortcomment cmt">Rewrite a single file by replacing all occurrences of
-the variable name <code>@workDir</code> with the string value for the
+the variable name <code>@workdir@</code> with the string value for the
 work directory.</p><div class="fullcomment"><div class="comment cmt"><p>Rewrite a single file by replacing all occurrences of
-the variable name <code>@workDir</code> with the string value for the
+the variable name <code>@workdir@</code> with the string value for the
 work directory.
 </p></div><dl class="paramcmts block"><dt class="param">f</dt><dd class="cmt"><p>File to rewrite.</p></dd><dt class="param">workDir</dt><dd class="cmt"><p>Actual directory where corpus-specific
 parser is to be built.</p></dd></dl></div>

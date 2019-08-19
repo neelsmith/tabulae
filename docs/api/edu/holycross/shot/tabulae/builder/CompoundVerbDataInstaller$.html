@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -459,10 +459,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(corpus:better.files.File,targetDir:better.files.File):Unit"></a><a id="apply(File,File):Unit"></a>
+    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="apply(dataSets:better.files.File,corpusList:Vector[String],targetDir:better.files.File):Unit"></a><a id="apply(File,Vector[String],File):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#apply(corpus:better.files.File,targetDir:better.files.File):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#apply(dataSets:better.files.File,corpusList:Vector[String],targetDir:better.files.File):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -471,13 +471,11 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="corpus">corpus: <span class="extype" name="better.files.File">File</span></span>, <span name="targetDir">targetDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">apply</span><span class="params">(<span name="dataSets">dataSets: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="targetDir">targetDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
       <p class="shortcomment cmt">Write FST rules for all compound verb stem data
-in a corpus.</p><div class="fullcomment"><div class="comment cmt"><p>Write FST rules for all compound verb stem data
-in a corpus.
-</p></div><dl class="paramcmts block"><dt class="param">corpus</dt><dd class="cmt"><p>Dataset for a corpus.</p></dd></dl></div>
+in a corpus.</p>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -663,38 +661,6 @@ information about compound verb stems.</p></dd></dl></div>
       </span>
       
       
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installIrregularGerundives" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="installIrregularGerundives(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit"></a><a id="installIrregularGerundives(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installIrregularGerundives(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">installIrregularGerundives</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="compoundMap">compoundMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installIrregularGerunds" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="installIrregularGerunds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit"></a><a id="installIrregularGerunds(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installIrregularGerunds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">installIrregularGerunds</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="compoundMap">compoundMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
     </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installIrregularInfinitives" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="installIrregularInfinitives(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit"></a><a id="installIrregularInfinitives(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
       <span class="permalink">
@@ -711,42 +677,10 @@ information about compound verb stems.</p></dd></dl></div>
       </span>
       
       
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installIrregularParticiples" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="installIrregularParticiples(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit"></a><a id="installIrregularParticiples(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installIrregularParticiples(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">installIrregularParticiples</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="compoundMap">compoundMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installIrregularSupines" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="installIrregularSupines(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit"></a><a id="installIrregularSupines(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installIrregularSupines(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,compoundMap:Map[String,Vector[String]]):Unit" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">installIrregularSupines</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="compoundMap">compoundMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
-      </span>
-      
-      
     </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#installRegularCompounds" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="installRegularCompounds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,simplexMap:Map[String,Vector[String]]):better.files.File"></a><a id="installRegularCompounds(Vector[CompoundEntry],File,Map[String,Vector[String]]):File"></a>
+      <a id="installRegularCompounds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,simplexMap:Map[String,Vector[String]]):Unit"></a><a id="installRegularCompounds(Vector[CompoundEntry],File,Map[String,Vector[String]]):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installRegularCompounds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,simplexMap:Map[String,Vector[String]]):better.files.File" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#installRegularCompounds(compounds:Vector[edu.holycross.shot.tabulae.builder.CompoundEntry],targetFile:better.files.File,simplexMap:Map[String,Vector[String]]):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -755,7 +689,7 @@ information about compound verb stems.</p></dd></dl></div>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">installRegularCompounds</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="simplexMap">simplexMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="better.files.File">File</span></span>
+        <span class="name">installRegularCompounds</span><span class="params">(<span name="compounds">compounds: <span class="extype" name="scala.Vector">Vector</span>[<a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>]</span>, <span name="targetFile">targetFile: <span class="extype" name="better.files.File">File</span></span>, <span name="simplexMap">simplexMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
       <p class="shortcomment cmt">For a given list of <a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>s, expand
@@ -765,38 +699,6 @@ any entries corresponding to simplex stems, and
 write the results to a file.
 </p></div><dl class="paramcmts block"><dt class="param">compounds</dt><dd class="cmt"><p>List of <a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>s to check.</p></dd><dt class="param">targetFile</dt><dd class="cmt"><p>File where results should be written.</p></dd><dt class="param">simplexMap</dt><dd class="cmt"><p>Map of lexical entity IDs to simplex
 stem data in CEX format.</p></dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#irregGerundMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="irregGerundMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]"></a><a id="irregGerundMap(File):Map[String,Vector[String]]"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#irregGerundMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">irregGerundMap</span><span class="params">(<span name="irregDir">irregDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
-      </span>
-      
-      
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#irregGerundiveMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="irregGerundiveMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]"></a><a id="irregGerundiveMap(File):Map[String,Vector[String]]"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#irregGerundiveMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">irregGerundiveMap</span><span class="params">(<span name="irregDir">irregDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
-      </span>
-      
-      
     </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#irregInfinitiveMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="irregInfinitiveMap(irregDir:better.files.File):Map[String,Vector[String]]"></a><a id="irregInfinitiveMap(File):Map[String,Vector[String]]"></a>
       <span class="permalink">
@@ -831,38 +733,6 @@ stem data in CEX format.</p></dd></dl></div>
       <p class="shortcomment cmt">Map lexical URNs to data for irregular verb forms.</p><div class="fullcomment"><div class="comment cmt"><p>Map lexical URNs to data for irregular verb forms.
 </p></div><dl class="paramcmts block"><dt class="param">irregDir</dt><dd class="cmt"><p>Directory containing .cex files
 with verb stem data.</p></dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#irregParticipleMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="irregParticipleMap(irregDir:better.files.File):Map[String,Vector[String]]"></a><a id="irregParticipleMap(File):Map[String,Vector[String]]"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#irregParticipleMap(irregDir:better.files.File):Map[String,Vector[String]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">irregParticipleMap</span><span class="params">(<span name="irregDir">irregDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
-      </span>
-      
-      
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#irregSupineMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="irregSupineMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]"></a><a id="irregSupineMap(File):Map[String,Vector[String]]"></a>
-      <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#irregSupineMap(irregDir:better.files.File):scala.collection.immutable.Map[String,scala.collection.immutable.Vector[String]]" title="Permalink">
-        <i class="material-icons"></i>
-      </a>
-    </span>
-      <span class="modifier_kind">
-        <span class="modifier"></span>
-        <span class="kind">def</span>
-      </span>
-      <span class="symbol">
-        <span class="name">irregSupineMap</span><span class="params">(<span name="irregDir">irregDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.collection.immutable.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.collection.immutable.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
-      </span>
-      
-      
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>
       <span class="permalink">
@@ -879,6 +749,25 @@ with verb stem data.</p></dd></dl></div>
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
+    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#mergeMaps" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="mergeMaps(mapList:Vector[Map[String,Vector[String]]],singleMap:Map[String,Vector[String]]):Map[String,Vector[String]]"></a><a id="mergeMaps(Vector[Map[String,Vector[String]]],Map[String,Vector[String]]):Map[String,Vector[String]]"></a>
+      <span class="permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#mergeMaps(mapList:Vector[Map[String,Vector[String]]],singleMap:Map[String,Vector[String]]):Map[String,Vector[String]]" title="Permalink">
+        <i class="material-icons"></i>
+      </a>
+    </span>
+      <span class="modifier_kind">
+        <span class="modifier"></span>
+        <span class="kind">def</span>
+      </span>
+      <span class="symbol">
+        <span class="name">mergeMaps</span><span class="params">(<span name="mapList">mapList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]]</span>, <span name="singleMap">singleMap: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]] = <span class="symbol">Map.empty[String, Vector[String]]</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+      </span>
+      
+      <p class="shortcomment cmt">Recursively create a single map of key values to a Vector of Strings,
+from a list of maps structured that way.</p><div class="fullcomment"><div class="comment cmt"><p>Recursively create a single map of key values to a Vector of Strings,
+from a list of maps structured that way.
+</p></div><dl class="paramcmts block"><dt class="param">mapList</dt><dd class="cmt"><p>List of maps to merge.</p></dd><dt class="param">singleMap</dt><dd class="cmt"><p>Contents of single merged map so far.</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
@@ -955,10 +844,10 @@ a list of <a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.t
 keys of the simplex or irregular data set.
 </p></div><dl class="paramcmts block"><dt class="param">compounds</dt><dd class="cmt"><p>List of <a href="CompoundEntry.html" class="extype" name="edu.holycross.shot.tabulae.builder.CompoundEntry">CompoundEntry</a>s to check.</p></dd><dt class="param">keys</dt><dd class="cmt"><p>Strings with lexical entity IDs for all
 regular and irregular stems in a data set.</p></dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#rulesMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="rulesMap(simplexDir:better.files.File):Map[String,Vector[String]]"></a><a id="rulesMap(File):Map[String,Vector[String]]"></a>
+    </li><li name="edu.holycross.shot.tabulae.builder.CompoundVerbDataInstaller#simplexMap" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <a id="simplexMap(sourceDir:better.files.File):Map[String,Vector[String]]"></a><a id="simplexMap(File):Map[String,Vector[String]]"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#rulesMap(simplexDir:better.files.File):Map[String,Vector[String]]" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/CompoundVerbDataInstaller$.html#simplexMap(sourceDir:better.files.File):Map[String,Vector[String]]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -967,10 +856,11 @@ regular and irregular stems in a data set.</p></dd></dl></div>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">rulesMap</span><span class="params">(<span name="simplexDir">simplexDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
+        <span class="name">simplexMap</span><span class="params">(<span name="sourceDir">sourceDir: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Predef.Map">Map</span>[<span class="extype" name="scala.Predef.String">String</span>, <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]]</span>
       </span>
       
-      
+      <p class="shortcomment cmt"> Reads data from a source directory and maps ID for lexeme
+to a Vector of data triples (rule, stem and stem class).</p>
     </li><li name="scala.AnyRef#synchronized" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="synchronized[T0](x$1:=&gt;T0):T0"></a><a id="synchronized[T0](⇒T0):T0"></a>
       <span class="permalink">

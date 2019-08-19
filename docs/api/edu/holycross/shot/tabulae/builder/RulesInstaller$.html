@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -441,9 +441,9 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.RulesInstaller#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(sourceDir:better.files.File,repo:better.files.File,corpus:String):Unit"></a><a id="apply(File,File,String):Unit"></a>
+      <a id="apply(dataSets:better.files.File,corpusList:Vector[String],parsers:better.files.File,fst:better.files.File):Unit"></a><a id="apply(File,Vector[String],File,File):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/RulesInstaller$.html#apply(sourceDir:better.files.File,repo:better.files.File,corpus:String):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/RulesInstaller$.html#apply(dataSets:better.files.File,corpusList:Vector[String],parsers:better.files.File,fst:better.files.File):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -452,15 +452,15 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="sourceDir">sourceDir: <span class="extype" name="better.files.File">File</span></span>, <span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">apply</span><span class="params">(<span name="dataSets">dataSets: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="parsers">parsers: <span class="extype" name="better.files.File">File</span></span>, <span name="fst">fst: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      <p class="shortcomment cmt">Format compilable FST rules for a named corpus.</p><div class="fullcomment"><div class="comment cmt"><p>Format compilable FST rules for a named corpus.
-</p></div><dl class="paramcmts block"><dt class="param">sourceDir</dt><dd class="cmt"><p>Base directory of data set.  Inflectional
-rules are drawn from tables here.</p></dd><dt class="param">repo</dt><dd class="cmt"><p>Base directory of the Tabulae repository.  Fst with
-inflectional rules in FST for invariant forms are drawn from here.</p></dd><dt class="param">corpus</dt><dd class="cmt"><p>Name of corpus.  All rules are installed in
-a subdirectory of the repository's parsers directory named
-for the corpus.</p></dd></dl></div>
+      <p class="shortcomment cmt">Install inflectional rules for a corpus-specific parser.</p><div class="fullcomment"><div class="comment cmt"><p>Install inflectional rules for a corpus-specific parser.
+</p></div><dl class="paramcmts block"><dt class="param">dataSets</dt><dd class="cmt"><p>Root directory for corpus-specific data sets.</p></dd><dt class="param">corpusList</dt><dd class="cmt"><p>&quot;Corpus names&quot; are names subdirectories of the
+dataSets directory.  Each corpus can have stem tables to install.</p></dd><dt class="param">parsers</dt><dd class="cmt"><p>Writable directory for work compiling parser. The parser
+source will be assembled in a sub-directory named from the list of names
+in corpusList.</p></dd><dt class="param">fst</dt><dd class="cmt"><p>Root directory with pre-composed fst not derived from
+user-managed tables.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">

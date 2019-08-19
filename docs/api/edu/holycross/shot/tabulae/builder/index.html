@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -421,10 +421,10 @@ tabular text files, and compiling SFST parsers.</p></div><div class="toggleConta
       
       <p class="shortcomment cmt">Required configuration information to compile a binary parser.</p><div class="fullcomment"><div class="comment cmt"><p>Required configuration information to compile a binary parser.
 </p></div><dl class="paramcmts block"><dt class="param">fstcompile</dt><dd class="cmt"><p>Path to fst-compiler-utf8</p></dd><dt class="param">fstinfl</dt><dd class="cmt"><p>Path to fst-infl</p></dd><dt class="param">make</dt><dd class="cmt"><p>Path to make</p></dd><dt class="param">datadir</dt><dd class="cmt"><p>Name, as a String, of root directory for data sets.</p></dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.Corpus" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="CorpusextendsProductwithSerializable"></a><a id="Corpus:Corpus"></a>
+    </li><li name="edu.holycross.shot.tabulae.builder.TabulaeDataSet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="TabulaeDataSetextendsProductwithSerializable"></a><a id="TabulaeDataSet:TabulaeDataSet"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/index.html#CorpusextendsProductwithSerializable" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/index.html#TabulaeDataSetextendsProductwithSerializable" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -433,12 +433,12 @@ tabular text files, and compiling SFST parsers.</p></div><div class="toggleConta
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts." href="Corpus.html"><span class="name">Corpus</span></a><span class="params">(<span name="dataSource">dataSource: <span class="extype" name="better.files.File">File</span></span>, <span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts." href="TabulaeDataSet.html"><span class="name">TabulaeDataSet</span></a><span class="params">(<span name="dataSource">dataSource: <span class="extype" name="better.files.File">File</span></span>, <span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      <p class="shortcomment cmt">In tabulae, a <a href="Corpus.html" class="extype" name="edu.holycross.shot.tabulae.builder.Corpus">Corpus</a> is a morphological corpus: that is,
+      <p class="shortcomment cmt">In tabulae, a <a href="TabulaeDataSet.html" class="extype" name="edu.holycross.shot.tabulae.builder.TabulaeDataSet">TabulaeDataSet</a> is a morphological corpus: that is,
 a dataset comprising rules tables, stem tables, and tables of
-irregular forms for a specific set of texts.</p><div class="fullcomment"><div class="comment cmt"><p>In tabulae, a <a href="Corpus.html" class="extype" name="edu.holycross.shot.tabulae.builder.Corpus">Corpus</a> is a morphological corpus: that is,
+irregular forms for a specific set of texts.</p><div class="fullcomment"><div class="comment cmt"><p>In tabulae, a <a href="TabulaeDataSet.html" class="extype" name="edu.holycross.shot.tabulae.builder.TabulaeDataSet">TabulaeDataSet</a> is a morphological corpus: that is,
 a dataset comprising rules tables, stem tables, and tables of
 irregular forms for a specific set of texts.
 </p></div><dl class="paramcmts block"><dt class="param">dataSource</dt><dd class="cmt"><p>Directory hosting one or more subdirectories
@@ -471,7 +471,9 @@ dataSource.  In compiling a parser for this corpus, the same name
       
       <p class="shortcomment cmt">Factory object for composing and writing to a file the top-level
 acceptor transducer, acceptor.fst, in the root of the project FST build.</p><div class="fullcomment"><div class="comment cmt"><p>Factory object for composing and writing to a file the top-level
-acceptor transducer, acceptor.fst, in the root of the project FST build.</p><p>The acceptor transducer is the final stage in the morphological pipeline.
+acceptor transducer, acceptor.fst, in the root of the project FST build.
+It checks for every possible lexicon file, and includes acceptors for
+those kinds that are present in this given build.</p><p>The acceptor transducer is the final stage in the morphological pipeline.
 See documentation on the tabulae github repository for details.</p></div></div>
     </li><li name="edu.holycross.shot.tabulae.builder.AdjectiveDataInstaller" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="AdjectiveDataInstaller"></a><a id="AdjectiveDataInstaller:AdjectiveDataInstaller"></a>

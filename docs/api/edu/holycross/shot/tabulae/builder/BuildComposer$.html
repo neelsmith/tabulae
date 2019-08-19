@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -446,9 +446,9 @@ created by <a href="ParserComposer$.html" class="extype" name="edu.holycross.sho
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>AnyRef → Any</dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.BuildComposer#apply" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="apply(dataSource:better.files.File,repo:better.files.File,corpus:String,fstcompiler:String):Unit"></a><a id="apply(File,File,String,String):Unit"></a>
+      <a id="apply(dataSource:better.files.File,corpusList:Vector[String],parsers:better.files.File,fstSource:better.files.File,fstcompiler:String):Unit"></a><a id="apply(File,Vector[String],File,File,String):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/BuildComposer$.html#apply(dataSource:better.files.File,repo:better.files.File,corpus:String,fstcompiler:String):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/BuildComposer$.html#apply(dataSource:better.files.File,corpusList:Vector[String],parsers:better.files.File,fstSource:better.files.File,fstcompiler:String):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -457,14 +457,11 @@ created by <a href="ParserComposer$.html" class="extype" name="edu.holycross.sho
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">apply</span><span class="params">(<span name="dataSource">dataSource: <span class="extype" name="better.files.File">File</span></span>, <span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="fstcompiler">fstcompiler: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">apply</span><span class="params">(<span name="dataSource">dataSource: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="parsers">parsers: <span class="extype" name="better.files.File">File</span></span>, <span name="fstSource">fstSource: <span class="extype" name="better.files.File">File</span></span>, <span name="fstcompiler">fstcompiler: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
       <p class="shortcomment cmt"> Assemble a tabulae build.</p><div class="fullcomment"><div class="comment cmt"><p> Assemble a tabulae build.
-</p></div><dl class="paramcmts block"><dt class="param">dataSource</dt><dd class="cmt"><p>Root directory for corpus-specific datasets.</p></dd><dt class="param">repo</dt><dd class="cmt"><p>Root directory of tabulae repository.  Build space will
-be created in repo/parsers/CORPUS.</p></dd><dt class="param">corpus</dt><dd class="cmt"><p>Name of corpus. This is the name of an extant subdirectory
-of dataSource, and will the name of the subdirectory in repo/parsers
-where the build is assembled.</p></dd></dl></div>
+</p></div><dl class="paramcmts block"><dt class="param">dataSource</dt><dd class="cmt"><p>Root directory for corpus-specific datasets.</p></dd></dl></div>
     </li><li name="scala.Any#asInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="asInstanceOf[T0]:T0"></a>
       <span class="permalink">
@@ -598,9 +595,9 @@ where the build is assembled.</p></dd></dl></div>
               
         </dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.BuildComposer#installAlphabet" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
-      <a id="installAlphabet(dataSrc:better.files.File,repo:better.files.File,corpus:String):Unit"></a><a id="installAlphabet(File,File,String):Unit"></a>
+      <a id="installAlphabet(dataSrc:better.files.File,corpusList:Vector[String],parsers:better.files.File):Unit"></a><a id="installAlphabet(File,Vector[String],File):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/BuildComposer$.html#installAlphabet(dataSrc:better.files.File,repo:better.files.File,corpus:String):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/BuildComposer$.html#installAlphabet(dataSrc:better.files.File,corpusList:Vector[String],parsers:better.files.File):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -609,11 +606,11 @@ where the build is assembled.</p></dd></dl></div>
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">installAlphabet</span><span class="params">(<span name="dataSrc">dataSrc: <span class="extype" name="better.files.File">File</span></span>, <span name="repo">repo: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">installAlphabet</span><span class="params">(<span name="dataSrc">dataSrc: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="parsers">parsers: <span class="extype" name="better.files.File">File</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
       <p class="shortcomment cmt">Install alphabet file.</p><div class="fullcomment"><div class="comment cmt"><p>Install alphabet file.
-</p></div><dl class="paramcmts block"><dt class="param">dataSrc</dt><dd class="cmt"><p>Source for corpus-specific data subdirectories.</p></dd><dt class="param">repo</dt><dd class="cmt"><p>Root of tabulae repository.</p></dd><dt class="param">corpus</dt><dd class="cmt"><p>Name of corpus.  Alphabet file will be copied from
+</p></div><dl class="paramcmts block"><dt class="param">dataSrc</dt><dd class="cmt"><p>Source for corpus-specific data subdirectories.</p></dd><dt class="param">corpusList</dt><dd class="cmt"><p>Name of corpus.  Alphabet file will be copied from
 data source area to repo/parsers/CORPUS space.</p></dd></dl></div>
     </li><li name="scala.Any#isInstanceOf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isInstanceOf[T0]:Boolean"></a>

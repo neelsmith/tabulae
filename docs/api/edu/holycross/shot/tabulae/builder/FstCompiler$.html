@@ -189,10 +189,6 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <a href="Configuration.html" title="Required configuration information to compile a binary parser.">Configuration</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
-                        <a class="class" href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
-                        <a href="Corpus.html" title="In tabulae, a Corpus is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">Corpus</a>
-                      </li><li class="current-entities indented5">
-                        <span class="separator"></span>
                         <a class="object" href="DataInstaller$.html" title="Install stems data for a corpus-specific parser."></a>
                         <a href="DataInstaller$.html" title="Install stems data for a corpus-specific parser.">DataInstaller</a>
                       </li><li class="current-entities indented5">
@@ -295,6 +291,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
                         <span class="separator"></span>
                         <a class="object" href="SymbolsComposer$.html" title=""></a>
                         <a href="SymbolsComposer$.html" title="">SymbolsComposer</a>
+                      </li><li class="current-entities indented5">
+                        <span class="separator"></span>
+                        <a class="class" href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts."></a>
+                        <a href="TabulaeDataSet.html" title="In tabulae, a TabulaeDataSet is a morphological corpus: that is, a dataset comprising rules tables, stem tables, and tables of irregular forms for a specific set of texts.">TabulaeDataSet</a>
                       </li><li class="current-entities indented5">
                         <span class="separator"></span>
                         <a class="object" href="UtilsInstaller$.html" title="Build transducers for debugging parts of the whole pipeline."></a>
@@ -480,10 +480,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
     </span>)</span>
               
         </dd></dl></div>
-    </li><li name="edu.holycross.shot.tabulae.builder.FstCompiler#compile" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="compile(dataDirectory:better.files.File,baseDir:better.files.File,corpus:String,conf:edu.holycross.shot.tabulae.builder.Configuration,replaceExisting:Boolean):Unit"></a><a id="compile(File,File,String,Configuration,Boolean):Unit"></a>
+    </li><li name="edu.holycross.shot.tabulae.builder.FstCompiler#compile" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="compile(dataDirectory:better.files.File,corpusList:Vector[String],parsers:better.files.File,fstSrc:better.files.File,conf:edu.holycross.shot.tabulae.builder.Configuration,replaceExisting:Boolean):Unit"></a><a id="compile(File,Vector[String],File,File,Configuration,Boolean):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/FstCompiler$.html#compile(dataDirectory:better.files.File,baseDir:better.files.File,corpus:String,conf:edu.holycross.shot.tabulae.builder.Configuration,replaceExisting:Boolean):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/FstCompiler$.html#compile(dataDirectory:better.files.File,corpusList:Vector[String],parsers:better.files.File,fstSrc:better.files.File,conf:edu.holycross.shot.tabulae.builder.Configuration,replaceExisting:Boolean):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -492,14 +492,16 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">compile</span><span class="params">(<span name="dataDirectory">dataDirectory: <span class="extype" name="better.files.File">File</span></span>, <span name="baseDir">baseDir: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="conf">conf: <a href="Configuration.html" class="extype" name="edu.holycross.shot.tabulae.builder.Configuration">Configuration</a></span>, <span name="replaceExisting">replaceExisting: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">compile</span><span class="params">(<span name="dataDirectory">dataDirectory: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="parsers">parsers: <span class="extype" name="better.files.File">File</span></span>, <span name="fstSrc">fstSrc: <span class="extype" name="better.files.File">File</span></span>, <span name="conf">conf: <a href="Configuration.html" class="extype" name="edu.holycross.shot.tabulae.builder.Configuration">Configuration</a></span>, <span name="replaceExisting">replaceExisting: <span class="extype" name="scala.Boolean">Boolean</span> = <span class="symbol">true</span></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      <p class="shortcomment cmt"> Compose a parser in FST from tabular source data, and compile it to binary form.</p>
+      <p class="shortcomment cmt"> Compose a parser in FST from tabular source data, and compile it to binary form.</p><div class="fullcomment"><div class="comment cmt"><p> Compose a parser in FST from tabular source data, and compile it to binary form.
+</p></div><dl class="paramcmts block"><dt class="param">dataDirectory</dt><dd class="cmt"><p>Base directory for finding source data from which
+the parser will be built.</p></dd><dt class="param">conf</dt><dd class="cmt"><p>Configuration object for compiling a parser.</p></dd></dl></div>
     </li><li name="edu.holycross.shot.tabulae.builder.FstCompiler#compileAll" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="compileAll(dataDirectory:better.files.File,baseDir:better.files.File,corpus:String,conf:edu.holycross.shot.tabulae.builder.Configuration):Unit"></a><a id="compileAll(File,File,String,Configuration):Unit"></a>
+      <a id="compileAll(dataSets:better.files.File,corpusList:Vector[String],parser:better.files.File,fstSource:better.files.File,conf:edu.holycross.shot.tabulae.builder.Configuration):Unit"></a><a id="compileAll(File,Vector[String],File,File,Configuration):Unit"></a>
       <span class="permalink">
-      <a href="../../../../../edu/holycross/shot/tabulae/builder/FstCompiler$.html#compileAll(dataDirectory:better.files.File,baseDir:better.files.File,corpus:String,conf:edu.holycross.shot.tabulae.builder.Configuration):Unit" title="Permalink">
+      <a href="../../../../../edu/holycross/shot/tabulae/builder/FstCompiler$.html#compileAll(dataSets:better.files.File,corpusList:Vector[String],parser:better.files.File,fstSource:better.files.File,conf:edu.holycross.shot.tabulae.builder.Configuration):Unit" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -508,10 +510,10 @@ tabular text files, and compiling SFST parsers.</p></div><dl class="attributes b
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">compileAll</span><span class="params">(<span name="dataDirectory">dataDirectory: <span class="extype" name="better.files.File">File</span></span>, <span name="baseDir">baseDir: <span class="extype" name="better.files.File">File</span></span>, <span name="corpus">corpus: <span class="extype" name="scala.Predef.String">String</span></span>, <span name="conf">conf: <a href="Configuration.html" class="extype" name="edu.holycross.shot.tabulae.builder.Configuration">Configuration</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
+        <span class="name">compileAll</span><span class="params">(<span name="dataSets">dataSets: <span class="extype" name="better.files.File">File</span></span>, <span name="corpusList">corpusList: <span class="extype" name="scala.Vector">Vector</span>[<span class="extype" name="scala.Predef.String">String</span>]</span>, <span name="parser">parser: <span class="extype" name="better.files.File">File</span></span>, <span name="fstSource">fstSource: <span class="extype" name="better.files.File">File</span></span>, <span name="conf">conf: <a href="Configuration.html" class="extype" name="edu.holycross.shot.tabulae.builder.Configuration">Configuration</a></span>)</span><span class="result">: <span class="extype" name="scala.Unit">Unit</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Compile lexica, morphological rule sets and core parser logic</p>
     </li><li name="scala.AnyRef#eq" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="eq(x$1:AnyRef):Boolean"></a><a id="eq(AnyRef):Boolean"></a>
       <span class="permalink">
