@@ -68,8 +68,8 @@ You can then use the `FstCompiler` object to compile a parser. The compiler need
 4. `conf`: the `Configuration`
 5.  `replaceExisting`:  Boolean flag indicating whether to replace an existing binary parser.  This may be omitted:  the default value is `true`.]
 
-
-```tut:silent
+REVISE THIS ON DOWN
+```
 val repo = File("src/test/resources")
 val datasource = repo / "datasets"
 val c = "analytical_types"
@@ -81,8 +81,8 @@ FstCompiler.compile(datasource, repo, c, conf, true)
 The `DataInstaller` object reads stem data, and writes the corresponding FST code:
 
 
-
-```tut:silent
+tut:silent
+```
 DataInstaller(datasource, repo, c)
 ```
 
