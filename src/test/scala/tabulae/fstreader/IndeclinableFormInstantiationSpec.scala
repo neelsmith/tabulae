@@ -6,20 +6,20 @@ import org.scalatest.FlatSpec
 class IndeclinableFormInstantiationSpec extends FlatSpec {
 
 
-  "The FstReader object" should  "instantiate regular indeclinable forms from FST source" in pending /* {
-    val adverbFst = "> care\n<u>proof.adj1</u><u>lexent.n6903</u>car<adj><us_a_um><div><us_a_um><adv>e<pos><u>proof.us_a_um1</u>".split("\n").toVector
+  "The FstReader object" should  "instantiate regular indeclinable forms from FST source" in  {
+    val indeclFst = "> cum\n<u>proof.indecl1</u><u>lexent.n11873</u>cum<indecl><indeclconj><div><indeclconj><indecl><u>indeclinfl.2</u>".split("\n").toVector
     println("\n\n\n")
-    val parsed = FstReader.parseFstLines(adverbFst)
+    val parsed = FstReader.parseFstLines(indeclFst)
     val parse = parsed(0)
-    assert(parse.literalToken == "care")
+    assert(parse.literalToken == "cum")
     assert(parse.analyses.size == 1)
 
-    val infForm: AdverbForm = parse.analyses(0) match {
-      case adv: AdverbForm => adv
-      case _ => fail("Nope, that wasn't an adverb.")
+    val ideclForm: IndeclinableForm = parse.analyses(0) match {
+      case indecl: IndeclinableForm => indecl
+      case _ => fail("Nope, that wasn't an indeclinable form.")
     }
-    assert(infForm.degree == Positive)
-  }*/
+    assert(ideclForm.pos == Conjunction)
+  }
 
 
 }

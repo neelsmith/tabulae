@@ -6,20 +6,22 @@ import org.scalatest.FlatSpec
 class ParticipleFormInstantiationSpec extends FlatSpec {
 
 
-  "The FstReader object" should  "instantiate regular participle forms from FST source" in pending /* {
-    val adverbFst = "> care\n<u>proof.adj1</u><u>lexent.n6903</u>car<adj><us_a_um><div><us_a_um><adv>e<pos><u>proof.us_a_um1</u>".split("\n").toVector
+  "The FstReader object" should  "instantiate regular participle forms from FST source" in  {
+    val adverbFst = "> monstrans\n<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><ptcpl>ans<masc><nom><sg><pres><act><u>proof.are_ptcpl1</u>".split("\n").toVector
     println("\n\n\n")
     val parsed = FstReader.parseFstLines(adverbFst)
     val parse = parsed(0)
-    assert(parse.literalToken == "care")
+    assert(parse.literalToken == "monstrans")
     assert(parse.analyses.size == 1)
 
-    val infForm: AdverbForm = parse.analyses(0) match {
-      case adv: AdverbForm => adv
-      case _ => fail("Nope, that wasn't an adverb.")
+    val ptcplForm: ParticipleForm = parse.analyses(0) match {
+      case ptcpl: ParticipleForm => ptcpl
+      case _ => fail("Nope, that wasn't a participle.")
     }
-    assert(infForm.degree == Positive)
-  }*/
+    assert(ptcplForm.gender == Positive)
+    assert(ptcplForm.grammaticalCase == Positive)
+    assert(ptcplForm.grammaticalNumber == Positive)
+  }
 
 
 }

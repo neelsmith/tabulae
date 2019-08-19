@@ -6,20 +6,20 @@ import org.scalatest.FlatSpec
 class GerundFormInstantiationSpec extends FlatSpec {
 
 
-  "The FstReader object" should  "instantiate regular gerund forms from FST source" in pending /* {
-    val adverbFst = "> care\n<u>proof.adj1</u><u>lexent.n6903</u>car<adj><us_a_um><div><us_a_um><adv>e<pos><u>proof.us_a_um1</u>".split("\n").toVector
+  "The FstReader object" should  "instantiate regular gerund forms from FST source" in {
+    val adverbFst = "> monstrandum\n<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<nom><u>proof.gerundconj1_1</u>\n<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<acc><u>proof.gerundconj1_2</u>".split("\n").toVector
     println("\n\n\n")
     val parsed = FstReader.parseFstLines(adverbFst)
     val parse = parsed(0)
-    assert(parse.literalToken == "care")
-    assert(parse.analyses.size == 1)
+    assert(parse.literalToken == "monstrandum")
+    assert(parse.analyses.size == 2)
 
-    val infForm: AdverbForm = parse.analyses(0) match {
-      case adv: AdverbForm => adv
-      case _ => fail("Nope, that wasn't an adverb.")
+    val grndForm: GerundForm = parse.analyses(0) match {
+      case grnd: GerundForm => grnd
+      case _ => fail("Nope, that wasn't a gerund.")
     }
-    assert(infForm.degree == Positive)
-  }*/
+    assert(grndForm.grammaticalCase == Nominative)
+  }
 
 
 }

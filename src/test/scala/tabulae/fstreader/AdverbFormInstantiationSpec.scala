@@ -21,5 +21,22 @@ class AdverbFormInstantiationSpec extends FlatSpec {
     assert(infForm.degree == Positive)
   }
 
+  it should  "instantiate create AdverbForms from FST source for irregular adverbs" in {
+
+
+    val adverbFst = "> bene\n<u>proof.irradv1</u><u>lexent.n5558</u>bene<pos><irregadv><div><irregadv><u>irreginfl.2</u>".split("\n").toVector
+    println("\n\n\n")
+    val parsed = FstReader.parseFstLines(adverbFst)
+    val parse = parsed(0)
+    assert(parse.literalToken == "bene")
+    assert(parse.analyses.size == 1)
+
+    val infForm: AdverbForm = parse.analyses(0) match {
+      case adv: AdverbForm => adv
+      case _ => fail("Nope, that wasn't an adverb.")
+    }
+    assert(infForm.degree == Positive)
+
+  }
 
 }

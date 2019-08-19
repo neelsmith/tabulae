@@ -1,7 +1,9 @@
 # Release notes for `tabulae`
 
+**5.0.0**:   Breaking change in internal APIs.  Provides complete analysis of all possible SFST output from a parser built with `tabulae`.
 
-**4.0.0**:  Major breaking change. Tabulae now permits merging multiple corpus sources if they have compatible orthographies (where one character set is a true subset of the other, and their usage does not conflict.)
+
+**4.0.0**:  Major breaking change. Tabulae now permits merging multiple corpus sources if they have compatible orthographies (where one character set is a true subset of the other, and their usage does not conflict.)  This should greatly facilitate the development of parsers for related corpora with shared content (whether shared lexicon or shared inflectional rules).
 
 **3.4.0**: Added support for parsing FST output for irregular adverbs.
 
