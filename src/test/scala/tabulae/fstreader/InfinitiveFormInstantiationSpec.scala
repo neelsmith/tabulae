@@ -23,4 +23,21 @@ class InfinitiveFormInstantiationSpec extends FlatSpec {
   }
 
 
+  it should "instantiate InfinitiveForms from FST source for irregular infinitives" in {
+    val infinFst = "> isse\n<u>proof.irrinf1</u><u>lexent.n15868</u>isse<pft><act><irreginfin><div><irreginfin><u>irreginfl.4</u>".split("\n").toVector
+    println("\n\n\n")
+    val parsed = FstReader.parseFstLines(infinFst)
+    val parse = parsed(0)
+    assert(parse.literalToken == "isse")
+    assert(parse.analyses.size == 1)
+
+    val infForm: InfinitiveForm = parse.analyses(0) match {
+      case inf: InfinitiveForm => inf
+      case _ => fail("Nope, that wasn't an infinitive.")
+    }
+    assert(infForm.tense == Perfect)
+    assert(infForm.voice == Active)
+  }
+
+
 }

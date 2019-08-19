@@ -68,10 +68,39 @@ object LemmatizedForm {
         val dataRE(stem, degr) =  remainder
 
         Some(AdverbForm(lexEntity, stemId, ruleId, degr))
+      }
+
+      case "irregadj" => {
+
+        val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+        val idsRE(stemId, lexEntity, remainder) = parts(0)
+        //<u>proof.irradj1</u><u>lexent.n48627</u>totius<masc><gen><sg><pos>
+        //<irregadj>
+        //<div>
+        //<irregadj><u>irreginfl.1</u>
+            val dataRE  = "([^<]*)<([^>]+)><([^>]+)><([^>]+)><([^>]+)><irregadj>".r
+        val dataRE(stem, gender, grammCase, grammNumber, degr) =  remainder
+
+        Some(AdjectiveForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber, degr))
+      }
+
+      case "irreginfin" => {
+
+        //<u>proof.irrinf1</u><u>lexent.n15868</u>isse<pft><act><irreginfin>
+        //<div>
+        //<irreginfin><u>irreginfl.4</u>
+        val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+        val idsRE(stemId, lexEntity, remainder) = parts(0)
+        //isse<pft><act><irreginfin>
+        val dataRE  = "([^<]*)<([^>]+)><([^>]+)><irreginfin>".r
+        val dataRE(stem, tense, voice) =  remainder
+
+        Some(InfinitiveForm(lexEntity, stemId, ruleId, tense, voice))
 
       }
+
       case _ => {
-        val err = "Irreg class "+ irregClass + " not recognized."
+        val err = "Lemmatizedform: irreg class "+ irregClass + " not recognized."
         //throw new Exception(err)
         println(err)
         None
