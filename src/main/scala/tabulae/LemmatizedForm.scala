@@ -17,6 +17,7 @@ sealed trait LemmatizedForm {
     this match {
       case v: VerbForm => "verb"
       case n: NounForm => "noun"
+      case pron: PronounForm => "pronoun"
       case adj: AdjectiveForm => "adjective"
       case ptcpl: ParticipleForm => "participle"
       case gnd: GerundForm => "gerund"
@@ -55,6 +56,17 @@ object LemmatizedForm {
 
         Some(NounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber))
       }
+
+
+    case "irregpron" => {
+      val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+      val idsRE(stemId, lexEntity, remainder) = parts(0)
+
+      val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><irregpron>".r
+      val dataRE(stem, gender, grammCase, grammNumber) =  remainder
+
+      Some(PronounForm(lexEntity, stemId, ruleId, gender, grammCase, grammNumber))
+    }
 
       case "irregadv" => {
       //<u>ocremorph.n25115</u><u>ls.n25115</u>
@@ -236,6 +248,30 @@ object NounForm {
   }
 }
 
+
+
+
+/** Noun form, identified by gender, case and number.
+*
+* @param gender Property for number.
+* @param grammaticalCase Property for case.
+* @param grammaticalNumber Property for number.
+*/
+case class PronounForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends LemmatizedForm {
+  def lemmaId = lemmaUrn
+  def stemId = stemUrn
+  def ruleId = ruleUrn
+}
+
+/** Factory object to build a [[PronounForm]] from string vaues.
+*/
+object PronounForm {
+  /** Create a [[PronounForm]] from three FST symbols.
+  */
+  def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String): PronounForm = {
+    PronounForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n))
+  }
+}
 
 /** Adjective form, identified by gender, case, number and degree.
 *
