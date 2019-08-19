@@ -12,9 +12,6 @@ There are three main phases to building a corpus-specific parser and working wit
 
 This documentation accordingly falls into three parts;
 
-1. Building a corpus-specific dataset
-2. Compiling and using a parser
-3. Analyzing the output of the parser.
-
-
-[Read more about how the code works](parsedOutput/).
+1. [Building a corpus-specific dataset](tables/)
+2. [Compiling and using a parser](compiling/)
+3. [Analyzing the output of the parser](analysis/)
