@@ -120,6 +120,12 @@ object LemmatizedForm {
             Some(AdjectiveForm(stemEntry.lexEntity,stemEntry.stemId,adjr.ruleId, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree))
           }
 
+
+
+          case advr: AdverbRule => {
+            Some(AdverbForm(stemEntry.lexEntity,stemEntry.stemId,advr.ruleId, advr.degree))
+          }
+
           case pr: ParticipleRule => {
             Some(ParticipleForm(stemEntry.lexEntity,stemEntry.stemId,pr.ruleId, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice))
           }

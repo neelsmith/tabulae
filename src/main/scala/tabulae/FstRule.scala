@@ -51,7 +51,7 @@ object IndeclRule {
 case class ParticipleRule(ruleId: String,gender: String, grammaticalCase: String,
 grammaticalNumber:String, tense: String, voice:  String,  declClass: String, ending: String ) extends FstRule
 
-/** Factory to create full [[AdjectiveRule]] object from FST.
+/** Factory to create full [[ParticipleRule]] object from FST.
 *
 */
 object ParticipleRule {
@@ -127,6 +127,25 @@ object AdjectiveRule {
 
 
 
+
+
+case class AdverbRule(ruleId: String, degree: String, declClass: String, ending: String ) extends FstRule
+
+/** Factory to create full [[AdverbRule]] object from FST.
+*
+*/
+object AdverbRule {
+  /** Create full [[AdverbRule]] object from adjective-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param nounData Noun-specific FST to parse.
+  */
+  def apply(declClass: String, adjData: String): AdverbRule = {
+    val dataRE  = "([^<]+)<([^<]+)><u>(.+)<\\/u>".r
+    val dataRE(ending, degree, ruleId) = adjData
+    AdverbRule(ruleId, degree, declClass, ending)
+  }
+}
 
 /** Rule entry for a noun form.
 *
@@ -257,6 +276,7 @@ object FstRule {
       case "indecl" => Some(IndeclRule.fromStrings(inflClass, remainder))
       case "verb" =>  Some(VerbRule(inflClass, remainder))
       case "adj" =>  Some(AdjectiveRule(inflClass, remainder))
+      case "adv" =>  Some(AdverbRule(inflClass, remainder))
       case "gerund" => Some(GerundRule(inflClass, remainder))
       //case "gerundive" => Some(GerundiveRule(inflClass, remainder))
       case "ptcpl" => Some(ParticipleRule(inflClass, remainder))
@@ -266,7 +286,6 @@ object FstRule {
         None
       }
 
-      //throw new Exception(s"Type ${s} not implemented (fst string ${fst})")
     }
   }
 
