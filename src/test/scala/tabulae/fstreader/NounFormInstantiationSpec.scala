@@ -21,5 +21,23 @@ class NounFormInstantiationSpec extends FlatSpec {
     assert(infForm.degree == Positive)
   }*/
 
+  it should "instantiate NounForms from FST source for irregular nouns" in {
+    val irregNounFst = "> vis\n<u>proof.irrn1m</u><u>lexent.n51113</u>vis<fem><nom><sg><irregnoun><div><irregnoun><u>irreginfl.0</u>".split("\n").toVector
+    println("\n\n\n")
+    val parsed = FstReader.parseFstLines(irregNounFst)
+    val parse = parsed(0)
+    assert(parse.literalToken == "vis")
+    assert(parse.analyses.size == 1)
+
+    val nounForm: NounForm = parse.analyses(0) match {
+      case noun: NounForm => noun
+      case _ => fail("Nope, that wasn't a noun.")
+    }
+    assert(nounForm.gender == Feminine)
+    assert(nounForm.grammaticalCase == Nominative)
+    assert(nounForm.grammaticalNumber == Singular)
+
+  }
+
 
 }
