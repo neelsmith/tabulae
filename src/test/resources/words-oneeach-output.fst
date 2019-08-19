@@ -5,17 +5,10 @@
 > monstrans
 <u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><ptcpl>ans<masc><nom><sg><pres><act><u>proof.are_ptcpl1</u>
 > monstrandum
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<masc><acc><sg><u>proof.gdv_1</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<neut><nom><sg><u>proof.gdv_2</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<neut><acc><sg><u>proof.gdv_3</u>
 <u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<nom><u>proof.gerundconj1_1</u>
 <u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<acc><u>proof.gerundconj1_2</u>
-> monstrandum
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<masc><acc><sg><u>proof.gdv_1</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<neut><nom><sg><u>proof.gdv_2</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andum<neut><acc><sg><u>proof.gdv_3</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<nom><u>proof.gerundconj1_1</u>
-<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerund>andum<acc><u>proof.gerundconj1_2</u>
+> monstrandarum
+<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><gerundive>andarum<fem><gen><pl><u>proof.gdv_1</u>
 > monstratu
 <u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><supine>atu<abl><u>proof.conj1_1</u>
 > puer
