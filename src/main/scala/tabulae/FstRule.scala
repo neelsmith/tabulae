@@ -72,24 +72,29 @@ object ParticipleRule {
 
 
 ////////////
-case class GerundiveRule(ruleId: String,gender: String, grammaticalCase: String,
-grammaticalNumber:String, tense: String, voice:  String,  declClass: String, ending: String ) extends FstRule
+case class GerundiveRule(
+    ruleId: String,
+    gender: String,
+    grammaticalCase: String,
+    grammaticalNumber: String,
+    declClass: String,
+    ending: String ) extends FstRule
 
-/** Factory to create full [[AdjectiveRule]] object from FST.
+/** Factory to create full [[GerundiveRule]] object from FST.
 *
 */
-object GerundiveRule {
+//object GerundiveRule {
   /** Create full [[GerundiveRule]] object from adjective-specific FST.
   *
   * @param declClass String value for declension class.
   * @param ptcplData Noun-specific FST to parse.
-  */
+
   def apply(declClass: String, ptcplData: String): GerundiveRule = {
     val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
-    val dataRE(ending, gender, grammCase, grammNumber, tense, voice, ruleId) = ptcplData
-    GerundiveRule(ruleId, gender, grammCase, grammNumber,tense, voice, declClass, ending)
-  }
-}
+    val dataRE(ending, gender, grammCase, grammNumber, ruleId) = ptcplData
+    GerundiveRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
+  }  */
+//}
 
 /** Rule entry for an adjective form.
 *
@@ -156,7 +161,6 @@ object NounRule {
 case class GerundRule(ruleId: String, grammaticalCase: String,
 declClass: String, ending: String ) extends FstRule
 
-
 /** Factory to create full [[NounRule]] object from FST.
 *
 */
@@ -208,6 +212,32 @@ object VerbRule {
 }
 
 
+
+case class InfinitiveRule(
+  ruleId: String,
+  tense: String,
+  voice: String,
+  declClass: String,
+  ending: String ) extends FstRule
+
+/** Factory to create full [[NounRule]] object from FST.
+*
+*/
+object InfinitiveRule {
+  /** Create full [[InfinitiveRule]] object from infinitive-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param infinitiveData Infinitive-specific FST to parse.
+  */
+  def apply(declClass: String, gerundData: String): InfinitiveRule = {
+    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    val dataRE(ending, tense, voice, ruleId) = gerundData
+
+    InfinitiveRule(ruleId, tense, voice, declClass, ending)
+  }
+}
+
+
 /** Factory object for creating [[FstRule]] objects
 * from the "rule" half of a FST reply.
 */
@@ -217,21 +247,29 @@ object FstRule {
   *
   * @param fst The "rule" half of an FST reply.
   */
-  def apply(fst: String): FstRule = {
+  def apply(fst: String): Option[FstRule] = {
 
     val idsRE = "<([^<]+)><([^<]+)>(.+)".r
     val idsRE(inflClass, stemType, remainder) = fst
 
     stemType match {
-      case "noun" => NounRule(inflClass,  remainder)
-      case "indecl" => IndeclRule.fromStrings(inflClass, remainder)
-      case "verb" =>  VerbRule(inflClass, remainder)
-      case "adj" =>  AdjectiveRule(inflClass, remainder)
-      case "gerund" => GerundRule(inflClass, remainder)
-      case "gerundive" => GerundiveRule(inflClass, remainder)
-      case "ptcpl" => ParticipleRule(inflClass, remainder)
-      case s: String => throw new Exception(s"Type ${s} not implemented (fst string ${fst})")
+      case "noun" => Some(NounRule(inflClass,  remainder))
+      case "indecl" => Some(IndeclRule.fromStrings(inflClass, remainder))
+      case "verb" =>  Some(VerbRule(inflClass, remainder))
+      case "adj" =>  Some(AdjectiveRule(inflClass, remainder))
+      case "gerund" => Some(GerundRule(inflClass, remainder))
+      //case "gerundive" => Some(GerundiveRule(inflClass, remainder))
+      case "ptcpl" => Some(ParticipleRule(inflClass, remainder))
+      case "infin" => Some(InfinitiveRule(inflClass,remainder))
+      case s: String =>  {
+        println(s"FstRule: type ${s} not implemented (fst string ${fst})")
+        None
+      }
+
+      //throw new Exception(s"Type ${s} not implemented (fst string ${fst})")
     }
   }
+
+
 
 }

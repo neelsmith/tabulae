@@ -36,3 +36,7 @@
 <u>proof.irradv1</u><u>lexent.n5558</u>bene<pos><irregadv><div><irregadv><u>irreginfl.2</u>
 > totius
 <u>proof.irradj1</u><u>lexent.n48627</u>totius<masc><gen><sg><pos><irregadj><div><irregadj><u>irreginfl.1</u>
+> hic
+<u>proof.irrpron1</u><u>lexent.n20640</u>hic<masc><nom><sg><irregpron><div><irregpron><u>irreginfl.7</u>
+> fake-not-latin
+no result for fake-not-latin

@@ -9,7 +9,7 @@ class FstRuleParsingSpec extends FlatSpec {
   "The FstRule object" should "recognize nouns forms" in  {
     val ruleFst = "<a_ae><noun>as<fem><acc><pl><u>lnouninfl.a_ae10</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case nr: NounRule => {
         assert(nr.ruleId == "lnouninfl.a_ae10")
         assert(nr.gender == "fem")
@@ -24,7 +24,7 @@ class FstRuleParsingSpec extends FlatSpec {
   it should "recognize nouns forms with null string for ending" in  {
     val ruleFst = "<0_is><noun><masc><nom><sg><u>ocremorph.0_is1</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case nr: NounRule => {
         assert(nr.ruleId == "ocremorph.0_is1")
         assert(nr.gender == "masc")
@@ -41,7 +41,7 @@ class FstRuleParsingSpec extends FlatSpec {
 
     val ruleFst = "<us_a_um><adj>o<masc><dat><sg><pos><u>ocremorph.us_a_um3</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case ar: AdjectiveRule => {
       }
       case _ => fail("Should have formed an AdjectiveRule")
@@ -52,7 +52,7 @@ class FstRuleParsingSpec extends FlatSpec {
   it should "recognize conjugated verb forms" in {
     val ruleFst = "<conj1><verb>i<1st><sg><pft><indic><act><u>lverbinfl.are_pftind1</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case vr: VerbRule => {
         assert(vr.ruleId == "lverbinfl.are_pftind1")
         assert(vr.person == "1st")
@@ -73,7 +73,7 @@ class FstRuleParsingSpec extends FlatSpec {
   it should "recognize forms of the gerund" in {
     val ruleFst = "<conj1><gerund>ando<dat><u>ocremorph.grd_conj1_2</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case gr: GerundRule => {
       }
       case _ => fail("Should have formed a GerundRule")
@@ -83,7 +83,7 @@ class FstRuleParsingSpec extends FlatSpec {
   it should "recognize participial forms" in {
     val ruleFst = "<pftpass><ptcpl>i<masc><nom><pl><pft><pass><u>ocremorph.pft_perfppl7</u>"
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case pr: ParticipleRule => {
         assert(pr.ruleId == "ocremorph.pft_perfppl7")
         assert(pr.gender == "masc")
@@ -108,7 +108,7 @@ class FstRuleParsingSpec extends FlatSpec {
 
 
     val rule = FstRule(ruleFst)
-    rule match {
+    rule.get match {
       case ir: IndeclRule => {
         assert(ir.ruleId == "indeclinfl.2")
         assert(ir.pos == "indeclconj")

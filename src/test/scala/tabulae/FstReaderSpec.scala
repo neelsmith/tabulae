@@ -91,4 +91,5 @@ class FstReaderSpec extends FlatSpec {
     assert (analyses.isEmpty)
   }
 
+
 }

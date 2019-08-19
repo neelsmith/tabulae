@@ -21,6 +21,7 @@ object FstReader {
   }
 
 
+
   /** Recursively pop off analyses for first lines in a Vector of FST strings
   * until a new token  is encountered.
   *
@@ -38,7 +39,10 @@ object FstReader {
 
       } else {
         LemmatizedForm(fstLines.head) match {
-          case None =>   popAnalyses(fstLines.tail, analysisVector)
+          case None =>   {
+            println("FAILED TO POP ANALYSIS ON \n\t" +  fstLines.head)
+            popAnalyses(fstLines.tail, analysisVector)
+          }
           case f: Option[LemmatizedForm] => popAnalyses(fstLines.tail, analysisVector :+ f.get)
         }
 
@@ -101,7 +105,7 @@ object FstReader {
   }
 
 
-  def formsFromFile(fileName: String) : Vector[AnalyzedToken]= {
+  def fromFile(fileName: String) : Vector[AnalyzedToken]= {
     val lines = Source.fromFile(fileName).getLines.toVector
     parseFstLines(lines.filter(_.nonEmpty))
   }

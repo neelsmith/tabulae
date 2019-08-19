@@ -23,9 +23,8 @@ sealed trait LemmatizedForm {
       case gndv: GerundiveForm => "gerundive"
       case adv: AdverbForm => "adverb"
       case indecl: IndeclinableForm => "indeclinable"
-      /*
       case inf: InfinitiveForm => "infinitive"
-      */
+
     }
   }
 }
@@ -104,40 +103,47 @@ object LemmatizedForm {
       // This is for handling regular forms:
       val stemEntry = FstStem(halves(0))
       val inflection = FstRule(halves(1))
+      if (inflection == None) {
+        None
 
+      } else {
+        println("MATCHING ON " + inflection.get)
+        inflection.get match {
+          case vr: VerbRule => {
+            Some(VerbForm(stemEntry.lexEntity, stemEntry.stemId, vr.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice))
+          }
 
-      inflection match {
-        case vr: VerbRule => {
-          Some(VerbForm(stemEntry.lexEntity, stemEntry.stemId, inflection.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice))
-        }
+          case nr: NounRule => {
+            Some(NounForm(stemEntry.lexEntity,stemEntry.stemId,nr.ruleId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber))
+          }
+          case adjr: AdjectiveRule => {
+            Some(AdjectiveForm(stemEntry.lexEntity,stemEntry.stemId,adjr.ruleId, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree))
+          }
 
-        case nr: NounRule => {
-          Some(NounForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, nr.gender, nr.grammaticalCase, nr.grammaticalNumber))
-        }
-        case adjr: AdjectiveRule => {
-          Some(AdjectiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, adjr.gender, adjr.grammaticalCase, adjr.grammaticalNumber, adjr.degree))
-        }
+          case pr: ParticipleRule => {
+            Some(ParticipleForm(stemEntry.lexEntity,stemEntry.stemId,pr.ruleId, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice))
+          }
+          case gr: GerundiveRule => {
+            Some(GerundiveForm(stemEntry.lexEntity,stemEntry.stemId,gr.ruleId, gr.gender, gr.grammaticalCase, gr.grammaticalNumber))
+          }
 
-        case pr: ParticipleRule => {
-          Some(ParticipleForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, pr.gender, pr.grammaticalCase, pr.grammaticalNumber, pr.tense, pr.voice))
-        }
-        case gr: GerundiveRule => {
-          Some(GerundiveForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.gender, gr.grammaticalCase, gr.grammaticalNumber))
-        }
+          case gr: GerundRule => {
+            Some(GerundForm(stemEntry.lexEntity,stemEntry.stemId,gr.ruleId, gr.grammaticalCase))
+          }
 
-        case gr: GerundRule => {
-          Some(GerundForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, gr.grammaticalCase))
-        }
+          case ir: IndeclRule => {
+            Some(IndeclinableForm(stemEntry.lexEntity,stemEntry.stemId,ir.ruleId, ir.pos))
+          }
 
-        case ir: IndeclRule => {
-          Some(IndeclinableForm(stemEntry.lexEntity,stemEntry.stemId,inflection.ruleId, ir.pos))
-        }
+          case infr: InfinitiveRule => {
+            Some(InfinitiveForm(stemEntry.lexEntity,stemEntry.stemId,infr.ruleId,infr.tense, infr.voice ))
+          }
 
-        case _ => {
-          println(s"Form.scala: form ${inflection} not yet implemented.")
-          None
+          case _ => {
+            println(s"LemmatizedForm.scala: form ${inflection} not yet implemented.")
+            None
+          }
         }
-        //throw new Exception(s"Form.scala: form ${inflection} not yet implemented.")
       }
     }
   }
@@ -239,7 +245,7 @@ case class GerundiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gen
 /** Factory object to build a [[NounForm]] from string vaues.
 */
 object GerundiveForm {
-  /** Create a [[GerundForm]] from one FST symbols.
+  /** Create a [[GerundiveForm]] from one FST symbols.
   */
   def apply( lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String): GerundiveForm = {
     GerundiveForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n) )
@@ -248,6 +254,23 @@ object GerundiveForm {
 
 
 
+/**
+*/
+case class InfinitiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, tense: Tense, voice: Voice) extends LemmatizedForm {
+  def lemmaId = lemmaUrn
+  def stemId = stemUrn
+  def ruleId = ruleUrn
+}
+
+/** Factory object to build a [[GerundForm]] from string vaues.
+*/
+object InfinitiveForm {
+  /** Create an  [[InfinitiveForm]] from one FST symbols.
+  */
+  def apply( lemmaUrn: String, stemUrn: String, ruleUrn: String, tns: String, vce :String): InfinitiveForm = {
+    InfinitiveForm(lemmaUrn, stemUrn, ruleUrn, tenseForFstSymbol(tns), voiceForFstSymbol(vce))
+  }
+}
 
 
 
