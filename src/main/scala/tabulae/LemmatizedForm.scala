@@ -58,6 +58,17 @@ object LemmatizedForm {
       }
 
 
+    case "irregcverb" => {
+      val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
+      val idsRE(stemId, lexEntity, remainder) = parts(0)
+
+      val dataRE  = "([^<]*)<([^>]+)><([^>]+)><([^>]+)><([^>]+)><([^>]+)><irregcverb>".r
+      val dataRE(stem, person, grammNumber, tense, mood, voice) =  remainder.replaceFirst("<#>", "")
+
+      Some(VerbForm(lexEntity, stemId, ruleId, person, grammNumber, tense, mood, voice))
+    }
+
+
     case "irregpron" => {
       val idsRE = "<u>([^<]+)<\\/u><u>([^<]+)<\\/u>(.+)".r
       val idsRE(stemId, lexEntity, remainder) = parts(0)
@@ -69,7 +80,7 @@ object LemmatizedForm {
     }
 
       case "irregadv" => {
-      //<u>ocremorph.n25115</u><u>ls.n25115</u>
+        //<u>ocremorph.n25115</u><u>ls.n25115</u>
       //itervm<pos><irregadv>
       //<div>
       //<irregadv><u>irreginfl.2</u>
@@ -148,7 +159,6 @@ object LemmatizedForm {
         None
 
       } else {
-        println("MATCHING ON " + inflection.get)
         inflection.get match {
           case vr: VerbRule => {
             Some(VerbForm(stemEntry.lexEntity, stemEntry.stemId, vr.ruleId, vr.person, vr.grammaticalNumber, vr.tense, vr.mood, vr.voice))
