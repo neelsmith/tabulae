@@ -3,10 +3,18 @@ title: Tabulae
 layout: page
 ---
 
+There are three main phases to building a corpus-specific parser and working with its output.
 
 
-Pipeline:
-
-1. you write tables
+1. you write (or modify existing) plain-text tables defining rules and vocabulary for your parser.
 2. `tabulae`'s build packages read your tables, then write and compile SFST code.
-3. `tabulae`'s analysis packages can read the output of the SFST parser, and give you structured objects.  [Read more about how the code works](parsedOutput/).
+3. `tabulae`'s analysis packages can read the output of the SFST parser, and give you structured objects.
+
+This documentation accordingly falls into three parts;
+
+1. Building a corpus-specific dataset
+2. Compiling and using a parser
+3. Analyzing the output of the parser.
+
+
+[Read more about how the code works](parsedOutput/).
