@@ -83,18 +83,18 @@ case class GerundiveRule(
 /** Factory to create full [[GerundiveRule]] object from FST.
 *
 */
-//object GerundiveRule {
+object GerundiveRule {
   /** Create full [[GerundiveRule]] object from adjective-specific FST.
   *
   * @param declClass String value for declension class.
   * @param ptcplData Noun-specific FST to parse.
-
+  */
   def apply(declClass: String, ptcplData: String): GerundiveRule = {
-    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
     val dataRE(ending, gender, grammCase, grammNumber, ruleId) = ptcplData
     GerundiveRule(ruleId, gender, grammCase, grammNumber, declClass, ending)
-  }  */
-//}
+  }
+}
 
 /** Rule entry for an adjective form.
 *
@@ -278,7 +278,7 @@ object FstRule {
       case "adj" =>  Some(AdjectiveRule(inflClass, remainder))
       case "adv" =>  Some(AdverbRule(inflClass, remainder))
       case "gerund" => Some(GerundRule(inflClass, remainder))
-      //case "gerundive" => Some(GerundiveRule(inflClass, remainder))
+      case "gerundive" => Some(GerundiveRule(inflClass, remainder))
       case "ptcpl" => Some(ParticipleRule(inflClass, remainder))
       case "infin" => Some(InfinitiveRule(inflClass,remainder))
       case s: String =>  {
