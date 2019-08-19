@@ -128,7 +128,6 @@ object AdjectiveRule {
 
 
 
-
 case class AdverbRule(ruleId: String, degree: String, declClass: String, ending: String ) extends FstRule
 
 /** Factory to create full [[AdverbRule]] object from FST.
@@ -146,6 +145,33 @@ object AdverbRule {
     AdverbRule(ruleId, degree, declClass, ending)
   }
 }
+
+
+
+
+
+
+
+
+case class SupineRule(ruleId: String, grammaticalCase: String, declClass: String, ending: String ) extends FstRule
+
+/** Factory to create full [[SupineRule]] object from FST.
+*
+*/
+object SupineRule {
+  /** Create full [[SupineRule]] object from adjective-specific FST.
+  *
+  * @param declClass String value for declension class.
+  * @param nounData Noun-specific FST to parse.
+  */
+  def apply(declClass: String, adjData: String): SupineRule = {
+    val dataRE  = "([^<]+)<([^<]+)><u>(.+)<\\/u>".r
+    val dataRE(ending, grammCase, ruleId) = adjData
+    SupineRule(ruleId, grammCase, declClass, ending)
+  }
+}
+
+
 
 /** Rule entry for a noun form.
 *
@@ -279,6 +305,7 @@ object FstRule {
       case "adv" =>  Some(AdverbRule(inflClass, remainder))
       case "gerund" => Some(GerundRule(inflClass, remainder))
       case "gerundive" => Some(GerundiveRule(inflClass, remainder))
+      case "supine" => Some(SupineRule(inflClass, remainder))
       case "ptcpl" => Some(ParticipleRule(inflClass, remainder))
       case "infin" => Some(InfinitiveRule(inflClass,remainder))
       case s: String =>  {

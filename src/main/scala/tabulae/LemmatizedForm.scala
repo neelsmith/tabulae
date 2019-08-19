@@ -24,7 +24,7 @@ sealed trait LemmatizedForm {
       case adv: AdverbForm => "adverb"
       case indecl: IndeclinableForm => "indeclinable"
       case inf: InfinitiveForm => "infinitive"
-
+      case sup: SupineForm => "supine"
     }
   }
 }
@@ -143,6 +143,10 @@ object LemmatizedForm {
 
           case infr: InfinitiveRule => {
             Some(InfinitiveForm(stemEntry.lexEntity,stemEntry.stemId,infr.ruleId,infr.tense, infr.voice ))
+          }
+
+          case sup: SupineRule => {
+            Some(SupineForm(stemEntry.lexEntity,stemEntry.stemId,sup.ruleId,sup.grammaticalCase))
           }
 
           case _ => {
@@ -300,13 +304,27 @@ object GerundForm {
   }
 }
 
+case class SupineForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, grammaticalCase: GrammaticalCase) extends LemmatizedForm {
+    def lemmaId = lemmaUrn
+    def stemId = stemUrn
+    def ruleId = ruleUrn
+}
+object SupineForm {
+  def apply(
+    lemmaUrn: String,
+    stemUrn: String,
+    ruleUrn: String,
+    grammCase: String): SupineForm = {
+    SupineForm(lemmaUrn, stemUrn, ruleUrn, caseForFstSymbol(grammCase))
+  }
+}
+
+
 case class AdverbForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, degree: Degree) extends LemmatizedForm {
     def lemmaId = lemmaUrn
     def stemId = stemUrn
     def ruleId = ruleUrn
 }
-
-
 object AdverbForm {
 
   def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, deg: String): AdverbForm = {

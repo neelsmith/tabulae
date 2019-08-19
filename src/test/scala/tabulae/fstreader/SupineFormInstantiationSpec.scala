@@ -6,20 +6,20 @@ import org.scalatest.FlatSpec
 class SupineFormInstantiationSpec extends FlatSpec {
 
 
-  "The FstReader object" should  "instantiate regular supine forms from FST source" in pending /* {
-    val adverbFst = "> care\n<u>proof.adj1</u><u>lexent.n6903</u>car<adj><us_a_um><div><us_a_um><adv>e<pos><u>proof.us_a_um1</u>".split("\n").toVector
+  "The FstReader object" should  "instantiate regular supine forms from FST source" in  {
+    val supineFst = "> monstratu\n<u>proof.v1</u><u>lexent.n29616</u><#>monstr<verb><conj1><div><conj1><supine>atu<abl><u>proof.conj1_1</u>".split("\n").toVector
     println("\n\n\n")
-    val parsed = FstReader.parseFstLines(adverbFst)
+    val parsed = FstReader.parseFstLines(supineFst)
     val parse = parsed(0)
-    assert(parse.literalToken == "care")
+    assert(parse.literalToken == "monstratu")
     assert(parse.analyses.size == 1)
 
-    val infForm: AdverbForm = parse.analyses(0) match {
-      case adv: AdverbForm => adv
-      case _ => fail("Nope, that wasn't an adverb.")
+    val supForm: SupineForm = parse.analyses(0) match {
+      case supine: SupineForm => supine
+      case _ => fail("Nope, that wasn't a supine.")
     }
-    assert(infForm.degree == Positive)
-  }*/
+    assert(supForm.grammaticalCase == Ablative)
+  }
 
 
 }
