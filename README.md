@@ -5,11 +5,11 @@
 `tabulae` makes it possible to build corpus-specific Latin morphological parsers from tabular data for inflectional rules and for vocabulary ("stems").  It's a Latin sibling of [`kanones`](https://github.com/neelsmith/kanones):  like `kanones`, its aim is to build corpus-specific morphological analyzers, identifying citable lexical items and citable inflectional rules for each analysis.
 
 
-## Current version: 5.0.0
+## Current version: 5.1.0
 
 Status:  **active development**. [Release notes](releases.md)
 
-Release **5.0.0** Provides complete analysis of all possible SFST output from a parser built with `tabulae`.
+The  **5.x** release series provides complete analysis of all possible SFST output from a parser built with `tabulae`.  Beginning with version **5.1.0**, the analytical parts of the  library are cross-compiled for ScalaJS as well as the JVM.
 
 ## Information and documentation
 

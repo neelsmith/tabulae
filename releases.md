@@ -1,5 +1,8 @@
 # Release notes for `tabulae`
 
+
+**5.1.0**:  Adds crosscompilation for ScalaJS as well as JVM for analytical parts of the library.
+
 **5.0.0**:   Breaking change in internal APIs.  Provides complete analysis of all possible SFST output from a parser built with `tabulae`.
 
 
