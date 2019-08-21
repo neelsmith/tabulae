@@ -356,6 +356,11 @@ case class NounForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gender: 
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
+
+  override def  toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
+    s"noun: " + data
+  }
 }
 
 /** Factory object to build a [[NounForm]] from string vaues.
@@ -403,6 +408,10 @@ case class AdjectiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gen
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
+  override def  toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber,  degree).mkString(", ").toLowerCase
+    s"adjective: " + data
+  }
 }
 
 
