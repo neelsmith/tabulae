@@ -12,7 +12,7 @@ class FstIrregularFormSpec extends FlatSpec {
     f.get match {
       case nf: NounForm => {
         assert (nf.gender == Masculine)
-    assert (nf.grammaticalCase == Nominative)
+        assert (nf.grammaticalCase == Nominative)
         assert (nf.grammaticalNumber == Singular)
       }
       case _ => fail("Should have created a noun form")

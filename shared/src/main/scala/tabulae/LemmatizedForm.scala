@@ -28,6 +28,116 @@ sealed trait LemmatizedForm {
       case sup: SupineForm => "supine"
     }
   }
+
+  def substantiveGender: Option[Gender] = {
+    this match {
+      case n: NounForm => Some(n.gender)
+      case pron: PronounForm => Some(pron.gender)
+      case adj: AdjectiveForm => Some(adj.gender)
+      case ptcpl: ParticipleForm => Some(ptcpl.gender)
+      case gdv: GerundiveForm => Some(gdv.gender)
+      case _ => None
+    }
+  }
+
+  def substantiveCase: Option[GrammaticalCase] = {
+    this match {
+      case n: NounForm => Some(n.grammaticalCase)
+      case pron: PronounForm => Some(pron.grammaticalCase)
+      case adj: AdjectiveForm => Some(adj.grammaticalCase)
+      case ptcpl: ParticipleForm => Some(ptcpl.grammaticalCase)
+      case gdv: GerundiveForm => Some(gdv.grammaticalCase)
+      case grnd: GerundForm => Some(grnd.grammaticalCase)
+      case _ => None
+    }
+  }
+
+  def substantiveNumber: Option[GrammaticalNumber] = {
+    this match {
+      case n: NounForm => Some(n.grammaticalNumber)
+      case pron: PronounForm => Some(pron.grammaticalNumber)
+      case adj: AdjectiveForm => Some(adj.grammaticalNumber)
+      case ptcpl: ParticipleForm => Some(ptcpl.grammaticalNumber)
+      case gdv: GerundiveForm => Some(gdv.grammaticalNumber)
+      case _ => None
+    }
+  }
+
+  def verbPerson: Option[Person] = {
+    this match {
+      case v: VerbForm => Some(v.person)
+      case _ => None
+    }
+  }
+
+  def verbNumber: Option[GrammaticalNumber] = {
+    this match {
+      case v: VerbForm => Some(v.grammaticalNumber)
+      case _ => None
+    }
+  }
+
+  def verbTense: Option[Tense] = {
+    this match {
+      case v: VerbForm => Some(v.tense)
+      case _ => None
+    }
+  }
+  def verbMood: Option[Mood] = {
+    this match {
+      case v: VerbForm => Some(v.mood)
+      case _ => None
+    }
+  }
+  def verbVoice: Option[Voice] = {
+    this match {
+      case v: VerbForm => Some(v.voice)
+      case _ => None
+    }
+  }
+
+  def infinitiveTense: Option[Tense] = {
+    this match {
+      case inf: InfinitiveForm => Some(inf.tense)
+      case _ => None
+    }
+  }
+
+  def infinitiveVoice: Option[Voice] = {
+    this match {
+      case inf: InfinitiveForm => Some(inf.voice)
+      case _ => None
+    }
+  }
+
+  def participleTense: Option[Tense] = {
+    this match {
+      case ptcpl: ParticipleForm => Some(ptcpl.tense)
+      case _ => None
+    }
+  }
+
+  def participleVoice: Option[Voice] = {
+    this match {
+      case ptcpl: ParticipleForm => Some(ptcpl.voice)
+      case _ => None
+    }
+  }
+
+
+  def adverbDegree: Option[Degree] = {
+    this match {
+      case adv: AdverbForm => Some(adv.degree)
+      case _ => None
+    }
+  }
+
+  def indeclinablePartOfSpeech: Option[IndeclinablePoS] = {
+    this match {
+      case indecl: IndeclinableForm => Some(indecl.pos)
+      case _ => None
+    }
+  }
 }
 
 /** Factory object to create full [[LemmatizedForm]] from a string of FST.
