@@ -14,7 +14,7 @@ The  **5.x** release series provides complete analysis of all possible SFST outp
 ## Information and documentation
 
 - The project web site at <https://neelsmith.github.io/tabulae>) is currently being updated to agree with the 5.x release series.
-- Complete [API docs for version 5.0.0](https://neelsmith.github.io/tabulae/api/edu/holycross/shot/tabulae/index.html) are now online.
+- Complete [API docs for version 5.2.0](https://neelsmith.github.io/tabulae/api/edu/holycross/shot/tabulae/index.html) are available online.
 -  I presented `tabulae` at [DH2019](https://dh2019.adho.org) in a short paper, "A Corpus-linguistic Approach to the Analysis of Latin Morphology"
 -   read more about its rationale and approach to parsing a historical language in "Morphological Analysis of Historical Languages" (*Bulletin of the Institute for Classical Studies* 59-2, 2016, 89-102)
 
