@@ -1,5 +1,8 @@
 # Release notes for `tabulae`
 
+**5.3.0**:  Overrides `toString` for all morphological form classes.
+
+
 **5.2.0**:  Adds full suite of functions to `LemmatizedForm` trait for morphological querying.
 
 **5.1.0**:  Adds crosscompilation for ScalaJS as well as JVM for analytical parts of the library.
