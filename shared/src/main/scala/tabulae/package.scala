@@ -125,7 +125,7 @@ package object tabulae {
     "impft" -> Imperfect,
     "fut" -> Future,
     "pft" -> Perfect,
-    "plpft" -> Pluperfect,
+    "plupft" -> Pluperfect,
     "futpft" -> FuturePerfect
   )
 

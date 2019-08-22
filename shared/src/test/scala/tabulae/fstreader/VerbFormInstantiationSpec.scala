@@ -39,15 +39,26 @@ class VerbFormInstantiationSpec extends FlatSpec {
       case verb: VerbForm => verb
       case _ => fail("Nope, that wasn't a verb.")
     }
-
-
     assert(vForm.person == Third)
     assert(vForm.grammaticalNumber == Singular)
     assert(vForm.tense == Present)
     assert(vForm.mood == Indicative)
     assert(vForm.voice == Active)
-
   }
 
+  it should "recognize the pluperfect tense for crying out loud" in {
+    val pluptf = "> conspexisset\n<u>livymorph.comp14_10</u><u>ls.n10586</u><#>conspex<verb><pftact><div><pftact><verb>isset<3rd><sg><plupft><subj><act><u>latcommon.pftact_plupft9</u>".split("\n").toVector
+
+    val parsed = FstReader.parseFstLines(pluptf)
+    val parse = parsed(0)
+    assert(parse.literalToken == "conspexisset")
+    assert(parse.analyses.size == 1)
+
+    val vForm: VerbForm = parse.analyses(0) match {
+      case verb: VerbForm => verb
+      case _ => fail("Nope, that wasn't a verb.")
+    }
+    assert(vForm.tense == Pluperfect)
+  }
 
 }

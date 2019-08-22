@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**5.3.1**:  Fixes a bug recognizing parses of conjugated verbs in pluperfect tense.
+
 **5.3.0**:  Overrides `toString` for all morphological form classes.
 
 
