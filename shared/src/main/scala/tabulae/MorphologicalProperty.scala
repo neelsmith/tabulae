@@ -118,3 +118,5 @@ case object Conjunction extends IndeclinablePoS
 case object Preposition extends IndeclinablePoS
 /** Indeclinable exclamation.*/
 case object Exclamation extends IndeclinablePoS
+/** Indeclinable numeral.*/
+case object Numeral extends IndeclinablePoS

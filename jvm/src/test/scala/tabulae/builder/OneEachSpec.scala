@@ -21,7 +21,8 @@ class OneEachSpec extends FlatSpec {
     val datasets = File("jvm/src/test/resources/datasets")
     val c = Vector("one-each")
     val tempParserDir = File("jvm/src/test/resources/parsers/stress") //  File("jvm/src/test/resources/parsers") / s"dummyparser-${r.nextInt(1000)}"
-    val fst = datasets / "fst"
+
+    val fst = File(".") / "fst"
 
     val projectDir = tempParserDir / c.mkString("-")
     val target = projectDir / "latin.a"

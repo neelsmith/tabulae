@@ -92,7 +92,8 @@ package object tabulae {
   val indeclinablePoSForTestLabel: Map[String, IndeclinablePoS] = Map(
     "conjunction" -> Conjunction,
     "preposition" -> Preposition,
-    "exclamation" -> Exclamation
+    "exclamation" -> Exclamation,
+    "numeral" -> Numeral
   )
 
 
@@ -101,7 +102,8 @@ package object tabulae {
   val indeclinablePoSForFst: Map[String, IndeclinablePoS] = Map(
     "indeclconj" -> Conjunction,
     "indeclprep" -> Preposition,
-    "indeclinterj" -> Exclamation
+    "indeclinterj" -> Exclamation,
+    "indeclnum" -> Numeral,
   )
 
 
