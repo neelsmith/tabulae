@@ -64,7 +64,7 @@ def parse(wordsFile : String) : String = {
 
 
 
-val testList = Vector("er_ra_rum")
+val testList = Vector("r_ra_rum")
 
 def testAdjective = {
   if (! tempDir.exists) {
@@ -74,11 +74,12 @@ def testAdjective = {
   val wordsDir = repo / "scripts/coverage_tests/wordlists-adjective"
   val results = for (test <- testList) yield {
     val testFile = wordsDir / s"${test}.txt"
+    val lemma = testFile.lines.head
     val fst = parse(testFile.toString)
     val parsed = FstReader.parseFstLines(fst.split("\n").toVector)
 
 
-    val summary = s"${test} class. Tokens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
+    val summary = s"${test} class (ex. ${lemma}). Tokens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
     val failed = parsed.filter(_.analyses.isEmpty).map(_.token)
 
     if (failed.nonEmpty) {

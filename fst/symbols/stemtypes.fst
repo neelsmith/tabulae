@@ -24,7 +24,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Adjective stem types
-#adj1and2# = <us_a_um><0_a_um><er_ra_rum><us_a_um_pos><us_a_um_superl>
+#adj1and2# = <us_a_um><0_a_um><er_ra_rum><r_ra_rum><us_a_um_pos><us_a_um_superl>
 
 #adj3# = <is_e><er_ris_re><or_oris_comp>
 
