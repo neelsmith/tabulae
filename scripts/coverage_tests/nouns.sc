@@ -24,21 +24,31 @@ val fstinfl = if ( (macInstall / "fst-infl").exists) {
 val make = "/usr/bin/make"
 
 
+val repo = File(".")
+val datasets: File = repo / "datasets"
+val corpusList = Vector("coverage-noun-rules", "coverage-noun-stems")
+
+def compile = {
 
 
 
-def compile(corpus: String, datasets: String = "datasets") = {
-  val repo = File(".")
-  val conf =  Configuration(compiler.toString, fstinfl.toString, make, datasets)
+  val conf =  Configuration(compiler.toString, fstinfl.toString, make, datasets.toString)
+  val parserDir = repo / "src/test/resources/parsers"
+  val fst = repo / "fst"
   try {
-    FstCompiler.compile(File(datasets), repo, corpus, conf, true)
-    val tabulaeParser = repo / "parsers" / corpus / "latin.a"
+    FstCompiler.compile(datasets, corpusList, parserDir, fst, conf)
 
-    println("\nCompilation completed.\nParser is available in " +  tabulaeParser)
+    println("\nCompilation completed.\nParser is available in " +  parserDir + "/" + corpusList.mkString("-") + "/latin.a")
   } catch {
     case t: Throwable => println("Error trying to compile:\n" + t.toString)
   }
+}
 
+def tidy = {
+
+  val parserDir = repo / "src/test/resources/parsers"
+  val tempDir = parserDir / corpusList.mkString("-")
+  tempDir.delete()
 }
 
 
@@ -57,6 +67,6 @@ def parse(wordsFile : String, parser: String = "analytical-types") : String = {
 }
 
 println("\n\nCompile a parser:\n")
-println("\tcompile(CORPUS, [DATASETS])\n")
+println("\tcompile\n")
 println("Parse a word list:\n")
 println("\tparse(WORDSFILE, [CORPUS])")
