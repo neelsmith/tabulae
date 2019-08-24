@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**5.4.1**:  Fixes a bug in  classification of first-declension nouns doubling stem consonant when forming superlative.
+
 **5.4.0**:  Adds support for indeclinable numerals.
 
 **5.3.1**:  Fixes a bug recognizing parses of conjugated verbs in pluperfect tense.
