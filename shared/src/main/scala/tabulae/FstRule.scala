@@ -119,7 +119,8 @@ object AdjectiveRule {
   * @param nounData Noun-specific FST to parse.
   */
   def apply(declClass: String, adjData: String): AdjectiveRule = {
-    val dataRE  = "([^<]+)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
+    //<masc><nom><sg><pos><u>latcommoninfl.0_a_um1</u>
+    val dataRE  = "([^<]*)<([^<]+)><([^<]+)><([^<]+)><([^<]+)><u>(.+)<\\/u>".r
     val dataRE(ending, gender, grammCase, grammNumber, degree, ruleId) = adjData
     AdjectiveRule(ruleId, gender, grammCase, grammNumber,degree, declClass, ending)
   }
