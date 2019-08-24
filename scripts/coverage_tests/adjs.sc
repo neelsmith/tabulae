@@ -64,7 +64,7 @@ def parse(wordsFile : String) : String = {
 
 
 
-val testList = Vector("0_a_um")
+val testList = Vector("er_ra_rum")
 
 def testAdjective = {
   if (! tempDir.exists) {
@@ -77,7 +77,16 @@ def testAdjective = {
     val fst = parse(testFile.toString)
     val parsed = FstReader.parseFstLines(fst.split("\n").toVector)
 
-    s"${test} class. Tokens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
+
+    val summary = s"${test} class. Tokens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
+    val failed = parsed.filter(_.analyses.isEmpty).map(_.token)
+
+    if (failed.nonEmpty) {
+        summary + " Failed on:\n" + failed.map(tkn => "\t" + tkn).mkString("\n")
+    } else {
+      summary
+    }
+
   }
   println("\nResults:\n-------\n\n" + results.mkString("\n"))
 
