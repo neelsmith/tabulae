@@ -27,7 +27,7 @@ val make = "/usr/bin/make"
 
 val repo = File(".")
 val datasets: File = repo / "datasets"
-val corpusList = Vector("coverage-noun-rules", "coverage-noun-stems")
+val corpusList = Vector("coverage-adjective-rules", "coverage-adjective-stems")
 val conf =  Configuration(compiler.toString, fstinfl.toString, make, datasets.toString)
 val parserDir = repo / "jvm/src/test/resources/parsers"
 val fst = repo / "fst"
@@ -43,7 +43,7 @@ def compile = {
   }
 }
 
-def tidy = {
+def tidyAdj = {
   tempDir.delete()
 }
 
@@ -64,23 +64,23 @@ def parse(wordsFile : String) : String = {
 
 
 
-val testList = Vector("a_ae")
+val testList = Vector("0_a_um")
 
-def testNouns = {
+def testAdjective = {
   if (! tempDir.exists) {
     compile
   }
 
-  val wordsDir = repo / "scripts/coverage_tests/wordlists-noun"
+  val wordsDir = repo / "scripts/coverage_tests/wordlists-adjective"
   val results = for (test <- testList) yield {
     val testFile = wordsDir / s"${test}.txt"
     val fst = parse(testFile.toString)
     val parsed = FstReader.parseFstLines(fst.split("\n").toVector)
 
-    s"${test} class. tkens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
+    s"${test} class. Tokens: ${parsed.size}. Parsed:  ${parsed.filter(_.analyses.nonEmpty).size}."
   }
   println("\nResults:\n-------\n\n" + results.mkString("\n"))
 
-  println(s"\nTotal classes tests: ${results.size}")
+  println(s"\nTotal classes tested: ${results.size}")
 
 }
