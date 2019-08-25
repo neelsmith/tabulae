@@ -26,13 +26,17 @@
 % Adjective stem types
 #adj1and2# = <us_a_um><er_era_erum><er_ra_rum><us_a_um_pos><us_a_um_superl>
 
-#adj3# = <is_e><er_ris_re><or_oris_comp>
+
+% like acer/acris/acre
+#adj3# = <0_is_e>
+
+#adj3twoendings# = <is_e><er_ris_re><or_oris_comp>
 
 #adj3single# = <ns_ntis><x_cis><us_eris><0_is><0_is_i><es_itis><s_dis><s_itis>
 
 
 
-#adjectiveclass# = #adj1and2# #adj3# #adj3single#
+#adjectiveclass# = #adj1and2# #adj3# #adj3single# #adj3twoendings#
 
 
 

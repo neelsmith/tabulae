@@ -28,25 +28,22 @@ Tested so far:
 
 Other classes appearing in `stemtypes.fst`:
 
+### Third declension, two endings
 
 
-
-### Third declension
-
-
-1. er_ris_re
-1. or_oris_comp
+1. er_ris_re (*acer*)
+1. or_oris_comp (*melior*)
 
 ### Third declension, one ending
 
-1. ns_ntis
-1. x_cis
-1. us_eris
-1. 0_is
-1. 0_is_i
-1. es_itis
-1. s_dis
-1. s_itis
+1. s_dis (*concors*)
+1. ns_ntis (*egens*)
+1. x_cis (*atrox*)
+1. us_eris (*vetus*)
+1. 0_is (*uber*)
+1. 0_is_i (*par*)
+1. es_itis (*dives*)
+1. s_itis (*praeceps*)
 
 
 
