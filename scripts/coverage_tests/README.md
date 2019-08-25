@@ -7,21 +7,29 @@ Data sets are in the repository's `/datasets` directory.
 
 Tested so far:
 
+
+### Fisrt-second declension
+
+- us_a_um (*longus*)
+- us_a_um_pos (*bonus*)
+- us_a_um_superl (*optimus*)
 - er_era_erum (*miser*)
 - er_ra_rum (*niger*)
+
+
+### Third declension
+
 - is_e (*levis*)
 
 
 
+
+## Not yet tested
+
 Other classes appearing in `stemtypes.fst`:
 
 
-### First-second declension:
 
-1. us_a_um
-1. 0_a_um
-1. us_a_um_pos
-1. us_a_um_superl
 
 ### Third declension
 

@@ -9,7 +9,7 @@ import java.io.{File => JFile}
 import better.files.Dsl._
 
 
-val testList = Vector("us_a_um",  "er_era_erum", "er_ra_rum", "is_e")
+val testList = Vector("us_a_um","us_a_um_pos", "us_a_um_superl", "er_era_erum", "er_ra_rum", "is_e")
 
 
 
