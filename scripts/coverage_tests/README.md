@@ -7,7 +7,8 @@ Data sets are in the repository's `/datasets` directory.
 
 Tested so far:
 
-- r_ra_rum
+- er_era_erum (*miser*)
+- er_ra_rum (*niger*)
 
 
 
@@ -18,9 +19,8 @@ Other classes appearing in `stemtypes.fst`:
 
 1. us_a_um
 1. 0_a_um
-1. er_ra_rum
 1. us_a_um_pos
-1. us_a_um_superl>
+1. us_a_um_superl
 
 ### Third declension
 
