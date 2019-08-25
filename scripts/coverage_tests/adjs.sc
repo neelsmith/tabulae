@@ -9,6 +9,10 @@ import java.io.{File => JFile}
 import better.files.Dsl._
 
 
+val testList = Vector("er_ra_rum", "er_era_erum", "is_e")
+
+
+
 val macInstall = File("/usr/local/bin/")
 val linuxInstall = File("/usr/bin/")
 
@@ -64,7 +68,6 @@ def parse(wordsFile : String) : String = {
 
 
 
-val testList = Vector("er_ra_rum", "er_era_erum")
 
 def testAdjective = {
   if (! tempDir.exists) {

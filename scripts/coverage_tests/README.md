@@ -9,6 +9,7 @@ Tested so far:
 
 - er_era_erum (*miser*)
 - er_ra_rum (*niger*)
+- is_e (*levis*)
 
 
 
@@ -24,9 +25,9 @@ Other classes appearing in `stemtypes.fst`:
 
 ### Third declension
 
-1. s_e
+
 1. er_ris_re
-1. or_oris_comp>
+1. or_oris_comp
 
 ### Third declension, one ending
 
