@@ -8,7 +8,7 @@ Data sets are in the repository's `/datasets` directory.
 Tested so far:
 
 
-### Fisrt-second declension
+### First-second declension
 
 - us_a_um (*longus*)
 - us_a_um_pos (*bonus*)
@@ -49,6 +49,9 @@ Other classes appearing in `stemtypes.fst`:
 1. s_itis
 
 
+
+
+
 ## Noun stem classes
 
 
@@ -58,6 +61,9 @@ Tested so far:
 ### First declension
 
 - a_ae
+
+
+## Not yet tested
 
 Other classes appearing in `stemtypes.fst`:
 
