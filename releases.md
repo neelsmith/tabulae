@@ -1,5 +1,8 @@
 # Release notes for `tabulae`
 
+
+**5.5.0**: Adds new `MorphologyFilter` class for matching arbitrary sets of grammatical properties against a `LemmatizedForm`.
+
 **5.4.1**:  Fixes a bug in  classification of first-declension nouns doubling stem consonant when forming superlative.
 
 **5.4.0**:  Adds support for indeclinable numerals.

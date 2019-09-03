@@ -12,7 +12,7 @@ lazy val crossed = crossProject.in(file(".")).
 
       name := "tabulae",
       organization := "edu.holycross.shot",
-      version := "5.4.1",
+      version := "5.5.0",
       scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
@@ -20,9 +20,10 @@ lazy val crossed = crossProject.in(file(".")).
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
 
+        "org.wvlet.airframe" %%% "airframe-log" % "19.9.0",
 
-        "edu.holycross.shot.cite" %% "xcite" % "4.0.2",
-        "edu.holycross.shot" %% "latphone" % "2.5.2"
+        "edu.holycross.shot.cite" %%% "xcite" % "4.0.2",
+        "edu.holycross.shot" %%% "latphone" % "2.5.2"
       )
 
     ).
