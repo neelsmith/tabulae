@@ -10,6 +10,7 @@ Analytical patterns we need to implement:
 
 /** A valid grammatical form identification.*/
 sealed trait LemmatizedForm {
+  def formLabel: String
   def lemmaId: String
   def stemId: String
   def ruleId: String
@@ -28,6 +29,7 @@ sealed trait LemmatizedForm {
       case sup: SupineForm => "supine"
     }
   }
+
 
   def substantiveGender: Option[Gender] = {
     this match {
@@ -333,7 +335,12 @@ case class VerbForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, person: 
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
+
   override def toString = {
+      val data  = Vector(person,grammaticalNumber, tense, mood, voice).mkString(", ").toLowerCase
+      s"verb: " + data  + s" (${lemmaId})"
+  }
+  def formLabel = {
     val data  = Vector(person,grammaticalNumber, tense, mood, voice).mkString(", ").toLowerCase
     s"verb: " + data
   }
@@ -361,9 +368,14 @@ case class NounForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gender: 
   def stemId = stemUrn
   def ruleId = ruleUrn
 
-  override def  toString = {
+  def formLabel = {
     val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
     s"noun: " + data
+  }
+
+  override def  toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
+    s"noun: " + data + s" (${lemmaId})"
   }
 }
 
@@ -390,9 +402,18 @@ case class PronounForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gende
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def  toString = {
+
+
+  def formLabel = {
     val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
     s"pronoun: " + data
+  }
+
+
+
+  override def  toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
+    s"pronoun: " + data  + s" (${lemmaId})"
   }
 }
 
@@ -418,8 +439,14 @@ case class AdjectiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gen
   def ruleId = ruleUrn
   override def  toString = {
     val data  = Vector(gender, grammaticalCase, grammaticalNumber,  degree).mkString(", ").toLowerCase
+    s"adjective: " + data + s" (${lemmaId})"
+  }
+
+  def  formLabel = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber,  degree).mkString(", ").toLowerCase
     s"adjective: " + data
   }
+
 }
 
 
@@ -435,9 +462,14 @@ case class ParticipleForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, ge
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def toString = {
+
+  def formLabel = {
     val data  = Vector(gender, grammaticalCase, grammaticalNumber, tense, voice).mkString(", ").toLowerCase
     s"participle: " + data
+  }
+  override def toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber, tense, voice).mkString(", ").toLowerCase
+    s"participle: " + data + s" (${lemmaId})"
   }
 }
 
@@ -456,9 +488,14 @@ case class GerundiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gen
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def toString = {
+
+  def formLabel = {
     val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
     s"gerundive: " + data
+  }
+  override def toString = {
+    val data  = Vector(gender, grammaticalCase, grammaticalNumber).mkString(", ").toLowerCase
+    s"gerundive: " + data + s" (${lemmaId})"
   }
 }
 
@@ -480,9 +517,13 @@ case class InfinitiveForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, te
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def toString = {
+  def formLabel = {
     val data  = Vector(tense, voice).mkString(", ").toLowerCase
     s"infinitive: " + data
+  }
+  override def toString = {
+    val data  = Vector(tense, voice).mkString(", ").toLowerCase
+    s"infinitive: " + data + s" (${lemmaId})"
   }
 }
 
@@ -506,9 +547,15 @@ case class GerundForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gramma
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def toString = {
+
+  def formLabel = {
     val data  = Vector(grammaticalCase).mkString(", ").toLowerCase
     s"gerund: " + data
+  }
+
+  override def toString = {
+    val data  = Vector(grammaticalCase).mkString(", ").toLowerCase
+    s"gerund: " + data + s" (${lemmaId})"
   }
 }
 
@@ -526,9 +573,14 @@ case class SupineForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, gramma
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def toString = {
+
+  def formLabel = {
     val data  = Vector(grammaticalCase).mkString(", ").toLowerCase
     s"supine: " + data
+  }
+  override def toString = {
+    val data  = Vector(grammaticalCase).mkString(", ").toLowerCase
+    s"supine: " + data + s" (${lemmaId})"
   }
 }
 object SupineForm {
@@ -546,9 +598,15 @@ case class AdverbForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, degree
     def lemmaId = lemmaUrn
     def stemId = stemUrn
     def ruleId = ruleUrn
-    override def  toString = {
+
+    def formLabel = {
       s"adverb: ${degree} degree".toLowerCase
     }
+
+    override def  toString = {
+      s"adverb: ${degree} degree".toLowerCase + s" (${lemmaId})"
+    }
+
 }
 object AdverbForm {
 
@@ -566,9 +624,15 @@ case class IndeclinableForm(lemmaUrn: String, stemUrn: String, ruleUrn: String, 
   def lemmaId = lemmaUrn
   def stemId = stemUrn
   def ruleId = ruleUrn
-  override def  toString = {
+
+  def formLabel = {
     s"uninflected form: ${pos}".toLowerCase
   }
+
+  override def  toString = {
+    s"uninflected form: ${pos}".toLowerCase + s" (${lemmaId})"
+  }
+
 }
 object IndeclinableForm {
 

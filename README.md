@@ -5,7 +5,7 @@
 `tabulae` makes it possible to build corpus-specific Latin morphological parsers from tabular data for inflectional rules and for vocabulary ("stems").  It's a Latin sibling of [`kanones`](https://github.com/neelsmith/kanones):  like `kanones`, its aim is to build corpus-specific morphological analyzers, identifying citable lexical items and citable inflectional rules for each analysis.
 
 
-## Current version: 5.5.0
+## Current version: 6.0.0
 
 Status:  **active development**. [Release notes](releases.md)
 

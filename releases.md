@@ -1,5 +1,6 @@
 # Release notes for `tabulae`
 
+**6.0.0**: Adds `LewisShort` object, and `formLabel` function on `LemmatizedForm` trait.
 
 **5.5.0**: Adds new `MorphologyFilter` class for matching arbitrary sets of grammatical properties against a `LemmatizedForm`.
 

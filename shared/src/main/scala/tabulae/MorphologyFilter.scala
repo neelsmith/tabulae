@@ -36,7 +36,7 @@ case class MorphologyFilter(
   /** True if a person is specified and agrees with the value of
   * the given form.
   *
-  * @param lemmaizedForm Form to check.
+  * @param lemmatizedForm Form to check.
   */
   def personAgrees(lemmatizedForm: LemmatizedForm) : Boolean = {
     person match {
