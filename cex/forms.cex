@@ -1,0 +1,1679 @@
+urn#label
+urn:cite2:tabulae:morphforms.v1:00000000#uninflected form
+urn:cite2:tabulae:morphforms.v1:01000110#masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02000110#masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01000120#masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02000120#masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01000130#masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02000130#masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01000140#masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02000140#masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01000150#masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02000150#masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01000160#masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02000160#masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01000210#feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02000210#feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01000220#feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02000220#feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01000230#feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02000230#feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01000240#feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02000240#feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01000250#feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02000250#feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01000260#feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02000260#feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01000310#neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02000310#neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01000320#neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02000320#neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01000330#neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02000330#neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01000340#neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02000340#neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01000350#neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02000350#neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01000360#neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02000360#neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01000111#masculine nominative singular positive
+urn:cite2:tabulae:morphforms.v1:01000112#masculine nominative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000113#masculine nominative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000111#masculine nominative plural positive
+urn:cite2:tabulae:morphforms.v1:02000112#masculine nominative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000113#masculine nominative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000121#masculine genitive singular positive
+urn:cite2:tabulae:morphforms.v1:01000122#masculine genitive singular comparative
+urn:cite2:tabulae:morphforms.v1:01000123#masculine genitive singular superlative
+urn:cite2:tabulae:morphforms.v1:02000121#masculine genitive plural positive
+urn:cite2:tabulae:morphforms.v1:02000122#masculine genitive plural comparative
+urn:cite2:tabulae:morphforms.v1:02000123#masculine genitive plural superlative
+urn:cite2:tabulae:morphforms.v1:01000131#masculine dative singular positive
+urn:cite2:tabulae:morphforms.v1:01000132#masculine dative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000133#masculine dative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000131#masculine dative plural positive
+urn:cite2:tabulae:morphforms.v1:02000132#masculine dative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000133#masculine dative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000141#masculine accusative singular positive
+urn:cite2:tabulae:morphforms.v1:01000142#masculine accusative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000143#masculine accusative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000141#masculine accusative plural positive
+urn:cite2:tabulae:morphforms.v1:02000142#masculine accusative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000143#masculine accusative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000151#masculine ablative singular positive
+urn:cite2:tabulae:morphforms.v1:01000152#masculine ablative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000153#masculine ablative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000151#masculine ablative plural positive
+urn:cite2:tabulae:morphforms.v1:02000152#masculine ablative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000153#masculine ablative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000161#masculine vocative singular positive
+urn:cite2:tabulae:morphforms.v1:01000162#masculine vocative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000163#masculine vocative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000161#masculine vocative plural positive
+urn:cite2:tabulae:morphforms.v1:02000162#masculine vocative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000163#masculine vocative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000211#feminine nominative singular positive
+urn:cite2:tabulae:morphforms.v1:01000212#feminine nominative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000213#feminine nominative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000211#feminine nominative plural positive
+urn:cite2:tabulae:morphforms.v1:02000212#feminine nominative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000213#feminine nominative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000221#feminine genitive singular positive
+urn:cite2:tabulae:morphforms.v1:01000222#feminine genitive singular comparative
+urn:cite2:tabulae:morphforms.v1:01000223#feminine genitive singular superlative
+urn:cite2:tabulae:morphforms.v1:02000221#feminine genitive plural positive
+urn:cite2:tabulae:morphforms.v1:02000222#feminine genitive plural comparative
+urn:cite2:tabulae:morphforms.v1:02000223#feminine genitive plural superlative
+urn:cite2:tabulae:morphforms.v1:01000231#feminine dative singular positive
+urn:cite2:tabulae:morphforms.v1:01000232#feminine dative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000233#feminine dative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000231#feminine dative plural positive
+urn:cite2:tabulae:morphforms.v1:02000232#feminine dative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000233#feminine dative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000241#feminine accusative singular positive
+urn:cite2:tabulae:morphforms.v1:01000242#feminine accusative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000243#feminine accusative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000241#feminine accusative plural positive
+urn:cite2:tabulae:morphforms.v1:02000242#feminine accusative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000243#feminine accusative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000251#feminine ablative singular positive
+urn:cite2:tabulae:morphforms.v1:01000252#feminine ablative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000253#feminine ablative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000251#feminine ablative plural positive
+urn:cite2:tabulae:morphforms.v1:02000252#feminine ablative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000253#feminine ablative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000261#feminine vocative singular positive
+urn:cite2:tabulae:morphforms.v1:01000262#feminine vocative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000263#feminine vocative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000261#feminine vocative plural positive
+urn:cite2:tabulae:morphforms.v1:02000262#feminine vocative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000263#feminine vocative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000311#neuter nominative singular positive
+urn:cite2:tabulae:morphforms.v1:01000312#neuter nominative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000313#neuter nominative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000311#neuter nominative plural positive
+urn:cite2:tabulae:morphforms.v1:02000312#neuter nominative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000313#neuter nominative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000321#neuter genitive singular positive
+urn:cite2:tabulae:morphforms.v1:01000322#neuter genitive singular comparative
+urn:cite2:tabulae:morphforms.v1:01000323#neuter genitive singular superlative
+urn:cite2:tabulae:morphforms.v1:02000321#neuter genitive plural positive
+urn:cite2:tabulae:morphforms.v1:02000322#neuter genitive plural comparative
+urn:cite2:tabulae:morphforms.v1:02000323#neuter genitive plural superlative
+urn:cite2:tabulae:morphforms.v1:01000331#neuter dative singular positive
+urn:cite2:tabulae:morphforms.v1:01000332#neuter dative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000333#neuter dative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000331#neuter dative plural positive
+urn:cite2:tabulae:morphforms.v1:02000332#neuter dative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000333#neuter dative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000341#neuter accusative singular positive
+urn:cite2:tabulae:morphforms.v1:01000342#neuter accusative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000343#neuter accusative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000341#neuter accusative plural positive
+urn:cite2:tabulae:morphforms.v1:02000342#neuter accusative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000343#neuter accusative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000351#neuter ablative singular positive
+urn:cite2:tabulae:morphforms.v1:01000352#neuter ablative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000353#neuter ablative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000351#neuter ablative plural positive
+urn:cite2:tabulae:morphforms.v1:02000352#neuter ablative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000353#neuter ablative plural superlative
+urn:cite2:tabulae:morphforms.v1:01000361#neuter vocative singular positive
+urn:cite2:tabulae:morphforms.v1:01000362#neuter vocative singular comparative
+urn:cite2:tabulae:morphforms.v1:01000363#neuter vocative singular superlative
+urn:cite2:tabulae:morphforms.v1:02000361#neuter vocative plural positive
+urn:cite2:tabulae:morphforms.v1:02000362#neuter vocative plural comparative
+urn:cite2:tabulae:morphforms.v1:02000363#neuter vocative plural superlative
+urn:cite2:tabulae:morphforms.v1:00000001#positive degree
+urn:cite2:tabulae:morphforms.v1:00000002#comparative degree
+urn:cite2:tabulae:morphforms.v1:00000003#superlative degree
+urn:cite2:tabulae:morphforms.v1:01101110#present active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01101110#present active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01101110#present active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02101110#present active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02101110#present active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02101110#present active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01101120#present active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01101120#present active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01101120#present active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02101120#present active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02101120#present active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02101120#present active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01101130#present active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01101130#present active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01101130#present active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02101130#present active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02101130#present active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02101130#present active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01101140#present active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01101140#present active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01101140#present active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02101140#present active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02101140#present active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02101140#present active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01101150#present active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01101150#present active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01101150#present active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02101150#present active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02101150#present active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02101150#present active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01101160#present active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01101160#present active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01101160#present active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02101160#present active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02101160#present active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02101160#present active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01101210#present active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01101210#present active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01101210#present active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02101210#present active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02101210#present active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02101210#present active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01101220#present active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01101220#present active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01101220#present active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02101220#present active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02101220#present active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02101220#present active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01101230#present active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01101230#present active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01101230#present active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02101230#present active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02101230#present active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02101230#present active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01101240#present active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01101240#present active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01101240#present active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02101240#present active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02101240#present active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02101240#present active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01101250#present active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01101250#present active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01101250#present active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02101250#present active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02101250#present active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02101250#present active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01101260#present active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01101260#present active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01101260#present active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02101260#present active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02101260#present active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02101260#present active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01101310#present active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01101310#present active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01101310#present active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02101310#present active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02101310#present active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02101310#present active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01101320#present active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01101320#present active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01101320#present active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02101320#present active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02101320#present active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02101320#present active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01101330#present active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01101330#present active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01101330#present active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02101330#present active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02101330#present active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02101330#present active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01101340#present active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01101340#present active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01101340#present active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02101340#present active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02101340#present active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02101340#present active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01101350#present active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01101350#present active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01101350#present active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02101350#present active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02101350#present active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02101350#present active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01101360#present active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01101360#present active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01101360#present active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02101360#present active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02101360#present active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02101360#present active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01201110#imperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01201110#imperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01201110#imperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02201110#imperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02201110#imperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02201110#imperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01201120#imperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01201120#imperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01201120#imperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02201120#imperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02201120#imperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02201120#imperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01201130#imperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01201130#imperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01201130#imperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02201130#imperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02201130#imperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02201130#imperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01201140#imperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01201140#imperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01201140#imperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02201140#imperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02201140#imperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02201140#imperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01201150#imperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01201150#imperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01201150#imperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02201150#imperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02201150#imperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02201150#imperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01201160#imperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01201160#imperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01201160#imperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02201160#imperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02201160#imperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02201160#imperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01201210#imperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01201210#imperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01201210#imperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02201210#imperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02201210#imperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02201210#imperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01201220#imperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01201220#imperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01201220#imperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02201220#imperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02201220#imperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02201220#imperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01201230#imperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01201230#imperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01201230#imperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02201230#imperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02201230#imperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02201230#imperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01201240#imperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01201240#imperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01201240#imperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02201240#imperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02201240#imperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02201240#imperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01201250#imperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01201250#imperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01201250#imperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02201250#imperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02201250#imperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02201250#imperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01201260#imperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01201260#imperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01201260#imperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02201260#imperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02201260#imperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02201260#imperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01201310#imperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01201310#imperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01201310#imperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02201310#imperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02201310#imperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02201310#imperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01201320#imperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01201320#imperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01201320#imperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02201320#imperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02201320#imperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02201320#imperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01201330#imperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01201330#imperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01201330#imperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02201330#imperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02201330#imperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02201330#imperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01201340#imperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01201340#imperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01201340#imperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02201340#imperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02201340#imperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02201340#imperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01201350#imperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01201350#imperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01201350#imperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02201350#imperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02201350#imperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02201350#imperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01201360#imperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01201360#imperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01201360#imperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02201360#imperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02201360#imperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02201360#imperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01301110#future active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01301110#future active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01301110#future active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02301110#future active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02301110#future active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02301110#future active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01301120#future active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01301120#future active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01301120#future active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02301120#future active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02301120#future active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02301120#future active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01301130#future active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01301130#future active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01301130#future active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02301130#future active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02301130#future active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02301130#future active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01301140#future active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01301140#future active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01301140#future active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02301140#future active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02301140#future active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02301140#future active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01301150#future active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01301150#future active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01301150#future active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02301150#future active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02301150#future active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02301150#future active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01301160#future active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01301160#future active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01301160#future active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02301160#future active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02301160#future active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02301160#future active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01301210#future active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01301210#future active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01301210#future active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02301210#future active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02301210#future active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02301210#future active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01301220#future active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01301220#future active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01301220#future active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02301220#future active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02301220#future active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02301220#future active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01301230#future active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01301230#future active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01301230#future active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02301230#future active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02301230#future active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02301230#future active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01301240#future active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01301240#future active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01301240#future active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02301240#future active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02301240#future active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02301240#future active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01301250#future active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01301250#future active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01301250#future active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02301250#future active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02301250#future active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02301250#future active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01301260#future active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01301260#future active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01301260#future active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02301260#future active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02301260#future active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02301260#future active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01301310#future active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01301310#future active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01301310#future active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02301310#future active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02301310#future active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02301310#future active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01301320#future active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01301320#future active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01301320#future active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02301320#future active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02301320#future active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02301320#future active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01301330#future active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01301330#future active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01301330#future active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02301330#future active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02301330#future active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02301330#future active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01301340#future active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01301340#future active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01301340#future active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02301340#future active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02301340#future active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02301340#future active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01301350#future active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01301350#future active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01301350#future active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02301350#future active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02301350#future active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02301350#future active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01301360#future active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01301360#future active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01301360#future active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02301360#future active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02301360#future active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02301360#future active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01401110#perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01401110#perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01401110#perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02401110#perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02401110#perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02401110#perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01401120#perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01401120#perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01401120#perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02401120#perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02401120#perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02401120#perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01401130#perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01401130#perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01401130#perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02401130#perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02401130#perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02401130#perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01401140#perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01401140#perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01401140#perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02401140#perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02401140#perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02401140#perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01401150#perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01401150#perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01401150#perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02401150#perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02401150#perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02401150#perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01401160#perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01401160#perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01401160#perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02401160#perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02401160#perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02401160#perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01401210#perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01401210#perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01401210#perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02401210#perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02401210#perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02401210#perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01401220#perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01401220#perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01401220#perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02401220#perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02401220#perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02401220#perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01401230#perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01401230#perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01401230#perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02401230#perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02401230#perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02401230#perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01401240#perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01401240#perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01401240#perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02401240#perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02401240#perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02401240#perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01401250#perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01401250#perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01401250#perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02401250#perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02401250#perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02401250#perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01401260#perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01401260#perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01401260#perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02401260#perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02401260#perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02401260#perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01401310#perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01401310#perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01401310#perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02401310#perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02401310#perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02401310#perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01401320#perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01401320#perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01401320#perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02401320#perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02401320#perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02401320#perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01401330#perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01401330#perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01401330#perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02401330#perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02401330#perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02401330#perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01401340#perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01401340#perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01401340#perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02401340#perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02401340#perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02401340#perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01401350#perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01401350#perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01401350#perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02401350#perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02401350#perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02401350#perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01401360#perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01401360#perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01401360#perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02401360#perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02401360#perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02401360#perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01501110#pluperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01501110#pluperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01501110#pluperfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02501110#pluperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02501110#pluperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02501110#pluperfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01501120#pluperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01501120#pluperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01501120#pluperfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02501120#pluperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02501120#pluperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02501120#pluperfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01501130#pluperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01501130#pluperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01501130#pluperfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02501130#pluperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02501130#pluperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02501130#pluperfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01501140#pluperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01501140#pluperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01501140#pluperfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02501140#pluperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02501140#pluperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02501140#pluperfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01501150#pluperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01501150#pluperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01501150#pluperfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02501150#pluperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02501150#pluperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02501150#pluperfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01501160#pluperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01501160#pluperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01501160#pluperfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02501160#pluperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02501160#pluperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02501160#pluperfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01501210#pluperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01501210#pluperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01501210#pluperfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02501210#pluperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02501210#pluperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02501210#pluperfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01501220#pluperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01501220#pluperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01501220#pluperfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02501220#pluperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02501220#pluperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02501220#pluperfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01501230#pluperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01501230#pluperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01501230#pluperfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02501230#pluperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02501230#pluperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02501230#pluperfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01501240#pluperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01501240#pluperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01501240#pluperfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02501240#pluperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02501240#pluperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02501240#pluperfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01501250#pluperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01501250#pluperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01501250#pluperfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02501250#pluperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02501250#pluperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02501250#pluperfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01501260#pluperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01501260#pluperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01501260#pluperfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02501260#pluperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02501260#pluperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02501260#pluperfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01501310#pluperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01501310#pluperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01501310#pluperfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02501310#pluperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02501310#pluperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02501310#pluperfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01501320#pluperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01501320#pluperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01501320#pluperfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02501320#pluperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02501320#pluperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02501320#pluperfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01501330#pluperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01501330#pluperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01501330#pluperfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02501330#pluperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02501330#pluperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02501330#pluperfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01501340#pluperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01501340#pluperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01501340#pluperfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02501340#pluperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02501340#pluperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02501340#pluperfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01501350#pluperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01501350#pluperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01501350#pluperfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02501350#pluperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02501350#pluperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02501350#pluperfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01501360#pluperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01501360#pluperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01501360#pluperfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02501360#pluperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02501360#pluperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02501360#pluperfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01601110#future perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01601110#future perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01601110#future perfect active masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02601110#future perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02601110#future perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02601110#future perfect active masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01601120#future perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01601120#future perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01601120#future perfect active masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02601120#future perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02601120#future perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02601120#future perfect active masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01601130#future perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01601130#future perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01601130#future perfect active masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02601130#future perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02601130#future perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02601130#future perfect active masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01601140#future perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01601140#future perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01601140#future perfect active masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02601140#future perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02601140#future perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02601140#future perfect active masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01601150#future perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01601150#future perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01601150#future perfect active masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02601150#future perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02601150#future perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02601150#future perfect active masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01601160#future perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01601160#future perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01601160#future perfect active masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02601160#future perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02601160#future perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02601160#future perfect active masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01601210#future perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01601210#future perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01601210#future perfect active feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02601210#future perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02601210#future perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02601210#future perfect active feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01601220#future perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01601220#future perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01601220#future perfect active feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02601220#future perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02601220#future perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02601220#future perfect active feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01601230#future perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01601230#future perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01601230#future perfect active feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02601230#future perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02601230#future perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02601230#future perfect active feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01601240#future perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01601240#future perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01601240#future perfect active feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02601240#future perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02601240#future perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02601240#future perfect active feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01601250#future perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01601250#future perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01601250#future perfect active feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02601250#future perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02601250#future perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02601250#future perfect active feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01601260#future perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01601260#future perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01601260#future perfect active feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02601260#future perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02601260#future perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02601260#future perfect active feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01601310#future perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01601310#future perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01601310#future perfect active neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02601310#future perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02601310#future perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02601310#future perfect active neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01601320#future perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01601320#future perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01601320#future perfect active neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02601320#future perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02601320#future perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02601320#future perfect active neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01601330#future perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01601330#future perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01601330#future perfect active neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02601330#future perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02601330#future perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02601330#future perfect active neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01601340#future perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01601340#future perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01601340#future perfect active neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02601340#future perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02601340#future perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02601340#future perfect active neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01601350#future perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01601350#future perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01601350#future perfect active neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02601350#future perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02601350#future perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02601350#future perfect active neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01601360#future perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01601360#future perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01601360#future perfect active neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02601360#future perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02601360#future perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02601360#future perfect active neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01102110#present passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01102110#present passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01102110#present passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02102110#present passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02102110#present passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02102110#present passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01102120#present passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01102120#present passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01102120#present passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02102120#present passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02102120#present passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02102120#present passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01102130#present passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01102130#present passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01102130#present passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02102130#present passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02102130#present passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02102130#present passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01102140#present passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01102140#present passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01102140#present passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02102140#present passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02102140#present passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02102140#present passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01102150#present passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01102150#present passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01102150#present passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02102150#present passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02102150#present passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02102150#present passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01102160#present passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01102160#present passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01102160#present passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02102160#present passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02102160#present passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02102160#present passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01102210#present passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01102210#present passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01102210#present passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02102210#present passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02102210#present passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02102210#present passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01102220#present passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01102220#present passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01102220#present passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02102220#present passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02102220#present passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02102220#present passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01102230#present passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01102230#present passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01102230#present passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02102230#present passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02102230#present passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02102230#present passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01102240#present passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01102240#present passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01102240#present passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02102240#present passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02102240#present passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02102240#present passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01102250#present passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01102250#present passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01102250#present passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02102250#present passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02102250#present passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02102250#present passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01102260#present passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01102260#present passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01102260#present passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02102260#present passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02102260#present passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02102260#present passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01102310#present passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01102310#present passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01102310#present passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02102310#present passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02102310#present passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02102310#present passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01102320#present passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01102320#present passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01102320#present passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02102320#present passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02102320#present passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02102320#present passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01102330#present passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01102330#present passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01102330#present passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02102330#present passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02102330#present passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02102330#present passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01102340#present passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01102340#present passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01102340#present passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02102340#present passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02102340#present passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02102340#present passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01102350#present passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01102350#present passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01102350#present passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02102350#present passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02102350#present passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02102350#present passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01102360#present passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01102360#present passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01102360#present passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02102360#present passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02102360#present passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02102360#present passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01202110#imperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01202110#imperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01202110#imperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02202110#imperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02202110#imperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02202110#imperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01202120#imperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01202120#imperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01202120#imperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02202120#imperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02202120#imperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02202120#imperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01202130#imperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01202130#imperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01202130#imperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02202130#imperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02202130#imperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02202130#imperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01202140#imperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01202140#imperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01202140#imperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02202140#imperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02202140#imperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02202140#imperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01202150#imperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01202150#imperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01202150#imperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02202150#imperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02202150#imperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02202150#imperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01202160#imperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01202160#imperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01202160#imperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02202160#imperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02202160#imperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02202160#imperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01202210#imperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01202210#imperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01202210#imperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02202210#imperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02202210#imperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02202210#imperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01202220#imperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01202220#imperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01202220#imperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02202220#imperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02202220#imperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02202220#imperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01202230#imperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01202230#imperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01202230#imperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02202230#imperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02202230#imperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02202230#imperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01202240#imperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01202240#imperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01202240#imperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02202240#imperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02202240#imperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02202240#imperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01202250#imperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01202250#imperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01202250#imperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02202250#imperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02202250#imperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02202250#imperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01202260#imperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01202260#imperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01202260#imperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02202260#imperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02202260#imperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02202260#imperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01202310#imperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01202310#imperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01202310#imperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02202310#imperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02202310#imperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02202310#imperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01202320#imperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01202320#imperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01202320#imperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02202320#imperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02202320#imperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02202320#imperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01202330#imperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01202330#imperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01202330#imperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02202330#imperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02202330#imperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02202330#imperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01202340#imperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01202340#imperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01202340#imperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02202340#imperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02202340#imperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02202340#imperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01202350#imperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01202350#imperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01202350#imperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02202350#imperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02202350#imperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02202350#imperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01202360#imperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01202360#imperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01202360#imperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02202360#imperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02202360#imperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02202360#imperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01302110#future passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01302110#future passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01302110#future passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02302110#future passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02302110#future passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02302110#future passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01302120#future passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01302120#future passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01302120#future passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02302120#future passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02302120#future passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02302120#future passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01302130#future passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01302130#future passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01302130#future passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02302130#future passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02302130#future passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02302130#future passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01302140#future passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01302140#future passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01302140#future passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02302140#future passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02302140#future passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02302140#future passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01302150#future passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01302150#future passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01302150#future passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02302150#future passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02302150#future passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02302150#future passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01302160#future passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01302160#future passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01302160#future passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02302160#future passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02302160#future passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02302160#future passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01302210#future passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01302210#future passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01302210#future passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02302210#future passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02302210#future passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02302210#future passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01302220#future passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01302220#future passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01302220#future passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02302220#future passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02302220#future passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02302220#future passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01302230#future passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01302230#future passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01302230#future passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02302230#future passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02302230#future passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02302230#future passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01302240#future passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01302240#future passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01302240#future passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02302240#future passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02302240#future passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02302240#future passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01302250#future passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01302250#future passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01302250#future passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02302250#future passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02302250#future passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02302250#future passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01302260#future passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01302260#future passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01302260#future passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02302260#future passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02302260#future passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02302260#future passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01302310#future passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01302310#future passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01302310#future passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02302310#future passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02302310#future passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02302310#future passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01302320#future passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01302320#future passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01302320#future passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02302320#future passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02302320#future passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02302320#future passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01302330#future passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01302330#future passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01302330#future passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02302330#future passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02302330#future passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02302330#future passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01302340#future passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01302340#future passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01302340#future passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02302340#future passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02302340#future passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02302340#future passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01302350#future passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01302350#future passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01302350#future passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02302350#future passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02302350#future passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02302350#future passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01302360#future passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01302360#future passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01302360#future passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02302360#future passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02302360#future passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02302360#future passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01402110#perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01402110#perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01402110#perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02402110#perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02402110#perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02402110#perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01402120#perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01402120#perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01402120#perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02402120#perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02402120#perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02402120#perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01402130#perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01402130#perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01402130#perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02402130#perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02402130#perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02402130#perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01402140#perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01402140#perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01402140#perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02402140#perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02402140#perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02402140#perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01402150#perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01402150#perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01402150#perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02402150#perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02402150#perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02402150#perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01402160#perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01402160#perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01402160#perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02402160#perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02402160#perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02402160#perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01402210#perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01402210#perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01402210#perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02402210#perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02402210#perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02402210#perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01402220#perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01402220#perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01402220#perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02402220#perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02402220#perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02402220#perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01402230#perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01402230#perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01402230#perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02402230#perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02402230#perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02402230#perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01402240#perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01402240#perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01402240#perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02402240#perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02402240#perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02402240#perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01402250#perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01402250#perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01402250#perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02402250#perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02402250#perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02402250#perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01402260#perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01402260#perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01402260#perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02402260#perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02402260#perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02402260#perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01402310#perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01402310#perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01402310#perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02402310#perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02402310#perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02402310#perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01402320#perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01402320#perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01402320#perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02402320#perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02402320#perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02402320#perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01402330#perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01402330#perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01402330#perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02402330#perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02402330#perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02402330#perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01402340#perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01402340#perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01402340#perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02402340#perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02402340#perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02402340#perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01402350#perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01402350#perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01402350#perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02402350#perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02402350#perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02402350#perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01402360#perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01402360#perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01402360#perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02402360#perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02402360#perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02402360#perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01502110#pluperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01502110#pluperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01502110#pluperfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02502110#pluperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02502110#pluperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02502110#pluperfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01502120#pluperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01502120#pluperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01502120#pluperfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02502120#pluperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02502120#pluperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02502120#pluperfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01502130#pluperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01502130#pluperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01502130#pluperfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02502130#pluperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02502130#pluperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02502130#pluperfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01502140#pluperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01502140#pluperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01502140#pluperfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02502140#pluperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02502140#pluperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02502140#pluperfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01502150#pluperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01502150#pluperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01502150#pluperfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02502150#pluperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02502150#pluperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02502150#pluperfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01502160#pluperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01502160#pluperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01502160#pluperfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02502160#pluperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02502160#pluperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02502160#pluperfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01502210#pluperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01502210#pluperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01502210#pluperfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02502210#pluperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02502210#pluperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02502210#pluperfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01502220#pluperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01502220#pluperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01502220#pluperfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02502220#pluperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02502220#pluperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02502220#pluperfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01502230#pluperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01502230#pluperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01502230#pluperfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02502230#pluperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02502230#pluperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02502230#pluperfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01502240#pluperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01502240#pluperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01502240#pluperfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02502240#pluperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02502240#pluperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02502240#pluperfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01502250#pluperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01502250#pluperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01502250#pluperfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02502250#pluperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02502250#pluperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02502250#pluperfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01502260#pluperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01502260#pluperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01502260#pluperfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02502260#pluperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02502260#pluperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02502260#pluperfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01502310#pluperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01502310#pluperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01502310#pluperfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02502310#pluperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02502310#pluperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02502310#pluperfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01502320#pluperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01502320#pluperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01502320#pluperfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02502320#pluperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02502320#pluperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02502320#pluperfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01502330#pluperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01502330#pluperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01502330#pluperfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02502330#pluperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02502330#pluperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02502330#pluperfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01502340#pluperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01502340#pluperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01502340#pluperfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02502340#pluperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02502340#pluperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02502340#pluperfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01502350#pluperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01502350#pluperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01502350#pluperfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02502350#pluperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02502350#pluperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02502350#pluperfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01502360#pluperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01502360#pluperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01502360#pluperfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02502360#pluperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02502360#pluperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02502360#pluperfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:01602110#future perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01602110#future perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:01602110#future perfect passive masculine nominative singular
+urn:cite2:tabulae:morphforms.v1:02602110#future perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02602110#future perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:02602110#future perfect passive masculine nominative plural
+urn:cite2:tabulae:morphforms.v1:01602120#future perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01602120#future perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:01602120#future perfect passive masculine genitive singular
+urn:cite2:tabulae:morphforms.v1:02602120#future perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02602120#future perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:02602120#future perfect passive masculine genitive plural
+urn:cite2:tabulae:morphforms.v1:01602130#future perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01602130#future perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:01602130#future perfect passive masculine dative singular
+urn:cite2:tabulae:morphforms.v1:02602130#future perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02602130#future perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:02602130#future perfect passive masculine dative plural
+urn:cite2:tabulae:morphforms.v1:01602140#future perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01602140#future perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:01602140#future perfect passive masculine accusative singular
+urn:cite2:tabulae:morphforms.v1:02602140#future perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02602140#future perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:02602140#future perfect passive masculine accusative plural
+urn:cite2:tabulae:morphforms.v1:01602150#future perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01602150#future perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:01602150#future perfect passive masculine ablative singular
+urn:cite2:tabulae:morphforms.v1:02602150#future perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02602150#future perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:02602150#future perfect passive masculine ablative plural
+urn:cite2:tabulae:morphforms.v1:01602160#future perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01602160#future perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:01602160#future perfect passive masculine vocative singular
+urn:cite2:tabulae:morphforms.v1:02602160#future perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02602160#future perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:02602160#future perfect passive masculine vocative plural
+urn:cite2:tabulae:morphforms.v1:01602210#future perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01602210#future perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:01602210#future perfect passive feminine nominative singular
+urn:cite2:tabulae:morphforms.v1:02602210#future perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02602210#future perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:02602210#future perfect passive feminine nominative plural
+urn:cite2:tabulae:morphforms.v1:01602220#future perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01602220#future perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:01602220#future perfect passive feminine genitive singular
+urn:cite2:tabulae:morphforms.v1:02602220#future perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02602220#future perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:02602220#future perfect passive feminine genitive plural
+urn:cite2:tabulae:morphforms.v1:01602230#future perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01602230#future perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:01602230#future perfect passive feminine dative singular
+urn:cite2:tabulae:morphforms.v1:02602230#future perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02602230#future perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:02602230#future perfect passive feminine dative plural
+urn:cite2:tabulae:morphforms.v1:01602240#future perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01602240#future perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:01602240#future perfect passive feminine accusative singular
+urn:cite2:tabulae:morphforms.v1:02602240#future perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02602240#future perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:02602240#future perfect passive feminine accusative plural
+urn:cite2:tabulae:morphforms.v1:01602250#future perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01602250#future perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:01602250#future perfect passive feminine ablative singular
+urn:cite2:tabulae:morphforms.v1:02602250#future perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02602250#future perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:02602250#future perfect passive feminine ablative plural
+urn:cite2:tabulae:morphforms.v1:01602260#future perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01602260#future perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:01602260#future perfect passive feminine vocative singular
+urn:cite2:tabulae:morphforms.v1:02602260#future perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02602260#future perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:02602260#future perfect passive feminine vocative plural
+urn:cite2:tabulae:morphforms.v1:01602310#future perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01602310#future perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:01602310#future perfect passive neuter nominative singular
+urn:cite2:tabulae:morphforms.v1:02602310#future perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02602310#future perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:02602310#future perfect passive neuter nominative plural
+urn:cite2:tabulae:morphforms.v1:01602320#future perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01602320#future perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:01602320#future perfect passive neuter genitive singular
+urn:cite2:tabulae:morphforms.v1:02602320#future perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02602320#future perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:02602320#future perfect passive neuter genitive plural
+urn:cite2:tabulae:morphforms.v1:01602330#future perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01602330#future perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:01602330#future perfect passive neuter dative singular
+urn:cite2:tabulae:morphforms.v1:02602330#future perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02602330#future perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:02602330#future perfect passive neuter dative plural
+urn:cite2:tabulae:morphforms.v1:01602340#future perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01602340#future perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:01602340#future perfect passive neuter accusative singular
+urn:cite2:tabulae:morphforms.v1:02602340#future perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02602340#future perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:02602340#future perfect passive neuter accusative plural
+urn:cite2:tabulae:morphforms.v1:01602350#future perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01602350#future perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:01602350#future perfect passive neuter ablative singular
+urn:cite2:tabulae:morphforms.v1:02602350#future perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02602350#future perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:02602350#future perfect passive neuter ablative plural
+urn:cite2:tabulae:morphforms.v1:01602360#future perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01602360#future perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:01602360#future perfect passive neuter vocative singular
+urn:cite2:tabulae:morphforms.v1:02602360#future perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02602360#future perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:02602360#future perfect passive neuter vocative plural
+urn:cite2:tabulae:morphforms.v1:11111000#first singular present indicative active
+urn:cite2:tabulae:morphforms.v1:11112000#first singular present indicative passive
+urn:cite2:tabulae:morphforms.v1:11121000#first singular present subjunctive active
+urn:cite2:tabulae:morphforms.v1:11122000#first singular present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11131000#first singular present imperative active
+urn:cite2:tabulae:morphforms.v1:11132000#first singular present imperative passive
+urn:cite2:tabulae:morphforms.v1:11211000#first singular imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:11212000#first singular imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:11221000#first singular imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:11222000#first singular imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11231000#first singular imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:11232000#first singular imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:11311000#first singular future indicative active
+urn:cite2:tabulae:morphforms.v1:11312000#first singular future indicative passive
+urn:cite2:tabulae:morphforms.v1:11321000#first singular future subjunctive active
+urn:cite2:tabulae:morphforms.v1:11322000#first singular future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11331000#first singular future imperative active
+urn:cite2:tabulae:morphforms.v1:11332000#first singular future imperative passive
+urn:cite2:tabulae:morphforms.v1:11411000#first singular perfect indicative active
+urn:cite2:tabulae:morphforms.v1:11412000#first singular perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:11421000#first singular perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:11422000#first singular perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11431000#first singular perfect imperative active
+urn:cite2:tabulae:morphforms.v1:11432000#first singular perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:11511000#first singular pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:11512000#first singular pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:11521000#first singular pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:11522000#first singular pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11531000#first singular pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:11532000#first singular pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:11611000#first singular future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:11612000#first singular future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:11621000#first singular future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:11622000#first singular future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:11631000#first singular future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:11632000#first singular future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:12111000#first plural present indicative active
+urn:cite2:tabulae:morphforms.v1:12112000#first plural present indicative passive
+urn:cite2:tabulae:morphforms.v1:12121000#first plural present subjunctive active
+urn:cite2:tabulae:morphforms.v1:12122000#first plural present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12131000#first plural present imperative active
+urn:cite2:tabulae:morphforms.v1:12132000#first plural present imperative passive
+urn:cite2:tabulae:morphforms.v1:12211000#first plural imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:12212000#first plural imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:12221000#first plural imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:12222000#first plural imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12231000#first plural imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:12232000#first plural imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:12311000#first plural future indicative active
+urn:cite2:tabulae:morphforms.v1:12312000#first plural future indicative passive
+urn:cite2:tabulae:morphforms.v1:12321000#first plural future subjunctive active
+urn:cite2:tabulae:morphforms.v1:12322000#first plural future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12331000#first plural future imperative active
+urn:cite2:tabulae:morphforms.v1:12332000#first plural future imperative passive
+urn:cite2:tabulae:morphforms.v1:12411000#first plural perfect indicative active
+urn:cite2:tabulae:morphforms.v1:12412000#first plural perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:12421000#first plural perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:12422000#first plural perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12431000#first plural perfect imperative active
+urn:cite2:tabulae:morphforms.v1:12432000#first plural perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:12511000#first plural pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:12512000#first plural pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:12521000#first plural pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:12522000#first plural pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12531000#first plural pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:12532000#first plural pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:12611000#first plural future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:12612000#first plural future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:12621000#first plural future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:12622000#first plural future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:12631000#first plural future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:12632000#first plural future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:21111000#second singular present indicative active
+urn:cite2:tabulae:morphforms.v1:21112000#second singular present indicative passive
+urn:cite2:tabulae:morphforms.v1:21121000#second singular present subjunctive active
+urn:cite2:tabulae:morphforms.v1:21122000#second singular present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21131000#second singular present imperative active
+urn:cite2:tabulae:morphforms.v1:21132000#second singular present imperative passive
+urn:cite2:tabulae:morphforms.v1:21211000#second singular imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:21212000#second singular imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:21221000#second singular imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:21222000#second singular imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21231000#second singular imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:21232000#second singular imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:21311000#second singular future indicative active
+urn:cite2:tabulae:morphforms.v1:21312000#second singular future indicative passive
+urn:cite2:tabulae:morphforms.v1:21321000#second singular future subjunctive active
+urn:cite2:tabulae:morphforms.v1:21322000#second singular future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21331000#second singular future imperative active
+urn:cite2:tabulae:morphforms.v1:21332000#second singular future imperative passive
+urn:cite2:tabulae:morphforms.v1:21411000#second singular perfect indicative active
+urn:cite2:tabulae:morphforms.v1:21412000#second singular perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:21421000#second singular perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:21422000#second singular perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21431000#second singular perfect imperative active
+urn:cite2:tabulae:morphforms.v1:21432000#second singular perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:21511000#second singular pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:21512000#second singular pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:21521000#second singular pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:21522000#second singular pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21531000#second singular pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:21532000#second singular pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:21611000#second singular future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:21612000#second singular future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:21621000#second singular future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:21622000#second singular future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:21631000#second singular future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:21632000#second singular future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:22111000#second plural present indicative active
+urn:cite2:tabulae:morphforms.v1:22112000#second plural present indicative passive
+urn:cite2:tabulae:morphforms.v1:22121000#second plural present subjunctive active
+urn:cite2:tabulae:morphforms.v1:22122000#second plural present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22131000#second plural present imperative active
+urn:cite2:tabulae:morphforms.v1:22132000#second plural present imperative passive
+urn:cite2:tabulae:morphforms.v1:22211000#second plural imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:22212000#second plural imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:22221000#second plural imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:22222000#second plural imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22231000#second plural imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:22232000#second plural imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:22311000#second plural future indicative active
+urn:cite2:tabulae:morphforms.v1:22312000#second plural future indicative passive
+urn:cite2:tabulae:morphforms.v1:22321000#second plural future subjunctive active
+urn:cite2:tabulae:morphforms.v1:22322000#second plural future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22331000#second plural future imperative active
+urn:cite2:tabulae:morphforms.v1:22332000#second plural future imperative passive
+urn:cite2:tabulae:morphforms.v1:22411000#second plural perfect indicative active
+urn:cite2:tabulae:morphforms.v1:22412000#second plural perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:22421000#second plural perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:22422000#second plural perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22431000#second plural perfect imperative active
+urn:cite2:tabulae:morphforms.v1:22432000#second plural perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:22511000#second plural pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:22512000#second plural pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:22521000#second plural pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:22522000#second plural pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22531000#second plural pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:22532000#second plural pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:22611000#second plural future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:22612000#second plural future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:22621000#second plural future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:22622000#second plural future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:22631000#second plural future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:22632000#second plural future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:31111000#third singular present indicative active
+urn:cite2:tabulae:morphforms.v1:31112000#third singular present indicative passive
+urn:cite2:tabulae:morphforms.v1:31121000#third singular present subjunctive active
+urn:cite2:tabulae:morphforms.v1:31122000#third singular present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31131000#third singular present imperative active
+urn:cite2:tabulae:morphforms.v1:31132000#third singular present imperative passive
+urn:cite2:tabulae:morphforms.v1:31211000#third singular imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:31212000#third singular imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:31221000#third singular imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:31222000#third singular imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31231000#third singular imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:31232000#third singular imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:31311000#third singular future indicative active
+urn:cite2:tabulae:morphforms.v1:31312000#third singular future indicative passive
+urn:cite2:tabulae:morphforms.v1:31321000#third singular future subjunctive active
+urn:cite2:tabulae:morphforms.v1:31322000#third singular future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31331000#third singular future imperative active
+urn:cite2:tabulae:morphforms.v1:31332000#third singular future imperative passive
+urn:cite2:tabulae:morphforms.v1:31411000#third singular perfect indicative active
+urn:cite2:tabulae:morphforms.v1:31412000#third singular perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:31421000#third singular perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:31422000#third singular perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31431000#third singular perfect imperative active
+urn:cite2:tabulae:morphforms.v1:31432000#third singular perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:31511000#third singular pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:31512000#third singular pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:31521000#third singular pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:31522000#third singular pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31531000#third singular pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:31532000#third singular pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:31611000#third singular future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:31612000#third singular future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:31621000#third singular future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:31622000#third singular future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:31631000#third singular future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:31632000#third singular future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:32111000#third plural present indicative active
+urn:cite2:tabulae:morphforms.v1:32112000#third plural present indicative passive
+urn:cite2:tabulae:morphforms.v1:32121000#third plural present subjunctive active
+urn:cite2:tabulae:morphforms.v1:32122000#third plural present subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32131000#third plural present imperative active
+urn:cite2:tabulae:morphforms.v1:32132000#third plural present imperative passive
+urn:cite2:tabulae:morphforms.v1:32211000#third plural imperfect indicative active
+urn:cite2:tabulae:morphforms.v1:32212000#third plural imperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:32221000#third plural imperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:32222000#third plural imperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32231000#third plural imperfect imperative active
+urn:cite2:tabulae:morphforms.v1:32232000#third plural imperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:32311000#third plural future indicative active
+urn:cite2:tabulae:morphforms.v1:32312000#third plural future indicative passive
+urn:cite2:tabulae:morphforms.v1:32321000#third plural future subjunctive active
+urn:cite2:tabulae:morphforms.v1:32322000#third plural future subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32331000#third plural future imperative active
+urn:cite2:tabulae:morphforms.v1:32332000#third plural future imperative passive
+urn:cite2:tabulae:morphforms.v1:32411000#third plural perfect indicative active
+urn:cite2:tabulae:morphforms.v1:32412000#third plural perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:32421000#third plural perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:32422000#third plural perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32431000#third plural perfect imperative active
+urn:cite2:tabulae:morphforms.v1:32432000#third plural perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:32511000#third plural pluperfect indicative active
+urn:cite2:tabulae:morphforms.v1:32512000#third plural pluperfect indicative passive
+urn:cite2:tabulae:morphforms.v1:32521000#third plural pluperfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:32522000#third plural pluperfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32531000#third plural pluperfect imperative active
+urn:cite2:tabulae:morphforms.v1:32532000#third plural pluperfect imperative passive
+urn:cite2:tabulae:morphforms.v1:32611000#third plural future perfect indicative active
+urn:cite2:tabulae:morphforms.v1:32612000#third plural future perfect indicative passive
+urn:cite2:tabulae:morphforms.v1:32621000#third plural future perfect subjunctive active
+urn:cite2:tabulae:morphforms.v1:32622000#third plural future perfect subjunctive passive
+urn:cite2:tabulae:morphforms.v1:32631000#third plural future perfect imperative active
+urn:cite2:tabulae:morphforms.v1:32632000#third plural future perfect imperative passive
+urn:cite2:tabulae:morphforms.v1:00101000#present active
+urn:cite2:tabulae:morphforms.v1:00102000#present passive
+urn:cite2:tabulae:morphforms.v1:00201000#imperfect active
+urn:cite2:tabulae:morphforms.v1:00202000#imperfect passive
+urn:cite2:tabulae:morphforms.v1:00301000#future active
+urn:cite2:tabulae:morphforms.v1:00302000#future passive
+urn:cite2:tabulae:morphforms.v1:00401000#perfect active
+urn:cite2:tabulae:morphforms.v1:00402000#perfect passive
+urn:cite2:tabulae:morphforms.v1:00501000#pluperfect active
+urn:cite2:tabulae:morphforms.v1:00502000#pluperfect passive
+urn:cite2:tabulae:morphforms.v1:00601000#future perfect active
+urn:cite2:tabulae:morphforms.v1:00602000#future perfect passive
+urn:cite2:tabulae:morphforms.v1:00000010#nominative
+urn:cite2:tabulae:morphforms.v1:00000020#genitive
+urn:cite2:tabulae:morphforms.v1:00000030#dative
+urn:cite2:tabulae:morphforms.v1:00000040#accusative
+urn:cite2:tabulae:morphforms.v1:00000050#ablative
+urn:cite2:tabulae:morphforms.v1:00000060#vocative
