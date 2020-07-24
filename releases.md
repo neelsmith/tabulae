@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**6.1.0**: Adds method for `formId` to `LemmatizedForm`.
+
 **6.0.1**: Correctly republish binaries for 6.0.0.
 
 **6.0.0**: Adds `LewisShort` object, and `formLabel` function on `LemmatizedForm` trait.
