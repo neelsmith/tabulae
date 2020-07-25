@@ -1,5 +1,6 @@
 package edu.holycross.shot.tabulae
 
+import edu.holycross.shot.cite._
 /*
 
 Analytical patterns we need to implement:
@@ -30,7 +31,9 @@ sealed trait LemmatizedForm {
       case sup: SupineForm => "supine"
     }
   }
-
+  def formUrn : Cite2Urn = {
+    Cite2Urn("urn:cite2:tabulae:morphforms.v1:" + formId)
+  }
 
   def substantiveGender: Option[Gender] = {
     this match {
