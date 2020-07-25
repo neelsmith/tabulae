@@ -5,7 +5,7 @@ import scala.io.Source
 
 case class UrnManager(collectionMap: Map[String, Cite2Urn]) {
   def resolve(id: String): Option[Cite2Urn] = {
-    None
+    collectionMap get id
   }
 }
 

@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**6.2.0**: Adds the `UrnManager` class, and `formUrn` method to `LemmatizedForm`.
+
 **6.1.0**: Adds method for `formId` to `LemmatizedForm`.
 
 **6.0.1**: Correctly republish binaries for 6.0.0.
