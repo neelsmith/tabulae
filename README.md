@@ -34,7 +34,7 @@ When we parse *animae* in Plautus with a classical Latin parser and *anime* in a
 
 
 
-## Current version: 6.2.0
+## Current version: 6.3.0
 
 - Status:  **active development**. [Release notes](releases.md)
 - Current [API documentation](http://neelsmith.info/code/auto/tabulae/edu/holycross/shot/tabulae/).

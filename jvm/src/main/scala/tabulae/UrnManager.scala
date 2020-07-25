@@ -7,6 +7,28 @@ case class UrnManager(collectionMap: Map[String, Cite2Urn]) {
   def resolve(id: String): Option[Cite2Urn] = {
     collectionMap get id
   }
+
+  def urn(id: String): Option[Cite2Urn] = {
+    val parts = id.split("\\.")
+    parts.size match {
+      case 2 => {
+        try {
+          val u = resolve(parts(0)).get
+          Some(u.addSelector(parts(1)))
+
+        } catch {
+          case t: Throwable => {
+            //warn
+            None
+          }
+        }
+      }
+      case _ => {
+        //warn
+        None
+      }
+    }
+  }
 }
 
 
