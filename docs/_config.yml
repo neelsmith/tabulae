@@ -8,3 +8,5 @@ aux_links:
     - "https://github.com/lingualatina/analysis/"
   "Lingua Latina home":
     - "https://lingualatina.github.io/"
+
+theme: jekyll-theme-minimal
