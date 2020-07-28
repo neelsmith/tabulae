@@ -1,6 +1,5 @@
 ---
 title: Page 2
-layout: page
 ---
 
 
