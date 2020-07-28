@@ -1,13 +1,18 @@
-lazy val supportedScalaVersions = List("2.12.4")
+lazy val scala211 = "2.11.12"
+lazy val scala212 = "2.12.10"
+lazy val supportedScalaVersions = List(scala212, scala211)
 
-lazy val root = project.in(file(".")).
-    aggregate(crossedJVM, crossedJS).
-    settings(
-      crossScalaVersions := Nil,
-      publish / skip := true
+ThisBuild / scalaVersion := scala212
+ThisBuild / turbo := true
+
+lazy val root = (project in file("."))
+  .aggregate(crossed.js, crossed.jvm)
+  .settings(
+        crossScalaVersions := Nil,
+        publish / skip := true
     )
 
-lazy val crossed = crossProject.in(file(".")).
+lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
     settings(
 
       name := "tabulae",
@@ -30,17 +35,10 @@ lazy val crossed = crossProject.in(file(".")).
     jvmSettings(
       libraryDependencies ++=  Seq(
         "com.github.pathikrit" %% "better-files" % "3.5.0"
-      ),
-      tutTargetDirectory := file("docs"),
-      tutSourceDirectory := file("tut"),
-      crossScalaVersions := supportedScalaVersions
+      )
 
     ).
     jsSettings(
-      skip in packageJSDependencies := false,
-      scalaJSUseMainModuleInitializer in Compile := true,
-      crossScalaVersions := supportedScalaVersions
+      // JS-specific settings:
+      scalaJSUseMainModuleInitializer := true,
     )
-
-lazy val crossedJS = crossed.js
-lazy val crossedJVM = crossed.jvm.enablePlugins(TutPlugin)
