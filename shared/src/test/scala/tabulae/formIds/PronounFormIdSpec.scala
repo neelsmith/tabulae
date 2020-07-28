@@ -8,7 +8,7 @@ class PronounFormIdSpec extends FlatSpec {
   "A  PronounForm" should "require encode its form" in {
     val pronounForm = PronounForm("ls.n20640", "proof.irrpron1","proof.irreginfl7", Masculine, Nominative, Singular)
 
-    val expected = "01000110"
+    val expected = "010001101"
     assert(pronounForm.formId == expected)
   }
 }

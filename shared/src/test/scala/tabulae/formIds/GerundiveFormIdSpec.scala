@@ -9,7 +9,7 @@ class GerundiveFormIdSpec extends FlatSpec {
     val gdvForm =  GerundiveForm("ls.fake", "ocremorph.dummy", "ocremorph.test", Feminine, Nominative, Singular)
 
 
-    val expected = "01000210"
+    val expected = "010002107"
     assert(gdvForm.formId == expected)
   }
 }

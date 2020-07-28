@@ -7,7 +7,7 @@ class NounFormIdSpec extends FlatSpec {
 
   "A  NounForm" should "require encode its form" in {
     val nounForm = NounForm("ls.n1315", "ocremorph.n27","ocremorph.stis13", Feminine, Nominative, Singular)
-    val expected = "01000210"
+    val expected = "010002100"
     assert(nounForm.formId == expected)
   }
 }
