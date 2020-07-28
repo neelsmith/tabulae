@@ -1,9 +1,9 @@
 ---
-title: Tabulae
+title: A junk file
 layout: page
 ---
 
 
-# Tabulae
+# Github pages
 
-Junk page
+Junk page that should display in any theme set in `_config.yml`.
