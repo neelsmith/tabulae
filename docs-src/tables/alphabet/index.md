@@ -1,6 +1,8 @@
 ---
 title: An alphabet for your parser
 layout: page
+parent: Building a corpus-specific dataset
+nav_order: 1
 ---
 
 In a `tabulae` dataset, the directory `orthography` contains a file `alphabet.fst` where the alphabet for your corpus is explicitly enuerated.

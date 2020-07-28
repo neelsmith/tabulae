@@ -1,6 +1,8 @@
 ---
 title: Irregular forms
 layout: page
+parent: Building a corpus-specific dataset
+nav_order: 3
 ---
 
 

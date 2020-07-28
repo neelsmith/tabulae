@@ -1,6 +1,8 @@
 ---
 title: Morphological rules
 layout: page
+parent: Building a corpus-specific dataset
+nav_order: 2
 ---
 
 

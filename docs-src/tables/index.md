@@ -1,9 +1,13 @@
 ---
 title: Building a corpus-specific dataset
 layout: page
+nav_order: 1
+has_children: true
 ---
 
-This section is being updated for `tabulae` version >= 4.0.
+**Version @VERSION@**
+
+# Building a corpus-specific dataset
 
 ## TL;DR
 

@@ -1,6 +1,8 @@
 ---
 title: The lexicon of stems
 layout: page
+parent: Building a corpus-specific dataset
+nav_order: 4
 ---
 
 In a `tabulae` dataset, the directory `stems-tables` contains the lexicon of stems for all words in your corpus that combine with regular endings.

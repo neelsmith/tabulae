@@ -1,4 +1,9 @@
-
+---
+title: "Examples of stem types"
+layout: page
+parent: Building a corpus-specific dataset
+nav_order: 6
+---
 ## Nouns
 
 noun1# = <a_ae><a_ae_gk><e_es><es_ae><as_ae>

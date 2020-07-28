@@ -1,8 +1,14 @@
 ---
 title: sbt tasks for testing
 layout: page
+nav_order: 1
+parent: Other topics
 ---
 
+
+**Version @VERSION@**
+
+# `sbt` tasks for testing
 
 From an `sbt` console:
 

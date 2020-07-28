@@ -1,8 +1,13 @@
 ---
 title: Analyzing the output of a parser
 layout: page
+nav_order: 3
+has_children: true
 ---
 
+**Version @VERSION@**
+
+# Analyzing the output of a parser
 
 The SFST parser maps your tokens to long descriptive strings identifying the morphology of the token, as well as identifying the lexeme and the specific rules `tabulae` applied to find that parse.
 

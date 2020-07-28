@@ -1,10 +1,11 @@
 ---
 title: Compiling and running a parser
 layout: page
+nav_order: 2
 ---
+**Version @VERSION@**
 
-This page is being updated for `tabulae` version >= 4.0.
-
+# Compiling and running a parser
 
 ## TL;DR
 

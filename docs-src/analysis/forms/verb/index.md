@@ -1,6 +1,8 @@
 ---
 title: Verb forms
 layout: page
+parent: Analyzing the output of a parser
+nav_order: 2
 ---
 
 

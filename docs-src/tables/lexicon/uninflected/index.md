@@ -1,6 +1,8 @@
 ---
 title: Indeclinable stems
 layout: page
+parent: Building a corpus-specific dataset
+nav_order: 5
 ---
 
 Example of a complete stem table with one data line;
