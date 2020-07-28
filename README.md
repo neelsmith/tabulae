@@ -1,3 +1,5 @@
+**Version 6.3.0**: [documentation](https://neelsmith.github.io/tabulae-documentation/)
+
 # `tabulae` #
 
 `tabulae` is a system for building corpus-specific Latin morphological parsers.
