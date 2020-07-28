@@ -1,7 +1,6 @@
 ---
 title: Tabulae
 layout: page
-nav_order: 0
 ---
 
 
