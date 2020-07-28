@@ -5,7 +5,9 @@ nav_order: 1
 has_children: true
 ---
 
-This section is being updated for `tabulae` version >= 4.0.
+**Version 6.3.0**
+
+# Building a corpus-specific dataset
 
 ## TL;DR
 

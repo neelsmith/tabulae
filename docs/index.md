@@ -5,6 +5,8 @@ nav_order: 0
 ---
 
 
+**Version 6.3.0**
+
 # Tabulae
 
 There are three main phases to building a corpus-specific parser and working with its output.
