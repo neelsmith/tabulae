@@ -7,22 +7,17 @@ import edu.holycross.shot.cite._
 sealed trait ValidForm {
   def urn: Cite2Urn
   def validUrnValue: Boolean
-
-
-
-
 }
 
 object ValidForm {
-  
   def apply(urn: Cite2Urn) : ValidForm = {
     val digits = urn.objectComponent.split("").toVector
     val partOfSpeech = digits(columnNames("inflectionType"))
     partOfSpeech match {
       case "0" => ValidNounForm(urn)
+      case "1" => ValidPronounForm(urn)
       case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
     }
-
   }
 
   val columnNames: Map[String, Int] = Map(
@@ -37,39 +32,75 @@ object ValidForm {
     "inflectionType" -> 8
   )
 
+  val genderCodes: Map[String, Gender] = Map(
+     "1" -> Masculine,
+     "2" -> Feminine,
+     "3" -> Neuter
+  )
 
+  val caseCodes : Map[String, GrammaticalCase] = Map (
+     "1" -> Nominative,
+     "2" -> Genitive,
+     "3" -> Dative,
+     "4" -> Accusative,
+     "5" -> Ablative,
+     "6" -> Vocative
+  )
+
+  val numberCodes : Map[String, GrammaticalNumber] = Map (
+    "1" -> Singular,
+    "2" -> Plural
+  )
 }
 
 case class ValidNounForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends ValidForm {
   def urn = formUrn
-  def validUrnValue: Boolean = false
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
 }
 object ValidNounForm {
   def apply(formUrn: Cite2Urn) : ValidNounForm = {
     val digits = formUrn.objectComponent.split("").toVector
-    val g = digits(ValidForm.columnNames("gender")).toInt
-    val c = digits(ValidForm.columnNames("grammaticalCase")).toInt
-    val n = digits(ValidForm.columnNames("grammaticalNumber")).toInt
-    val gender = g match {
-      case 1 => Masculine
-      case 2 => Feminine
-      case 3 => Neuter
-    }
-    val gcase = c match {
-      case 1 => Nominative
-      case 2 => Genitive
-      case 3 => Dative
-      case 4 => Accusative
-      case 5 => Ablative
-      case 6 => Vocative
-    }
-    val gnumber = n match {
-      case 1 => Singular
-      case 2 => Plural
-    }
-    ValidNounForm(formUrn, gender, gcase, gnumber)
+    val g = digits(ValidForm.columnNames("gender"))
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+    val n = digits(ValidForm.columnNames("grammaticalNumber"))
+
+    ValidNounForm(
+      formUrn,
+      ValidForm.genderCodes(g),
+      ValidForm.caseCodes(c),
+      ValidForm.numberCodes(n)
+    )
   }
 }
+
+
+case class ValidPronounForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidPronounForm {
+  def apply(formUrn: Cite2Urn) : ValidPronounForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+    val g = digits(ValidForm.columnNames("gender"))
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+    val n = digits(ValidForm.columnNames("grammaticalNumber"))
+
+    ValidPronounForm(
+      formUrn,
+      ValidForm.genderCodes(g),
+      ValidForm.caseCodes(c),
+      ValidForm.numberCodes(n)
+    )
+  }
+}
+
+
 
 
 /*
