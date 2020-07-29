@@ -113,6 +113,24 @@ def rollInfinitives = {
   infins.flatten
 }
 
+
+def rollGerundives : Vector[String]= {
+    val adjs = for ( (g, gidx) <- gender.zipWithIndex ) yield {
+      val embedded = for ( (gc, gcidx) <- gcase.zipWithIndex) yield {
+        val substs = for ((gnum, gnumidx) <- gnumber.zipWithIndex) yield {
+          val records = for ((d, didx) <- degree.zipWithIndex) yield {
+            val s = s"0${gnumidx + 1}000${gidx + 1}${gcidx + 1}${didx + 1}${gerundive}#gerundive: ${g} ${gc} ${gnum} ${d}"
+            s
+          }
+          records
+        }
+        substs
+      }
+    embedded
+  }
+  adjs.flatten.flatten.flatten
+}
+
 // 8 for gerund, 9 for supine
 def rollVerbalNouns(vnoun: Int) = {
   val records = for ( (gc, gcidx) <- gcase.zipWithIndex) yield {
@@ -150,7 +168,7 @@ def rollUninfl = {
 def cex: String = {
   val group = "urn:cite2:tabulae:morphforms.v1:"
   val header = "urn#label\n"
-  header + (rollSubst(0) ++ rollSubst(1)  ++ rollAdjectives ++ rollAdvs ++ rollParticiples ++ rollFiniteVerbs ++ rollInfinitives ++ rollVerbalNouns(gerund) ++ rollVerbalNouns(supine )  ++ rollUninfl).map(group + _ ).mkString("\n")
+  header + (rollSubst(0) ++ rollSubst(1)  ++ rollAdjectives ++ rollAdvs ++ rollParticiples ++ rollFiniteVerbs ++ rollInfinitives ++ rollVerbalNouns(gerund) ++ rollVerbalNouns(supine )  ++ rollGerundives ++ rollUninfl).map(group + _ ).mkString("\n")
 }
 
 import java.io.PrintWriter
