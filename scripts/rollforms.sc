@@ -117,18 +117,15 @@ def rollInfinitives = {
 def rollGerundives : Vector[String]= {
     val adjs = for ( (g, gidx) <- gender.zipWithIndex ) yield {
       val embedded = for ( (gc, gcidx) <- gcase.zipWithIndex) yield {
-        val substs = for ((gnum, gnumidx) <- gnumber.zipWithIndex) yield {
-          val records = for ((d, didx) <- degree.zipWithIndex) yield {
-            val s = s"0${gnumidx + 1}000${gidx + 1}${gcidx + 1}${didx + 1}${gerundive}#gerundive: ${g} ${gc} ${gnum} ${d}"
-            s
-          }
-          records
+        val records = for ((gnum, gnumidx) <- gnumber.zipWithIndex) yield {
+          val s = s"0${gnumidx + 1}000${gidx + 1}${gcidx + 1}0${gerundive}#gerundive: ${g} ${gc} ${gnum}"
+          s
         }
-        substs
+        records
       }
-    embedded
+      embedded
   }
-  adjs.flatten.flatten.flatten
+  adjs.flatten.flatten
 }
 
 // 8 for gerund, 9 for supine
