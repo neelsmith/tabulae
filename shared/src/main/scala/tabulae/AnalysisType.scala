@@ -3,10 +3,18 @@ package edu.holycross.shot.tabulae
 
 
 /** A valid analytical pattern for a morphological analysis.*/
-sealed trait AnalysisType
+sealed trait AnalysisType {
+  //def fromCex() :
+}
 
 /** Noun analysis type.*/
-object Noun extends AnalysisType
+case object Noun extends AnalysisType {
+
+  def fromStrings(g: String, c: String, n: String)  = {
+    
+  }
+
+}
 /** Adjective analysis type.*/
 object Adjective extends AnalysisType
 /** Adverb analysis type.*/

@@ -174,10 +174,25 @@ sealed trait LemmatizedForm {
 */
 object LemmatizedForm {
 
-  def fromUrn(urn: Cite2Urn) = {
-    def digits = urn.objectComponent.split(".").map(_.toInt.toHexString)
-    println(digits)
-  }
+  def posCodeLabels: Map[String, String] = Map(
+    "0" -> "noun",
+    "1" -> "pronoun",
+    "2" -> "adjective",
+    "3" -> "adverb",
+    "4" -> "finiteverb",
+    "5" -> "participle",
+    "6" -> "infinitive",
+    "7" -> "gerundive",
+    "8" -> "gerund",
+    "9" -> "gerundive",
+    "A" -> "conjunction",
+    "B" -> "preposition",
+    "C" -> "exclamation",
+    "D" -> "numeral"
+  )
+
+
+
   def irregularForm(fst: String) : Option[LemmatizedForm] = {
     //println("Received irreg. form " + fst)
     val parts = fst.split("<div>")
@@ -423,9 +438,8 @@ object NounForm {
   def apply(lemmaUrn: String, stemUrn: String, ruleUrn: String, g: String, c: String, n: String): NounForm = {
     NounForm(lemmaUrn, stemUrn, ruleUrn, genderForFstSymbol(g), caseForFstSymbol(c), numberForFstSymbol(n))
   }
+
 }
-
-
 
 
 /** Noun form, identified by gender, case and number.
