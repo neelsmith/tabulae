@@ -7,7 +7,7 @@ import org.scalatest.FlatSpec
 // data over the internet.
 class UrnDecoderSpec extends FlatSpec {
 
-  "The LemmatizedForm object" should "should recognized valid URNs for noun forms" in  {
+  "The LemmatizedForm object" should "should recognize valid URNs for noun forms" in  {
     val urn = Cite2Urn("urn:cite2:tabulae:morphforms.v1:020001400")
 
     val form = ValidForm(urn)
@@ -34,10 +34,53 @@ class UrnDecoderSpec extends FlatSpec {
       case _ => fail("Should have created a pronoun form")
     }
   }
-  it should "recognize valid URNs for adjective forms" in pending
-  it should "recognize valid URNs for adverb forms" in pending
+  it should "recognize valid URNs for adjective forms" in {
+    //urn:cite2:tabulae:morphforms.v1:020002612#adjective: feminine vocative plural positive
+    val urn = Cite2Urn("urn:cite2:tabulae:morphforms.v1:020002612")
+    val form = ValidForm(urn)
+    form match {
+      case adj: ValidAdjectiveForm => {
+        assert(adj.gender == Feminine)
+        assert(adj.grammaticalCase == Vocative)
+        assert(adj.grammaticalNumber == Plural)
+        assert(adj.degree == Positive)
+      }
+      case _ => fail("Should have created an adjective form")
+    }
+
+  }
+  it should "recognize valid URNs for adverb forms" in {
+    //urn:cite2:tabulae:morphforms.v1:000000023#adverb: comparative degree
+    val urn = Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000023")
+    val form = ValidForm(urn)
+    form match {
+      case adv: ValidAdverbForm => {
+        assert(adv.degree == Comparative)
+      }
+      case _ => fail("Should have created an adverb form")
+    }
+  }
+  it should "recognize valid URNs for finite verb forms" in {
+    // urn:cite2:tabulae:morphforms.v1:212210004#finite verb: second singular imperfect subjunctive active
+    val urn = Cite2Urn("urn:cite2:tabulae:morphforms.v1:212210004")
+    val form = ValidForm(urn)
+    form match {
+      case v: ValidFiniteVerbForm => {
+        assert(v.person == Second)
+        assert(v.grammaticalNumber == Singular)
+        assert(v.tense == Imperfect)
+        assert(v.mood == Subjunctive)
+        assert(v.voice == Active)
+      }
+      case _ => fail("Should have created a finite verb form")
+    }
+
+  }
+
+
+
   it should "recognize valid URNs for participle forms" in pending
-  it should "recognize valid URNs for finite verb forms" in pending
+
   it should "recognize valid URNs for infinitive verb forms" in pending
   it should "recognize valid URNs for gerundive  forms" in pending
   it should "recognize valid URNs for gerund forms" in pending
