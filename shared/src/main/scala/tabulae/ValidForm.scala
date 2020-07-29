@@ -19,15 +19,15 @@ object ValidForm {
       case "2" => ValidAdjectiveForm(urn)
       case "3" => ValidAdverbForm(urn)
       case "4" => ValidFiniteVerbForm(urn)
-      //case "5" => ValidParticipleForm(urn)
-      //case "6" => ValidInfintiveForm(urn)
-      //case "7" => ValidGerundiveForm(urn)
-      //case "8" => ValidGerundForm(urn)
-      //case "9" => ValidSupineForm(urn)
-      //case  "A" => ValidUnflectedForm(urn)
-      //case  "B" => ValidUnflectedForm(urn)
-      //case  "C" => ValidUnflectedForm(urn)
-      //case  "D" => ValidUnflectedForm(urn)
+      case "5" => ValidParticipleForm(urn)
+      case "6" => ValidInfinitiveForm(urn)
+      case "7" => ValidGerundiveForm(urn)
+      case "8" => ValidGerundForm(urn)
+      case "9" => ValidSupineForm(urn)
+      case  "A" => ValidUninflectedForm(urn)
+      case  "B" => ValidUninflectedForm(urn)
+      case  "C" => ValidUninflectedForm(urn)
+      case  "D" => ValidUninflectedForm(urn)
 
       case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
     }
@@ -91,6 +91,13 @@ object ValidForm {
     "1" -> Active,
     "2" -> Passive
   )
+  val posCodes: Map[String, IndeclinablePoS] = Map(
+    "A" -> Conjunction,
+    "B" -> Preposition,
+    "C" -> Exclamation,
+    "D" -> Numeral
+  )
+
 }
 
 /** Noun form identified by gender, case and number, with its
@@ -216,7 +223,6 @@ object ValidFiniteVerbForm {
     val m = digits(ValidForm.columnNames("mood"))
     val v = digits(ValidForm.columnNames("voice"))
 
-
     ValidFiniteVerbForm(
       formUrn,
       ValidForm.personCodes(p),
@@ -228,6 +234,152 @@ object ValidFiniteVerbForm {
 
   }
 }
+
+case class ValidParticipleForm(formUrn: Cite2Urn,
+  tense: Tense,
+  voice: Voice,
+  gender: Gender,
+  grammaticalCase: GrammaticalCase,
+  grammaticalNumber: GrammaticalNumber
+) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidParticipleForm {
+  def apply(formUrn: Cite2Urn) : ValidParticipleForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+
+    val t = digits(ValidForm.columnNames("tense"))
+    val v = digits(ValidForm.columnNames("voice"))
+    val g = digits(ValidForm.columnNames("gender"))
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+    val n = digits(ValidForm.columnNames("grammaticalNumber"))
+
+    ValidParticipleForm(
+      formUrn,
+      ValidForm.tenseCodes(t),
+      ValidForm.voiceCodes(v),
+      ValidForm.genderCodes(g),
+      ValidForm.caseCodes(c),
+      ValidForm.numberCodes(n),
+    )
+
+  }
+}
+
+
+case class ValidInfinitiveForm(formUrn: Cite2Urn,
+  tense: Tense,
+  voice: Voice
+) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidInfinitiveForm {
+  def apply(formUrn: Cite2Urn) : ValidInfinitiveForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+
+    val t = digits(ValidForm.columnNames("tense"))
+    val v = digits(ValidForm.columnNames("voice"))
+
+    ValidInfinitiveForm(
+      formUrn,
+      ValidForm.tenseCodes(t),
+      ValidForm.voiceCodes(v)
+    )
+
+  }
+}
+
+case class ValidGerundiveForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase: GrammaticalCase, grammaticalNumber: GrammaticalNumber) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidGerundiveForm {
+  def apply(formUrn: Cite2Urn) : ValidGerundiveForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+    val g = digits(ValidForm.columnNames("gender"))
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+    val n = digits(ValidForm.columnNames("grammaticalNumber"))
+
+    ValidGerundiveForm(
+      formUrn,
+      ValidForm.genderCodes(g),
+      ValidForm.caseCodes(c),
+      ValidForm.numberCodes(n)
+    )
+  }
+}
+
+
+
+case class ValidGerundForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidGerundForm {
+  def apply(formUrn: Cite2Urn) : ValidGerundForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+
+    ValidGerundForm(
+      formUrn,
+      ValidForm.caseCodes(c)
+    )
+  }
+}
+
+
+case class ValidSupineForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidSupineForm {
+  def apply(formUrn: Cite2Urn) : ValidSupineForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+    val c = digits(ValidForm.columnNames("grammaticalCase"))
+
+    ValidSupineForm(
+      formUrn,
+      ValidForm.caseCodes(c)
+    )
+  }
+}
+
+case class ValidUninflectedForm(formUrn: Cite2Urn, indeclinablePoS: IndeclinablePoS) extends ValidForm {
+  def urn = formUrn
+  def validUrnValue: Boolean = {
+    // check all other columns are 0s
+    false
+  }
+}
+object ValidUninflectedForm {
+  def apply(formUrn: Cite2Urn) : ValidUninflectedForm = {
+    val digits = formUrn.objectComponent.split("").toVector
+    val pos = digits(ValidForm.columnNames("inflectionType"))
+
+    ValidUninflectedForm(
+      formUrn,
+      ValidForm.posCodes(pos)
+    )
+  }
+}
+
 /*
   def fromCex(s: String): Option[LemmatizedForm] = {
     val urns = splitCex(s)
