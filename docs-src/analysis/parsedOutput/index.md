@@ -6,7 +6,7 @@ nav_order: 0
 ---
 
 
-# Parsed output
+# Parsed output in FST format
 
 The `FstReader` object recognizes the SFST patterns for a token and for a sequence of analyses, and from pairings of tokens and analyses creates `AnalyticalToken`s.
 

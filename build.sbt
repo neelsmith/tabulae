@@ -48,7 +48,7 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
         .enablePlugins(MdocPlugin)
         .settings(
           mdocIn := file("docs-src"),
-          mdocOut := file("docs"),
+          mdocOut := file("testDocs"),
           mdocExtraArguments := Seq("--no-link-hygiene"),
           mdocVariables := Map(
             "VERSION" -> "6.3.0"

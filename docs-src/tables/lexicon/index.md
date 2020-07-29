@@ -5,6 +5,13 @@ parent: Building a corpus-specific dataset
 nav_order: 4
 ---
 
+
+
+**Version @VERSION@**
+
+# The lexicon of stems
+
+
 In a `tabulae` dataset, the directory `stems-tables` contains the lexicon of stems for all words in your corpus that combine with regular endings.
 
 Stem tables are tabular files using `#` as the column delimiter.  File names are not significant, but must end with the extension `.cex`.  Tables begin with a header line followed by one or more data lines.

@@ -6,6 +6,10 @@ parent: Other topics
 ---
 
 
+
+**Version @VERSION@**
+
+
 # The URN manager
 
 

@@ -1,9 +1,14 @@
 ---
-title: Indeclinable stems
+title: Uninflected stems
 layout: page
 parent: Building a corpus-specific dataset
 nav_order: 5
 ---
+
+
+**Version @VERSION@**
+
+# Uninflected stems
 
 Example of a complete stem table with one data line;
 
