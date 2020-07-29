@@ -1,9 +1,5 @@
 package edu.holycross.shot.tabulae
 
-
-import edu.holycross.shot.mid.validator._
-
-
 /** Association of [[LemmatizedForm]]s with a surface string (token).
 *
 * @param token A morphologically analyzed surface form.

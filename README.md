@@ -1,4 +1,4 @@
-**Version 6.3.0**: [documentation](https://neelsmith.github.io/tabulae-documentation/)
+**Version 6.4.0**: [documentation](https://neelsmith.github.io/tabulae-documentation/)
 
 # `tabulae` #
 

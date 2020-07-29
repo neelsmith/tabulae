@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**6.4.0**: Adds the `ValidForm` trait and 10 implementations.
+
 **6.3.0**: Adds the `urn` method to the `UrnManager` class.
 
 **6.2.0**: Adds the `UrnManager` class, and `formUrn` method to `LemmatizedForm`.

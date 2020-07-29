@@ -17,18 +17,17 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
 
       name := "tabulae",
       organization := "edu.holycross.shot",
-      version := "6.3.0",
+      version := "6.4.0",
       scalaVersion := "2.12.4",
       licenses += ("GPL-3.0",url("https://opensource.org/licenses/gpl-3.0.html")),
       resolvers += Resolver.jcenterRepo,
       resolvers += Resolver.bintrayRepo("neelsmith", "maven"),
       libraryDependencies ++= Seq(
         "org.scalatest" %% "scalatest" % "3.0.1" % "test",
+        "org.wvlet.airframe" %%% "airframe-log" % "20.5.2",
 
-        "org.wvlet.airframe" %%% "airframe-log" % "19.9.0",
-
-        "edu.holycross.shot.cite" %%% "xcite" % "4.0.2",
-        "edu.holycross.shot" %%% "latphone" % "2.5.2"
+        "edu.holycross.shot.cite" %%% "xcite" % "4.3.0",
+        "edu.holycross.shot" %%% "latphone" % "3.0.0"
       )
 
     ).
@@ -51,7 +50,7 @@ lazy val crossed = crossProject(JSPlatform, JVMPlatform).in(file(".")).
           mdocOut := file("testDocs"),
           mdocExtraArguments := Seq("--no-link-hygiene"),
           mdocVariables := Map(
-            "VERSION" -> "6.3.0"
+            "VERSION" -> "6.4.0"
           )
 
         )
