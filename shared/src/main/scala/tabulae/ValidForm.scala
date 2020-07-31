@@ -33,6 +33,11 @@ object ValidForm {
     }
   }
 
+  def correctZeroes(digits: Vector[String], zeroColumns: Vector[Int]): Boolean = {
+    val tf = zeroColumns.map(i => digits(i) == "0").distinct
+    (tf.size == 1) && (tf.head)
+  }
+
   val columnNames: Map[String, Int] = Map(
     "person" -> 0,
     "grammaticalNumber" -> 1,
@@ -97,7 +102,6 @@ object ValidForm {
     "C" -> Exclamation,
     "D" -> Numeral
   )
-
 }
 
 /** Noun form identified by gender, case and number, with its
@@ -160,7 +164,8 @@ degree: Degree) extends ValidForm {
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    ValidForm.correctZeroes(digits, Vector(0,2,3,4))
   }
 }
 object ValidAdjectiveForm {
@@ -185,7 +190,8 @@ case class ValidAdverbForm(formUrn: Cite2Urn, degree: Degree) extends ValidForm 
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,6))
   }
 }
 object ValidAdverbForm {
@@ -379,51 +385,3 @@ object ValidUninflectedForm {
     )
   }
 }
-
-/*
-  def fromCex(s: String): Option[LemmatizedForm] = {
-    val urns = splitCex(s)
-    val formOpt = posCodeLabels(digits(8).toHexString.toUpperCase) match {
-      case "noun" => NounForm.fromCex(s)
-      case _ => {
-          println("NOT YET HANDLING " + posCodeLabels(digits(8).toHexString.toUpperCase))
-          None
-      }
-    }
-    println("URN: " + urn + " yields digits " + digits.size)
-    formOpt
-  }
-
-*/
-
-/*
-
-def nounFromCex(digits: Vector[Int]): Option[LemmatizedForm] = {
-  println(digits)
-
-  val gender: Gender = {
-    digits(4) match {
-      case 1 => Masculine
-      case 2 => Feminine
-      case 3 => Neuter
-    }
-  }
-  val grammaticalCase : GrammaticalCase = {
-    digits(5) match {
-      case 1 => Nominative
-      case 2 => Genitive
-      case 3 => Dative
-      case 4 => Accusative
-      case 5 => Ablative
-      case 6 => Vocative
-    }
-  }
-*/
-
-///
-// urn:cite2:linglat:tkns.v1:2020_07_25_4
-//Record 2020_07_25_4
-// urn:cts:latinLit:stoa1263.stoa001.hc_tkns:108a.1.1
-// cum
-// urn:cite2:tabulae:ls.v1:n11872
-// urn:cite2:tabulae:morphforms.v1:00000000
