@@ -7,9 +7,9 @@ import edu.holycross.shot.cite._
 
 import org.scalatest.FlatSpec
 
-class ValidGerundSpec extends FlatSpec {
+class ValidSupineSpec extends FlatSpec {
 
-  "A ValidGerundForm" should "accept forms with C for gerund PoS" in {
+  "A ValidSupineForm" should "accept forms with C for supine PoS" in {
     val gerundForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000308"))
     assert(gerundForm.validUrnValue)
   }
@@ -20,7 +20,7 @@ class ValidGerundSpec extends FlatSpec {
     assert(badGerundForm.validUrnValue == false)
   }
 
-  it should "reject values of nominative for C" in pending
+  it should "reject values other than acc, abl for case" in pending
 
   it should "reject plural number" in pending
 

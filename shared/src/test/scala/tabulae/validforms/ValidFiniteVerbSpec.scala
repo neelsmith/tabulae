@@ -20,4 +20,10 @@ class ValidFiniteVerbSpec extends FlatSpec {
     assert(badVerbForm.validUrnValue == false)
   }
 
+  it should "reject subjunctive forms in mood other than pr, impft, pft, pluptf" in pending
+
+  it should "reject imperative forms in combinations other than 2nd pres and future, and 3rd future" in pending
+
+  it should "reject imperative tenses other than pres and fut" in pending
+
 }

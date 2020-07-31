@@ -13,5 +13,6 @@ class ValidParticipleSpec extends FlatSpec {
 
 
   it should "reject non-zero values on other columns" in pending
+  it should "reject tense-mood combos other than pres-act, pft-pass and fut-act" in pending
 
 }

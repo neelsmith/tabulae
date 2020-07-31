@@ -14,4 +14,6 @@ class ValidInfinitiveSpec extends FlatSpec {
 
   it should "reject non-zero values on other columns" in pending
 
+  it should "reject tenses other than pres, pft, fut" in pending
+
 }
