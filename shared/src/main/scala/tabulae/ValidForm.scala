@@ -384,7 +384,10 @@ case class ValidUninflectedForm(formUrn: Cite2Urn, indeclinablePoS: Indeclinable
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctZeroes = ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,6,7))
+    val correctPosValue = ValidForm.validValue(digits(8), Vector("A", "B", "C", "D"))
+    correctZeroes && correctPosValue
   }
 }
 object ValidUninflectedForm {
