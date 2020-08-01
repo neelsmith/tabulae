@@ -3,6 +3,9 @@ package edu.holycross.shot.tabulae
 
 import edu.holycross.shot.cite._
 
+import wvlet.log._
+import wvlet.log.LogFormatter.SourceCodeLogFormatter
+
 
 sealed trait ValidForm {
   def urn: Cite2Urn
@@ -121,22 +124,31 @@ case class ValidNounForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase: Gra
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    ValidForm.correctZeroes(digits, Vector(0,2,3,4,7))
   }
 }
-object ValidNounForm {
+object ValidNounForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidNounForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val g = digits(ValidForm.columnNames("gender"))
     val c = digits(ValidForm.columnNames("grammaticalCase"))
     val n = digits(ValidForm.columnNames("grammaticalNumber"))
 
-    ValidNounForm(
-      formUrn,
-      ValidForm.genderCodes(g),
-      ValidForm.caseCodes(c),
-      ValidForm.numberCodes(n)
-    )
+    try {
+      ValidNounForm(
+        formUrn,
+        ValidForm.genderCodes(g),
+        ValidForm.caseCodes(c),
+        ValidForm.numberCodes(n)
+      )
+    } catch {
+      case t: Throwable => {
+        val msg = "URN " + formUrn + " has invalid values for noun GCN"
+        warn(msg)
+        throw new Exception(msg)
+      }
+    }
   }
 }
 
@@ -289,21 +301,36 @@ case class ValidInfinitiveForm(formUrn: Cite2Urn,
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctZeroes = ValidForm.correctZeroes(digits,
+      Vector(0,1,3,5,6,7))
+    val correctTenseValue = ValidForm.validValue(digits(2),
+    Vector("1", "3", "4"))
+
+    correctZeroes && correctTenseValue
   }
 }
-object ValidInfinitiveForm {
+object ValidInfinitiveForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidInfinitiveForm = {
     val digits = formUrn.objectComponent.split("").toVector
 
     val t = digits(ValidForm.columnNames("tense"))
     val v = digits(ValidForm.columnNames("voice"))
 
-    ValidInfinitiveForm(
-      formUrn,
-      ValidForm.tenseCodes(t),
-      ValidForm.voiceCodes(v)
-    )
+    try {
+      ValidInfinitiveForm(
+        formUrn,
+        ValidForm.tenseCodes(t),
+        ValidForm.voiceCodes(v)
+      )
+    } catch {
+      case t: Throwable => {
+        val msg = "URN " + formUrn + " has invalid values for infinitive TV"
+        warn(msg)
+        throw new Exception(msg)
+      }
+    }
+
 
   }
 }
