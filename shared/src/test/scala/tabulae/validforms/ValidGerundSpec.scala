@@ -26,6 +26,7 @@ class ValidGerundSpec extends FlatSpec {
 
   }
 
+  it should "should reject out of range values for C" in pending
 
 
 }

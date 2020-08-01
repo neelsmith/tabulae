@@ -20,4 +20,6 @@ class ValidIndeclinableSpec extends FlatSpec {
     assert(badIndecl.validUrnValue == false)
   }
 
+  it should "reject out of range values for PoS" in pending
+
 }

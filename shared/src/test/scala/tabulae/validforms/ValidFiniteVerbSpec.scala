@@ -26,6 +26,6 @@ class ValidFiniteVerbSpec extends FlatSpec {
 
   it should "reject imperative tenses other than pres and fut" in pending
 
-  it should "reject invalid values for PNTMV" in pending
+  it should "reject out of range values for PNTMV" in pending
 
 }

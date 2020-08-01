@@ -25,7 +25,7 @@ class ValidInfinitiveSpec extends FlatSpec {
     assert(badTense.validUrnValue ==  false)
   }
 
-  it should "reject out of range values" in {
+  it should "reject out of range values for TV" in {
     try {
       val badTense =   ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:00X010006"))
     } catch {

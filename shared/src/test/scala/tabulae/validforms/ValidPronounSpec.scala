@@ -20,7 +20,7 @@ class ValidPronounSpec extends FlatSpec {
     assert(badPron.validUrnValue == false)
   }
 
-  it should "reject invalid values for GCN" in {
+  it should "reject out of range values for GCN" in {
     try {
       val badPron = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:040001101"))
     } catch {

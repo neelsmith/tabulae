@@ -28,5 +28,7 @@ class ValidSupineSpec extends FlatSpec {
     assert(badSupine.validUrnValue == false)
   }
 
+  it should "reject out of range values for C" in pending
+
 
 }

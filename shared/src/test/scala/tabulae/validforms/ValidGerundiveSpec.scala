@@ -21,4 +21,5 @@ class ValidGerundiveSpec extends FlatSpec {
     assert(badGdvForm.validUrnValue == false)
   }
 
+  it should "reject out of range values for GCN" in pending
 }

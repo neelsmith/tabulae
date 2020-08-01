@@ -20,4 +20,5 @@ class ValidAdverbSpec extends FlatSpec {
     assert(badAdvForm.validUrnValue == false)
   }
 
+  it should "reject out of range values for D"  in pending
 }
