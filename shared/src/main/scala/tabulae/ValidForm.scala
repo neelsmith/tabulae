@@ -157,22 +157,31 @@ case class ValidPronounForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase: 
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    ValidForm.correctZeroes(digits, Vector(0,2,3,4,7))
   }
 }
-object ValidPronounForm {
+object ValidPronounForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidPronounForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val g = digits(ValidForm.columnNames("gender"))
     val c = digits(ValidForm.columnNames("grammaticalCase"))
     val n = digits(ValidForm.columnNames("grammaticalNumber"))
 
-    ValidPronounForm(
-      formUrn,
-      ValidForm.genderCodes(g),
-      ValidForm.caseCodes(c),
-      ValidForm.numberCodes(n)
-    )
+    try {
+      ValidPronounForm(
+        formUrn,
+        ValidForm.genderCodes(g),
+        ValidForm.caseCodes(c),
+        ValidForm.numberCodes(n)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " has invalid values for pronoun GCN"
+        warn (msg)
+        throw new Exception(msg)
+      }
+    }
   }
 }
 
