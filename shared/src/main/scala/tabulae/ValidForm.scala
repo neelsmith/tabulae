@@ -7,6 +7,10 @@ import wvlet.log._
 import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 
+/** Classes extending [[ValidForm]] are required to
+* report whether the values encoded in `urn`  are valid
+* for that inflectional type ("part of speech").
+*/
 sealed trait ValidForm {
   def urn: Cite2Urn
   def validUrnValue: Boolean
@@ -277,10 +281,36 @@ case class ValidParticipleForm(formUrn: Cite2Urn,
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctTenseVoiceCombo = {
+      tense match {
+        case Present => {
+          voice match {
+            case Active => true
+            case Passive => false
+          }
+        }
+        case Future => {
+          voice match {
+            case Active => true
+            case Passive => false
+          }
+        }
+        case Perfect => {
+          voice match {
+            case Active => false
+            case Passive => true
+          }
+        }
+        case _ => false
+      }
+    }
+    val correctZeros = ValidForm.correctZeroes(digits, Vector(0,3,7))
+
+    correctZeros && correctTenseVoiceCombo
   }
 }
-object ValidParticipleForm {
+object ValidParticipleForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidParticipleForm = {
     val digits = formUrn.objectComponent.split("").toVector
 
@@ -290,14 +320,23 @@ object ValidParticipleForm {
     val c = digits(ValidForm.columnNames("grammaticalCase"))
     val n = digits(ValidForm.columnNames("grammaticalNumber"))
 
-    ValidParticipleForm(
-      formUrn,
-      ValidForm.tenseCodes(t),
-      ValidForm.voiceCodes(v),
-      ValidForm.genderCodes(g),
-      ValidForm.caseCodes(c),
-      ValidForm.numberCodes(n),
-    )
+    try {
+      ValidParticipleForm(
+        formUrn,
+        ValidForm.tenseCodes(t),
+        ValidForm.voiceCodes(v),
+        ValidForm.genderCodes(g),
+        ValidForm.caseCodes(c),
+        ValidForm.numberCodes(n),
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " has invalid valudes for participle TVGCN"
+        warn(msg)
+        throw new Exception(msg)
+      }
+    }
+
 
   }
 }
