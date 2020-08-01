@@ -16,6 +16,13 @@ class ValidAdjectiveSpec extends FlatSpec {
     val badAdjForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:120002112"))
     assert(badAdjForm.validUrnValue == false)
   }
-  it should "reject out of range values for GCND" in pending
+  it should "reject out of range values for GCND" in {
+    try {
+      val badAdjForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:0X0002112"))
+    } catch {
+      case e: Exception => assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:0X0002112 contains invalid values for adjective GCND"))
+    }
+
+  }
 
 }

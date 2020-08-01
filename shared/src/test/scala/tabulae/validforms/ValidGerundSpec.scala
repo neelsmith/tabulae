@@ -26,7 +26,15 @@ class ValidGerundSpec extends FlatSpec {
 
   }
 
-  it should "should reject out of range values for C" in pending
+  it should "should reject out of range values for C" in {
+    try {
+      val gerundForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000X08"))
+    } catch {
+      case e : Exception => {
+        assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:000000X08 has invalid values for gerund case"))
+      }
+    }
 
+  }
 
 }

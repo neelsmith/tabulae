@@ -198,7 +198,7 @@ degree: Degree) extends ValidForm {
     ValidForm.correctZeroes(digits, Vector(0,2,3,4))
   }
 }
-object ValidAdjectiveForm {
+object ValidAdjectiveForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidAdjectiveForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val g = digits(ValidForm.columnNames("gender"))
@@ -206,13 +206,20 @@ object ValidAdjectiveForm {
     val n = digits(ValidForm.columnNames("grammaticalNumber"))
     val d = digits(ValidForm.columnNames("degree"))
 
-    ValidAdjectiveForm(
-      formUrn,
-      ValidForm.genderCodes(g),
-      ValidForm.caseCodes(c),
-      ValidForm.numberCodes(n),
-      ValidForm.degreeCodes(d)
-    )
+    try {
+      ValidAdjectiveForm(
+        formUrn,
+        ValidForm.genderCodes(g),
+        ValidForm.caseCodes(c),
+        ValidForm.numberCodes(n),
+        ValidForm.degreeCodes(d)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " contains invalid values for adjective GCND"
+        throw new Exception(msg)
+      }
+    }
   }
 }
 
@@ -224,15 +231,22 @@ case class ValidAdverbForm(formUrn: Cite2Urn, degree: Degree) extends ValidForm 
     ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,6))
   }
 }
-object ValidAdverbForm {
+object ValidAdverbForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidAdverbForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val d = digits(ValidForm.columnNames("degree"))
 
-    ValidAdverbForm(
-      formUrn,
-      ValidForm.degreeCodes(d)
-    )
+    try {
+      ValidAdverbForm(
+        formUrn,
+        ValidForm.degreeCodes(d)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " has invalid value for adverb degree"
+        throw new Exception(msg)
+      }
+    }
   }
 }
 
@@ -245,12 +259,54 @@ case class ValidFiniteVerbForm(formUrn: Cite2Urn,
   voice: Voice
 ) extends ValidForm {
   def urn = formUrn
+
+  def validImperative: Boolean = {
+    if (mood == Imperative) {
+      tense match {
+        case Present => {
+          person match {
+            case First => false
+            case Second => true
+            case Third => true
+          }
+        }
+        case Future => {
+          person match {
+            case First => false
+            case Second => true
+            case Third => true
+          }
+        }
+        case _ => false
+      }
+    } else {
+      true
+    }
+  }
+
+
+  def validSubjunctive: Boolean = {
+    tense match {
+      case Present => true
+      case Imperfect => true
+      case Perfect => true
+      case Pluperfect => true
+      case _ => false
+    }
+  }
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctZeroes = ValidForm.correctZeroes(digits, Vector(5,6,7))
+    val validForMood = mood match {
+      case Indicative => true
+      case Imperative => validImperative
+      case Subjunctive => validSubjunctive
+    }
+    correctZeroes && validForMood
   }
 }
-object ValidFiniteVerbForm {
+object ValidFiniteVerbForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidFiniteVerbForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val p = digits(ValidForm.columnNames("person"))
@@ -259,14 +315,21 @@ object ValidFiniteVerbForm {
     val m = digits(ValidForm.columnNames("mood"))
     val v = digits(ValidForm.columnNames("voice"))
 
-    ValidFiniteVerbForm(
-      formUrn,
-      ValidForm.personCodes(p),
-      ValidForm.numberCodes(n),
-      ValidForm.tenseCodes(t),
-      ValidForm.moodCodes(m),
-      ValidForm.voiceCodes(v)
-    )
+    try {
+      ValidFiniteVerbForm(
+        formUrn,
+        ValidForm.personCodes(p),
+        ValidForm.numberCodes(n),
+        ValidForm.tenseCodes(t),
+        ValidForm.moodCodes(m),
+        ValidForm.voiceCodes(v)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " contains invalid values for finitive verb PNTMV"
+        throw new Exception(msg)
+      }
+    }
 
   }
 }
@@ -279,35 +342,37 @@ case class ValidParticipleForm(formUrn: Cite2Urn,
   grammaticalNumber: GrammaticalNumber
 ) extends ValidForm {
   def urn = formUrn
+
+  def validTenseVoice : Boolean = {
+    tense match {
+      case Present => {
+        voice match {
+          case Active => true
+          case Passive => false
+        }
+      }
+      case Future => {
+        voice match {
+          case Active => true
+          case Passive => false
+        }
+      }
+      case Perfect => {
+        voice match {
+          case Active => false
+          case Passive => true
+        }
+      }
+      case _ => false
+    }
+  }
+
   def validUrnValue: Boolean = {
     // check all other columns are 0s
     val digits = formUrn.objectComponent.split("").toVector
-    val correctTenseVoiceCombo = {
-      tense match {
-        case Present => {
-          voice match {
-            case Active => true
-            case Passive => false
-          }
-        }
-        case Future => {
-          voice match {
-            case Active => true
-            case Passive => false
-          }
-        }
-        case Perfect => {
-          voice match {
-            case Active => false
-            case Passive => true
-          }
-        }
-        case _ => false
-      }
-    }
     val correctZeros = ValidForm.correctZeroes(digits, Vector(0,3,7))
 
-    correctZeros && correctTenseVoiceCombo
+    correctZeros && validTenseVoice
   }
 }
 object ValidParticipleForm extends LogSupport {
@@ -392,22 +457,28 @@ case class ValidGerundiveForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase
     correctZeroes
   }
 }
-object ValidGerundiveForm {
+object ValidGerundiveForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidGerundiveForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val g = digits(ValidForm.columnNames("gender"))
     val c = digits(ValidForm.columnNames("grammaticalCase"))
     val n = digits(ValidForm.columnNames("grammaticalNumber"))
 
-    ValidGerundiveForm(
-      formUrn,
-      ValidForm.genderCodes(g),
-      ValidForm.caseCodes(c),
-      ValidForm.numberCodes(n)
-    )
+    try {
+      ValidGerundiveForm(
+        formUrn,
+        ValidForm.genderCodes(g),
+        ValidForm.caseCodes(c),
+        ValidForm.numberCodes(n)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " has invalid values for gerundive GCN"
+        throw new Exception(msg)
+      }
+    }
   }
 }
-
 
 
 case class ValidGerundForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) extends ValidForm {
@@ -420,15 +491,22 @@ case class ValidGerundForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) 
     correctZeroes  && correctCaseValue
   }
 }
-object ValidGerundForm {
+object ValidGerundForm extends LogSupport {
   def apply(formUrn: Cite2Urn) : ValidGerundForm = {
     val digits = formUrn.objectComponent.split("").toVector
     val c = digits(ValidForm.columnNames("grammaticalCase"))
+    try {
+      ValidGerundForm(
+        formUrn,
+        ValidForm.caseCodes(c)
+      )
+    } catch {
+      case e: Exception => {
+        val msg = "URN " + formUrn + " has invalid values for gerund case"
+        throw new Exception(msg)
+      }
+    }
 
-    ValidGerundForm(
-      formUrn,
-      ValidForm.caseCodes(c)
-    )
   }
 }
 

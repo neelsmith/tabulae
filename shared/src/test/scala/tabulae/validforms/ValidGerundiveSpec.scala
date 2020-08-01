@@ -21,5 +21,12 @@ class ValidGerundiveSpec extends FlatSpec {
     assert(badGdvForm.validUrnValue == false)
   }
 
-  it should "reject out of range values for GCN" in pending
+  it should "reject out of range values for GCN" in {
+    try {
+      val badGdvForm = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:0X0002107"))
+    } catch {
+      case e : Exception => assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:0X0002107 has invalid values for gerundive GCN"))
+    }
+
+  }
 }
