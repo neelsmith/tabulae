@@ -337,7 +337,10 @@ case class ValidGerundForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) 
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctZeroes = ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,7))
+    val correctCaseValue = ValidForm.validValue(digits(6), Vector("1", "2", "3", "4"))
+    correctZeroes  && correctCaseValue
   }
 }
 object ValidGerundForm {

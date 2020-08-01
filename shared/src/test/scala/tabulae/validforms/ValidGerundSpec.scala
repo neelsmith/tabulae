@@ -20,8 +20,12 @@ class ValidGerundSpec extends FlatSpec {
     assert(badGerundForm.validUrnValue == false)
   }
 
-  it should "reject values of nominative for C" in pending
+  it should "reject values of nominative for C" in {
+    val badGerundForm  =      ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:100000108"))
+    assert(badGerundForm.validUrnValue == false)
 
-  it should "reject plural number" in pending
+  }
+
+
 
 }
