@@ -5,7 +5,7 @@ import edu.holycross.shot.cite._
 
 import org.scalatest.FlatSpec
 
-class ValidAdjectiveFormSpec extends FlatSpec {
+class ValidAdjectiveSpec extends FlatSpec {
 
   "A ValidAdjectiveForm" should "accept forms with GCND for adj. PoS" in {
     val adjForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:020002112"))

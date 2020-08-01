@@ -312,7 +312,9 @@ case class ValidGerundiveForm(formUrn: Cite2Urn, gender: Gender, grammaticalCase
   def urn = formUrn
   def validUrnValue: Boolean = {
     // check all other columns are 0s
-    false
+    val digits = formUrn.objectComponent.split("").toVector
+    val correctZeroes = ValidForm.correctZeroes(digits, Vector(0,2,3,4,7))
+    correctZeroes
   }
 }
 object ValidGerundiveForm {

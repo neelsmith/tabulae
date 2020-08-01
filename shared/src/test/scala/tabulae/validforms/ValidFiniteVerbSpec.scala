@@ -9,7 +9,7 @@ import org.scalatest.FlatSpec
 
 class ValidFiniteVerbSpec extends FlatSpec {
 
-  "A ValidAdverbForm" should "accept forms with D for adverb PoS" in {
+  "A ValidFiniteVerbForm" should "accept forms with D for adverb PoS" in {
     val verbForm  = ValidForm(Cite2Urn("urn:cite2:tabulae:morphforms.v1:314110004"))
     assert(verbForm.validUrnValue)
   }
