@@ -191,20 +191,32 @@ object LemmatizedForm {
         PronounForm(lemmaId, stemId, ruleId, pronoun.gender, pronoun.grammaticalCase, pronoun.grammaticalNumber)
       }
 
-      /*
-      case "2" => ValidAdjectiveForm(form)
-      case "3" => ValidAdverbForm(form)
-      */
+      case "2" => {
+        val adj = ValidAdjectiveForm(form)
+        AdjectiveForm(lemmaId, stemId, ruleId, adj.gender, adj.grammaticalCase, adj.grammaticalNumber, adj.degree)
+      }
+
+      case "3" => {
+        val adv = ValidAdverbForm(form)
+        AdverbForm(lemmaId, stemId, ruleId, adv.degree)
+      }
+
       case "4" => {
         val verb = ValidFiniteVerbForm(form)
         VerbForm(lemmaId, stemId, ruleId, verb.person, verb.grammaticalNumber, verb.tense,
         verb.mood, verb.voice)
 
       }
-  /*    case "5" => ValidParticipleForm(form)
-      case "6" => ValidInfinitiveForm(form)
-      case "7" => ValidGerundiveForm(form)
-      case "8" => ValidGerundForm(form)
+      case "5" => {
+        val ptcp = ValidParticipleForm(form)
+        ParticipleForm(lemmaId, stemId, ruleId, ptcp.gender, ptcp.grammaticalCase, ptcp.grammaticalNumber, ptcp.tense, ptcp.voice )
+      }
+      case "6" => {
+        val infin = ValidInfinitiveForm(form)
+        InfinitiveForm(lemmaId, stemId, ruleId, infin.tense, infin.voice)
+      }
+    /*  case "7" => ValidGerundiveForm(form)
+          case "8" => ValidGerundForm(form)
       case "9" => ValidSupineForm(form)
 
       case  "A" => ValidUninflectedForm(form)

@@ -38,17 +38,37 @@ class LemmatizedFormCexSpec extends FlatSpec {
 
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_1150#Record 2020_08_02_1150#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:2pr.3.10#adulescentis#urn:cite2:tabulae:ls.v1:n1021#urn:cite2:tabulae:morphforms.v1:010001212#LexicalToken#1150
-  it should  "build a LemmatizedForm for adjective forms from CEX" in  pending
+  it should  "build a LemmatizedForm for adjective forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n1021")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:010001212")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.substantiveCase.get == Genitive)
+  }
 
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_1005#Record 2020_08_02_1005#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:2pr.1.31#ita#urn:cite2:tabulae:ls.v1:n25100#urn:cite2:tabulae:morphforms.v1:000000013#LexicalToken#1005
-  it should  "build a LemmatizedForm for adverb forms from CEX" in  pending
+  it should  "build a LemmatizedForm for adverb forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n25100")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000013")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.adverbDegree.get == Positive)
+  }
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_1163#Record 2020_08_02_1163#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:2pr.3.17#cognito#urn:cite2:tabulae:ls.v1:n8938#urn:cite2:tabulae:morphforms.v1:014021305#LexicalToken#1163
-  it should  "build a LemmatizedForm for participle forms from CEX" in  pending
+  it should  "build a LemmatizedForm for participle forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n8938")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:014021305")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.participleTense.get == Perfect)
+  }
 
   // urn:cite2:linglat:tkns.v1:2020_08_02_1258#Record 2020_08_02_1258#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:2pr.5.14#appellari#urn:cite2:tabulae:ls.v1:n3134#urn:cite2:tabulae:morphforms.v1:001020006#LexicalToken#1258
-  it should  "build a LemmatizedForm for infinitive forms from CEX" in  pending
+  it should  "build a LemmatizedForm for infinitive forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n3134")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:001020006")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.infinitiveVoice.get == Passive)
+  }
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_2971#Record 2020_08_02_2971#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:12pr.2.13#faciendi#urn:cite2:tabulae:ls.v1:n17516#urn:cite2:tabulae:morphforms.v1:020001107#LexicalToken#2971
   it should  "build a LemmatizedForm for gerund forms from CEX" in  pending
