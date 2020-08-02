@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**6.6.1**: Handles bad value in Form URNs.
+
 **6.6.0**: Adds `fromFormUrn` method to the `LemmatizedForm` object.
 
 **6.5.0**: Adds labelling of `ValidForm` implementations.
