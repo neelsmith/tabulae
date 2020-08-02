@@ -174,6 +174,50 @@ sealed trait LemmatizedForm {
 */
 object LemmatizedForm {
 
+  def fromFormUrn(lemmaId: String, stemId: String, ruleId: String, form: Cite2Urn) : LemmatizedForm = {
+    //val vForm = ValidForm(form)
+    println("Lemma/Form: " + lemmaId + " / " + form)
+    val digits = form.objectComponent.split("").toVector
+    val partOfSpeech = digits(ValidForm.columnNames("inflectionType"))
+    val vForm = partOfSpeech match {
+
+      case "0" => {
+        val noun = ValidNounForm(form)
+        NounForm(lemmaId, stemId, ruleId, noun.gender, noun.grammaticalCase, noun.grammaticalNumber)
+      }
+
+      case "1" => {
+        val pronoun = ValidPronounForm(form)
+        PronounForm(lemmaId, stemId, ruleId, pronoun.gender, pronoun.grammaticalCase, pronoun.grammaticalNumber)
+      }
+
+      /*
+      case "2" => ValidAdjectiveForm(form)
+      case "3" => ValidAdverbForm(form)
+      */
+      case "4" => {
+        val verb = ValidFiniteVerbForm(form)
+        VerbForm(lemmaId, stemId, ruleId, verb.person, verb.grammaticalNumber, verb.tense,
+        verb.mood, verb.voice)
+
+      }
+  /*    case "5" => ValidParticipleForm(form)
+      case "6" => ValidInfinitiveForm(form)
+      case "7" => ValidGerundiveForm(form)
+      case "8" => ValidGerundForm(form)
+      case "9" => ValidSupineForm(form)
+
+      case  "A" => ValidUninflectedForm(form)
+      case  "B" => ValidUninflectedForm(form)
+      case  "C" => ValidUninflectedForm(form)
+      case  "D" => ValidUninflectedForm(form)  */
+
+      case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
+    }
+    vForm
+
+  }
+
   def posCodeLabels: Map[String, String] = Map(
     "0" -> "noun",
     "1" -> "pronoun",
