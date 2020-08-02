@@ -71,25 +71,57 @@ class LemmatizedFormCexSpec extends FlatSpec {
   }
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_2971#Record 2020_08_02_2971#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:12pr.2.13#faciendi#urn:cite2:tabulae:ls.v1:n17516#urn:cite2:tabulae:morphforms.v1:020001107#LexicalToken#2971
-  it should  "build a LemmatizedForm for gerund forms from CEX" in  pending
+  it should  "build a LemmatizedForm for gerundive forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n17516")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:020001107")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.substantiveCase.get == Nominative)
+  }
 
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_13782#Record 2020_08_02_13782#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:57pr.2.27#interficiendum#urn:cite2:tabulae:ls.v1:n24257#urn:cite2:tabulae:morphforms.v1:000000408#LexicalToken#13782
-  it should  "build a LemmatizedForm for gerundive forms from CEX" in  pending
+  it should  "build a LemmatizedForm for gerund forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n24257")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000408")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.substantiveCase.get == Accusative)
+  }
 
   // urn:cite2:linglat:tkns.v1:2020_08_02_30244#Record 2020_08_02_30244#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:126a.9.44#rogatu#urn:cite2:tabulae:ls.v1:n41838#urn:cite2:tabulae:morphforms.v1:000000509#LexicalToken#30244
-  it should  "build a LemmatizedForm for supine forms from CEX" in  pending
+  it should  "build a LemmatizedForm for supine forms from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n41838")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:000000509")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.substantiveCase.get == Ablative)
+  }
 
 
   //urn:cite2:linglat:tkns.v1:2020_08_02_30256#Record 2020_08_02_30256#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:127a.1.2#et#urn:cite2:tabulae:ls.v1:n16278#urn:cite2:tabulae:morphforms.v1:00000000A#LexicalToken#30256
-  //
+  it should  "build a LemmatizedForm for indeclinable conjunctions from CEX" in  {
+    val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n16278")
+    val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:00000000A")
+    val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+    assert(lemmatizedForm.indeclinablePartOfSpeech.get == Conjunction)
+  }
+
+
   //urn:cite2:linglat:tkns.v1:2020_08_02_30260#Record 2020_08_02_30260#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:127a.1.6#a#urn:cite2:tabulae:ls.v1:n4#urn:cite2:tabulae:morphforms.v1:00000000B#LexicalToken#30260
-  //
-  // urn:cite2:linglat:tkns.v1:2020_08_02_31529#Record 2020_08_02_31529#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:134a.4.3#duodecim#urn:cite2:tabulae:ls.v1:n14920#urn:cite2:tabulae:morphforms.v1:00000000D#LexicalToken#31529
-  it should  "build a LemmatizedForm for indeclinable forms from CEX" in  pending
+    it should  "build a LemmatizedForm for indeclinable prepositions from CEX" in  {
+      val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n4")
+      val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:00000000B")
+      val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+      assert(lemmatizedForm.indeclinablePartOfSpeech.get == Preposition)
+    }
 
 
-  //val cexLine = "urn:cite2:linglat:tkns.v1:2020_08_02_12#Record 2020_08_02_12#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:pr.1.5#et#urn:cite2:tabulae:ls.v1:n16278#urn:cite2:tabulae:morphforms.v1:00000000A#LexicalToken#12"
-  //
+    // urn:cite2:linglat:tkns.v1:2020_08_02_31529#Record 2020_08_02_31529#urn:cts:latinLit:stoa1263.stoa001.hc_tkns:134a.4.3#duodecim#urn:cite2:tabulae:ls.v1:n14920#urn:cite2:tabulae:morphforms.v1:00000000D#LexicalToken#31529
+    it should  "build a LemmatizedForm for indeclinable numerals from CEX" in  {
+      val lemma = Cite2Urn("urn:cite2:tabulae:ls.v1:n14920")
+      val form = Cite2Urn("urn:cite2:tabulae:morphforms.v1:00000000D")
+      val lemmatizedForm = LemmatizedForm.fromFormUrn(lemmaId(lemma), "", "", form )
+      assert(lemmatizedForm.indeclinablePartOfSpeech.get == Numeral)
+    }
+
+
 
 }

@@ -78,6 +78,7 @@ sealed trait LemmatizedForm {
       case ptcpl: ParticipleForm => Some(ptcpl.grammaticalCase)
       case gdv: GerundiveForm => Some(gdv.grammaticalCase)
       case grnd: GerundForm => Some(grnd.grammaticalCase)
+      case supine: SupineForm => Some(supine.grammaticalCase)
       case _ => None
     }
   }
@@ -215,14 +216,39 @@ object LemmatizedForm {
         val infin = ValidInfinitiveForm(form)
         InfinitiveForm(lemmaId, stemId, ruleId, infin.tense, infin.voice)
       }
-    /*  case "7" => ValidGerundiveForm(form)
-          case "8" => ValidGerundForm(form)
-      case "9" => ValidSupineForm(form)
+      case "7" => {
+        val gerundive = ValidGerundiveForm(form)
+        GerundiveForm(lemmaId, stemId, ruleId, gerundive.gender, gerundive.grammaticalCase, gerundive.grammaticalNumber)
+      }
+      case "8" => {
+        val gerund = ValidGerundForm(form)
+        GerundForm(lemmaId, stemId, ruleId, gerund.grammaticalCase)
+      }
 
-      case  "A" => ValidUninflectedForm(form)
-      case  "B" => ValidUninflectedForm(form)
-      case  "C" => ValidUninflectedForm(form)
-      case  "D" => ValidUninflectedForm(form)  */
+      case "9" => {
+        val supine = ValidSupineForm(form)
+        SupineForm(lemmaId, stemId, ruleId, supine.grammaticalCase)
+      }
+
+
+      case  "A" => {
+        val conjunction = ValidUninflectedForm(form)
+        IndeclinableForm(lemmaId, stemId, ruleId, conjunction.indeclinablePoS)
+      }
+
+
+      case  "B" => {
+        val preposition = ValidUninflectedForm(form)
+        IndeclinableForm(lemmaId, stemId, ruleId, preposition.indeclinablePoS)
+      }
+      case  "C" => {
+        val exclamation = ValidUninflectedForm(form)
+        IndeclinableForm(lemmaId, stemId, ruleId, exclamation.indeclinablePoS)
+      }
+      case  "D" => {
+        val numeral = ValidUninflectedForm(form)
+        IndeclinableForm(lemmaId, stemId, ruleId, numeral.indeclinablePoS)
+      }
 
       case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
     }
