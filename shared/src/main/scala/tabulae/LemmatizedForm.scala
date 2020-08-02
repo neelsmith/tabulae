@@ -179,11 +179,13 @@ object LemmatizedForm {
     //val vForm = ValidForm(form)
     println("Lemma/Form: " + lemmaId + " / " + form)
     val digits = form.objectComponent.split("").toVector
+
     val index = ValidForm.columnNames("inflectionType")
     if (digits.size <= index) {
       throw new Exception("Too few digits. Could not make lemmatized form from " + form )
     }
     val partOfSpeech = digits(index)
+
     val vForm = partOfSpeech match {
 
       case "0" => {
