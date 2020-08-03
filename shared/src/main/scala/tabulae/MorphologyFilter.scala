@@ -19,13 +19,13 @@ case class MorphologyFilter(
   degree: Option[Degree] = None,
   indeclinablePoS : Option[IndeclinablePoS] = None
 ) extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.DEBUG)
+  //Logger.setDefaultLogLevel(LogLevel.DEBUG)
 
 
   /** True if a pos is specified and agrees with the pos of
   * the given form.
   *
-  * @param lemmaizedForm Form to check.
+  * @param lemmatizedForm Form to check.
   */
   def posAgrees(lemmatizedForm: LemmatizedForm) : Boolean = {
     pos match {

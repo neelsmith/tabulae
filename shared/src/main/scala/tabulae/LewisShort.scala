@@ -9,7 +9,7 @@ import wvlet.log.LogFormatter.SourceCodeLogFormatter
 
 
 object LewisShort extends LogSupport {
-  Logger.setDefaultLogLevel(LogLevel.WARN)
+  //Logger.setDefaultLogLevel(LogLevel.WARN)
 
   val indexUrl = "https://raw.githubusercontent.com/Eumaeus/cex_lewis_and_short/master/ls_indexData.txt"
   lazy val lemmaIndex = Source.fromURL(indexUrl).getLines.toVector

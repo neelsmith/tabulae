@@ -1,5 +1,9 @@
 # Release notes for `tabulae`
 
+**7.0.1**: Turn off debugging output.
+
+**7.0.0**: Revised API to `LematizedForm` with constructor working directly from URN value for morphological form.
+
 **6.6.1**: Handles bad value in Form URNs.
 
 **6.6.0**: Adds `fromFormUrn` method to the `LemmatizedForm` object.

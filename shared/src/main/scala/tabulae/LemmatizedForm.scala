@@ -175,90 +175,94 @@ sealed trait LemmatizedForm {
 */
 object LemmatizedForm {
 
-  def fromFormUrn(lemmaId: String, stemId: String, ruleId: String, form: Cite2Urn) : LemmatizedForm = {
-    //val vForm = ValidForm(form)
-    println("Lemma/Form: " + lemmaId + " / " + form)
-    val digits = form.objectComponent.split("").toVector
+  /** Alternative constructor for [[LemmatizedForm]] when
+  * form is expressed as a URN value.
+  */
+  def apply(lemmaId: String, stemId: String, ruleId: String, form: Cite2Urn) : Option[LemmatizedForm] = {
+    if (form.objectComponent == "null") {
+      None
 
-    val index = ValidForm.columnNames("inflectionType")
-    if (digits.size <= index) {
-      throw new Exception("Too few digits. Could not make lemmatized form from " + form )
+    } else {
+      val digits = form.objectComponent.split("").toVector
+      val index = ValidForm.columnNames("inflectionType")
+      if (digits.size <= index) {
+        throw new Exception("Too few digits. Could not make lemmatized form from " + form )
+      }
+      val partOfSpeech = digits(index)
+      val lemmatizedForm = partOfSpeech match {
+
+        case "0" => {
+          val noun = ValidNounForm(form)
+          NounForm(lemmaId, stemId, ruleId, noun.gender, noun.grammaticalCase, noun.grammaticalNumber)
+        }
+
+        case "1" => {
+          val pronoun = ValidPronounForm(form)
+          PronounForm(lemmaId, stemId, ruleId, pronoun.gender, pronoun.grammaticalCase, pronoun.grammaticalNumber)
+        }
+
+        case "2" => {
+          val adj = ValidAdjectiveForm(form)
+          AdjectiveForm(lemmaId, stemId, ruleId, adj.gender, adj.grammaticalCase, adj.grammaticalNumber, adj.degree)
+        }
+
+        case "3" => {
+          val adv = ValidAdverbForm(form)
+          AdverbForm(lemmaId, stemId, ruleId, adv.degree)
+        }
+
+        case "4" => {
+          val verb = ValidFiniteVerbForm(form)
+          VerbForm(lemmaId, stemId, ruleId, verb.person, verb.grammaticalNumber, verb.tense,
+          verb.mood, verb.voice)
+
+        }
+        case "5" => {
+          val ptcp = ValidParticipleForm(form)
+          ParticipleForm(lemmaId, stemId, ruleId, ptcp.gender, ptcp.grammaticalCase, ptcp.grammaticalNumber, ptcp.tense, ptcp.voice )
+        }
+        case "6" => {
+          val infin = ValidInfinitiveForm(form)
+          InfinitiveForm(lemmaId, stemId, ruleId, infin.tense, infin.voice)
+        }
+        case "7" => {
+          val gerundive = ValidGerundiveForm(form)
+          GerundiveForm(lemmaId, stemId, ruleId, gerundive.gender, gerundive.grammaticalCase, gerundive.grammaticalNumber)
+        }
+        case "8" => {
+          val gerund = ValidGerundForm(form)
+          GerundForm(lemmaId, stemId, ruleId, gerund.grammaticalCase)
+        }
+
+        case "9" => {
+          val supine = ValidSupineForm(form)
+          SupineForm(lemmaId, stemId, ruleId, supine.grammaticalCase)
+        }
+
+
+        case  "A" => {
+          val conjunction = ValidUninflectedForm(form)
+          IndeclinableForm(lemmaId, stemId, ruleId, conjunction.indeclinablePoS)
+        }
+
+
+        case  "B" => {
+          val preposition = ValidUninflectedForm(form)
+          IndeclinableForm(lemmaId, stemId, ruleId, preposition.indeclinablePoS)
+        }
+        case  "C" => {
+          val exclamation = ValidUninflectedForm(form)
+          IndeclinableForm(lemmaId, stemId, ruleId, exclamation.indeclinablePoS)
+        }
+        case  "D" => {
+          val numeral = ValidUninflectedForm(form)
+          IndeclinableForm(lemmaId, stemId, ruleId, numeral.indeclinablePoS)
+        }
+
+        case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
+      }
+      Some(lemmatizedForm)
     }
-    val partOfSpeech = digits(index)
-
-    val vForm = partOfSpeech match {
-
-      case "0" => {
-        val noun = ValidNounForm(form)
-        NounForm(lemmaId, stemId, ruleId, noun.gender, noun.grammaticalCase, noun.grammaticalNumber)
-      }
-
-      case "1" => {
-        val pronoun = ValidPronounForm(form)
-        PronounForm(lemmaId, stemId, ruleId, pronoun.gender, pronoun.grammaticalCase, pronoun.grammaticalNumber)
-      }
-
-      case "2" => {
-        val adj = ValidAdjectiveForm(form)
-        AdjectiveForm(lemmaId, stemId, ruleId, adj.gender, adj.grammaticalCase, adj.grammaticalNumber, adj.degree)
-      }
-
-      case "3" => {
-        val adv = ValidAdverbForm(form)
-        AdverbForm(lemmaId, stemId, ruleId, adv.degree)
-      }
-
-      case "4" => {
-        val verb = ValidFiniteVerbForm(form)
-        VerbForm(lemmaId, stemId, ruleId, verb.person, verb.grammaticalNumber, verb.tense,
-        verb.mood, verb.voice)
-
-      }
-      case "5" => {
-        val ptcp = ValidParticipleForm(form)
-        ParticipleForm(lemmaId, stemId, ruleId, ptcp.gender, ptcp.grammaticalCase, ptcp.grammaticalNumber, ptcp.tense, ptcp.voice )
-      }
-      case "6" => {
-        val infin = ValidInfinitiveForm(form)
-        InfinitiveForm(lemmaId, stemId, ruleId, infin.tense, infin.voice)
-      }
-      case "7" => {
-        val gerundive = ValidGerundiveForm(form)
-        GerundiveForm(lemmaId, stemId, ruleId, gerundive.gender, gerundive.grammaticalCase, gerundive.grammaticalNumber)
-      }
-      case "8" => {
-        val gerund = ValidGerundForm(form)
-        GerundForm(lemmaId, stemId, ruleId, gerund.grammaticalCase)
-      }
-
-      case "9" => {
-        val supine = ValidSupineForm(form)
-        SupineForm(lemmaId, stemId, ruleId, supine.grammaticalCase)
-      }
-
-
-      case  "A" => {
-        val conjunction = ValidUninflectedForm(form)
-        IndeclinableForm(lemmaId, stemId, ruleId, conjunction.indeclinablePoS)
-      }
-
-
-      case  "B" => {
-        val preposition = ValidUninflectedForm(form)
-        IndeclinableForm(lemmaId, stemId, ruleId, preposition.indeclinablePoS)
-      }
-      case  "C" => {
-        val exclamation = ValidUninflectedForm(form)
-        IndeclinableForm(lemmaId, stemId, ruleId, exclamation.indeclinablePoS)
-      }
-      case  "D" => {
-        val numeral = ValidUninflectedForm(form)
-        IndeclinableForm(lemmaId, stemId, ruleId, numeral.indeclinablePoS)
-      }
-
-      case _ => throw new Exception("Can not parse PoS value " + partOfSpeech)
-    }
-    vForm
 
   }
 
