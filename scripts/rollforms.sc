@@ -81,26 +81,23 @@ def rollAdvs : Vector[String] = {
   records
 }
 def rollParticiples = {
-  val ptcpls = for ( (v, vidx) <- voice.zipWithIndex) yield {
-    val tensed = for ( (t, tidx) <- tense.zipWithIndex) yield {
-      val adjs = for ( (g, gidx) <- gender.zipWithIndex ) yield {
-        val embedded = for ( (gc, gcidx) <- gcase.zipWithIndex) yield {
-          val substs = for ((gnum, gnumidx) <- gnumber.zipWithIndex) yield {
-            val records = for ((d, didx) <- degree.zipWithIndex) yield {
-              val s = s"0${gnumidx + 1}${tidx + 1}0${vidx + 1}${gidx + 1}${gcidx + 1}0${participle}#participle: ${t} ${v} ${g} ${gc} ${gnum}"
-              s
-            }
-            records
+  val addVoice = for ( (v, vidx) <- voice.zipWithIndex) yield {
+    val addTense = for ( (t, tidx) <- tense.zipWithIndex) yield {
+      val addGender = for ( (g, gidx) <- gender.zipWithIndex ) yield {
+        val addCase = for ( (gc, gcidx) <- gcase.zipWithIndex) yield {
+          val addNum = for ((gnum, gnumidx) <- gnumber.zipWithIndex) yield {
+            val ptcp = s"0${gnumidx + 1}${tidx + 1}0${vidx + 1}${gidx + 1}${gcidx + 1}0${participle}#participle: ${t} ${v} ${g} ${gc} ${gnum}"
+            ptcp
           }
-          substs
+          addNum
         }
-        embedded
+        addCase
       }
-      adjs
+      addGender
     }
-    tensed
+    addTense
   }
-  ptcpls.flatten.flatten.flatten.flatten.flatten
+  addVoice.flatten.flatten.flatten.flatten
 }
 def rollInfinitives = {
   val infins = for ( (t, tidx) <- tense.zipWithIndex)  yield {
