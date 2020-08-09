@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**7.0.2**: Eliminate duplicate keys in `ValidForm`'s map of labels.
+
 **7.0.1**: Turn off debugging output.
 
 **7.0.0**: Revised API to `LematizedForm` with constructor working directly from URN value for morphological form.
