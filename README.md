@@ -1,4 +1,4 @@
-**Version 7.0.4**: [documentation](https://neelsmith.github.io/tabulae-documentation/)
+**Version 7.0.5**: [documentation](https://neelsmith.github.io/tabulae-documentation/)
 
 # `tabulae` #
 
@@ -36,7 +36,7 @@ When we parse *animae* in Plautus with a classical Latin parser and *anime* in a
 
 
 
-## Current version: 7.0.4
+## Current version: 7.0.5
 
 - Status:  **active development**. [Release notes](releases.md)
 - Current [API documentation](http://neelsmith.info/code/auto/tabulae/edu/holycross/shot/tabulae/).

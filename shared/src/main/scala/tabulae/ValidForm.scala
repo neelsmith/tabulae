@@ -127,6 +127,7 @@ object ValidForm {
     "urn:cite2:tabulae:morphforms.v1:000000208" -> "gerund: genitive",
     "urn:cite2:tabulae:morphforms.v1:000000308" -> "gerund: dative",
     "urn:cite2:tabulae:morphforms.v1:000000408" -> "gerund: accusative",
+    "urn:cite2:tabulae:morphforms.v1:000000508" -> "gerund: ablative",
     "urn:cite2:tabulae:morphforms.v1:000000409" -> "supine: accusative",
     "urn:cite2:tabulae:morphforms.v1:000000509" -> "supine: ablative",
     "urn:cite2:tabulae:morphforms.v1:001010006" -> "infinitive: present active",
@@ -970,7 +971,7 @@ case class ValidGerundForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) 
     // check all other columns are 0s
     val digits = formUrn.objectComponent.split("").toVector
     val correctZeroes = ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,7))
-    val correctCaseValue = ValidForm.validValue(digits(6), Vector("1", "2", "3", "4"))
+    val correctCaseValue = ValidForm.validValue(digits(6), Vector("1", "2", "3", "4", "5"))
     correctZeroes  && correctCaseValue
   }
 }

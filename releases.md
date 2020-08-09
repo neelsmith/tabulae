@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**7.0.5**: Fixes an error in testing valid cases for gerund.
+
 **7.0.4**: Align labelling of form URNs match corrected values for supine.
 
 **7.0.3**: Fixes an error in testing valid cases for supine.
