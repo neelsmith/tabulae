@@ -53,12 +53,11 @@ class ValidSupineSpec extends FlatSpec {
         assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:000000X09 has invalid value for supine case"))
       }
     }
+  }
 
-
-
-
-
-
+  "The ValidForm object" should "correctly label valid supine forms" in {
+    assert( ValidForm.labels("urn:cite2:tabulae:morphforms.v1:000000409") == "supine: accusative")
+    assert( ValidForm.labels("urn:cite2:tabulae:morphforms.v1:000000509") == "supine: ablative")
   }
 
 
