@@ -1,5 +1,7 @@
 # Release notes for `tabulae`
 
+**7.0.3**: Fixes an error in testing valid cases for supine.
+
 **7.0.2**: Eliminate duplicate keys in `ValidForm`'s map of labels.
 
 **7.0.1**: Turn off debugging output.

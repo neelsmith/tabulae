@@ -1000,7 +1000,7 @@ case class ValidSupineForm(formUrn: Cite2Urn, grammaticalCase: GrammaticalCase) 
     // check all other columns are 0s
     val digits = formUrn.objectComponent.split("").toVector
     val correctZeroes = ValidForm.correctZeroes(digits, Vector(0,1,2,3,4,5,7))
-    val correctCaseValue = ValidForm.validValue(digits(6), Vector("3", "4"))
+    val correctCaseValue = ValidForm.validValue(digits(6), Vector( "4", "5"))
     correctZeroes && correctCaseValue
   }
 }
@@ -1016,7 +1016,7 @@ object ValidSupineForm extends LogSupport {
       )
     } catch {
       case e: Exception => {
-        val msg = "URN " + formUrn + " has invalid valid for supine case"
+        val msg = "URN " + formUrn + " has invalid value for supine case"
         warn(msg)
         throw new Exception(msg)
       }

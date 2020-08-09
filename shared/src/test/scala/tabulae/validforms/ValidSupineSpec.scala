@@ -22,9 +22,26 @@ class ValidSupineSpec extends FlatSpec {
 
 
   it should "reject values other than acc, abl for case" in {
-    val supineForm = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Nominative)
-    val badSupine = ValidForm(supineForm.formUrn)
-    assert(badSupine.validUrnValue == false)
+    val nom = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Nominative)
+    val badNom = ValidForm(nom.formUrn)
+    assert(badNom.validUrnValue == false)
+
+    val gen = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Genitive)
+    val badGen = ValidForm(gen.formUrn)
+    assert(badGen.validUrnValue == false)
+
+    val dat = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Dative)
+    val badDat = ValidForm(dat.formUrn)
+    assert(badDat.validUrnValue == false)
+
+    val acc = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Accusative)
+    val accForm = ValidForm(acc.formUrn)
+    assert(accForm.validUrnValue)
+
+    val abl = SupineForm("ls.demo","ocremorph.stem","livymorph.form", Ablative)
+    val ablForm = ValidForm(abl.formUrn)
+    assert(ablForm.validUrnValue)
+
   }
 
   it should "reject out of range values for C" in {
@@ -33,7 +50,7 @@ class ValidSupineSpec extends FlatSpec {
     } catch {
       case e: Exception => {
 
-        assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:000000X09 has invalid valid for supine case"))
+        assert(e.toString.contains("URN urn:cite2:tabulae:morphforms.v1:000000X09 has invalid value for supine case"))
       }
     }
 
