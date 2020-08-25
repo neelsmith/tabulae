@@ -162,6 +162,12 @@ sealed trait LemmatizedForm {
       case _ => None
     }
   }
+  def adjectiveDegree: Option[Degree] = {
+    this match {
+      case adj: AdjectiveForm => Some(adj.degree)
+      case _ => None
+    }
+  }
 
   def indeclinablePartOfSpeech: Option[IndeclinablePoS] = {
     this match {
